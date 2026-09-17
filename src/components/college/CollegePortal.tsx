@@ -30,7 +30,10 @@ import {
   TrendingUp,
   Activity,
   Scale,
-  Palette
+  Palette,
+  Menu,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useTheme } from '../../context/ThemeContext';
@@ -67,6 +70,7 @@ export const CollegePortal: React.FC = () => {
   // Navigation Sub-Tabs
   type TpoTab = 'cohort_readiness' | 'campus_drives' | 'curriculum_radar' | 'erp_onboarding' | 'faculty_rnd';
   const [activeTab, setActiveTab] = useState<TpoTab>('cohort_readiness');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Modals State
   const [showNirfModal, setShowNirfModal] = useState(false);
@@ -198,67 +202,146 @@ export const CollegePortal: React.FC = () => {
       </div>
 
       {/* 2. SUB-TAB NAVIGATION BAR */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1">
-        <button
-          onClick={() => setActiveTab('cohort_readiness')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
-            activeTab === 'cohort_readiness'
-              ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
-              : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-          }`}
-        >
-          <BarChart2 className="w-4 h-4" />
-          <span>Cohort Skill Readiness & Heatmaps</span>
-        </button>
+      <div className="relative z-30">
+        
+        {/* Mobile View: 3 Horizontal Lines Hamburger Toggle (md:hidden) */}
+        <div className="md:hidden space-y-2">
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="w-full m3-surface-2 rounded-2xl p-3.5 border border-slate-200/80 dark:border-white/[0.08] shadow-md flex items-center justify-between gap-3 text-slate-900 dark:text-white font-bold text-xs"
+          >
+            <div className="flex items-center gap-3 truncate">
+              <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                <Menu className="w-4 h-4" />
+              </div>
+              <div className="flex flex-col text-left truncate">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono uppercase tracking-wider">
+                  Mobile Menu • TPO Console
+                </span>
+                <span className="text-xs font-extrabold truncate text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                  {activeTab === 'cohort_readiness' && <BarChart2 className="w-3.5 h-3.5" />}
+                  {activeTab === 'campus_drives' && <Briefcase className="w-3.5 h-3.5" />}
+                  {activeTab === 'curriculum_radar' && <BookOpen className="w-3.5 h-3.5" />}
+                  {activeTab === 'erp_onboarding' && <Layers className="w-3.5 h-3.5" />}
+                  {activeTab === 'faculty_rnd' && <Award className="w-3.5 h-3.5" />}
+                  {activeTab === 'cohort_readiness' && 'Cohort Skill Readiness & Heatmaps'}
+                  {activeTab === 'campus_drives' && 'Visiting Campus Drives & Rosters'}
+                  {activeTab === 'curriculum_radar' && 'Curriculum Deficit & BoS Radar'}
+                  {activeTab === 'erp_onboarding' && 'Batch Onboarding & ERP Hub'}
+                  {activeTab === 'faculty_rnd' && 'Faculty R&D & Sabbatical Hub'}
+                </span>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-1 text-slate-400 shrink-0">
+              {isMobileMenuOpen ? (
+                <ChevronUp className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              ) : (
+                <ChevronDown className="w-5 h-5 text-slate-400" />
+              )}
+            </div>
+          </button>
 
-        <button
-          onClick={() => setActiveTab('campus_drives')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
-            activeTab === 'campus_drives'
-              ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
-              : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-          }`}
-        >
-          <Briefcase className="w-4 h-4" />
-          <span>Visiting Campus Drives & Rosters</span>
-          <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-emerald-500 text-slate-950 font-black">3</span>
-        </button>
+          {/* Expanded Mobile Dropdown List */}
+          {isMobileMenuOpen && (
+            <div className="m3-surface-2 rounded-2xl p-2 border border-slate-200 dark:border-white/[0.1] shadow-2xl space-y-1.5 animate-fadeIn">
+              {[
+                { id: 'cohort_readiness', label: 'Cohort Skill Readiness & Heatmaps', icon: <BarChart2 className="w-4 h-4" /> },
+                { id: 'campus_drives', label: 'Visiting Campus Drives & Rosters', icon: <Briefcase className="w-4 h-4" /> },
+                { id: 'curriculum_radar', label: 'Curriculum Deficit & BoS Radar', icon: <BookOpen className="w-4 h-4" /> },
+                { id: 'erp_onboarding', label: 'Batch Onboarding & ERP Hub', icon: <Layers className="w-4 h-4" /> },
+                { id: 'faculty_rnd', label: 'Faculty R&D & Sabbatical Hub (NEP 2020)', icon: <Award className="w-4 h-4" /> }
+              ].map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => {
+                      setActiveTab(tab.id as TpoTab);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between p-3 rounded-xl text-xs font-bold transition-all ${
+                      isActive
+                        ? 'bg-emerald-600 text-white shadow-md'
+                        : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 truncate">
+                      <span className={isActive ? 'text-white' : 'text-slate-500 dark:text-slate-400'}>
+                        {tab.icon}
+                      </span>
+                      <span className="truncate">{tab.label}</span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
 
-        <button
-          onClick={() => setActiveTab('curriculum_radar')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
-            activeTab === 'curriculum_radar'
-              ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
-              : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-          }`}
-        >
-          <BookOpen className="w-4 h-4" />
-          <span>Curriculum Deficit & BoS Radar</span>
-        </button>
+        {/* Desktop View: Sub-Tab Navigation Bar (hidden md:flex) */}
+        <div className="hidden md:flex items-center gap-2 overflow-x-auto pb-1">
+          <button
+            onClick={() => setActiveTab('cohort_readiness')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
+              activeTab === 'cohort_readiness'
+                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
+                : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <BarChart2 className="w-4 h-4" />
+            <span>Cohort Skill Readiness & Heatmaps</span>
+          </button>
 
-        <button
-          onClick={() => setActiveTab('erp_onboarding')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
-            activeTab === 'erp_onboarding'
-              ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
-              : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-          }`}
-        >
-          <Layers className="w-4 h-4" />
-          <span>Batch Onboarding & ERP Hub</span>
-        </button>
+          <button
+            onClick={() => setActiveTab('campus_drives')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
+              activeTab === 'campus_drives'
+                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
+                : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <Briefcase className="w-4 h-4" />
+            <span>Visiting Campus Drives & Rosters</span>
+            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-emerald-500 text-slate-950 font-black">3</span>
+          </button>
 
-        <button
-          onClick={() => setActiveTab('faculty_rnd')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
-            activeTab === 'faculty_rnd'
-              ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
-              : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-          }`}
-        >
-          <Award className="w-4 h-4" />
-          <span>Faculty R&D & Sabbatical Hub (NEP 2020)</span>
-        </button>
+          <button
+            onClick={() => setActiveTab('curriculum_radar')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
+              activeTab === 'curriculum_radar'
+                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
+                : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <BookOpen className="w-4 h-4" />
+            <span>Curriculum Deficit & BoS Radar</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('erp_onboarding')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
+              activeTab === 'erp_onboarding'
+                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
+                : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <Layers className="w-4 h-4" />
+            <span>Batch Onboarding & ERP Hub</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('faculty_rnd')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
+              activeTab === 'faculty_rnd'
+                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
+                : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <Award className="w-4 h-4" />
+            <span>Faculty R&D & Sabbatical Hub (NEP 2020)</span>
+          </button>
+        </div>
       </div>
 
       {/* ========================================================================= */}

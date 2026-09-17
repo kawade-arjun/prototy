@@ -15,13 +15,17 @@ import {
   Building2, 
   UserCheck, 
   ShieldCheck,
-  Lock
+  Lock,
+  Menu,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 
 import { useStudent } from '../../context/StudentContext';
 
 export const StudentPortal: React.FC = () => {
   const [activeTab, setActiveTab] = useState<StudentTab>('recommendations');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { activeStudent } = useStudent();
 
   const tabs: { id: StudentTab; label: string; num: string; icon: React.ReactNode; category: string }[] = [
@@ -33,6 +37,8 @@ export const StudentPortal: React.FC = () => {
     { id: 'organisations', label: 'Organisations Directory', num: '6', icon: <Building2 className="w-3.5 h-3.5" />, category: 'Discovery' },
     { id: 'profile', label: 'Comprehensive Profile', num: '7', icon: <UserCheck className="w-3.5 h-3.5" />, category: 'Sovereign ID' }
   ];
+
+  const currentTabObj = tabs.find(t => t.id === activeTab) || tabs[0];
 
   return (
     <div className="space-y-6">
@@ -81,10 +87,85 @@ export const StudentPortal: React.FC = () => {
         </div>
       </div>
 
-      {/* 7-Tab Material Design 3 Segmented Command Dock */}
-      <div className="relative">
-        <div className="m3-surface-2 rounded-full p-2 border border-slate-200/80 dark:border-white/[0.08] shadow-sm overflow-x-auto">
-          <div className="flex items-center gap-2 min-w-[840px]">
+      {/* 7-Tab Command Navigation Dock */}
+      <div className="relative z-30">
+        
+        {/* Mobile View: 3 Horizontal Lines (Hamburger Menu) Toggle (md:hidden) */}
+        <div className="md:hidden space-y-2">
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="w-full m3-surface-2 rounded-2xl p-3.5 border border-slate-200/80 dark:border-white/[0.08] shadow-md flex items-center justify-between gap-3 text-slate-900 dark:text-white font-bold text-xs"
+          >
+            <div className="flex items-center gap-3 truncate">
+              {/* 3 Horizontal Lines Hamburger Icon */}
+              <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                <Menu className="w-4 h-4" />
+              </div>
+              <div className="flex flex-col text-left truncate">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono uppercase tracking-wider">
+                  Mobile Menu • Tab {currentTabObj.num} of 7
+                </span>
+                <span className="text-xs font-extrabold truncate flex items-center gap-1.5 text-indigo-600 dark:text-cyan-400">
+                  {currentTabObj.icon}
+                  {currentTabObj.label}
+                </span>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-1 text-slate-400 shrink-0">
+              {isMobileMenuOpen ? (
+                <ChevronUp className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
+              ) : (
+                <ChevronDown className="w-5 h-5 text-slate-400" />
+              )}
+            </div>
+          </button>
+
+          {/* Expanded Mobile Vertical Dropdown Menu */}
+          {isMobileMenuOpen && (
+            <div className="m3-surface-2 rounded-2xl p-2 border border-slate-200 dark:border-white/[0.1] shadow-2xl space-y-1.5 animate-fadeIn">
+              {tabs.map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => {
+                      setActiveTab(tab.id);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between p-3 rounded-xl text-xs font-bold transition-all ${
+                      isActive
+                        ? 'bg-indigo-600 text-white shadow-md'
+                        : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 truncate">
+                      <span className={`text-[10px] font-mono font-bold w-6 h-6 rounded-lg flex items-center justify-center shrink-0 ${
+                        isActive ? 'bg-indigo-700 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                      }`}>
+                        {tab.num}
+                      </span>
+                      <span className={isActive ? 'text-white' : 'text-slate-500 dark:text-slate-400'}>
+                        {tab.icon}
+                      </span>
+                      <span className="truncate">{tab.label}</span>
+                    </div>
+                    
+                    <span className={`text-[10px] px-2 py-0.5 rounded-md font-mono shrink-0 ${
+                      isActive ? 'bg-indigo-700/80 text-white' : 'bg-slate-100 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400'
+                    }`}>
+                      {tab.category}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Desktop View: Segmented Command Dock (hidden md:block) */}
+        <div className="hidden md:block m3-surface-2 rounded-full p-2 border border-slate-200/80 dark:border-white/[0.08] shadow-sm">
+          <div className="flex items-center gap-2">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id;
               return (
