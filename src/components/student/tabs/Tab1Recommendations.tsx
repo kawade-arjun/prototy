@@ -494,11 +494,11 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               
               {/* Dynamic Realistic Skill Gap Radar Visualization */}
               {(() => {
-                const getRadarMetrics = () => {
+                const getRadarAxesForStream = () => {
                   switch (selectedStream) {
                     case 'tech_ai':
                       return {
-                        axes: ['Core AI/ML', 'System Infra', 'Parsability', 'Problem Solving', 'Tooling', 'NEP Credits'],
+                        axes: ['Algorithms & DSA', 'Cloud Architecture', 'System Design', 'REST & Microservices', 'Docker & DevOps', 'Database & SQL'],
                         candValues: [
                           Math.min(activeStudent.compositeScore / 100, 0.94),
                           atsResult.quantifiedMetricsScore / 100,
@@ -507,20 +507,11 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                           atsResult.keywordDensityScore / 100,
                           0.90
                         ],
-                        targetValues: [0.96, 0.90, 0.88, 0.92, 0.94, 0.90],
-                        labels: [
-                          { name: 'Core AI/ML', score: `${Math.min(activeStudent.compositeScore, 94)}% / 96%` },
-                          { name: 'System Infra', score: `${atsResult.quantifiedMetricsScore}% / 90%` },
-                          { name: 'Parsability', score: `${atsResult.formattingParsabilityScore}% / 88%` },
-                          { name: 'Problem Solving', score: `${Math.min(atsResult.overallScore + 4, 96)}% / 92%` },
-                          { name: 'Tooling', score: `${atsResult.keywordDensityScore}% / 94%` },
-                          { name: 'NEP Credits', score: `90% / 90%` },
-                        ],
-                        overlapIndex: '89.4%'
+                        targetValues: [0.88, 0.94, 0.90, 0.84, 0.92, 0.86]
                       };
                     case 'commerce_finance':
                       return {
-                        axes: ['Fin Modeling', 'LBO & DCF', 'SEC Audit', 'Quant Risk', 'Parsability', 'NEP Credits'],
+                        axes: ['Financial Modeling', 'LBO & DCF Valuation', 'SEC Edgar Audit', 'Quant Risk Analysis', 'FinTech APIs', 'Excel & SQL'],
                         candValues: [
                           Math.min((activeStudent.compositeScore + 2) / 100, 0.96),
                           atsResult.quantifiedMetricsScore / 100,
@@ -529,20 +520,11 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                           atsResult.formattingParsabilityScore / 100,
                           0.92
                         ],
-                        targetValues: [0.98, 0.92, 0.90, 0.94, 0.90, 0.92],
-                        labels: [
-                          { name: 'Fin Modeling', score: `${Math.min(activeStudent.compositeScore + 2, 96)}% / 98%` },
-                          { name: 'LBO & DCF', score: `${atsResult.quantifiedMetricsScore}% / 92%` },
-                          { name: 'SEC Audit', score: `${atsResult.keywordDensityScore}% / 90%` },
-                          { name: 'Quant Risk', score: `${Math.min(atsResult.overallScore, 92)}% / 94%` },
-                          { name: 'Parsability', score: `${atsResult.formattingParsabilityScore}% / 90%` },
-                          { name: 'NEP Credits', score: `92% / 92%` },
-                        ],
-                        overlapIndex: '91.8%'
+                        targetValues: [0.90, 0.96, 0.88, 0.92, 0.86, 0.94]
                       };
                     case 'healthcare_bio':
                       return {
-                        axes: ['Bio-Stats', 'ICD-11 Coding', 'Clinical Trials', 'Data Governance', 'Diagnostic Acc', 'NEP Credits'],
+                        axes: ['Ayush Bio-Stats', 'ICD-11 Taxonomy', 'Clinical Protocols', 'Data Governance', 'Diagnostic Acc', 'Pharmacology'],
                         candValues: [
                           Math.min((activeStudent.compositeScore - 2) / 100, 0.90),
                           Math.min((atsResult.keywordDensityScore + 5) / 100, 0.95),
@@ -551,20 +533,11 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                           atsResult.formattingParsabilityScore / 100,
                           0.94
                         ],
-                        targetValues: [0.94, 0.92, 0.96, 0.90, 0.95, 0.94],
-                        labels: [
-                          { name: 'Bio-Stats', score: `${Math.min(activeStudent.compositeScore - 2, 90)}% / 94%` },
-                          { name: 'ICD-11 Coding', score: `${Math.min(atsResult.keywordDensityScore + 5, 95)}% / 92%` },
-                          { name: 'Clinical Trials', score: `${atsResult.quantifiedMetricsScore}% / 96%` },
-                          { name: 'Data Governance', score: `${Math.min(atsResult.overallScore + 2, 94)}% / 90%` },
-                          { name: 'Diagnostic Acc', score: `${atsResult.formattingParsabilityScore}% / 95%` },
-                          { name: 'NEP Credits', score: `94% / 94%` },
-                        ],
-                        overlapIndex: '88.5%'
+                        targetValues: [0.92, 0.88, 0.94, 0.86, 0.92, 0.90]
                       };
                     case 'law_governance':
                       return {
-                        axes: ['Const Law', 'DPDP Compliance', 'Drafting', 'Case Analysis', 'Litigation Risk', 'NEP Credits'],
+                        axes: ['Constitutional Law', 'DPDP Compliance', 'Statutory Drafting', 'Case Analysis', 'Litigation Risk', 'Corporate Legal'],
                         candValues: [
                           Math.min(activeStudent.compositeScore / 100, 0.93),
                           Math.min((atsResult.keywordDensityScore + 8) / 100, 0.98),
@@ -573,21 +546,12 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                           Math.min((atsResult.overallScore + 1) / 100, 0.93),
                           0.91
                         ],
-                        targetValues: [0.95, 0.96, 0.92, 0.94, 0.90, 0.91],
-                        labels: [
-                          { name: 'Const Law', score: `${Math.min(activeStudent.compositeScore, 93)}% / 95%` },
-                          { name: 'DPDP Compliance', score: `${Math.min(atsResult.keywordDensityScore + 8, 98)}% / 96%` },
-                          { name: 'Drafting', score: `${atsResult.quantifiedMetricsScore}% / 92%` },
-                          { name: 'Case Analysis', score: `${atsResult.formattingParsabilityScore}% / 94%` },
-                          { name: 'Litigation Risk', score: `${Math.min(atsResult.overallScore + 1, 93)}% / 90%` },
-                          { name: 'NEP Credits', score: `91% / 91%` },
-                        ],
-                        overlapIndex: '93.1%'
+                        targetValues: [0.90, 0.94, 0.88, 0.92, 0.86, 0.90]
                       };
                     case 'ui_ux':
                     default:
                       return {
-                        axes: ['UI/UX Research', 'Design Systems', 'WCAG 2.2 AA', 'User Testing', 'Prototyping', 'NEP Credits'],
+                        axes: ['UI/UX Research', 'Design Systems', 'WCAG 2.2 AA', 'User Testing', 'Figma Prototyping', 'Spatial Layout'],
                         candValues: [
                           Math.min((activeStudent.compositeScore + 1) / 100, 0.95),
                           Math.min((atsResult.quantifiedMetricsScore + 2) / 100, 0.94),
@@ -596,52 +560,57 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                           Math.min((atsResult.overallScore + 3) / 100, 0.95),
                           0.89
                         ],
-                        targetValues: [0.96, 0.92, 0.95, 0.90, 0.94, 0.89],
-                        labels: [
-                          { name: 'UI/UX Research', score: `${Math.min(activeStudent.compositeScore + 1, 95)}% / 96%` },
-                          { name: 'Design Systems', score: `${Math.min(atsResult.quantifiedMetricsScore + 2, 94)}% / 92%` },
-                          { name: 'WCAG 2.2 AA', score: `${atsResult.formattingParsabilityScore}% / 95%` },
-                          { name: 'User Testing', score: `${atsResult.keywordDensityScore}% / 90%` },
-                          { name: 'Prototyping', score: `${Math.min(atsResult.overallScore + 3, 95)}% / 94%` },
-                          { name: 'NEP Credits', score: `89% / 89%` },
-                        ],
-                        overlapIndex: '90.7%'
+                        targetValues: [0.92, 0.90, 0.94, 0.88, 0.92, 0.86]
                       };
                   }
                 };
 
-                const radar = getRadarMetrics();
+                const rData = getRadarAxesForStream();
 
-                // Compute polygon coordinates
-                const candPoints = radar.candValues.map((val, i) => {
+                // Compute Polygon 1 (Candidate Score - Solid Teal)
+                const candPoints = rData.candValues.map((val, i) => {
                   const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
-                  const r = 85 * val;
-                  return `${140 + r * Math.cos(angle)},${120 + r * Math.sin(angle)}`;
+                  const r = 100 * val;
+                  return `${180 + r * Math.cos(angle)},${150 + r * Math.sin(angle)}`;
                 }).join(' ');
 
-                const targetPoints = radar.targetValues.map((val, i) => {
+                // Compute Polygon 2 (Industry Target Benchmark - Dashed Orange)
+                const targetPoints = rData.targetValues.map((val, i) => {
                   const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
-                  const r = 85 * val;
-                  return `${140 + r * Math.cos(angle)},${120 + r * Math.sin(angle)}`;
+                  const r = 100 * val;
+                  return `${180 + r * Math.cos(angle)},${150 + r * Math.sin(angle)}`;
                 }).join(' ');
 
                 return (
-                  <div className="p-6 rounded-3xl m3-surface-2 border border-slate-200 dark:border-white/[0.08] flex flex-col md:flex-row items-center justify-around gap-6 relative overflow-hidden">
+                  <div className="p-8 rounded-3xl bg-white dark:bg-[#0c1220] border border-slate-200/90 dark:border-white/[0.08] shadow-lg flex flex-col items-center justify-center space-y-6 relative overflow-hidden">
                     
-                    {/* Radar SVG Chart matching reference image design */}
-                    <div className="relative w-80 h-72 flex flex-col items-center justify-center shrink-0 p-2">
-                      
-                      <svg viewBox="0 0 320 280" className="w-full h-full overflow-visible">
+                    {/* Header Title */}
+                    <div className="text-center space-y-1">
+                      <h4 className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                        MULTI-AXIS COMPETENCY RADAR
+                      </h4>
+                      <div className="text-[11px] font-mono text-indigo-600 dark:text-cyan-400">
+                        Candidate Vector vs Target Benchmark ({selectedJobId})
+                      </div>
+                    </div>
+
+                    {/* Radar SVG Chart */}
+                    <div className="relative w-full max-w-lg h-72 flex flex-col items-center justify-center p-2">
+                      <svg viewBox="0 0 360 300" className="w-full h-full overflow-visible">
                         <defs>
-                          <radialGradient id="pinkRadarGrad" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stopColor="#d946ef" stopOpacity="0.25" />
-                            <stop offset="100%" stopColor="#c084fc" stopOpacity="0.08" />
+                          <radialGradient id="tealGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stopColor="#0d9488" stopOpacity="0.25" />
+                            <stop offset="100%" stopColor="#10b981" stopOpacity="0.08" />
+                          </radialGradient>
+                          <radialGradient id="amberGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stopColor="#d97706" stopOpacity="0.18" />
+                            <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.04" />
                           </radialGradient>
                         </defs>
 
-                        {/* Concentric Hexagon Web Rings (20, 40, 60, 80, 100) */}
+                        {/* Concentric Hexagon Web Rings (20%, 40%, 60%, 80%, 100%) */}
                         {[0.2, 0.4, 0.6, 0.8, 1.0].map((scale, idx) => {
-                          const cx = 160, cy = 140, r = 95 * scale;
+                          const cx = 180, cy = 150, r = 100 * scale;
                           const points = [0, 1, 2, 3, 4, 5].map((i) => {
                             const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
                             return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
@@ -651,7 +620,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                               key={idx}
                               points={points}
                               fill="none"
-                              stroke={theme === 'dark' ? 'rgba(255,255,255,0.15)' : '#cbd5e1'}
+                              stroke={theme === 'dark' ? 'rgba(255,255,255,0.12)' : '#e2e8f0'}
                               strokeWidth="1.2"
                             />
                           );
@@ -660,151 +629,80 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                         {/* Axis Spokes from Center */}
                         {[0, 1, 2, 3, 4, 5].map((i) => {
                           const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
-                          const x2 = 160 + 95 * Math.cos(angle);
-                          const y2 = 140 + 95 * Math.sin(angle);
+                          const x2 = 180 + 100 * Math.cos(angle);
+                          const y2 = 150 + 100 * Math.sin(angle);
                           return (
                             <line
                               key={i}
-                              x1="160"
-                              y1="140"
+                              x1="180"
+                              y1="150"
                               x2={x2}
                               y2={y2}
-                              stroke={theme === 'dark' ? 'rgba(255,255,255,0.18)' : '#cbd5e1'}
+                              stroke={theme === 'dark' ? 'rgba(255,255,255,0.14)' : '#e2e8f0'}
                               strokeWidth="1.2"
                             />
                           );
                         })}
 
-                        {/* Vertical Axis Scale Ticks (20, 40, 60, 80, 100) */}
-                        {[
-                          { val: 100, y: 140 - 95 * 1.0 },
-                          { val: 80, y: 140 - 95 * 0.8 },
-                          { val: 60, y: 140 - 95 * 0.6 },
-                          { val: 40, y: 140 - 95 * 0.4 },
-                          { val: 20, y: 140 - 95 * 0.2 }
-                        ].map((tick, i) => (
-                          <text 
-                            key={i} 
-                            x="160" 
-                            y={tick.y + 3} 
-                            textAnchor="middle" 
-                            className="text-[9px] font-bold fill-slate-500 dark:fill-slate-400 font-mono"
-                          >
-                            {tick.val}
-                          </text>
-                        ))}
+                        {/* 1. Industry Target Benchmark Polygon (Dashed Orange - Matching Image) */}
+                        <polygon
+                          points={targetPoints}
+                          fill="url(#amberGrad)"
+                          stroke="#d97706"
+                          strokeWidth="2"
+                          strokeDasharray="4 3"
+                          className="transition-all duration-700 ease-out"
+                        />
 
-                        {/* Magenta Candidate Data Polygon (Matching reference image) */}
-                        {(() => {
-                          // Scale ratios for 6 axes: Problem Solving, Communication, Attitude, Competitiveness, Punctuality, Team Player
-                          const candValues = [
-                            Math.min(activeStudent.compositeScore / 100, 0.94), // Top: Problem Solving
-                            0.84, // Top-Right: Communication
-                            0.92, // Bottom-Right: Attitude
-                            0.96, // Bottom: Competitiveness
-                            0.88, // Bottom-Left: Punctuality
-                            0.92  // Top-Left: Team Player
-                          ];
+                        {/* 2. Verified Candidate Score Polygon (Solid Teal - Matching Image) */}
+                        <polygon
+                          points={candPoints}
+                          fill="url(#tealGrad)"
+                          stroke="#0d9488"
+                          strokeWidth="2.8"
+                          className="transition-all duration-700 ease-out"
+                        />
 
-                          const candPoints = candValues.map((val, i) => {
-                            const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
-                            const r = 95 * val;
-                            return `${160 + r * Math.cos(angle)},${140 + r * Math.sin(angle)}`;
-                          }).join(' ');
-
+                        {/* Solid Teal Vertex Dots */}
+                        {rData.candValues.map((val, i) => {
+                          const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
+                          const r = 100 * val;
+                          const cx = 180 + r * Math.cos(angle);
+                          const cy = 150 + r * Math.sin(angle);
                           return (
-                            <>
-                              <polygon
-                                points={candPoints}
-                                fill="url(#pinkRadarGrad)"
-                                stroke="#d946ef"
-                                strokeWidth="2.5"
-                                className="transition-all duration-700 ease-out"
-                              />
-
-                              {/* Solid Magenta Vertex Circles */}
-                              {candValues.map((val, i) => {
-                                const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
-                                const r = 95 * val;
-                                const cx = 160 + r * Math.cos(angle);
-                                const cy = 140 + r * Math.sin(angle);
-                                return (
-                                  <circle
-                                    key={i}
-                                    cx={cx}
-                                    cy={cy}
-                                    r="5"
-                                    fill="#d946ef"
-                                    stroke="#ffffff"
-                                    strokeWidth="2"
-                                    className="transition-all duration-700 ease-out shadow-sm"
-                                  />
-                                );
-                              })}
-                            </>
+                            <circle
+                              key={i}
+                              cx={cx}
+                              cy={cy}
+                              r="4.5"
+                              fill="#0d9488"
+                              stroke="#ffffff"
+                              strokeWidth="1.8"
+                              className="transition-all duration-700 ease-out"
+                            />
                           );
-                        })()}
+                        })}
 
-                        {/* 6 Axis Labels (Matching Reference Image) */}
-                        <text x="160" y="24" textAnchor="middle" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">Problem Solving</text>
-                        <text x="268" y="85" textAnchor="start" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">Communication</text>
-                        <text x="268" y="200" textAnchor="start" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">Attitude</text>
-                        <text x="160" y="262" textAnchor="middle" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">Competitiveness</text>
-                        <text x="52" y="200" textAnchor="end" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">Punctuality</text>
-                        <text x="52" y="85" textAnchor="end" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">Team Player</text>
-
-                        {/* Yellow "Maine" Callout Tag pointing to Top-Left Vertex */}
-                        <g transform="translate(62, 92)">
-                          <polygon points="12,0 0,6 8,14" fill="#fbbf24" />
-                          <rect x="-42" y="-12" width="48" height="22" rx="11" fill="#facc15" stroke="#ffffff" strokeWidth="1.5" />
-                          <text x="-18" y="3" textAnchor="middle" className="text-[10px] font-black fill-slate-900">Maine</text>
-                        </g>
-
-                        {/* Cyan "Bec" Callout Tag pointing to Bottom-Right Axis */}
-                        <g transform="translate(262, 185)">
-                          <polygon points="-8,-4 4,-10 0,6" fill="#22d3ee" />
-                          <rect x="4" y="-18" width="40" height="22" rx="11" fill="#06b6d4" stroke="#ffffff" strokeWidth="1.5" />
-                          <text x="24" y="-3" textAnchor="middle" className="text-[10px] font-black fill-white">Bec</text>
-                        </g>
+                        {/* 6 Axis Text Labels (Matching Image Layout) */}
+                        <text x="180" y="28" textAnchor="middle" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">{rData.axes[0]}</text>
+                        <text x="296" y="94" textAnchor="start" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">{rData.axes[1]}</text>
+                        <text x="296" y="214" textAnchor="start" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">{rData.axes[2]}</text>
+                        <text x="180" y="278" textAnchor="middle" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">{rData.axes[3]}</text>
+                        <text x="64" y="214" textAnchor="end" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">{rData.axes[4]}</text>
+                        <text x="64" y="94" textAnchor="end" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">{rData.axes[5]}</text>
 
                       </svg>
                     </div>
 
-                    {/* Dynamic Metrics Summary Legend */}
-                    <div className="flex-1 space-y-3 w-full">
-                      <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.08] pb-2">
-                        <div>
-                          <h4 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">
-                            Skill Deficit Vector • {activeStudent.streamName}
-                          </h4>
-                          <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                            Real-time 6-axis candidate skill telemetry vs employer threshold
-                          </p>
-                        </div>
-                        <span className="text-xs font-mono font-bold text-indigo-600 dark:text-cyan-400 bg-indigo-50 dark:bg-indigo-950/60 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800/60">
-                          {selectedJobId}
-                        </span>
+                    {/* Bottom Legend Bar (Matching Reference Image) */}
+                    <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-extrabold pt-2 border-t border-slate-100 dark:border-white/[0.06] w-full">
+                      <div className="flex items-center gap-2">
+                        <span className="w-3.5 h-3.5 rounded-sm bg-[#0d9488] shadow-sm" />
+                        <span className="text-slate-700 dark:text-slate-200">Verified Candidate Score</span>
                       </div>
-
-                      <div className="flex flex-wrap items-center gap-4 text-xs font-bold">
-                        <div className="flex items-center gap-1.5">
-                          <span className="w-3 h-3 rounded-full bg-indigo-600 shadow-sm" />
-                          <span className="text-slate-800 dark:text-slate-200">{activeStudent.name} (Candidate)</span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <span className="w-3 h-3 rounded-full border-2 border-dashed border-cyan-500 bg-cyan-500/20" />
-                          <span className="text-slate-500 dark:text-slate-400">Target JD Requirement</span>
-                        </div>
-                      </div>
-
-                      {/* 6 Dimension Score Badges */}
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-xs">
-                        {radar.labels.map((lbl, idx) => (
-                          <div key={idx} className="p-2.5 rounded-xl bg-slate-100/90 dark:bg-slate-900/60 border border-slate-200 dark:border-white/[0.06] flex flex-col justify-between">
-                            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold truncate">{lbl.name}</span>
-                            <span className="font-extrabold text-indigo-600 dark:text-cyan-400 text-xs mt-0.5">{lbl.score}</span>
-                          </div>
-                        ))}
+                      <div className="flex items-center gap-2">
+                        <span className="w-3.5 h-3.5 rounded-sm border-2 border-dashed border-[#d97706] bg-amber-500/10" />
+                        <span className="text-slate-600 dark:text-slate-400">Industry Target Benchmark</span>
                       </div>
                     </div>
 
