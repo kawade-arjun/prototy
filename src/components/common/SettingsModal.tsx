@@ -19,15 +19,33 @@ import { useTheme } from '../../context/ThemeContext';
 interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
+  isLoggedIn?: boolean;
+  initialTab?: 'bookmarks' | 'privacy' | 'preferences';
 }
 
-export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
+export const SettingsModal: React.FC<SettingsModalProps> = ({ 
+  isOpen, 
+  onClose,
+  isLoggedIn = false,
+  initialTab
+}) => {
   const { theme, toggleTheme } = useTheme();
-  const [activeSubTab, setActiveSubTab] = useState<'bookmarks' | 'privacy' | 'preferences'>('bookmarks');
+  const [activeSubTab, setActiveSubTab] = useState<'bookmarks' | 'privacy' | 'preferences'>(
+    initialTab || (isLoggedIn ? 'bookmarks' : 'preferences')
+  );
   const [anonymousMode, setAnonymousMode] = useState(false);
   const [maskContactDetails, setMaskContactDetails] = useState(true);
   const [macroAnalyticsConsent, setMacroAnalyticsConsent] = useState(true);
   const [emailNotifications, setEmailNotifications] = useState(true);
+
+  // Sync initial tab or reset to preferences if logged out
+  React.useEffect(() => {
+    if (initialTab) {
+      setActiveSubTab(initialTab);
+    } else if (!isLoggedIn) {
+      setActiveSubTab('preferences');
+    }
+  }, [initialTab, isLoggedIn, isOpen]);
 
   const [savedOpportunities, setSavedOpportunities] = useState([
     {
@@ -62,6 +80,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
     setSavedOpportunities(prev => prev.filter(o => o.id !== id));
   };
 
+  const currentTab = !isLoggedIn ? 'preferences' : activeSubTab;
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
       <div 
@@ -79,7 +99,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                 Settings & System Controls
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Application tracker, DPDP Act 2023 privacy consents & preferences
+                {isLoggedIn ? 'Application tracker, DPDP Act 2023 privacy consents & preferences' : 'System preferences & application controls'}
               </p>
             </div>
           </div>
@@ -94,28 +114,32 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
 
         {/* Navigation Sub-Tabs - Material Design 3 Segmented Chips */}
         <div className="flex items-center gap-2 px-6 py-3 border-b border-slate-200 dark:border-white/[0.06] m3-surface-1">
-          <button
-            onClick={() => setActiveSubTab('bookmarks')}
-            className={`m3-chip ${activeSubTab === 'bookmarks' ? 'm3-chip-active' : 'm3-chip-inactive'}`}
-          >
-            <Bookmark className="w-3.5 h-3.5" />
-            <span>Saved & Tracker</span>
-            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-indigo-700 text-white">
-              {savedOpportunities.length}
-            </span>
-          </button>
+          {isLoggedIn && (
+            <>
+              <button
+                onClick={() => setActiveSubTab('bookmarks')}
+                className={`m3-chip ${currentTab === 'bookmarks' ? 'm3-chip-active' : 'm3-chip-inactive'}`}
+              >
+                <Bookmark className="w-3.5 h-3.5" />
+                <span>Saved & Tracker</span>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-indigo-700 text-white">
+                  {savedOpportunities.length}
+                </span>
+              </button>
 
-          <button
-            onClick={() => setActiveSubTab('privacy')}
-            className={`m3-chip ${activeSubTab === 'privacy' ? 'm3-chip-active' : 'm3-chip-inactive'}`}
-          >
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>DPDP Privacy</span>
-          </button>
+              <button
+                onClick={() => setActiveSubTab('privacy')}
+                className={`m3-chip ${currentTab === 'privacy' ? 'm3-chip-active' : 'm3-chip-inactive'}`}
+              >
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>DPDP Privacy</span>
+              </button>
+            </>
+          )}
 
           <button
             onClick={() => setActiveSubTab('preferences')}
-            className={`m3-chip ${activeSubTab === 'preferences' ? 'm3-chip-active' : 'm3-chip-inactive'}`}
+            className={`m3-chip ${currentTab === 'preferences' ? 'm3-chip-active' : 'm3-chip-inactive'}`}
           >
             <Globe className="w-3.5 h-3.5" />
             <span>System Preferences</span>
@@ -124,7 +148,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
 
         {/* Tab Body */}
         <div className="p-6 overflow-y-auto space-y-4 flex-1">
-          {activeSubTab === 'bookmarks' && (
+          {currentTab === 'bookmarks' && (
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
@@ -177,7 +201,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
             </div>
           )}
 
-          {activeSubTab === 'privacy' && (
+          {currentTab === 'privacy' && (
             <div className="space-y-4">
               <div className="p-4 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-500/25 space-y-2">
                 <div className="flex items-center gap-2 text-xs font-bold text-indigo-900 dark:text-indigo-200">
@@ -232,7 +256,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
             </div>
           )}
 
-          {activeSubTab === 'preferences' && (
+          {currentTab === 'preferences' && (
             <div className="space-y-3">
               {/* Appearance & Theme Mode Switcher */}
               <div className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/40">

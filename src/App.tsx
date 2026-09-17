@@ -16,6 +16,16 @@ const AppContent: React.FC = () => {
   const [currentRole, setCurrentRole] = useState<UserRole | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [settingsTab, setSettingsTab] = useState<'bookmarks' | 'privacy' | 'preferences'>('preferences');
+
+  const handleOpenSettings = (tab?: 'bookmarks' | 'privacy' | 'preferences') => {
+    if (tab) {
+      setSettingsTab(tab);
+    } else {
+      setSettingsTab(currentRole !== null ? 'bookmarks' : 'preferences');
+    }
+    setIsSettingsOpen(true);
+  };
 
   return (
     <div className="min-h-screen flex flex-col ambient-bg text-slate-900 dark:text-slate-100 font-sans transition-colors duration-200">
@@ -25,7 +35,7 @@ const AppContent: React.FC = () => {
         onRoleChange={setCurrentRole}
         onGoHome={() => setCurrentRole(null)}
         onOpenAuthModal={() => setIsAuthOpen(true)}
-        onOpenSettings={() => setIsSettingsOpen(true)}
+        onOpenSettings={handleOpenSettings}
       />
 
       {/* Main Workspace Viewport - Fluidly auto-adapts to laptop, tablet, or mobile devices */}
@@ -49,6 +59,8 @@ const AppContent: React.FC = () => {
       <SettingsModal
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
+        isLoggedIn={currentRole !== null}
+        initialTab={settingsTab}
       />
 
       {/* Global Footer */}

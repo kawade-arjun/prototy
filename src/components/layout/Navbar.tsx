@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { UserRole } from '../../types';
 import { useTheme } from '../../context/ThemeContext';
 import { useStudent } from '../../context/StudentContext';
@@ -9,14 +9,21 @@ import {
   Sun,
   Moon,
   Settings,
-  User
+  User,
+  Bookmark,
+  ShieldCheck,
+  Bell,
+  Globe,
+  SlidersHorizontal,
+  ChevronRight,
+  X
 } from 'lucide-react';
 
 interface NavbarProps {
   currentRole: UserRole | null;
   onRoleChange: (role: UserRole | null) => void;
   onOpenAuthModal?: () => void;
-  onOpenSettings?: () => void;
+  onOpenSettings?: (tab?: 'bookmarks' | 'privacy' | 'preferences') => void;
   onGoHome?: () => void;
 }
 
@@ -29,12 +36,33 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const { theme, toggleTheme } = useTheme();
   const { activeStudent } = useStudent();
+  const [isSettingsMenuOpen, setIsSettingsMenuOpen] = useState(false);
+  const [emailAlerts, setEmailAlerts] = useState(true);
+  const settingsRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (settingsRef.current && !settingsRef.current.contains(event.target as Node)) {
+        setIsSettingsMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleHomeClick = () => {
     if (onGoHome) {
       onGoHome();
     } else {
       onRoleChange(null);
+    }
+  };
+
+  const handleSelectSettingsOption = (tab?: 'bookmarks' | 'privacy' | 'preferences') => {
+    setIsSettingsMenuOpen(false);
+    if (onOpenSettings) {
+      onOpenSettings(tab);
     }
   };
 
@@ -65,7 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </button>
 
-        {/* Right Controls: Level XP, Streak, Theme Switcher, Settings, Profile */}
+        {/* Right Controls: Level XP, Streak, Current Session Profile, Settings */}
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           
           {/* Level 6 XP Badge & Streak Badge - Only inside active user portal */}
@@ -86,18 +114,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </>
           )}
 
-          {/* Top-Right Settings Button (Includes Theme & Privacy Settings) */}
-
-          {/* Top-Right Settings Button */}
-          <button
-            onClick={onOpenSettings}
-            className="w-9 h-9 rounded-full bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-slate-300 dark:hover:bg-slate-700 transition-all active:scale-95"
-            title="Open Settings & Privacy Controls"
-          >
-            <Settings className="w-4 h-4" />
-          </button>
-
-          {/* User Avatar Profile Button */}
+          {/* 1. User Avatar Profile Button (Position Exchanged - Now First) */}
           <button 
             onClick={onOpenAuthModal}
             className="relative group cursor-pointer focus:outline-none"
@@ -110,9 +127,180 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
             <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 dark:bg-emerald-400 border-2 border-white dark:border-[#0B0E14]" />
           </button>
+
+          {/* 2. Top-Right Settings Gear Button with Mobile Phone Style Options Dropdown (Now Second) */}
+          <div className="relative" ref={settingsRef}>
+            <button
+              onClick={() => setIsSettingsMenuOpen(!isSettingsMenuOpen)}
+              className={`w-9 h-9 rounded-full flex items-center justify-center transition-all active:scale-95 cursor-pointer ${
+                isSettingsMenuOpen
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30 ring-2 ring-indigo-400 dark:ring-indigo-500'
+                  : 'bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700'
+              }`}
+              title="Settings & System Preferences"
+            >
+              <Settings className={`w-4 h-4 transition-transform duration-300 ${isSettingsMenuOpen ? 'rotate-90' : ''}`} />
+            </button>
+
+            {/* Native Phone Style Settings Dropdown List */}
+            {isSettingsMenuOpen && (
+              <div className="absolute right-0 mt-2.5 w-72 sm:w-80 glass-panel rounded-2xl shadow-2xl border border-slate-200 dark:border-white/[0.12] bg-white/95 dark:bg-[#0c1220]/95 backdrop-blur-xl p-3 z-50 animate-fadeIn space-y-2">
+                
+                {/* Header */}
+                <div className="px-2.5 py-2 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                      <Settings className="w-3.5 h-3.5" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-black text-slate-900 dark:text-white">Settings</h4>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                        {currentRole !== null ? 'Session Active • Preferences' : 'Guest Mode • System Settings'}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setIsSettingsMenuOpen(false)}
+                    className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/[0.08]"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {/* Settings Options List - Phone Menu Style */}
+                <div className="space-y-1">
+                  
+                  {/* Option: Saved & Trackers (Only displayed when logged in) */}
+                  {currentRole !== null && (
+                    <button
+                      onClick={() => handleSelectSettingsOption('bookmarks')}
+                      className="w-full p-2.5 rounded-xl flex items-center justify-between hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors group cursor-pointer text-left"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-cyan-400 flex items-center justify-center shrink-0">
+                          <Bookmark className="w-3.5 h-3.5" />
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                            Saved Jobs & Trackers
+                          </div>
+                          <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                            3 Active Applications Bookmarked
+                          </div>
+                        </div>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
+                    </button>
+                  )}
+
+                  {/* Option: DPDP Privacy Settings (Only displayed when logged in) */}
+                  {currentRole !== null && (
+                    <button
+                      onClick={() => handleSelectSettingsOption('privacy')}
+                      className="w-full p-2.5 rounded-xl flex items-center justify-between hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors group cursor-pointer text-left"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                          <ShieldCheck className="w-3.5 h-3.5" />
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                            DPDP Act 2023 Privacy
+                          </div>
+                          <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                            Statutory Zero-Knowledge Masking
+                          </div>
+                        </div>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
+                    </button>
+                  )}
+
+                  {/* Option: Appearance & Theme Switcher */}
+                  <div className="w-full p-2.5 rounded-xl flex items-center justify-between hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                        {theme === 'dark' ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5 text-amber-500" />}
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-900 dark:text-white">
+                          Appearance & Theme
+                        </div>
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                          {theme === 'dark' ? 'Dark Mode Enabled' : 'Light Mode Enabled'}
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={toggleTheme}
+                      className="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-bold text-[10px] shadow-sm hover:bg-indigo-500 active:scale-95 transition-all cursor-pointer"
+                    >
+                      {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                    </button>
+                  </div>
+
+                  {/* Option: Notification Alerts Toggle */}
+                  <div className="w-full p-2.5 rounded-xl flex items-center justify-between hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
+                        <Bell className="w-3.5 h-3.5" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-900 dark:text-white">
+                          Digest & Alerts
+                        </div>
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                          {emailAlerts ? 'Weekly Digests Active' : 'Alerts Muted'}
+                        </div>
+                      </div>
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={emailAlerts}
+                      onChange={(e) => setEmailAlerts(e.target.checked)}
+                      className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
+                    />
+                  </div>
+
+                  {/* Option: Sovereign Data Storage Region */}
+                  <div className="w-full p-2.5 rounded-xl flex items-center justify-between opacity-85">
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-cyan-400 flex items-center justify-center shrink-0">
+                        <Globe className="w-3.5 h-3.5" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-900 dark:text-white">
+                          Cloud Data Region
+                        </div>
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                          AWS ap-south-1 (Mumbai, MH)
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* Footer: Open Full Settings Modal Button */}
+                <div className="pt-2 border-t border-slate-100 dark:border-white/[0.08]">
+                  <button
+                    onClick={() => handleSelectSettingsOption()}
+                    className="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-indigo-50 dark:bg-slate-800/80 dark:hover:bg-indigo-950/60 text-slate-800 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-cyan-400 font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
+                  >
+                    <SlidersHorizontal className="w-3.5 h-3.5" />
+                    <span>Open Full Settings Controls</span>
+                  </button>
+                </div>
+
+              </div>
+            )}
+          </div>
+
         </div>
 
       </div>
     </header>
   );
 };
+
