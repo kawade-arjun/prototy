@@ -10,12 +10,22 @@ import { GovernmentPortal } from './components/government/GovernmentPortal';
 import { HomeScreen } from './components/home/HomeScreen';
 import { AuthModal } from './components/auth/AuthModal';
 import { SettingsModal } from './components/common/SettingsModal';
+import { DeviceFrame, DeviceRatio, DeviceOrientation } from './components/common/DeviceFrame';
 import { ShieldCheck, Lock } from 'lucide-react';
 
 const AppContent: React.FC = () => {
   const [currentRole, setCurrentRole] = useState<UserRole | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  // Device Aspect Ratio Viewport Simulation State
+  const [deviceRatio, setDeviceRatio] = useState<DeviceRatio>('responsive');
+  const [orientation, setOrientation] = useState<DeviceOrientation>('portrait');
+  const [scale, setScale] = useState<number>(1);
+
+  const handleOrientationToggle = () => {
+    setOrientation(prev => prev === 'portrait' ? 'landscape' : 'portrait');
+  };
 
   return (
     <div className="min-h-screen flex flex-col ambient-bg text-slate-900 dark:text-slate-100 font-sans transition-colors duration-200">
@@ -26,16 +36,28 @@ const AppContent: React.FC = () => {
         onGoHome={() => setCurrentRole(null)}
         onOpenAuthModal={() => setIsAuthOpen(true)}
         onOpenSettings={() => setIsSettingsOpen(true)}
+        deviceRatio={deviceRatio}
+        onDeviceChange={setDeviceRatio}
       />
 
-      {/* Main Workspace Viewport */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {currentRole === null && <HomeScreen onSelectRole={setCurrentRole} />}
-        {currentRole === 'student' && <StudentPortal />}
-        {currentRole === 'college' && <CollegePortal />}
-        {currentRole === 'recruiter' && <RecruiterPortal />}
-        {currentRole === 'government' && <GovernmentPortal />}
-      </main>
+      {/* Viewport Aspect Ratio Device Frame Wrapper */}
+      <DeviceFrame
+        deviceRatio={deviceRatio}
+        orientation={orientation}
+        scale={scale}
+        onDeviceChange={setDeviceRatio}
+        onOrientationToggle={handleOrientationToggle}
+        onScaleChange={setScale}
+      >
+        {/* Main Workspace Viewport */}
+        <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
+          {currentRole === null && <HomeScreen onSelectRole={setCurrentRole} />}
+          {currentRole === 'student' && <StudentPortal />}
+          {currentRole === 'college' && <CollegePortal />}
+          {currentRole === 'recruiter' && <RecruiterPortal />}
+          {currentRole === 'government' && <GovernmentPortal />}
+        </main>
+      </DeviceFrame>
 
       {/* Login & Sign-Up Modal Gateway */}
       <AuthModal
