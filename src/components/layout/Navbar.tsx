@@ -1,21 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import { UserRole } from '../../types';
 import { useTheme } from '../../context/ThemeContext';
 import { useStudent } from '../../context/StudentContext';
-import { DeviceRatio } from '../common/DeviceFrame';
 import { 
   Flame, 
   Award, 
   Sparkles,
   Sun,
   Moon,
-  Settings,
-  Smartphone,
-  Tablet,
-  Laptop,
-  Monitor,
-  Maximize2,
-  ChevronDown
+  Settings
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -24,8 +17,6 @@ interface NavbarProps {
   onOpenAuthModal?: () => void;
   onOpenSettings?: () => void;
   onGoHome?: () => void;
-  deviceRatio?: DeviceRatio;
-  onDeviceChange?: (ratio: DeviceRatio) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
@@ -33,42 +24,16 @@ export const Navbar: React.FC<NavbarProps> = ({
   onRoleChange, 
   onOpenAuthModal,
   onOpenSettings,
-  onGoHome,
-  deviceRatio = 'responsive',
-  onDeviceChange
+  onGoHome
 }) => {
   const { theme, toggleTheme } = useTheme();
   const { activeStudent } = useStudent();
-  const [isDeviceMenuOpen, setIsDeviceMenuOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleHomeClick = () => {
     if (onGoHome) {
       onGoHome();
     } else {
       onRoleChange(null);
-    }
-  };
-
-  // Close dropdown on click outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDeviceMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const getRatioLabel = (r: DeviceRatio) => {
-    switch(r) {
-      case 'mobile': return 'Mobile (375p)';
-      case 'mobile_plus': return 'Mobile+ (414p)';
-      case 'tablet': return 'Tablet (768p)';
-      case 'laptop': return 'Laptop (1024p)';
-      case 'desktop': return 'Desktop (1280p)';
-      default: return 'Fluid Full';
     }
   };
 
@@ -102,92 +67,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </button>
 
-        {/* Right Controls: Device Ratio Selector, XP, Streak, Theme, Settings, Profile */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        {/* Right Controls: Level XP, Streak, Theme Switcher, Settings, Profile */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           
-          {/* Device Aspect Ratio Selector Dropdown */}
-          {onDeviceChange && (
-            <div className="relative" ref={dropdownRef}>
-              <button
-                type="button"
-                onClick={() => setIsDeviceMenuOpen(!isDeviceMenuOpen)}
-                className="m3-chip m3-chip-inactive"
-                title="Change Screen Aspect Ratio / Mobile View"
-              >
-                {deviceRatio === 'mobile' || deviceRatio === 'mobile_plus' ? (
-                  <Smartphone className="w-3.5 h-3.5 text-amber-500" />
-                ) : deviceRatio === 'tablet' ? (
-                  <Tablet className="w-3.5 h-3.5 text-cyan-500" />
-                ) : deviceRatio === 'laptop' ? (
-                  <Laptop className="w-3.5 h-3.5 text-purple-500" />
-                ) : deviceRatio === 'desktop' ? (
-                  <Monitor className="w-3.5 h-3.5 text-rose-500" />
-                ) : (
-                  <Maximize2 className="w-3.5 h-3.5 text-indigo-500" />
-                )}
-                <span className="hidden sm:inline text-xs font-bold">{getRatioLabel(deviceRatio)}</span>
-                <ChevronDown className={`w-3 h-3 transition-transform ${isDeviceMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              {/* Ratio Selection Menu */}
-              {isDeviceMenuOpen && (
-                <div className="absolute right-0 mt-2 w-52 rounded-3xl m3-surface-3 border border-slate-200/80 dark:border-white/[0.1] shadow-2xl py-2 z-50 text-xs font-medium space-y-0.5 animate-in fade-in slide-in-from-top-2 duration-150">
-                  <div className="px-4 py-1 text-[10px] uppercase font-bold text-slate-400 tracking-wider">
-                    Select Viewport Ratio
-                  </div>
-                  
-                  <button
-                    onClick={() => { onDeviceChange('responsive'); setIsDeviceMenuOpen(false); }}
-                    className={`w-full px-4 py-2 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors ${deviceRatio === 'responsive' ? 'text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50/50 dark:bg-indigo-500/10' : 'text-slate-700 dark:text-slate-300'}`}
-                  >
-                    <span className="flex items-center gap-2"><Maximize2 className="w-3.5 h-3.5" /> Fluid Responsive</span>
-                    <span className="text-[10px] text-slate-400">Auto</span>
-                  </button>
-
-                  <button
-                    onClick={() => { onDeviceChange('mobile'); setIsDeviceMenuOpen(false); }}
-                    className={`w-full px-4 py-2 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors ${deviceRatio === 'mobile' ? 'text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50/50 dark:bg-indigo-500/10' : 'text-slate-700 dark:text-slate-300'}`}
-                  >
-                    <span className="flex items-center gap-2"><Smartphone className="w-3.5 h-3.5 text-amber-500" /> Mobile (iPhone)</span>
-                    <span className="text-[10px] text-slate-400">375px</span>
-                  </button>
-
-                  <button
-                    onClick={() => { onDeviceChange('mobile_plus'); setIsDeviceMenuOpen(false); }}
-                    className={`w-full px-4 py-2 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors ${deviceRatio === 'mobile_plus' ? 'text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50/50 dark:bg-indigo-500/10' : 'text-slate-700 dark:text-slate-300'}`}
-                  >
-                    <span className="flex items-center gap-2"><Smartphone className="w-3.5 h-3.5 text-emerald-500" /> Mobile Max</span>
-                    <span className="text-[10px] text-slate-400">414px</span>
-                  </button>
-
-                  <button
-                    onClick={() => { onDeviceChange('tablet'); setIsDeviceMenuOpen(false); }}
-                    className={`w-full px-4 py-2 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors ${deviceRatio === 'tablet' ? 'text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50/50 dark:bg-indigo-500/10' : 'text-slate-700 dark:text-slate-300'}`}
-                  >
-                    <span className="flex items-center gap-2"><Tablet className="w-3.5 h-3.5 text-cyan-500" /> Tablet (iPad)</span>
-                    <span className="text-[10px] text-slate-400">768px</span>
-                  </button>
-
-                  <button
-                    onClick={() => { onDeviceChange('laptop'); setIsDeviceMenuOpen(false); }}
-                    className={`w-full px-4 py-2 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors ${deviceRatio === 'laptop' ? 'text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50/50 dark:bg-indigo-500/10' : 'text-slate-700 dark:text-slate-300'}`}
-                  >
-                    <span className="flex items-center gap-2"><Laptop className="w-3.5 h-3.5 text-purple-500" /> Laptop</span>
-                    <span className="text-[10px] text-slate-400">1024px</span>
-                  </button>
-
-                  <button
-                    onClick={() => { onDeviceChange('desktop'); setIsDeviceMenuOpen(false); }}
-                    className={`w-full px-4 py-2 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors ${deviceRatio === 'desktop' ? 'text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50/50 dark:bg-indigo-500/10' : 'text-slate-700 dark:text-slate-300'}`}
-                  >
-                    <span className="flex items-center gap-2"><Monitor className="w-3.5 h-3.5 text-rose-500" /> Desktop Widescreen</span>
-                    <span className="text-[10px] text-slate-400">1280px</span>
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-
           {/* Level 6 XP Badge */}
           <div className="hidden xs:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-100/80 dark:bg-indigo-900/40 text-indigo-900 dark:text-indigo-200 text-xs font-bold">
             <Award className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
