@@ -24,15 +24,23 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
+import { useStudent } from '../../../context/StudentContext';
+
 interface Tab1Props {
   onSelectOpportunity?: (opp: OpportunityListing) => void;
 }
 
 export const Tab1Recommendations: React.FC<Tab1Props> = () => {
   const { theme } = useTheme();
-  const [atsResult, setAtsResult] = useState<AtsDiagnosticResult>(INITIAL_ATS_RESULT);
+  const { activeStudent } = useStudent();
+  const [atsResult, setAtsResult] = useState<AtsDiagnosticResult>(activeStudent.atsBreakdown);
   const [isAnalyzingResume, setIsAnalyzingResume] = useState(false);
   const [showAiResumeModal, setShowAiResumeModal] = useState(false);
+
+  // Sync with active student profile change
+  React.useEffect(() => {
+    setAtsResult(activeStudent.atsBreakdown);
+  }, [activeStudent]);
 
   // Skill Gap State
   const [gapMode, setGapMode] = useState<'jobId' | 'pasteJd'>('jobId');
@@ -50,17 +58,17 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
     setTimeout(() => {
       setIsAnalyzingResume(false);
       setAtsResult({
-        ...INITIAL_ATS_RESULT,
-        overallScore: 91,
-        quantifiedMetricsScore: 94,
-        keywordDensityScore: 88,
+        ...activeStudent.atsBreakdown,
+        overallScore: Math.min(activeStudent.atsBreakdown.overallScore + 3, 98),
+        quantifiedMetricsScore: Math.min(activeStudent.atsBreakdown.quantifiedMetricsScore + 2, 99),
+        keywordDensityScore: Math.min(activeStudent.atsBreakdown.keywordDensityScore + 3, 98),
         strengths: [
-          ...INITIAL_ATS_RESULT.strengths,
-          'Recently added verified Monaco IDE Judge0 badge boosted computational score by +7%'
+          ...activeStudent.atsBreakdown.strengths,
+          `Verified ${activeStudent.streamName} Sandbox badge boosted computational score by +3%`
         ]
       });
       confetti({ particleCount: 50, spread: 60 });
-    }, 1200);
+    }, 1000);
   };
 
   const handleRunDiff = () => {

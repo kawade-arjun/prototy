@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
 import { UserRole } from './types';
 import { ThemeProvider } from './context/ThemeContext';
+import { StudentProvider } from './context/StudentContext';
 import { Navbar } from './components/layout/Navbar';
 import { StudentPortal } from './components/student/StudentPortal';
 import { CollegePortal } from './components/college/CollegePortal';
 import { RecruiterPortal } from './components/recruiter/RecruiterPortal';
 import { GovernmentPortal } from './components/government/GovernmentPortal';
+import { AuthModal } from './components/auth/AuthModal';
 import { ShieldCheck, Lock } from 'lucide-react';
 
 const AppContent: React.FC = () => {
   const [currentRole, setCurrentRole] = useState<UserRole>('student');
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col ambient-bg text-slate-900 dark:text-slate-100 font-sans transition-colors duration-200">
       {/* Top Global Navigation Bar */}
-      <Navbar currentRole={currentRole} onRoleChange={setCurrentRole} />
+      <Navbar 
+        currentRole={currentRole} 
+        onRoleChange={setCurrentRole}
+        onOpenAuthModal={() => setIsAuthOpen(true)}
+      />
 
       {/* Main Workspace Viewport */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -23,6 +30,14 @@ const AppContent: React.FC = () => {
         {currentRole === 'recruiter' && <RecruiterPortal />}
         {currentRole === 'government' && <GovernmentPortal />}
       </main>
+
+      {/* Login & Sign-Up Modal Gateway */}
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        currentRole={currentRole}
+        onRoleChange={setCurrentRole}
+      />
 
       {/* Global Footer */}
       <footer className="border-t border-slate-200 dark:border-white/[0.08] bg-white/70 dark:bg-[#070a11]/70 backdrop-blur-md py-6 mt-12 text-xs text-slate-500 dark:text-slate-400 transition-colors">
@@ -54,7 +69,9 @@ const AppContent: React.FC = () => {
 export const App: React.FC = () => {
   return (
     <ThemeProvider>
-      <AppContent />
+      <StudentProvider>
+        <AppContent />
+      </StudentProvider>
     </ThemeProvider>
   );
 };

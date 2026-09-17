@@ -38,12 +38,13 @@ import {
   ChevronDown
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { useStudent } from '../../../context/StudentContext';
 
 export const Tab2ProctoredSandbox: React.FC = () => {
   const { theme } = useTheme();
+  const { selectedStream, setStudentStream, activeStudent } = useStudent();
 
-  // Active discipline stream filter with quick dropdown
-  const [selectedStream, setSelectedStream] = useState<AcademicStream>('tech_ai');
+  // Quick dropdown toggle
   const [showStreamDropdown, setShowStreamDropdown] = useState(false);
 
   // Active sub-tabs (defaults to all_tests)
@@ -224,7 +225,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                   <button
                     key={s.id}
                     onClick={() => {
-                      setSelectedStream(s.id);
+                      setStudentStream(s.id);
                       setShowStreamDropdown(false);
                     }}
                     className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-left transition-all ${
@@ -246,7 +247,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
 
         </div>
 
-        {/* The 4 KPI Gauges (Compact & Sleek) */}
+        {/* The 4 KPI Gauges (Dynamic per Active Student Disciplinary Field) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 pt-2.5 border-t border-slate-100 dark:border-white/[0.08]">
           
           {/* KPI 1: Composite Competency Score */}
@@ -255,11 +256,11 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               Composite Competency Score
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-xl sm:text-2xl font-black text-indigo-600 dark:text-cyan-400 tracking-tight">92</span>
+              <span className="text-xl sm:text-2xl font-black text-indigo-600 dark:text-cyan-400 tracking-tight">{activeStudent.compositeScore}</span>
               <span className="text-[11px] text-slate-400 font-bold">/ 100</span>
             </div>
             <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1 truncate">
-              <Trophy className="w-3 h-3 shrink-0" /> Top 1.1% Global Rank
+              <Trophy className="w-3 h-3 shrink-0" /> {activeStudent.nationalPercentile} Percentile
             </div>
           </div>
 
@@ -269,11 +270,13 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               Evaluations Ratio
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400 tracking-tight">14 / 16</span>
+              <span className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400 tracking-tight">
+                {activeStudent.evaluationsRatio.split(' ')[0]} / {activeStudent.evaluationsRatio.split(' ')[2]}
+              </span>
               <span className="text-[11px] text-slate-400 font-bold">Cleared</span>
             </div>
             <div className="text-[10px] text-slate-500 dark:text-slate-400 font-medium truncate">
-              88% Completion • 2 Remaining
+              {activeStudent.evaluationsRatio.includes('(') ? activeStudent.evaluationsRatio.split('(')[1].replace(')', '') : '88% Completion'}
             </div>
           </div>
 
@@ -284,12 +287,12 @@ export const Tab2ProctoredSandbox: React.FC = () => {
             </div>
             <div className="flex items-baseline gap-1.5">
               <span className="text-xl sm:text-2xl font-black text-amber-500 tracking-tight flex items-center gap-1">
-                <Flame className="w-4 h-4 fill-amber-500 shrink-0" /> 8-Day
+                <Flame className="w-4 h-4 fill-amber-500 shrink-0" /> {activeStudent.streakDays}-Day
               </span>
               <span className="text-[11px] text-slate-400 font-bold">Streak</span>
             </div>
             <div className="text-[10px] text-amber-700 dark:text-amber-300 font-semibold truncate">
-              Level 4 Scholar • +50 XP/Test
+              Level {Math.floor(activeStudent.streakDays / 3) + 2} Scholar • +50 XP/Test
             </div>
           </div>
 
@@ -297,15 +300,15 @@ export const Tab2ProctoredSandbox: React.FC = () => {
           <div className="p-3 rounded-xl bg-slate-50/90 dark:bg-[#080d1a]/90 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5 flex flex-col justify-between">
             <div>
               <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider truncate">
-                National AICTE Benchmark
+                National Benchmark Badge
               </div>
               <div className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5 mt-0.5 truncate">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-                <span className="truncate">Gold Tier Candidate</span>
+                <span className="truncate">{activeStudent.benchmarkBadge.split('•')[0]}</span>
               </div>
             </div>
             <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold truncate">
-              0% Fraud • Tamper-Proof Seal
+              0% Fraud • {activeStudent.digiLockerId}
             </div>
           </div>
 

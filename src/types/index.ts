@@ -123,3 +123,36 @@ export interface DailyQuest {
   completed: boolean;
   rewardBadge: string;
 }
+
+export interface DomainPercentileRank {
+  domain: string;
+  percentile: string;
+  badge: string;
+  icon: string;
+  color: string;
+  border: string;
+}
+
+export interface StudentProfile {
+  id: string;
+  streamId: AcademicStream;
+  streamName: string;
+  name: string;
+  avatarInitials: string;
+  degree: string;
+  institution: string;
+  benchmarkBadge: string;
+  digiLockerId: string;
+  compositeScore: number;
+  evaluationsRatio: string;
+  streakDays: number;
+  atsScore: number;
+  nationalPercentile: string;
+  summary: string;
+  verifiedSkills: string[];
+  missingSkills: string[];
+  targetRoles: string[];
+  atsBreakdown: AtsDiagnosticResult;
+  livingResumeRankings: DomainPercentileRank[];
+}
+

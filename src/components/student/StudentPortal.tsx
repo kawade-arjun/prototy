@@ -20,8 +20,11 @@ import {
   Lock
 } from 'lucide-react';
 
+import { useStudent } from '../../context/StudentContext';
+
 export const StudentPortal: React.FC = () => {
   const [activeTab, setActiveTab] = useState<StudentTab>('recommendations');
+  const { activeStudent, selectedStream, setStudentStream, allStudents } = useStudent();
 
   const tabs: { id: StudentTab; label: string; num: string; icon: React.ReactNode; category: string }[] = [
     { id: 'recommendations', label: 'Recommendations Studio', num: '1', icon: <Sparkles className="w-3.5 h-3.5" />, category: 'Diagnostics' },
@@ -38,45 +41,83 @@ export const StudentPortal: React.FC = () => {
     <div className="space-y-6">
       
       {/* Student Quick-HUD Status Ribbon */}
-      <div className="glass-panel rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4 transition-colors">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-500 p-0.5 shadow-md">
-              <div className="w-full h-full bg-white dark:bg-[#0d1322] rounded-[14px] flex items-center justify-center font-bold text-indigo-600 dark:text-white text-xs">
-                AK
+      <div className="glass-panel rounded-3xl p-5 space-y-4 transition-colors">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-500 p-0.5 shadow-md">
+                <div className="w-full h-full bg-white dark:bg-[#0d1322] rounded-[14px] flex items-center justify-center font-bold text-indigo-600 dark:text-white text-xs">
+                  {activeStudent.avatarInitials}
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-base text-slate-900 dark:text-white">{activeStudent.name}</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-500/10 dark:text-indigo-300 dark:border-indigo-500/20">
+                    {activeStudent.streamName}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400">
+                  <span>{activeStudent.degree}</span>
+                  <span>•</span>
+                  <span>{activeStudent.digiLockerId}</span>
+                </div>
               </div>
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-base text-slate-900 dark:text-white">Arjun Kawade</span>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-500/10 dark:text-indigo-300 dark:border-indigo-500/20">
-                  GenAI & Distributed Systems
-                </span>
-              </div>
-              <span className="text-[11px] text-slate-500 dark:text-slate-400">
-                DigiLocker ID: DL-IN-2026-992140-BTech
-              </span>
+          </div>
+
+          {/* Real-time telemetry badges */}
+          <div className="flex flex-wrap items-center gap-2.5">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100/90 dark:bg-slate-900/80 border border-slate-200 dark:border-white/[0.06] text-xs">
+              <span className="text-slate-500 dark:text-slate-400">ATS Score:</span>
+              <span className="font-black text-indigo-600 dark:text-cyan-400">{activeStudent.atsScore}/100</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100/90 dark:bg-slate-900/80 border border-slate-200 dark:border-white/[0.06] text-xs">
+              <span className="text-slate-500 dark:text-slate-400">National Percentile:</span>
+              <span className="font-black text-emerald-600 dark:text-emerald-400">{activeStudent.nationalPercentile}</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-300 text-xs font-semibold">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              <span>0% Discrepancy</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 dark:bg-indigo-500/10 dark:border-indigo-500/20 dark:text-indigo-300 text-xs font-semibold">
+              <Lock className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+              <span>DPDP Masked</span>
             </div>
           </div>
         </div>
 
-        {/* Real-time telemetry badges */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-100/90 dark:bg-slate-900/80 border border-slate-200 dark:border-white/[0.06] text-xs">
-            <span className="text-slate-500 dark:text-slate-400">ATS Score:</span>
-            <span className="font-black text-indigo-600 dark:text-cyan-400">89/100</span>
+        {/* 5-Disciplinary Fields Quick Switcher Row */}
+        <div className="pt-3 border-t border-slate-200/80 dark:border-white/[0.06] flex flex-col md:flex-row md:items-center justify-between gap-2.5">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300">
+            <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+            <span>Switch Disciplinary Field Persona (5 Disciplines):</span>
           </div>
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-100/90 dark:bg-slate-900/80 border border-slate-200 dark:border-white/[0.06] text-xs">
-            <span className="text-slate-500 dark:text-slate-400">National Percentile:</span>
-            <span className="font-black text-emerald-600 dark:text-emerald-400">98.4th</span>
-          </div>
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-300 text-xs font-semibold">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-            <span>0% Credential Discrepancy</span>
-          </div>
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 dark:bg-indigo-500/10 dark:border-indigo-500/20 dark:text-indigo-300 text-xs font-semibold">
-            <Lock className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-            <span>DPDP Masked</span>
+          <div className="flex flex-wrap items-center gap-1.5">
+            {allStudents.map((stu) => {
+              const isCurrent = selectedStream === stu.streamId;
+              const emoji = stu.streamId === 'tech_ai' ? '💻' : stu.streamId === 'commerce_finance' ? '📈' : stu.streamId === 'healthcare_bio' ? '🧬' : stu.streamId === 'law_governance' ? '⚖️' : '🎨';
+              return (
+                <button
+                  key={stu.id}
+                  onClick={() => setStudentStream(stu.streamId)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                    isCurrent
+                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30 ring-2 ring-indigo-500/40 font-bold'
+                      : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-slate-200'
+                  }`}
+                  title={`${stu.name} (${stu.degree})`}
+                >
+                  <span>{emoji}</span>
+                  <span>{stu.streamName}</span>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-mono ${
+                    isCurrent ? 'bg-indigo-700 text-cyan-300' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
+                  }`}>
+                    {stu.compositeScore}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

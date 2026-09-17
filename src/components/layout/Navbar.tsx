@@ -1,6 +1,7 @@
 import React from 'react';
 import { UserRole } from '../../types';
 import { useTheme } from '../../context/ThemeContext';
+import { useStudent } from '../../context/StudentContext';
 import { 
   ShieldCheck, 
   Flame, 
@@ -11,16 +12,19 @@ import {
   Landmark, 
   Sparkles,
   Sun,
-  Moon
+  Moon,
+  LogIn
 } from 'lucide-react';
 
 interface NavbarProps {
   currentRole: UserRole;
   onRoleChange: (role: UserRole) => void;
+  onOpenAuthModal?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ currentRole, onRoleChange }) => {
+export const Navbar: React.FC<NavbarProps> = ({ currentRole, onRoleChange, onOpenAuthModal }) => {
   const { theme, toggleTheme } = useTheme();
+  const { activeStudent } = useStudent();
 
   const roleConfig: Record<UserRole, { label: string; shortLabel: string; icon: React.ReactNode; color: string; activeColor: string; desc: string }> = {
     student: {
@@ -143,15 +147,29 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRole, onRoleChange }) => 
             <span className="hidden sm:inline">DigiLocker Verified</span>
           </div>
 
-          {/* User Avatar */}
-          <div className="relative">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 p-0.5 shadow-md">
+          {/* Login / Switch Profile Gateway Button */}
+          <button
+            onClick={onOpenAuthModal}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 dark:bg-indigo-600/20 dark:hover:bg-indigo-600/30 dark:border-indigo-500/30 dark:text-indigo-200 text-xs font-bold transition-all shadow-sm active:scale-95"
+            title="Open Login / Sign-up or Switch Disciplinary Profile"
+          >
+            <LogIn className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+            <span className="hidden sm:inline">Login / Switch</span>
+          </button>
+
+          {/* User Avatar with Profile Modal Trigger */}
+          <button 
+            onClick={onOpenAuthModal}
+            className="relative group cursor-pointer focus:outline-none"
+            title="Current Session Profile"
+          >
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 p-0.5 shadow-md group-hover:scale-105 transition-transform">
               <div className="w-full h-full bg-white dark:bg-[#0a0f1d] rounded-[10px] flex items-center justify-center text-xs font-bold text-indigo-600 dark:text-white">
-                AK
+                {currentRole === 'student' ? activeStudent.avatarInitials : currentRole === 'college' ? 'TPO' : currentRole === 'recruiter' ? 'HR' : 'GOV'}
               </div>
             </div>
             <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 dark:bg-emerald-400 border-2 border-white dark:border-[#060911]" />
-          </div>
+          </button>
         </div>
 
       </div>
