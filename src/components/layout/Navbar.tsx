@@ -262,24 +262,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                       className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
                     />
                   </div>
-
-                  {/* Option: Sovereign Data Storage Region */}
-                  <div className="w-full p-2.5 rounded-xl flex items-center justify-between opacity-85">
-                    <div className="flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-cyan-400 flex items-center justify-center shrink-0">
-                        <Globe className="w-3.5 h-3.5" />
-                      </div>
-                      <div>
-                        <div className="text-xs font-bold text-slate-900 dark:text-white">
-                          Cloud Data Region
-                        </div>
-                        <div className="text-[10px] text-slate-500 dark:text-slate-400">
-                          AWS ap-south-1 (Mumbai, MH)
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                 </div>
 
                 {/* Footer: Open Full Settings Modal Button */}

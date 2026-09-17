@@ -293,11 +293,6 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
                 />
               </div>
-
-              <div className="p-4 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/40 space-y-1 text-xs">
-                <div className="font-bold text-slate-900 dark:text-white">Sovereign Data Storage Zone</div>
-                <div className="text-slate-500 text-[11px]">MeitY Empaneled Cloud • AWS ap-south-1 (Mumbai, MH, India)</div>
-              </div>
             </div>
           )}
         </div>
