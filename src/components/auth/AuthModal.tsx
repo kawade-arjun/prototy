@@ -219,11 +219,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               <select
                 value={selectedStream}
                 onChange={(e) => handleDisciplineSelect(e.target.value as any)}
-                className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-indigo-500 focus:outline-none cursor-pointer"
               >
                 {allStudents.map((stu) => (
                   <option key={stu.id} value={stu.streamId}>
-                    {stu.streamName} • {stu.name} ({stu.compositeScore}/100) — {stu.institution.split('(')[0]}
+                    {stu.streamName}
                   </option>
                 ))}
               </select>
@@ -255,13 +255,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <select
                   value={signupStream}
                   onChange={(e) => setSignupStream(e.target.value as AcademicStream)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none cursor-pointer"
                 >
-                  <option value="tech_ai">Engineering (Computer Science & AI)</option>
-                  <option value="commerce_finance">Commerce & Finance (Financial Engineering)</option>
-                  <option value="healthcare_bio">Healthcare & Bio-Sciences (Integrative Medicine)</option>
-                  <option value="law_governance">Law & Governance (Corporate & Tech Law)</option>
-                  <option value="ui_ux">UI/UX Design (Human-Computer Interaction)</option>
+                  <option value="tech_ai">Engineering</option>
+                  <option value="commerce_finance">Commerce & Finance</option>
+                  <option value="healthcare_bio">Healthcare & Bio-Sciences</option>
+                  <option value="law_governance">Law & Governance</option>
+                  <option value="ui_ux">UI/UX Design</option>
                 </select>
               </div>
             )}
