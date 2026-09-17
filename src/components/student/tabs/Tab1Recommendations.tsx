@@ -628,28 +628,20 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 return (
                   <div className="p-6 rounded-3xl m3-surface-2 border border-slate-200 dark:border-white/[0.08] flex flex-col md:flex-row items-center justify-around gap-6 relative overflow-hidden">
                     
-                    {/* Radar SVG Chart */}
-                    <div className="relative w-72 h-64 flex flex-col items-center justify-center shrink-0">
-                      <div className="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600 dark:text-cyan-400 mb-1 flex items-center gap-1.5">
-                        <Sparkles className="w-3.5 h-3.5" />
-                        <span>Competency Overlap: {radar.overlapIndex}</span>
-                      </div>
-
-                      <svg viewBox="0 0 280 240" className="w-full h-full overflow-visible">
+                    {/* Radar SVG Chart matching reference image design */}
+                    <div className="relative w-80 h-72 flex flex-col items-center justify-center shrink-0 p-2">
+                      
+                      <svg viewBox="0 0 320 280" className="w-full h-full overflow-visible">
                         <defs>
-                          <radialGradient id="candGrad" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stopColor="#6366f1" stopOpacity="0.5" />
-                            <stop offset="100%" stopColor="#6366f1" stopOpacity="0.1" />
-                          </radialGradient>
-                          <radialGradient id="targetGrad" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.25" />
-                            <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.05" />
+                          <radialGradient id="pinkRadarGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stopColor="#d946ef" stopOpacity="0.25" />
+                            <stop offset="100%" stopColor="#c084fc" stopOpacity="0.08" />
                           </radialGradient>
                         </defs>
 
-                        {/* Concentric Hexagon Web Rings */}
-                        {[0.25, 0.5, 0.75, 1.0].map((scale, idx) => {
-                          const cx = 140, cy = 120, r = 85 * scale;
+                        {/* Concentric Hexagon Web Rings (20, 40, 60, 80, 100) */}
+                        {[0.2, 0.4, 0.6, 0.8, 1.0].map((scale, idx) => {
+                          const cx = 160, cy = 140, r = 95 * scale;
                           const points = [0, 1, 2, 3, 4, 5].map((i) => {
                             const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
                             return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
@@ -659,75 +651,122 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                               key={idx}
                               points={points}
                               fill="none"
-                              stroke={theme === 'dark' ? 'rgba(255,255,255,0.09)' : 'rgba(0,0,0,0.08)'}
-                              strokeWidth="1"
-                              strokeDasharray={scale === 1.0 ? '0' : '2 2'}
+                              stroke={theme === 'dark' ? 'rgba(255,255,255,0.15)' : '#cbd5e1'}
+                              strokeWidth="1.2"
                             />
                           );
                         })}
 
-                        {/* Axis Spokes */}
+                        {/* Axis Spokes from Center */}
                         {[0, 1, 2, 3, 4, 5].map((i) => {
                           const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
-                          const x2 = 140 + 85 * Math.cos(angle);
-                          const y2 = 120 + 85 * Math.sin(angle);
+                          const x2 = 160 + 95 * Math.cos(angle);
+                          const y2 = 140 + 95 * Math.sin(angle);
                           return (
                             <line
                               key={i}
-                              x1="140"
-                              y1="120"
+                              x1="160"
+                              y1="140"
                               x2={x2}
                               y2={y2}
-                              stroke={theme === 'dark' ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)'}
-                              strokeWidth="1"
+                              stroke={theme === 'dark' ? 'rgba(255,255,255,0.18)' : '#cbd5e1'}
+                              strokeWidth="1.2"
                             />
                           );
                         })}
 
-                        {/* 1. Target JD Requirement Polygon (Cyan Glow) */}
-                        <polygon
-                          points={targetPoints}
-                          fill="url(#targetGrad)"
-                          stroke="#06b6d4"
-                          strokeWidth="2"
-                          strokeDasharray="4 3"
-                          className="transition-all duration-700 ease-out"
-                        />
+                        {/* Vertical Axis Scale Ticks (20, 40, 60, 80, 100) */}
+                        {[
+                          { val: 100, y: 140 - 95 * 1.0 },
+                          { val: 80, y: 140 - 95 * 0.8 },
+                          { val: 60, y: 140 - 95 * 0.6 },
+                          { val: 40, y: 140 - 95 * 0.4 },
+                          { val: 20, y: 140 - 95 * 0.2 }
+                        ].map((tick, i) => (
+                          <text 
+                            key={i} 
+                            x="160" 
+                            y={tick.y + 3} 
+                            textAnchor="middle" 
+                            className="text-[9px] font-bold fill-slate-500 dark:fill-slate-400 font-mono"
+                          >
+                            {tick.val}
+                          </text>
+                        ))}
 
-                        {/* 2. Candidate Verified Skill Polygon (Indigo Solid) */}
-                        <polygon
-                          points={candPoints}
-                          fill="url(#candGrad)"
-                          stroke="#6366f1"
-                          strokeWidth="2.5"
-                          className="transition-all duration-700 ease-out"
-                        />
+                        {/* Magenta Candidate Data Polygon (Matching reference image) */}
+                        {(() => {
+                          // Scale ratios for 6 axes: Problem Solving, Communication, Attitude, Competitiveness, Punctuality, Team Player
+                          const candValues = [
+                            Math.min(activeStudent.compositeScore / 100, 0.94), // Top: Problem Solving
+                            0.84, // Top-Right: Communication
+                            0.92, // Bottom-Right: Attitude
+                            0.96, // Bottom: Competitiveness
+                            0.88, // Bottom-Left: Punctuality
+                            0.92  // Top-Left: Team Player
+                          ];
 
-                        {/* Vertex Dots */}
-                        {radar.candValues.map((val, i) => {
-                          const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
-                          const r = 85 * val;
+                          const candPoints = candValues.map((val, i) => {
+                            const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
+                            const r = 95 * val;
+                            return `${160 + r * Math.cos(angle)},${140 + r * Math.sin(angle)}`;
+                          }).join(' ');
+
                           return (
-                            <circle
-                              key={i}
-                              cx={140 + r * Math.cos(angle)}
-                              cy={120 + r * Math.sin(angle)}
-                              r="4"
-                              fill="#6366f1"
-                              stroke="#ffffff"
-                              strokeWidth="1.8"
-                              className="transition-all duration-700 ease-out"
-                            />
-                          );
-                        })}
+                            <>
+                              <polygon
+                                points={candPoints}
+                                fill="url(#pinkRadarGrad)"
+                                stroke="#d946ef"
+                                strokeWidth="2.5"
+                                className="transition-all duration-700 ease-out"
+                              />
 
-                        {/* Dynamic Axis Text Labels */}
-                        <text x="140" y="20" textAnchor="middle" className="text-[8px] font-bold fill-indigo-600 dark:fill-indigo-300">{radar.axes[0]}</text>
-                        <text x="235" y="75" textAnchor="start" className="text-[8px] font-bold fill-cyan-600 dark:fill-cyan-300">{radar.axes[1]}</text>
-                        <text x="235" y="170" textAnchor="start" className="text-[8px] font-bold fill-emerald-600 dark:fill-emerald-300">{radar.axes[2]}</text>
-                        <text x="140" y="222" textAnchor="middle" className="text-[8px] font-bold fill-amber-600 dark:fill-amber-300">{radar.axes[3]}</text>
-                        <text x="45" y="170" textAnchor="end" className="text-[8px] font-bold fill-purple-600 dark:fill-purple-300">{radar.axes[4]}</text>
-                        <text x="45" y="75" textAnchor="end" className="text-[8px] font-bold fill-rose-600 dark:fill-rose-300">{radar.axes[5]}</text>
+                              {/* Solid Magenta Vertex Circles */}
+                              {candValues.map((val, i) => {
+                                const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
+                                const r = 95 * val;
+                                const cx = 160 + r * Math.cos(angle);
+                                const cy = 140 + r * Math.sin(angle);
+                                return (
+                                  <circle
+                                    key={i}
+                                    cx={cx}
+                                    cy={cy}
+                                    r="5"
+                                    fill="#d946ef"
+                                    stroke="#ffffff"
+                                    strokeWidth="2"
+                                    className="transition-all duration-700 ease-out shadow-sm"
+                                  />
+                                );
+                              })}
+                            </>
+                          );
+                        })()}
+
+                        {/* 6 Axis Labels (Matching Reference Image) */}
+                        <text x="160" y="24" textAnchor="middle" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">Problem Solving</text>
+                        <text x="268" y="85" textAnchor="start" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">Communication</text>
+                        <text x="268" y="200" textAnchor="start" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">Attitude</text>
+                        <text x="160" y="262" textAnchor="middle" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">Competitiveness</text>
+                        <text x="52" y="200" textAnchor="end" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">Punctuality</text>
+                        <text x="52" y="85" textAnchor="end" className="text-[11px] font-extrabold fill-slate-800 dark:fill-slate-100">Team Player</text>
+
+                        {/* Yellow "Maine" Callout Tag pointing to Top-Left Vertex */}
+                        <g transform="translate(62, 92)">
+                          <polygon points="12,0 0,6 8,14" fill="#fbbf24" />
+                          <rect x="-42" y="-12" width="48" height="22" rx="11" fill="#facc15" stroke="#ffffff" strokeWidth="1.5" />
+                          <text x="-18" y="3" textAnchor="middle" className="text-[10px] font-black fill-slate-900">Maine</text>
+                        </g>
+
+                        {/* Cyan "Bec" Callout Tag pointing to Bottom-Right Axis */}
+                        <g transform="translate(262, 185)">
+                          <polygon points="-8,-4 4,-10 0,6" fill="#22d3ee" />
+                          <rect x="4" y="-18" width="40" height="22" rx="11" fill="#06b6d4" stroke="#ffffff" strokeWidth="1.5" />
+                          <text x="24" y="-3" textAnchor="middle" className="text-[10px] font-black fill-white">Bec</text>
+                        </g>
+
                       </svg>
                     </div>
 
