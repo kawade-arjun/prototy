@@ -18,11 +18,11 @@ import {
   Lock,
   Menu,
   ChevronDown,
-  ChevronUp,
-  CheckCircle2
+  ChevronUp
 } from 'lucide-react';
 
 import { useStudent } from '../../context/StudentContext';
+import { MetaVerifiedBadge } from '../common/MetaVerifiedBadge';
 
 export const StudentPortal: React.FC = () => {
   const [activeTab, setActiveTab] = useState<StudentTab>('recommendations');
@@ -53,8 +53,8 @@ export const StudentPortal: React.FC = () => {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            {/* Blue Tick Badge in front of the name */}
-            <CheckCircle2 className="w-4.5 h-4.5 text-blue-500 fill-blue-500 text-white shrink-0" />
+            {/* Meta Verified Blue Tick Badge in front of the name */}
+            <MetaVerifiedBadge className="w-5 h-5" />
             <span className="font-extrabold text-base sm:text-lg text-slate-900 dark:text-white">{activeStudent.name}</span>
             <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/80 dark:bg-indigo-500/15 dark:text-indigo-300 dark:border-indigo-500/30">
               {activeStudent.streamName}
