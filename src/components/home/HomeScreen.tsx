@@ -355,14 +355,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
       </div>
 
       {/* FOOTER GUARANTEE BADGE */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white/60 dark:bg-[#0c1222]/60 border border-slate-200 dark:border-white/[0.06] flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-        <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
-          <span>Backed by DigiLocker Sovereign Identity & India DPDP Act 2023 Statutory Guardrails</span>
-        </div>
-        <div className="font-mono text-xs">
-          Build: 2026.09-NEP2020-v2.6
-        </div>
+      <div className="p-4 sm:p-5 rounded-2xl bg-white/60 dark:bg-[#0c1222]/60 border border-slate-200 dark:border-white/[0.06] flex items-center justify-center text-center gap-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+        <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
+        <span>Backed by DigiLocker Sovereign Identity & India DPDP Act 2023 Statutory Guardrails</span>
       </div>
 
     </div>

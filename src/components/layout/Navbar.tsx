@@ -68,20 +68,23 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Right Controls: Level XP, Streak, Theme Switcher, Settings, Profile */}
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           
-          {/* Level 6 XP Badge */}
-          <div className="hidden xs:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-100/80 dark:bg-indigo-900/40 text-indigo-900 dark:text-indigo-200 text-xs font-bold">
-            <Award className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
-            <span className="whitespace-nowrap">Lvl 6 • 2,450 XP</span>
-          </div>
+          {/* Level 6 XP Badge & Streak Badge - Only inside active user portal */}
+          {currentRole !== null && (
+            <>
+              <div className="hidden xs:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-100/80 dark:bg-indigo-900/40 text-indigo-900 dark:text-indigo-200 text-xs font-bold">
+                <Award className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                <span className="whitespace-nowrap">Lvl 6 • 2,450 XP</span>
+              </div>
 
-          {/* Streak Badge */}
-          <div 
-            className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-amber-100/80 dark:bg-amber-900/40 text-amber-900 dark:text-amber-200 text-xs font-black"
-            title="8-Day Active Streak"
-          >
-            <span>8</span>
-            <Flame className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-          </div>
+              <div 
+                className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-amber-100/80 dark:bg-amber-900/40 text-amber-900 dark:text-amber-200 text-xs font-black"
+                title="8-Day Active Streak"
+              >
+                <span>8</span>
+                <Flame className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+              </div>
+            </>
+          )}
 
           {/* Light / Dark Mode Toggle Button */}
           <button

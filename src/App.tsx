@@ -67,11 +67,6 @@ const AppContent: React.FC = () => {
               <Lock className="w-3.5 h-3.5" /> India DPDP Act 2023 Statutory Conformance
             </span>
           </div>
-
-          <div className="flex items-center gap-4 text-slate-500 dark:text-slate-500">
-            <span>IITB / SRCC / NID / NLSIU / AIIMS Benchmarks</span>
-            <span>AICTE Regulatory Synchronized</span>
-          </div>
         </div>
       </footer>
     </div>
