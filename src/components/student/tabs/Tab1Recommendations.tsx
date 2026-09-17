@@ -91,48 +91,9 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
   return (
     <div className="space-y-8 animate-fadeIn">
-      {/* Hero Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl glass-panel p-8 bg-gradient-to-br from-indigo-50/90 via-white to-cyan-50/80 dark:from-indigo-950/40 dark:via-[#0d1424] dark:to-cyan-950/30 transition-colors">
-        <div className="absolute top-0 right-0 -mt-8 -mr-8 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 -mb-8 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-        
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-500/15 border border-indigo-200 dark:border-indigo-500/30 text-indigo-800 dark:text-indigo-300 text-xs font-bold tracking-wide">
-              <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-              <span>TAB 1 • RECOMMENDATIONS STUDIO</span>
-            </div>
-            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
-              ATS Diagnostics & AI Skill Gap Engine
-            </h2>
-            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              Synthesizing 0–100 quantified applicant tracking scores, automated differential vector gap analysis, and 2026–2028 market growth horizons.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              onClick={handleAnalyzeResume}
-              disabled={isAnalyzingResume}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition-all duration-200 active:scale-95 disabled:opacity-50"
-            >
-              <Zap className={`w-4 h-4 text-cyan-300 ${isAnalyzingResume ? 'animate-spin' : ''}`} />
-              <span>{isAnalyzingResume ? 'Scanning Tokens...' : 'Analyse Current Resume'}</span>
-            </button>
-            <button
-              onClick={() => setShowAiResumeModal(true)}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 dark:bg-[#121a2e] dark:hover:bg-[#18233e] dark:text-slate-200 dark:border-white/[0.1] text-xs font-bold transition-all duration-200 active:scale-95 shadow-sm"
-            >
-              <Download className="w-4 h-4 text-indigo-600 dark:text-cyan-400" />
-              <span>Make New Resume using AI</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* 1. Resume AI Studio & Competency Radar Section */}
       <div className="space-y-5">
-        <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.08] pb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-white/[0.08] pb-3">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
               <FileText className="w-5 h-5" />
@@ -142,9 +103,24 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               <p className="text-xs text-slate-500 dark:text-slate-400">Quantified metrics breakdown, interactive suggestions & 6-axis radar matrix</p>
             </div>
           </div>
-          <span className="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 px-2.5 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800/40">
-            Interactive Diagnostics
-          </span>
+          
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={handleAnalyzeResume}
+              disabled={isAnalyzingResume}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-md shadow-indigo-600/30 transition-all duration-200 active:scale-95 disabled:opacity-50"
+            >
+              <Zap className={`w-3.5 h-3.5 text-cyan-300 ${isAnalyzingResume ? 'animate-spin' : ''}`} />
+              <span>{isAnalyzingResume ? 'Scanning Tokens...' : 'Analyse Current Resume'}</span>
+            </button>
+            <button
+              onClick={() => setShowAiResumeModal(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 dark:bg-[#121a2e] dark:hover:bg-[#18233e] dark:text-slate-200 dark:border-white/[0.1] text-xs font-bold transition-all duration-200 active:scale-95 shadow-sm"
+            >
+              <Download className="w-3.5 h-3.5 text-indigo-600 dark:text-cyan-400" />
+              <span>Make New Resume using AI</span>
+            </button>
+          </div>
         </div>
 
         {/* ATS Overview Grid */}

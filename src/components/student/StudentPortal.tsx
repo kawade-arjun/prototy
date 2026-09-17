@@ -63,31 +63,27 @@ export const StudentPortal: React.FC = () => {
         </div>
       </div>
 
-      {/* 7-Tab Command Navigation Dock */}
-      <div className="relative z-30">
+      {/* 7-Tab Command Navigation Dock (Sticky at top below Navbar) */}
+      <div className="sticky top-16 z-30 bg-slate-50/90 dark:bg-[#070a11]/90 backdrop-blur-md py-2 border-b border-slate-200/60 dark:border-white/[0.08] shadow-sm transition-all">
         
-        {/* Mobile View: 3 Horizontal Lines (Hamburger Menu) Toggle (md:hidden) */}
+        {/* Mobile View: 3 Horizontal Lines Toggle with Centered Tab Name (md:hidden) */}
         <div className="md:hidden space-y-2">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="w-full m3-surface-2 rounded-2xl p-3.5 border border-slate-200/80 dark:border-white/[0.08] shadow-md flex items-center justify-between gap-3 text-slate-900 dark:text-white font-bold text-xs"
+            className="w-full m3-surface-2 rounded-2xl p-3 border border-slate-200/80 dark:border-white/[0.08] shadow-md flex items-center justify-between gap-3 text-slate-900 dark:text-white font-bold text-xs"
           >
-            <div className="flex items-center gap-3 truncate">
-              {/* 3 Horizontal Lines Hamburger Icon */}
-              <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-sm">
-                <Menu className="w-4 h-4" />
-              </div>
-              <div className="flex flex-col text-left truncate">
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono uppercase tracking-wider">
-                  Tab {currentTabObj.num} of 7
-                </span>
-                <span className="text-xs font-extrabold truncate flex items-center gap-1.5 text-indigo-600 dark:text-cyan-400">
-                  {currentTabObj.icon}
-                  {currentTabObj.label}
-                </span>
-              </div>
+            {/* Left 3 Horizontal Lines Icon */}
+            <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+              <Menu className="w-4 h-4" />
+            </div>
+
+            {/* Centered Active Tab Name */}
+            <div className="flex-1 flex items-center justify-center gap-2 text-center text-xs sm:text-sm font-extrabold text-indigo-600 dark:text-cyan-400 truncate">
+              {currentTabObj.icon}
+              <span className="truncate">{currentTabObj.label}</span>
             </div>
             
+            {/* Right Chevron Indicator */}
             <div className="flex items-center gap-1 text-slate-400 shrink-0">
               {isMobileMenuOpen ? (
                 <ChevronUp className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
