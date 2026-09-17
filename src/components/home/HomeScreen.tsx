@@ -510,80 +510,85 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80 backdrop-blur-md p-4 animate-fadeIn">
           <div className="glass-panel max-w-2xl w-full p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1424] space-y-6 relative shadow-2xl border border-indigo-500/30">
             
-            {/* Header */}
+            {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.08] pb-4">
               <div className="flex items-center gap-2.5">
                 <Sparkles className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
-                <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">CareerLens</h3>
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">CareerLens</h3>
               </div>
               <button
                 onClick={() => setShowDemoModal(false)}
                 className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center text-xs font-bold transition-colors cursor-pointer"
+                aria-label="Close modal"
               >
                 ✕
               </button>
             </div>
 
-            {/* Subtitle description */}
-            <div className="space-y-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+            {/* Tagline / Subtitle */}
+            <div className="space-y-5 text-slate-700 dark:text-slate-200 leading-relaxed">
+              <p className="text-base font-semibold text-slate-800 dark:text-slate-200">
                 India's unified talent ecosystem for verified skills, AI hiring, and education-industry collaboration.
               </p>
 
-              {/* 4 Workspace Cards Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
-                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/[0.06] space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-sm">
-                    <GraduationCap className="w-4 h-4 text-indigo-600 dark:text-cyan-400 shrink-0" />
+              {/* 4 Cards Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                {/* Student Workspace */}
+                <div className="p-4.5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-indigo-400/50 transition-colors">
+                  <div className="flex items-center gap-2.5 font-extrabold text-slate-900 dark:text-white text-base">
+                    <GraduationCap className="w-5 h-5 text-indigo-600 dark:text-cyan-400 shrink-0" />
                     <span>Student Workspace</span>
                   </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 leading-normal">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                     Personalized learning, verified portfolios & career preparation.
-                  </div>
+                  </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/[0.06] space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-sm">
-                    <Building2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                {/* TPO Placement Console */}
+                <div className="p-4.5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-emerald-400/50 transition-colors">
+                  <div className="flex items-center gap-2.5 font-extrabold text-slate-900 dark:text-white text-base">
+                    <Building2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <span>TPO Placement Console</span>
                   </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 leading-normal">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                     Smart campus placements, analytics & compliance management.
-                  </div>
+                  </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/[0.06] space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-sm">
-                    <Briefcase className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                {/* Corporate Recruiter */}
+                <div className="p-4.5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-amber-400/50 transition-colors">
+                  <div className="flex items-center gap-2.5 font-extrabold text-slate-900 dark:text-white text-base">
+                    <Briefcase className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0" />
                     <span>Corporate Recruiter</span>
                   </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 leading-normal">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                     Hire verified talent using AI-powered skill intelligence.
-                  </div>
+                  </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/[0.06] space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-sm">
-                    <Landmark className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
+                {/* Policy Observatory */}
+                <div className="p-4.5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-rose-400/50 transition-colors">
+                  <div className="flex items-center gap-2.5 font-extrabold text-slate-900 dark:text-white text-base">
+                    <Landmark className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
                     <span>Policy Observatory</span>
                   </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 leading-normal">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                     Real-time skill demand, employment trends & policy insights.
-                  </div>
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Action Footer */}
+            {/* Action Footer Button */}
             <div className="pt-2 flex justify-end">
               <button
                 onClick={() => {
                   setShowDemoModal(false);
                   handleScrollToPortals();
                 }}
-                className="px-6 py-2.5 rounded-full bg-indigo-600 text-white font-bold text-xs hover:bg-indigo-500 transition-all shadow-md shadow-indigo-600/20 active:scale-95 cursor-pointer"
+                className="px-6 py-2.5 rounded-full bg-indigo-600 text-white font-bold text-xs sm:text-sm hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-600/30 active:scale-95 cursor-pointer"
               >
-                Explore Portals
+                Get Started
               </button>
             </div>
           </div>
