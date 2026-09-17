@@ -136,58 +136,38 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
             </p>
           </div>
 
-          {/* Section Category Tabs */}
-          <div className="flex items-center gap-1 p-1 rounded-2xl bg-slate-100 dark:bg-[#0c1222] border border-slate-200 dark:border-white/[0.08] overflow-x-auto">
+          {/* Section Category Tabs - Material Design 3 Segmented Chips */}
+          <div className="flex items-center gap-2 p-1.5 rounded-full bg-slate-200/60 dark:bg-[#131824] overflow-x-auto">
             <button
               onClick={() => setRoleCategory('all')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                roleCategory === 'all'
-                  ? 'bg-white dark:bg-[#161f36] text-slate-900 dark:text-white shadow-sm'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-              }`}
+              className={`m3-chip ${roleCategory === 'all' ? 'm3-chip-active' : 'm3-chip-inactive'}`}
             >
               All Portals
             </button>
             <button
               onClick={() => setRoleCategory('student')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-                roleCategory === 'student'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-indigo-600'
-              }`}
+              className={`m3-chip ${roleCategory === 'student' ? 'm3-chip-active' : 'm3-chip-inactive'}`}
             >
               <GraduationCap className="w-3.5 h-3.5" />
               <span>Student</span>
             </button>
             <button
               onClick={() => setRoleCategory('college')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-                roleCategory === 'college'
-                  ? 'bg-emerald-600 text-white shadow-sm'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-emerald-600'
-              }`}
+              className={`m3-chip ${roleCategory === 'college' ? 'bg-emerald-600 text-white shadow-sm' : 'm3-chip-inactive'}`}
             >
               <Building2 className="w-3.5 h-3.5" />
               <span>College TPO</span>
             </button>
             <button
               onClick={() => setRoleCategory('recruiter')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-                roleCategory === 'recruiter'
-                  ? 'bg-amber-600 text-white shadow-sm'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-amber-600'
-              }`}
+              className={`m3-chip ${roleCategory === 'recruiter' ? 'bg-amber-600 text-white shadow-sm' : 'm3-chip-inactive'}`}
             >
               <Briefcase className="w-3.5 h-3.5" />
               <span>Recruiter</span>
             </button>
             <button
               onClick={() => setRoleCategory('government')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-                roleCategory === 'government'
-                  ? 'bg-rose-600 text-white shadow-sm'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-rose-600'
-              }`}
+              className={`m3-chip ${roleCategory === 'government' ? 'bg-rose-600 text-white shadow-sm' : 'm3-chip-inactive'}`}
             >
               <Landmark className="w-3.5 h-3.5" />
               <span>Government</span>
@@ -272,7 +252,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                 <button
                   type="button"
                   onClick={handleLaunchStudent}
-                  className="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-indigo-600/30 active:scale-95 transition-all group"
+                  className="m3-btn-filled w-full rounded-full"
                 >
                   <span>Enter Student Workspace</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -329,7 +309,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
               <button
                 type="button"
                 onClick={() => onSelectRole('college')}
-                className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 active:scale-95 transition-all group"
+                className="w-full py-2.5 px-4 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm hover:shadow-md active:scale-95 transition-all group"
               >
                 <span>Launch TPO Command Center</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -380,7 +360,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
               <button
                 type="button"
                 onClick={() => onSelectRole('recruiter')}
-                className="w-full py-2.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-amber-600/20 active:scale-95 transition-all group"
+                className="w-full py-2.5 px-4 rounded-full bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm hover:shadow-md active:scale-95 transition-all group"
               >
                 <span>Enter Recruiter Console</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -431,7 +411,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
               <button
                 type="button"
                 onClick={() => onSelectRole('government')}
-                className="w-full py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-rose-600/20 active:scale-95 transition-all group"
+                className="w-full py-2.5 px-4 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm hover:shadow-md active:scale-95 transition-all group"
               >
                 <span>Access Policy Observatory</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

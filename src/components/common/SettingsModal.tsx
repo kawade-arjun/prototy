@@ -88,42 +88,30 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
           </button>
         </div>
 
-        {/* Navigation Sub-Tabs */}
-        <div className="flex items-center gap-2 px-6 pt-4 border-b border-slate-200 dark:border-white/[0.06] bg-slate-50/30 dark:bg-slate-900/20">
+        {/* Navigation Sub-Tabs - Material Design 3 Segmented Chips */}
+        <div className="flex items-center gap-2 px-6 py-3 border-b border-slate-200 dark:border-white/[0.06] m3-surface-1">
           <button
             onClick={() => setActiveSubTab('bookmarks')}
-            className={`pb-3 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
-              activeSubTab === 'bookmarks'
-                ? 'border-indigo-600 text-indigo-600 dark:text-cyan-400'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'
-            }`}
+            className={`m3-chip ${activeSubTab === 'bookmarks' ? 'm3-chip-active' : 'm3-chip-inactive'}`}
           >
             <Bookmark className="w-3.5 h-3.5" />
             <span>Saved & Tracker</span>
-            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-indigo-700 text-white">
               {savedOpportunities.length}
             </span>
           </button>
 
           <button
             onClick={() => setActiveSubTab('privacy')}
-            className={`pb-3 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
-              activeSubTab === 'privacy'
-                ? 'border-indigo-600 text-indigo-600 dark:text-cyan-400'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'
-            }`}
+            className={`m3-chip ${activeSubTab === 'privacy' ? 'm3-chip-active' : 'm3-chip-inactive'}`}
           >
-            <Lock className="w-3.5 h-3.5" />
-            <span>DPDP Privacy Controls</span>
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>DPDP Privacy</span>
           </button>
 
           <button
             onClick={() => setActiveSubTab('preferences')}
-            className={`pb-3 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-2 ${
-              activeSubTab === 'preferences'
-                ? 'border-indigo-600 text-indigo-600 dark:text-cyan-400'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'
-            }`}
+            className={`m3-chip ${activeSubTab === 'preferences' ? 'm3-chip-active' : 'm3-chip-inactive'}`}
           >
             <Globe className="w-3.5 h-3.5" />
             <span>System Preferences</span>

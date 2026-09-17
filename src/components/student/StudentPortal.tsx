@@ -81,26 +81,26 @@ export const StudentPortal: React.FC = () => {
         </div>
       </div>
 
-      {/* 7-Tab Modern Segmented Command Dock */}
+      {/* 7-Tab Material Design 3 Segmented Command Dock */}
       <div className="relative">
-        <div className="glass-panel rounded-2xl p-1.5 shadow-xl backdrop-blur-xl overflow-x-auto">
-          <div className="flex items-center gap-1.5 min-w-[820px]">
+        <div className="m3-surface-2 rounded-full p-2 border border-slate-200/80 dark:border-white/[0.08] shadow-sm overflow-x-auto">
+          <div className="flex items-center gap-2 min-w-[840px]">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id;
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex-1 flex items-center justify-center gap-2.5 px-3 py-3 rounded-xl text-xs font-bold transition-all duration-200 relative group ${
+                  className={`flex-1 flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-full text-xs font-bold transition-all duration-200 relative group ${
                     isActive
-                      ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                      : 'text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-slate-800'
                   }`}
                 >
-                  <span className={`text-[10px] font-mono font-black w-5 h-5 rounded-md flex items-center justify-center transition-colors ${
+                  <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-full transition-colors ${
                     isActive 
                       ? 'bg-indigo-700 text-white' 
-                      : 'bg-slate-200 text-slate-700 dark:bg-slate-800/80 dark:text-slate-400 group-hover:bg-slate-300'
+                      : 'bg-slate-300/80 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
                   }`}>
                     {tab.num}
                   </span>
@@ -110,10 +110,6 @@ export const StudentPortal: React.FC = () => {
                   </span>
                   
                   <span className="truncate tracking-tight">{tab.label}</span>
-
-                  {isActive && (
-                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-1 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400" />
-                  )}
                 </button>
               );
             })}
