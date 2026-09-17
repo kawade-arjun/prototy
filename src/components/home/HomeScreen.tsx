@@ -20,14 +20,8 @@ import {
   Scale,
   Palette,
   Layers,
-  Globe,
   Terminal,
-  Award,
-  Play,
-  ArrowUpRight,
-  Sliders,
-  Check,
-  RefreshCw
+  Play
 } from 'lucide-react';
 
 interface HomeScreenProps {
@@ -106,27 +100,27 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
   const architectureSteps = [
     {
       step: 1,
-      title: 'Proctored 40-40-20 Evaluation Engine',
+      title: 'Proctored Evaluation Engine',
       badge: 'Skill Diagnostic',
-      desc: 'Synthesizes 40% proctored sandbox coding/case execution, 40% DigiLocker verified portfolio vector, and 20% peer-validated competency index.',
-      metric: '0-100 Quantified Score',
-      icon: <Terminal className="w-5 h-5 text-indigo-500" />
+      desc: 'Synthesizes proctored sandbox execution, DigiLocker verified portfolio vectors, and peer-validated competency indices.',
+      metric: 'Quantified Skill Matrix',
+      icon: <Terminal className="w-5 h-5 text-indigo-400" />
     },
     {
       step: 2,
       title: 'OpenCV Error Level Analysis (ELA)',
       badge: 'Forensic Audit',
-      desc: 'Automated 16-pass pixel compression inspection detecting digital mark-sheet alterations, spliced CGPA certificates, and degree fraud.',
-      metric: '99.98% Tamper Detection',
-      icon: <ShieldCheck className="w-5 h-5 text-emerald-500" />
+      desc: 'Automated multi-pass pixel compression inspection detecting digital mark-sheet alterations, spliced CGPA certificates, and degree fraud.',
+      metric: 'Tamper-Proof Verification',
+      icon: <ShieldCheck className="w-5 h-5 text-emerald-400" />
     },
     {
       step: 3,
       title: 'Gale-Shapley Stable Placement Dispatch',
       badge: 'Algorithmic Matching',
-      desc: 'Game-theoretic multi-agent matching matching top verified candidates directly to recruiter threshold cutoffs without manual bias.',
-      metric: 'Zero Pareto Inefficiency',
-      icon: <Zap className="w-5 h-5 text-cyan-500" />
+      desc: 'Game-theoretic multi-agent matching pairing verified candidates directly to recruiter threshold cutoffs without manual bias.',
+      metric: 'Optimal Candidate Matching',
+      icon: <Zap className="w-5 h-5 text-cyan-400" />
     }
   ];
 
@@ -157,7 +151,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
         {/* Hero Subtitle */}
         <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed font-normal">
           CareerLens unifies Students, Institutions, Recruiters, and Government Regulators into one 
-          cryptographically verifiable competency network powered by 0–100 ATS diagnostics and automated placement matching.
+          verifiable competency network powered by real-time skill diagnostics and transparent placement matching.
         </p>
 
         {/* Action Buttons */}
@@ -179,24 +173,24 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
           </button>
         </div>
 
-        {/* Feature Highlights Grid */}
+        {/* Feature Highlights Grid (Clean text with no unsubstantiated numbers) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto pt-6 text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300">
           <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#0c1222]/80 border border-slate-200/80 dark:border-white/[0.06] shadow-sm hover:border-indigo-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group">
             <Zap className="w-5 h-5 text-amber-500 group-hover:scale-110 transition-transform" />
-            <span className="font-extrabold text-slate-900 dark:text-white">75% Faster Hiring</span>
-            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">40-40-20 Composite Vector</span>
+            <span className="font-extrabold text-slate-900 dark:text-white">Accelerated AI Hiring</span>
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">Skill Intelligence Engine</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#0c1222]/80 border border-slate-200/80 dark:border-white/[0.06] shadow-sm hover:border-emerald-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group">
             <ShieldCheck className="w-5 h-5 text-emerald-500 group-hover:scale-110 transition-transform" />
-            <span className="font-extrabold text-slate-900 dark:text-white">0% Credential Fraud</span>
+            <span className="font-extrabold text-slate-900 dark:text-white">Tamper-Proof Verification</span>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">OpenCV ELA Forensic Scan</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#0c1222]/80 border border-slate-200/80 dark:border-white/[0.06] shadow-sm hover:border-purple-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group">
             <BarChart3 className="w-5 h-5 text-indigo-500 group-hover:scale-110 transition-transform" />
-            <span className="font-extrabold text-slate-900 dark:text-white">85% Audit Savings</span>
-            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">1-Click NIRF / NAAC 5.2.1</span>
+            <span className="font-extrabold text-slate-900 dark:text-white">Automated Compliance</span>
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">NIRF & NAAC Audit Reporting</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#0c1222]/80 border border-slate-200/80 dark:border-white/[0.06] shadow-sm hover:border-cyan-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group">
@@ -208,28 +202,28 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
 
       </div>
 
-      {/* SECTION 2: INTERACTIVE CORE SUBSTRATE ARCHITECTURE */}
-      <div className="space-y-6 glass-panel p-6 sm:p-8 rounded-3xl bg-slate-900 text-white border border-indigo-500/30 relative overflow-hidden shadow-2xl">
+      {/* SECTION 2: INTERACTIVE CORE SUBSTRATE ARCHITECTURE (HIGH VISIBILITY CONTRAST) */}
+      <div className="space-y-6 glass-panel p-6 sm:p-8 rounded-3xl bg-slate-950 text-white border-2 border-indigo-500/40 relative overflow-hidden shadow-2xl">
         <div className="absolute -top-24 -right-24 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-mono font-bold border border-indigo-500/30 mb-2">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/30 text-cyan-300 text-xs font-mono font-bold border border-indigo-400/40 mb-2">
               <Layers className="w-3.5 h-3.5 text-cyan-400" />
               <span>CORE ARCHITECTURE ENGINE</span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-black text-white">How CareerLens Substrate Works</h3>
+            <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">How CareerLens Substrate Works</h3>
           </div>
 
-          <div className="flex items-center gap-2 bg-slate-800/80 p-1 rounded-2xl border border-slate-700">
+          <div className="flex items-center gap-2 bg-slate-900 p-1.5 rounded-2xl border border-slate-800">
             {architectureSteps.map((item) => (
               <button
                 key={item.step}
                 onClick={() => setActiveArchitectureStep(item.step)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${
                   activeArchitectureStep === item.step
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-800'
                 }`}
               >
                 Pillar {item.step}
@@ -238,30 +232,30 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
           </div>
         </div>
 
-        {/* Selected Architecture Pillar Detail */}
+        {/* Selected Architecture Pillar Detail (High Contrast & Clear Bold Text) */}
         {architectureSteps.map((pillar) => {
           if (pillar.step !== activeArchitectureStep) return null;
           return (
             <div key={pillar.step} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center pt-2 animate-fadeIn">
               <div className="md:col-span-2 space-y-3">
                 <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-2xl bg-indigo-500/20 border border-indigo-500/30">
+                  <div className="p-3 rounded-2xl bg-indigo-500/30 border border-indigo-400/40">
                     {pillar.icon}
                   </div>
                   <div>
-                    <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wide">{pillar.badge}</span>
-                    <h4 className="text-lg font-extrabold text-white">{pillar.title}</h4>
+                    <span className="text-xs font-mono font-extrabold text-cyan-300 uppercase tracking-wider">{pillar.badge}</span>
+                    <h4 className="text-xl font-black text-white">{pillar.title}</h4>
                   </div>
                 </div>
-                <p className="text-sm text-slate-300 leading-relaxed">
+                <p className="text-sm font-semibold text-slate-100 leading-relaxed bg-slate-900/80 p-4.5 rounded-2xl border border-slate-800">
                   {pillar.desc}
                 </p>
               </div>
 
-              <div className="p-5 rounded-2xl bg-slate-800/90 border border-slate-700/80 flex flex-col justify-center items-center text-center space-y-2">
-                <span className="text-xs text-slate-400 uppercase font-mono">Telemetry Outcome</span>
-                <span className="text-2xl font-black text-emerald-400">{pillar.metric}</span>
-                <span className="text-[11px] text-slate-400 font-normal">Validated Real-Time</span>
+              <div className="p-6 rounded-2xl bg-slate-900 border border-indigo-500/30 flex flex-col justify-center items-center text-center space-y-2 shadow-lg">
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">Platform Capability</span>
+                <span className="text-lg font-black text-emerald-400">{pillar.metric}</span>
+                <span className="text-[11px] font-semibold text-slate-300">Verified System Substrate</span>
               </div>
             </div>
           );
@@ -302,11 +296,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                   Student & Job Seeker
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mt-1">
-                  Proctored 40-40-20 sandboxes, ATS diagnostics, freelance marketplace & DigiLocker living resume
+                  Proctored sandboxes, ATS diagnostics, freelance marketplace & DigiLocker living resume
                 </p>
               </div>
 
-              {/* Discipline Switcher Dropdown */}
+              {/* Discipline Switcher Dropdown (Only 5 Academic Discipline Fields, No Student Names) */}
               <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-white/[0.06]">
                 <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
                   <span>Select Academic Field:</span>
@@ -323,7 +317,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                   >
                     {allStudents.map((stu) => (
                       <option key={stu.id} value={stu.streamId}>
-                        {stu.streamName} • {stu.name} ({stu.compositeScore}/100)
+                        {stu.streamName}
                       </option>
                     ))}
                   </select>
@@ -332,15 +326,15 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
               </div>
             </div>
 
-            {/* Candidate Summary & Action */}
+            {/* Selected Disciplinary Field Summary */}
             <div className="space-y-3 pt-2">
               <div className="p-4 rounded-2xl bg-white/90 dark:bg-[#0d1424] border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white">
                 <div className="flex items-center gap-2 truncate">
                   {disciplineDetails[activeTabField]?.icon}
-                  <span className="truncate">{activeStudent.name}</span>
+                  <span className="truncate">{activeStudent.streamName}</span>
                 </div>
-                <span className="text-xs font-mono font-black text-indigo-600 dark:text-cyan-400 bg-indigo-50 dark:bg-indigo-950 px-2.5 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800 shrink-0">
-                  {activeStudent.compositeScore}/100
+                <span className="text-xs font-mono font-bold text-indigo-600 dark:text-cyan-400 bg-indigo-50 dark:bg-indigo-950 px-2.5 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800 shrink-0">
+                  {disciplineDetails[activeTabField]?.institute}
                 </span>
               </div>
 
@@ -426,7 +420,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
               <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 pt-3 border-t border-slate-100 dark:border-white/[0.06]">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
-                  <span>40-40-20 Composite AI Scoring Engine</span>
+                  <span>Composite Skill AI Scoring Engine</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
@@ -505,10 +499,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
         <span>Backed by DigiLocker Sovereign Identity & India DPDP Act 2023 Statutory Guardrails</span>
       </div>
 
-      {/* PLATFORM OVERVIEW MODAL */}
+      {/* PLATFORM OVERVIEW MODAL (ADJUSTED BOX SIZES & CLEAN SPACING) */}
       {showDemoModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80 backdrop-blur-md p-4 animate-fadeIn">
-          <div className="glass-panel max-w-2xl w-full p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1424] space-y-6 relative shadow-2xl border border-indigo-500/30">
+          <div className="glass-panel max-w-3xl w-full p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1424] space-y-6 relative shadow-2xl border border-indigo-500/30">
             
             {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.08] pb-4">
@@ -531,48 +525,48 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                 India's unified talent ecosystem for verified skills, AI hiring, and education-industry collaboration.
               </p>
 
-              {/* 4 Cards Grid */}
+              {/* 4 Workspace Cards Grid (Proportioned Spacious Boxes) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
                 {/* Student Workspace */}
-                <div className="p-4.5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-indigo-400/50 transition-colors">
+                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-indigo-400/50 transition-colors min-h-[110px] flex flex-col justify-center shadow-sm">
                   <div className="flex items-center gap-2.5 font-extrabold text-slate-900 dark:text-white text-base">
                     <GraduationCap className="w-5 h-5 text-indigo-600 dark:text-cyan-400 shrink-0" />
                     <span>Student Workspace</span>
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
                     Personalized learning, verified portfolios & career preparation.
                   </p>
                 </div>
 
                 {/* TPO Placement Console */}
-                <div className="p-4.5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-emerald-400/50 transition-colors">
+                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-emerald-400/50 transition-colors min-h-[110px] flex flex-col justify-center shadow-sm">
                   <div className="flex items-center gap-2.5 font-extrabold text-slate-900 dark:text-white text-base">
                     <Building2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <span>TPO Placement Console</span>
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
                     Smart campus placements, analytics & compliance management.
                   </p>
                 </div>
 
                 {/* Corporate Recruiter */}
-                <div className="p-4.5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-amber-400/50 transition-colors">
+                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-amber-400/50 transition-colors min-h-[110px] flex flex-col justify-center shadow-sm">
                   <div className="flex items-center gap-2.5 font-extrabold text-slate-900 dark:text-white text-base">
                     <Briefcase className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0" />
                     <span>Corporate Recruiter</span>
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
                     Hire verified talent using AI-powered skill intelligence.
                   </p>
                 </div>
 
                 {/* Policy Observatory */}
-                <div className="p-4.5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-rose-400/50 transition-colors">
+                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-rose-400/50 transition-colors min-h-[110px] flex flex-col justify-center shadow-sm">
                   <div className="flex items-center gap-2.5 font-extrabold text-slate-900 dark:text-white text-base">
                     <Landmark className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
                     <span>Policy Observatory</span>
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
                     Real-time skill demand, employment trends & policy insights.
                   </p>
                 </div>

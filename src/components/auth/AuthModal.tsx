@@ -355,15 +355,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               <ArrowRight className="w-4 h-4" />
             </button>
 
-            {/* DigiLocker National SSO Fast Login */}
-            <button
-              onClick={handleDigiLockerLogin}
-              className="w-full py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/40 dark:text-emerald-300 dark:border-emerald-500/30 font-bold text-xs flex items-center justify-center gap-2 transition-all"
-            >
-              <Fingerprint className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              <span>Sign in with DigiLocker / MeriPehchaan (National SSO)</span>
-            </button>
-
             {/* Fast Demo Bypass */}
             <button
               onClick={() => handleCompleteAuth(true)}
@@ -374,14 +365,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             </button>
           </div>
 
-        </div>
-
-        {/* Footer Security Note */}
-        <div className="p-4 border-t border-slate-200 dark:border-white/[0.06] bg-slate-50/50 dark:bg-[#080d17]/50 rounded-b-3xl flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400">
-          <span className="flex items-center gap-1">
-            <Lock className="w-3 h-3 text-indigo-500" /> AES-256 GCM Encrypted Session
-          </span>
-          <span>MeitY Empaneled Sovereign Cloud</span>
         </div>
 
       </div>
