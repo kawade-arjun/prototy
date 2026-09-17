@@ -509,56 +509,81 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
       {showDemoModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80 backdrop-blur-md p-4 animate-fadeIn">
           <div className="glass-panel max-w-2xl w-full p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1424] space-y-6 relative shadow-2xl border border-indigo-500/30">
+            
+            {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.08] pb-4">
               <div className="flex items-center gap-2.5">
                 <Sparkles className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">CareerLens Ecosystem Overview</h3>
+                <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">CareerLens</h3>
               </div>
               <button
                 onClick={() => setShowDemoModal(false)}
-                className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center text-xs font-bold"
+                className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center text-xs font-bold transition-colors cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
+            {/* Subtitle description */}
             <div className="space-y-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              <p>
-                <strong className="text-slate-900 dark:text-white">CareerLens</strong> is India’s first sovereign talent infrastructure designed to eliminate resume fraud and align higher education output directly with corporate demand.
+              <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+                India's unified talent ecosystem for verified skills, AI hiring, and education-industry collaboration.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/[0.06] space-y-1">
-                  <div className="font-bold text-indigo-600 dark:text-cyan-400">🎓 Student Workspace</div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400">Proctored sandboxes & ATS resume diagnostics across 5 streams.</div>
+              {/* 4 Workspace Cards Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/[0.06] space-y-1.5">
+                  <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-sm">
+                    <GraduationCap className="w-4 h-4 text-indigo-600 dark:text-cyan-400 shrink-0" />
+                    <span>Student Workspace</span>
+                  </div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400 leading-normal">
+                    Personalized learning, verified portfolios & career preparation.
+                  </div>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/[0.06] space-y-1">
-                  <div className="font-bold text-emerald-600 dark:text-emerald-400">🏫 TPO Placement Console</div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400">NIRF/NAAC audit export & ELA marksheet fraud inspector.</div>
+                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/[0.06] space-y-1.5">
+                  <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-sm">
+                    <Building2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                    <span>TPO Placement Console</span>
+                  </div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400 leading-normal">
+                    Smart campus placements, analytics & compliance management.
+                  </div>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/[0.06] space-y-1">
-                  <div className="font-bold text-amber-600 dark:text-amber-400">💼 Corporate Recruiter</div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400">Gale-Shapley matching engine pairing candidates with job cutoffs.</div>
+                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/[0.06] space-y-1.5">
+                  <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-sm">
+                    <Briefcase className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                    <span>Corporate Recruiter</span>
+                  </div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400 leading-normal">
+                    Hire verified talent using AI-powered skill intelligence.
+                  </div>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/[0.06] space-y-1">
-                  <div className="font-bold text-rose-600 dark:text-rose-400">🏛️ Policy Observatory</div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400">Statewide skill deficit telemetry & Ayush ICD-11 bridge.</div>
+                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/[0.06] space-y-1.5">
+                  <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-sm">
+                    <Landmark className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
+                    <span>Policy Observatory</span>
+                  </div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400 leading-normal">
+                    Real-time skill demand, employment trends & policy insights.
+                  </div>
                 </div>
               </div>
             </div>
 
+            {/* Action Footer */}
             <div className="pt-2 flex justify-end">
               <button
                 onClick={() => {
                   setShowDemoModal(false);
                   handleScrollToPortals();
                 }}
-                className="px-5 py-2.5 rounded-full bg-indigo-600 text-white font-bold text-xs hover:bg-indigo-500 transition-all"
+                className="px-6 py-2.5 rounded-full bg-indigo-600 text-white font-bold text-xs hover:bg-indigo-500 transition-all shadow-md shadow-indigo-600/20 active:scale-95 cursor-pointer"
               >
-                Get Started
+                Explore Portals
               </button>
             </div>
           </div>
