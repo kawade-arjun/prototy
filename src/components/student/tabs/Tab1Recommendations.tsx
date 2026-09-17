@@ -32,15 +32,10 @@ interface Tab1Props {
 
 export const Tab1Recommendations: React.FC<Tab1Props> = () => {
   const { theme } = useTheme();
-  const { activeStudent } = useStudent();
+  const { activeStudent, selectedStream } = useStudent();
   const [atsResult, setAtsResult] = useState<AtsDiagnosticResult>(activeStudent.atsBreakdown);
   const [isAnalyzingResume, setIsAnalyzingResume] = useState(false);
   const [showAiResumeModal, setShowAiResumeModal] = useState(false);
-
-  // Sync with active student profile change
-  React.useEffect(() => {
-    setAtsResult(activeStudent.atsBreakdown);
-  }, [activeStudent]);
 
   // Skill Gap State
   const [gapMode, setGapMode] = useState<'jobId' | 'pasteJd'>('jobId');
@@ -49,7 +44,16 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
   const [isDiffing, setIsDiffing] = useState(false);
   const [diffComplete, setDiffComplete] = useState(true);
 
-  // Curated Feed Filter
+  // Sync with active student profile change
+  React.useEffect(() => {
+    setAtsResult(activeStudent.atsBreakdown);
+    const streamOpps = MOCK_OPPORTUNITIES.filter(o => o.stream === selectedStream);
+    if (streamOpps.length > 0) {
+      setSelectedJobId(streamOpps[0].id);
+    }
+  }, [activeStudent, selectedStream]);
+
+  // Curated Feed Filter - Filtered to active discipline
   const [feedType, setFeedType] = useState<'all' | 'gig' | 'internship' | 'job'>('all');
   const [selectedOpportunityForModal, setSelectedOpportunityForModal] = useState<OpportunityListing | null>(null);
 
@@ -80,9 +84,10 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
     }, 800);
   };
 
-  const filteredOpportunities = feedType === 'all' 
-    ? MOCK_OPPORTUNITIES 
-    : MOCK_OPPORTUNITIES.filter(o => o.type === feedType);
+  // Only show opportunities matching the student's disciplinary field
+  const filteredOpportunities = MOCK_OPPORTUNITIES
+    .filter(o => o.stream === selectedStream)
+    .filter(o => feedType === 'all' ? true : o.type === feedType);
 
   return (
     <div className="space-y-8 animate-fadeIn">
@@ -362,20 +367,14 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             </button>
           </div>
 
-          {/* Mode A: Job ID Selector */}
+          {/* Mode A: Job ID Selector (Filtered to active student's discipline) */}
           {gapMode === 'jobId' ? (
             <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
-                Select Target Opportunity or Enter Traceable ID:
+                Select Target Opportunity in {activeStudent.streamName}:
               </label>
               <div className="flex flex-wrap gap-2">
-                {[
-                  { id: 'JOB-MSFT-901', role: 'GenAI Engineer' },
-                  { id: 'INT-MSFT-101', role: 'AI Systems Intern' },
-                  { id: 'JOB-RZP-402', role: 'Quant Treasury Analyst' },
-                  { id: 'JOB-NLSIU-501', role: 'Tech Policy Associate' },
-                  { id: 'INT-AIIMS-302', role: 'Genomics Fellow' },
-                ].map((item) => (
+                {MOCK_OPPORTUNITIES.filter(o => o.stream === selectedStream).map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setSelectedJobId(item.id)}
@@ -386,7 +385,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     }`}
                   >
                     <span>{item.id}</span>
-                    <span className="text-[10px] opacity-80 font-sans font-normal">({item.role})</span>
+                    <span className="text-[10px] opacity-80 font-sans font-normal truncate max-w-[140px]">({item.title})</span>
                   </button>
                 ))}
               </div>
@@ -399,7 +398,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               <textarea
                 value={pastedJd}
                 onChange={(e) => setPastedJd(e.target.value)}
-                placeholder="Paste raw JD requirements here (e.g. from LinkedIn, AngelList, Microsoft Careers)..."
+                placeholder="Paste raw JD requirements here (e.g. from LinkedIn, AngelList, or employer portals)..."
                 rows={3}
                 className="w-full bg-white dark:bg-[#0a0f1d] border border-slate-200 dark:border-white/[0.08] rounded-xl p-3.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-indigo-500 leading-relaxed font-mono"
               />
@@ -411,18 +410,18 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             <div className="space-y-5 pt-3 border-t border-slate-200 dark:border-white/[0.08]">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 
-                {/* Matched Competencies (Green) */}
+                {/* Matched Competencies (Green) - Filtered to Active Student */}
                 <div className="p-5 rounded-2xl bg-emerald-50/80 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/40 space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Matched Competencies (In Profile)
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Matched Competencies in {activeStudent.streamName}
                     </span>
                     <span className="text-xs px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-bold">
-                      78% Alignment
+                      {activeStudent.verifiedSkills.length} Verified
                     </span>
                   </div>
                   <div className="flex flex-wrap gap-2 pt-1">
-                    {['PyTorch Distributed', 'CUDA Optimization', 'Docker Containerization', 'Redis Vector Caching', 'Python Asyncio', 'Judge0 Sandboxing'].map((skill) => (
+                    {activeStudent.verifiedSkills.map((skill) => (
                       <span
                         key={skill}
                         className="px-3 py-1.5 rounded-xl bg-white dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 text-xs font-medium flex items-center gap-1.5 shadow-sm"
@@ -433,18 +432,18 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   </div>
                 </div>
 
-                {/* Missing Competencies (Red) */}
+                {/* Missing Competencies (Red) - Filtered to Active Student */}
                 <div className="p-5 rounded-2xl bg-rose-50/80 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-800/40 space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wider flex items-center gap-2">
-                      <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" /> Missing / Deficit Skills (Target Cutoff)
+                      <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" /> Target Deficit Gaps ({selectedJobId})
                     </span>
                     <span className="text-xs px-2.5 py-1 rounded-full bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300 font-bold">
-                      3 High-Yield Gaps
+                      {activeStudent.missingSkills.length} High-Yield Gaps
                     </span>
                   </div>
                   <div className="flex flex-wrap gap-2 pt-1">
-                    {['vLLM PagedAttention Kernel Fusion', 'Triton Custom Ops', 'DPDP Act 2023 Statutory Auditing'].map((skill) => (
+                    {activeStudent.missingSkills.map((skill) => (
                       <span
                         key={skill}
                         className="px-3 py-1.5 rounded-xl bg-white dark:bg-rose-500/10 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-500/30 text-xs font-medium flex items-center gap-1.5 shadow-sm"
@@ -457,7 +456,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
               </div>
 
-              {/* Minimum Skill-Bridge Section */}
+              {/* Minimum Skill-Bridge Section (Discipline Specific) */}
               <div className="p-6 rounded-2xl glass-panel border border-indigo-200 dark:border-cyan-500/30 space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="flex items-center gap-2.5">
@@ -466,9 +465,11 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     </div>
                     <div>
                       <h4 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">
-                        Minimum Skill-Bridge (Smallest High-Yield Intervention)
+                        Minimum Skill-Bridge ({activeStudent.streamName})
                       </h4>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">Complete these 3 interventions to exceed employer cutoff thresholds</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        Tailored interventions designed to exceed cutoff thresholds for {activeStudent.targetRoles[0]}
+                      </p>
                     </div>
                   </div>
                   <span className="text-xs font-bold text-indigo-700 dark:text-cyan-300 bg-indigo-50 dark:bg-cyan-950/80 px-3 py-1 rounded-full border border-indigo-200 dark:border-cyan-800/60">
@@ -477,47 +478,27 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#090e1c] border border-slate-200 dark:border-white/[0.08] hover:border-indigo-400 transition-all space-y-2 flex flex-col justify-between">
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-[10px] text-indigo-600 dark:text-indigo-400 font-bold uppercase tracking-wider">
-                        <span>Certification</span>
-                        <span className="text-slate-500 dark:text-slate-400 font-normal">2.5 Hours</span>
+                  {activeStudent.skillBridgeInterventions.map((item, idx) => (
+                    <div key={idx} className="p-4 rounded-xl bg-slate-50 dark:bg-[#090e1c] border border-slate-200 dark:border-white/[0.08] hover:border-indigo-400 transition-all space-y-2 flex flex-col justify-between">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between text-[10px] text-indigo-600 dark:text-indigo-400 font-bold uppercase tracking-wider">
+                          <span>{item.type}</span>
+                          <span className="text-slate-500 dark:text-slate-400 font-normal">{item.duration}</span>
+                        </div>
+                        <p className="text-xs font-bold text-slate-900 dark:text-white">{item.title}</p>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">{item.description}</p>
                       </div>
-                      <p className="text-xs font-bold text-slate-900 dark:text-white">vLLM Inference Acceleration Specialist</p>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">Multi-GPU tensor parallelism and custom decoding pipelines.</p>
+                      <button 
+                        onClick={() => {
+                          confetti({ particleCount: 40 });
+                          alert(`Enrolled in ${item.title}!`);
+                        }}
+                        className="text-xs text-indigo-600 dark:text-cyan-400 font-bold flex items-center gap-1 pt-2 hover:underline"
+                      >
+                        {item.buttonText} <ArrowUpRight className="w-3.5 h-3.5" />
+                      </button>
                     </div>
-                    <button className="text-xs text-indigo-600 dark:text-cyan-400 font-bold flex items-center gap-1 pt-2">
-                      Start Bridge Lab <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-
-                  <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#090e1c] border border-slate-200 dark:border-white/[0.08] hover:border-purple-400 transition-all space-y-2 flex flex-col justify-between">
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-[10px] text-purple-600 dark:text-purple-400 font-bold uppercase tracking-wider">
-                        <span>Sandbox Blueprint</span>
-                        <span className="text-slate-500 dark:text-slate-400 font-normal">4 Hours</span>
-                      </div>
-                      <p className="text-xs font-bold text-slate-900 dark:text-white">Triton Softmax Kernel Implementation</p>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">Curated code blueprint evaluated automatically in Judge0.</p>
-                    </div>
-                    <button className="text-xs text-indigo-600 dark:text-cyan-400 font-bold flex items-center gap-1 pt-2">
-                      Fork Sandbox Blueprint <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-
-                  <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#090e1c] border border-slate-200 dark:border-white/[0.08] hover:border-emerald-400 transition-all space-y-2 flex flex-col justify-between">
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider">
-                        <span>Regulatory Module</span>
-                        <span className="text-slate-500 dark:text-slate-400 font-normal">1 Hour</span>
-                      </div>
-                      <p className="text-xs font-bold text-slate-900 dark:text-white">DPDP Act 2023 Compliance Micro-Badge</p>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">Statutory test verified directly via DigiLocker credential hash.</p>
-                    </div>
-                    <button className="text-xs text-indigo-600 dark:text-cyan-400 font-bold flex items-center gap-1 pt-2">
-                      Enroll & Verify <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
+                  ))}
                 </div>
 
               </div>

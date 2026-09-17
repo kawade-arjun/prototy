@@ -12,6 +12,9 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
+import { AcademicStream } from '../../../types';
+import { useStudent } from '../../../context/StudentContext';
+
 interface MicroProject {
   id: string;
   title: string;
@@ -19,12 +22,14 @@ interface MicroProject {
   verifiedClient: boolean;
   budget: string;
   duration: string;
+  stream: AcademicStream;
   skills: string[];
   description: string;
   proposalsCount: number;
 }
 
 const MOCK_GIGS: MicroProject[] = [
+  // Tech & AI
   {
     id: 'GIG-LLM-101',
     title: 'Deploy High-Throughput vLLM Model on AWS g5.2xlarge',
@@ -32,32 +37,25 @@ const MOCK_GIGS: MicroProject[] = [
     verifiedClient: true,
     budget: '₹65,000',
     duration: '10 Days',
+    stream: 'tech_ai',
     skills: ['vLLM', 'Docker', 'AWS CUDA', 'FastAPI'],
     description: 'Set up an inference endpoint serving Qwen2.5-14B with PagedAttention and FP8 quantization.',
     proposalsCount: 6
   },
   {
-    id: 'GIG-AUDIT-202',
-    title: 'DPDP Act 2023 Consent Banner & Audit Trail Implementation',
-    client: 'HealthSovereign Cloud',
+    id: 'GIG-CUDA-102',
+    title: 'CUDA Kernel Optimization for Custom Softmax Layer',
+    client: 'DeepScale Systems',
     verifiedClient: true,
-    budget: '₹40,000',
-    duration: '1 Week',
-    skills: ['DPDP Act 2023', 'TypeScript', 'PostgreSQL', 'Security'],
-    description: 'Build statutory consent ledger recording tamper-proof user data preferences with cryptographic timestamps.',
+    budget: '₹75,000',
+    duration: '12 Days',
+    stream: 'tech_ai',
+    skills: ['CUDA C++', 'Kernel Fusion', 'GPU Memory', 'Triton'],
+    description: 'Optimize multi-head attention softmax kernel reducing memory coalescing stalls on Hopper architectures.',
     proposalsCount: 4
   },
-  {
-    id: 'GIG-DESIGN-303',
-    title: 'Figma Design System WCAG 2.2 AA Contrast Rectification',
-    client: 'EdTech Scaler Labs',
-    verifiedClient: true,
-    budget: '₹35,000',
-    duration: '5 Days',
-    skills: ['WCAG 2.2', 'Figma Tokens', 'UI/UX Design'],
-    description: 'Audit 60+ responsive web components and deliver compliant high-contrast color token variables.',
-    proposalsCount: 8
-  },
+
+  // Commerce & Finance
   {
     id: 'GIG-FIN-404',
     title: 'Dynamic DCF Sensitivity Table for Series-B SaaS Financial Model',
@@ -65,24 +63,122 @@ const MOCK_GIGS: MicroProject[] = [
     verifiedClient: true,
     budget: '₹50,000',
     duration: '1 Week',
+    stream: 'commerce_finance',
     skills: ['DCF Modeling', 'Excel / Python', 'Valuation'],
     description: 'Build automated Monte Carlo simulation grid showing revenue multiple outcomes under varied discount rates.',
     proposalsCount: 3
+  },
+  {
+    id: 'GIG-FIN-405',
+    title: 'Basel III Risk-Weighted Assets & Capital Adequacy Calculator',
+    client: 'NeoBank Securities',
+    verifiedClient: true,
+    budget: '₹60,000',
+    duration: '10 Days',
+    stream: 'commerce_finance',
+    skills: ['Basel III', 'Capital Adequacy', 'Python Pandas', 'Credit Risk'],
+    description: 'Build automated regulatory capital computation module conforming to RBI Master Directions on capital adequacy.',
+    proposalsCount: 5
+  },
+
+  // Healthcare & Bio
+  {
+    id: 'GIG-BIO-501',
+    title: 'NAMASTE Morbidity Terminology to WHO ICD-11 Dual-Crosswalk',
+    client: 'Ayush Telemedicine Council',
+    verifiedClient: true,
+    budget: '₹55,000',
+    duration: '2 Weeks',
+    stream: 'healthcare_bio',
+    skills: ['NAMASTE Ontology', 'ICD-11 TM2', 'Medical Informatics', 'Biostatistics'],
+    description: 'Map 120 traditional herbal formulations and clinical morbidity terms to WHO ICD-11 Chapter 2 classifications.',
+    proposalsCount: 2
+  },
+  {
+    id: 'GIG-BIO-502',
+    title: 'Kaplan-Meier Survival Curve Generator for Observational Trial',
+    client: 'BioStat ClinTech',
+    verifiedClient: true,
+    budget: '₹48,000',
+    duration: '8 Days',
+    stream: 'healthcare_bio',
+    skills: ['Kaplan-Meier', 'R / Bioconductor', 'Log-Rank Test', 'GCP'],
+    description: 'Construct automated statistical report computing hazard ratios and confidence intervals across 500 patient records.',
+    proposalsCount: 4
+  },
+
+  // Law & Governance
+  {
+    id: 'GIG-AUDIT-202',
+    title: 'DPDP Act 2023 Consent Banner & Audit Trail Implementation',
+    client: 'HealthSovereign Cloud',
+    verifiedClient: true,
+    budget: '₹40,000',
+    duration: '1 Week',
+    stream: 'law_governance',
+    skills: ['DPDP Act 2023', 'Consent Manager', 'Section 8 Notice', 'Tech Law'],
+    description: 'Build statutory consent ledger recording tamper-proof user data preferences with cryptographic timestamps.',
+    proposalsCount: 4
+  },
+  {
+    id: 'GIG-LAW-203',
+    title: 'SaaS Master Services Agreement (MSA) & DPA Statutory Review',
+    client: 'GovTech Advisory',
+    verifiedClient: true,
+    budget: '₹45,000',
+    duration: '5 Days',
+    stream: 'law_governance',
+    skills: ['Contract Drafting', 'DPA Terms', 'Data Transfer Clauses', 'IP Law'],
+    description: 'Review and redline enterprise cloud agreement aligning liability caps and breach notification windows with Indian laws.',
+    proposalsCount: 3
+  },
+
+  // UI/UX Design
+  {
+    id: 'GIG-DESIGN-303',
+    title: 'Figma Design System WCAG 2.2 AA Contrast Rectification',
+    client: 'EdTech Scaler Labs',
+    verifiedClient: true,
+    budget: '₹35,000',
+    duration: '5 Days',
+    stream: 'ui_ux',
+    skills: ['WCAG 2.2', 'Figma Tokens', 'UI/UX Design'],
+    description: 'Audit 60+ responsive web components and deliver compliant high-contrast color token variables.',
+    proposalsCount: 8
+  },
+  {
+    id: 'GIG-DESIGN-304',
+    title: 'VisionOS Spatial UI Design Tokens & Ergonomic Asset Prep',
+    client: 'SpatialDesk Interactive',
+    verifiedClient: true,
+    budget: '₹55,000',
+    duration: '9 Days',
+    stream: 'ui_ux',
+    skills: ['Spatial UI', 'Design Tokens', 'Ergonomics', 'VisionOS'],
+    description: 'Prepare multi-depth spatial tokens and accessible 3D interface components for clinical telemedicine headsets.',
+    proposalsCount: 5
   }
 ];
 
 export const Tab3FreelanceMarketplace: React.FC = () => {
+  const { activeStudent, selectedStream } = useStudent();
   const [selectedGig, setSelectedGig] = useState<MicroProject | null>(null);
   const [generatedProposal, setGeneratedProposal] = useState<string>('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
   const [selectedTag, setSelectedTag] = useState<string>('All');
+  const [onlyMyField, setOnlyMyField] = useState(true);
 
-  const tags = ['All', 'vLLM', 'DPDP Act 2023', 'WCAG 2.2', 'DCF Modeling'];
+  // Filter gigs strictly by student's disciplinary stream
+  const disciplineGigs = onlyMyField 
+    ? MOCK_GIGS.filter(g => g.stream === selectedStream) 
+    : MOCK_GIGS;
+
+  const tags = ['All', ...Array.from(new Set(disciplineGigs.flatMap(g => g.skills)))];
 
   const filteredGigs = selectedTag === 'All' 
-    ? MOCK_GIGS 
-    : MOCK_GIGS.filter(g => g.skills.includes(selectedTag));
+    ? disciplineGigs 
+    : disciplineGigs.filter(g => g.skills.includes(selectedTag));
 
   const handleOpenAiProposal = (gig: MicroProject) => {
     setSelectedGig(gig);
@@ -94,19 +190,19 @@ export const Tab3FreelanceMarketplace: React.FC = () => {
       setGeneratedProposal(
 `Dear ${gig.client} Team,
 
-I am writing to submit my proposal for "${gig.title}". As a verified developer ranked in the 98th percentile on the CareerLens IIT Bombay Benchmark sandbox, I have hands-on experience directly addressing your project requirements:
+I am writing to submit my proposal for "${gig.title}". As a verified scholar ranked in the ${activeStudent.nationalPercentile} percentile on the CareerLens ${activeStudent.benchmarkBadge.split('•')[0].trim()} sandbox, I have hands-on experience directly addressing your project requirements:
 
-1. Technical Alignment: I have implemented containerized production environments utilizing ${gig.skills.slice(0, 3).join(', ')}, achieving sub-20ms P99 latency budgets.
-2. Verified Credential Integrity: My skills have been validated through 3-tier proctored tests (with tamper-proof OpenCV ELA and pyHanko cryptographic signatures).
+1. Technical Alignment: I have implemented production-ready solutions utilizing ${gig.skills.slice(0, 3).join(', ')}, aligned with the rigorous curriculum of ${activeStudent.institution}.
+2. Verified Credential Integrity: My competencies have been validated through 3-tier proctored assessments (with tamper-proof OpenCV ELA and pyHanko cryptographic signatures).
 3. Delivery Timeline: I can complete this deliverable within ${gig.duration} for your benchmark budget of ${gig.budget}.
 
-You can view my verified Living Resume, code artifacts, and benchmark scores at my CareerLens public ledger: careerlens.in/verify/AK-984.
+You can view my verified Living Resume, benchmark scores, and sovereign credential ledger at: careerlens.in/verify/${activeStudent.digiLockerId}.
 
 Best regards,
-Arjun Kawade
-GenAI & Systems Engineer`
+${activeStudent.name}
+${activeStudent.degree}`
       );
-    }, 700);
+    }, 600);
   };
 
   const handleCopy = () => {
@@ -165,10 +261,20 @@ GenAI & Systems Engineer`
         </div>
       </div>
 
-      {/* Filter by skill tag */}
+      {/* Filter by skill tag & discipline */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1">
-        <Filter className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Filter Tag:</span>
+        <Filter className="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0" />
+        <button
+          onClick={() => setOnlyMyField(!onlyMyField)}
+          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border shrink-0 ${
+            onlyMyField 
+              ? 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-600/20 dark:text-indigo-300 dark:border-indigo-500/30 shadow-sm' 
+              : 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-white/[0.08]'
+          }`}
+        >
+          {onlyMyField ? `✓ Only ${activeStudent.streamName}` : 'Showing All Disciplines'}
+        </button>
+        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium shrink-0">Tags:</span>
         {tags.map(tag => (
           <button
             key={tag}

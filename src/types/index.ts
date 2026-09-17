@@ -133,6 +133,14 @@ export interface DomainPercentileRank {
   border: string;
 }
 
+export interface SkillBridgeIntervention {
+  type: 'Certification' | 'Sandbox Blueprint' | 'Regulatory Module';
+  title: string;
+  duration: string;
+  description: string;
+  buttonText: string;
+}
+
 export interface StudentProfile {
   id: string;
   streamId: AcademicStream;
@@ -154,5 +162,7 @@ export interface StudentProfile {
   targetRoles: string[];
   atsBreakdown: AtsDiagnosticResult;
   livingResumeRankings: DomainPercentileRank[];
+  skillBridgeInterventions: SkillBridgeIntervention[];
 }
+
 

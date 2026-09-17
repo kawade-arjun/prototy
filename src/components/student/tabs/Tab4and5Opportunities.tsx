@@ -14,17 +14,25 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
+import { useStudent } from '../../../context/StudentContext';
+
 interface OpportunitiesProps {
   mode: 'internships' | 'jobs';
 }
 
 export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) => {
+  const { activeStudent, selectedStream } = useStudent();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOpp, setSelectedOpp] = useState<OpportunityListing | null>(null);
   const [appliedJobs, setAppliedJobs] = useState<string[]>([]);
+  const [onlyMyField, setOnlyMyField] = useState(true);
 
   const isInternship = mode === 'internships';
-  const opportunities = MOCK_OPPORTUNITIES.filter(o => isInternship ? o.type === 'internship' : o.type === 'job');
+  
+  // Filter out opportunities not related to the active student's disciplinary field
+  const opportunities = MOCK_OPPORTUNITIES
+    .filter(o => isInternship ? o.type === 'internship' : o.type === 'job')
+    .filter(o => onlyMyField ? o.stream === selectedStream : true);
 
   const filtered = opportunities.filter(o => 
     o.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -33,7 +41,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
     o.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const candidateScore = 89;
+  const candidateScore = activeStudent.compositeScore;
 
   const handleOpenAnalysis = (opp: OpportunityListing) => {
     setSelectedOpp(opp);
@@ -42,7 +50,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
   const handleFastTrackApply = (id: string) => {
     confetti({ particleCount: 60 });
     setAppliedJobs(prev => [...prev, id]);
-    alert(`Application submitted for ${id}! Your pre-verified credentials bypassed Round 1.`);
+    alert(`Application submitted for ${id}! Your verified credentials (${activeStudent.degree}) bypassed Round 1.`);
     setSelectedOpp(null);
   };
 
@@ -81,7 +89,17 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
           />
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-500 dark:text-slate-400">Total Listings:</span>
+          <button
+            onClick={() => setOnlyMyField(!onlyMyField)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
+              onlyMyField 
+                ? 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-600/20 dark:text-indigo-300 dark:border-indigo-500/30 shadow-sm' 
+                : 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-white/[0.08]'
+            }`}
+          >
+            {onlyMyField ? `✓ Only ${activeStudent.streamName}` : 'Showing All Disciplines'}
+          </button>
+          <span className="text-xs text-slate-500 dark:text-slate-400">Listings:</span>
           <span className="text-xs font-bold text-slate-900 dark:text-white px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
             {filtered.length} Active
           </span>

@@ -58,6 +58,29 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       { domain: 'Data Structures & Algorithms', percentile: '98.7th', badge: 'Top 1.3%', icon: '⚡', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' },
       { domain: 'System Design & Scalability', percentile: '97.4th', badge: 'Top 2.6%', icon: '📐', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' },
       { domain: 'Code Uniqueness & Veracity', percentile: '99.8th', badge: 'Top 0.2%', icon: '🛡️', color: 'text-purple-600 dark:text-purple-400', border: 'border-purple-200 dark:border-purple-500/30' }
+    ],
+    skillBridgeInterventions: [
+      {
+        type: 'Certification',
+        title: 'vLLM Inference Acceleration Specialist',
+        duration: '2.5 Hours',
+        description: 'Multi-GPU tensor parallelism and custom decoding pipelines.',
+        buttonText: 'Start Bridge Lab'
+      },
+      {
+        type: 'Sandbox Blueprint',
+        title: 'Triton Softmax Kernel Implementation',
+        duration: '4 Hours',
+        description: 'Curated code blueprint evaluated automatically in Judge0.',
+        buttonText: 'Fork Sandbox Blueprint'
+      },
+      {
+        type: 'Regulatory Module',
+        title: 'DPDP Act 2023 Compliance Micro-Badge',
+        duration: '1 Hour',
+        description: 'Statutory test verified directly via DigiLocker credential hash.',
+        buttonText: 'Enroll & Verify'
+      }
     ]
   },
 
@@ -118,6 +141,29 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       { domain: 'Quantitative Econometrics', percentile: '97.2nd', badge: 'Top 2.8%', icon: '📊', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' },
       { domain: 'Corporate Finance & M&A', percentile: '96.5th', badge: 'Top 3.5%', icon: '💼', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' },
       { domain: 'Audited Model Integrity', percentile: '99.5th', badge: 'Top 0.5%', icon: '🛡️', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' }
+    ],
+    skillBridgeInterventions: [
+      {
+        type: 'Certification',
+        title: 'Monte Carlo Stochastic Volatility Modeling (CFA Tier 1)',
+        duration: '3 Hours',
+        description: 'Continuous Brownian motion simulation for options pricing and VaR modeling.',
+        buttonText: 'Start Quant Lab'
+      },
+      {
+        type: 'Sandbox Blueprint',
+        title: 'Dynamic LBO Debt Waterfall with Revolver Sweep',
+        duration: '4.5 Hours',
+        description: 'Audited financial spreadsheet model evaluated against institutional private equity benchmarks.',
+        buttonText: 'Open Financial Simulator'
+      },
+      {
+        type: 'Regulatory Module',
+        title: 'Basel III Capital Adequacy & RBI Liquidity Compliance',
+        duration: '1.5 Hours',
+        description: 'Statutory credit risk exposure framework verified through DigiLocker accreditation.',
+        buttonText: 'Enroll & Verify'
+      }
     ]
   },
 
@@ -178,6 +224,29 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       { domain: 'Ontology Mapping (ICD-11)', percentile: '99.9th', badge: 'Top 0.1%', icon: '🌐', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' },
       { domain: 'Clinical Biostatistics', percentile: '97.8th', badge: 'Top 2.2%', icon: '📊', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' },
       { domain: 'Phytopharmacology & GCP', percentile: '98.5th', badge: 'Top 1.5%', icon: '🌿', color: 'text-amber-600 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-500/30' }
+    ],
+    skillBridgeInterventions: [
+      {
+        type: 'Certification',
+        title: 'WHO ICD-11 Traditional Medicine Module 2 Ontological Classifier',
+        duration: '2 Hours',
+        description: 'Bi-directional semantic crosswalk between NAMASTE nomenclature and ICD-11 TM2.',
+        buttonText: 'Start Crosswalk Lab'
+      },
+      {
+        type: 'Sandbox Blueprint',
+        title: 'Kaplan-Meier Survival Analysis & Log-Rank Estimator',
+        duration: '3.5 Hours',
+        description: 'Statistical sandbox modeling longitudinal patient cohorts and phytomedicine efficacy.',
+        buttonText: 'Fork Survival Script'
+      },
+      {
+        type: 'Regulatory Module',
+        title: 'Good Clinical Practice (GCP) & Ethical Committee Guidelines',
+        duration: '1 Hour',
+        description: 'Ministry of Ayush / CDSCO regulatory conformance micro-certification.',
+        buttonText: 'Enroll & Verify'
+      }
     ]
   },
 
@@ -238,6 +307,29 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       { domain: 'Tech Contracts & Licensing', percentile: '98.1st', badge: 'Top 1.9%', icon: '📜', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' },
       { domain: 'Statutory Risk Analysis', percentile: '97.5th', badge: 'Top 2.5%', icon: '🛡️', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' },
       { domain: 'M&A Due Diligence', percentile: '96.8th', badge: 'Top 3.2%', icon: '💼', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' }
+    ],
+    skillBridgeInterventions: [
+      {
+        type: 'Certification',
+        title: 'India DPDP Act 2023 Principal Fiduciary Data Auditor',
+        duration: '2 Hours',
+        description: 'Comprehensive statutory review of Consent Manager architecture and §8 notice requirements.',
+        buttonText: 'Start Legal Lab'
+      },
+      {
+        type: 'Sandbox Blueprint',
+        title: 'Cross-Border Contractual Clauses (EU SCCs vs. MeitY)',
+        duration: '3.5 Hours',
+        description: 'Automated contract clause risk parser evaluated against National Law benchmarks.',
+        buttonText: 'Open Clause Sandbox'
+      },
+      {
+        type: 'Regulatory Module',
+        title: 'Bar Council Legal Tech & Digital Evidence Admissibility',
+        duration: '1.5 Hours',
+        description: 'Electronic records certification under BSA 2023 / Section 65B Indian Evidence Act.',
+        buttonText: 'Enroll & Verify'
+      }
     ]
   },
 
@@ -298,6 +390,29 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       { domain: 'Design Systems Architecture', percentile: '98.8th', badge: 'Top 1.2%', icon: '✨', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' },
       { domain: 'Spatial & Multimodal UI', percentile: '98.2nd', badge: 'Top 1.8%', icon: '🕶️', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' },
       { domain: 'Interaction & Micro-Motion', percentile: '97.9th', badge: 'Top 2.1%', icon: '⚡', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' }
+    ],
+    skillBridgeInterventions: [
+      {
+        type: 'Certification',
+        title: 'W3C Certified WCAG 2.2 AAA Accessibility Auditor',
+        duration: '2.5 Hours',
+        description: 'Comprehensive screen-reader, color contrast (7:1), and focus navigation certification.',
+        buttonText: 'Start Design Lab'
+      },
+      {
+        type: 'Sandbox Blueprint',
+        title: 'High-Contrast Tokenized Multi-Theme Design System',
+        duration: '3.5 Hours',
+        description: 'Live Figma-to-Tailwind token mapping tested in the Sandbox auditor.',
+        buttonText: 'Open Design Sandbox'
+      },
+      {
+        type: 'Regulatory Module',
+        title: 'European Accessibility Act (EAA) & Section 508 Guidelines',
+        duration: '1 Hour',
+        description: 'Statutory inclusive design standards stamped to living verifiable credential.',
+        buttonText: 'Enroll & Verify'
+      }
     ]
   }
 };

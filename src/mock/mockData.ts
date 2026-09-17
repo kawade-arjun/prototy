@@ -122,6 +122,7 @@ export const EMERGING_SKILLS_PREDICTIONS: EmergingSkillPrediction[] = [
 ];
 
 export const MOCK_OPPORTUNITIES: OpportunityListing[] = [
+  // 1. Tech & AI
   {
     id: 'JOB-MSFT-901',
     title: 'GenAI & Applied Research Engineer',
@@ -167,6 +168,8 @@ export const MOCK_OPPORTUNITIES: OpportunityListing[] = [
       'Focus on algorithmic complexity and asynchronous Python concurrency'
     ]
   },
+
+  // 2. Commerce & Finance
   {
     id: 'JOB-RZP-402',
     title: 'Quantitative Risk & Treasury Analyst',
@@ -189,25 +192,69 @@ export const MOCK_OPPORTUNITIES: OpportunityListing[] = [
     ]
   },
   {
-    id: 'GIG-DES-104',
-    title: 'Design System Accessibility (WCAG 2.2 AA) Audit',
-    organization: 'GovTech Innovations',
-    orgLogo: 'GT',
-    type: 'gig',
-    location: 'Remote',
-    stipendOrSalary: '₹45,000 / project',
-    budget: '₹45,000',
-    duration: '2 Weeks',
-    stream: 'ui_ux',
-    tags: ['WCAG 2.2', 'Figma Tokens', 'ARIA', 'Design Systems'],
-    cutoffScore: 75,
-    deadline: 'Rolling',
-    description: 'Conduct a systematic screen-reader, contrast ratio, and spatial layout audit across 24 citizen services portals.',
+    id: 'INT-GS-201',
+    title: 'Investment Banking & LBO Valuation Intern',
+    organization: 'Goldman Sachs',
+    orgLogo: 'GS',
+    type: 'internship',
+    location: 'Mumbai / In-office',
+    stipendOrSalary: '₹1,10,000 / month',
+    stream: 'commerce_finance',
+    tags: ['LBO Waterfall', '3-Statement Modeling', 'CFA Level 1', 'M&A'],
+    cutoffScore: 84,
+    deadline: 'In 5 days',
+    description: 'Structure leveraged buyout models, debt amortization schedules, and accretion/dilution analysis for institutional transactions.',
     responsibilities: [
-      'Audit color contrast ratios against AAA/AA standards',
-      'Deliver Figma component token adjustments and keyboard navigation maps'
+      'Construct dynamic DCF models and sensitivity matrices',
+      'Audit balance sheet circularities in private equity transaction models'
+    ],
+    interviewTips: [
+      'Master Enterprise Value to Equity Value bridge adjustments'
     ]
   },
+
+  // 3. Healthcare & Bio
+  {
+    id: 'JOB-NIA-401',
+    title: 'Clinical Biostatistician & Ayush Research Officer',
+    organization: 'National Institute of Ayurveda',
+    orgLogo: 'NIA',
+    type: 'job',
+    location: 'Jaipur / On-site',
+    stipendOrSalary: '₹15 - 20 LPA',
+    stream: 'healthcare_bio',
+    tags: ['NAMASTE Ontology', 'Kaplan-Meier', 'GCP', 'Biostatistics'],
+    cutoffScore: 82,
+    deadline: 'In 11 days',
+    description: 'Lead clinical research biostatistics translating standardized NAMASTE terminology into WHO ICD-11 Traditional Medicine datasets.',
+    responsibilities: [
+      'Model longitudinal patient survival curves and treatment hazard ratios',
+      'Validate multi-centric observational clinical trial data under CDSCO rules'
+    ],
+    interviewTips: [
+      'Review WHO ICD-11 Chapter 2 TM2 classification guidelines'
+    ]
+  },
+  {
+    id: 'INT-AIIMS-302',
+    title: 'Computational Oncology Single-Cell Fellow',
+    organization: 'AIIMS New Delhi Genomics Lab',
+    orgLogo: 'AI',
+    type: 'internship',
+    location: 'New Delhi / In-person',
+    stipendOrSalary: '₹60,000 / month',
+    stream: 'healthcare_bio',
+    tags: ['RNA-seq', 'Scanpy', 'Bio-Statistics', 'Python'],
+    cutoffScore: 80,
+    deadline: 'In 5 days',
+    description: 'Analyze single-cell RNA-sequencing data from clinical immunotherapy trials using automated quality-control pipelines.',
+    responsibilities: [
+      'Filter low-quality droplets and normalize mitochondrial gene readouts',
+      'Perform UMAP cluster projection and differential gene expression analysis'
+    ]
+  },
+
+  // 4. Law & Governance
   {
     id: 'JOB-NLSIU-501',
     title: 'Digital Tech Policy & Statutory Compliance Associate',
@@ -227,21 +274,79 @@ export const MOCK_OPPORTUNITIES: OpportunityListing[] = [
     ]
   },
   {
-    id: 'INT-AIIMS-302',
-    title: 'Computational Oncology Single-Cell Fellow',
-    organization: 'AIIMS New Delhi Genomics Lab',
-    orgLogo: 'AI',
+    id: 'INT-CAM-102',
+    title: 'Corporate Privacy & DPDP Conformance Legal Intern',
+    organization: 'Cyril Amarchand Mangaldas',
+    orgLogo: 'CAM',
     type: 'internship',
-    location: 'New Delhi / In-person',
-    stipendOrSalary: '₹60,000 / month',
-    stream: 'healthcare_bio',
-    tags: ['RNA-seq', 'Scanpy', 'Bio-Statistics', 'Python'],
+    location: 'Bengaluru / Hybrid',
+    stipendOrSalary: '₹55,000 / month',
+    stream: 'law_governance',
+    tags: ['DPDP Section 8', 'Consent Manager', 'GDPR', 'Tech Policy'],
     cutoffScore: 80,
-    deadline: 'In 5 days',
-    description: 'Analyze single-cell RNA-sequencing data from clinical immunotherapy trials using automated quality-control pipelines.',
+    deadline: 'In 7 days',
+    description: 'Draft statutory notice disclosures, consent manager agreements, and cross-border data protection impact assessments.',
     responsibilities: [
-      'Filter low-quality droplets and normalize mitochondrial gene readouts',
-      'Perform UMAP cluster projection and differential gene expression analysis'
+      'Review enterprise agreements for statutory penalty liabilities under Section 33',
+      'Draft standardized terms for Data Fiduciary and Data Processor engagements'
+    ]
+  },
+
+  // 5. UI/UX Design
+  {
+    id: 'JOB-FLPK-202',
+    title: 'Principal Product Designer (Spatial & Multimodal UI)',
+    organization: 'Flipkart UX Labs',
+    orgLogo: 'FK',
+    type: 'job',
+    location: 'Bengaluru / Hybrid',
+    stipendOrSalary: '₹24 - 32 LPA',
+    stream: 'ui_ux',
+    tags: ['WCAG 2.2 AAA', 'Spatial UI', 'Figma Tokens', 'Micro-Interactions'],
+    cutoffScore: 86,
+    deadline: 'In 8 days',
+    description: 'Architect tokenized design systems and accessible user interfaces for next-generation mobile and spatial e-commerce.',
+    responsibilities: [
+      'Enforce automated color contrast and keyboard navigation audits across 40+ web components',
+      'Deliver fluid gesture and voice micro-interactions for Bharat vernacular users'
+    ]
+  },
+  {
+    id: 'INT-ADBE-101',
+    title: 'Design Systems & Accessibility Engineering Intern',
+    organization: 'Adobe Design Lab',
+    orgLogo: 'AD',
+    type: 'internship',
+    location: 'Noida / In-office',
+    stipendOrSalary: '₹90,000 / month',
+    stream: 'ui_ux',
+    tags: ['Design Systems', 'WCAG AAA', 'Tailwind', 'Figma'],
+    cutoffScore: 82,
+    deadline: 'In 4 days',
+    description: 'Work with the design foundation team implementing cross-platform tokens, dark/light ambient adaptations, and ARIA attributes.',
+    responsibilities: [
+      'Benchmark UI components against WCAG 2.2 AAA guidelines',
+      'Maintain synchronized Figma variables and Tailwind CSS token themes'
+    ]
+  },
+  {
+    id: 'GIG-DES-104',
+    title: 'Design System Accessibility (WCAG 2.2 AA) Audit',
+    organization: 'GovTech Innovations',
+    orgLogo: 'GT',
+    type: 'gig',
+    location: 'Remote',
+    stipendOrSalary: '₹45,000 / project',
+    budget: '₹45,000',
+    duration: '2 Weeks',
+    stream: 'ui_ux',
+    tags: ['WCAG 2.2', 'Figma Tokens', 'ARIA', 'Design Systems'],
+    cutoffScore: 75,
+    deadline: 'Rolling',
+    description: 'Conduct a systematic screen-reader, contrast ratio, and spatial layout audit across 24 citizen services portals.',
+    responsibilities: [
+      'Audit color contrast ratios against AAA/AA standards',
+      'Deliver Figma component token adjustments and keyboard navigation maps'
     ]
   }
 ];

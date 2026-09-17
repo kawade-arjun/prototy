@@ -170,14 +170,13 @@ export const Tab2ProctoredSandbox: React.FC = () => {
     setDiagnosticReportTest(finishedTest);
   };
 
-  // Filter tests by sub-tab, stream, and search
+  // Filter tests strictly by sub-tab, student discipline, and search query
   const filteredTests = ASSESSMENT_TESTS.filter(t => {
     const matchSubTab = activeSubTab === 'all_tests' ? true : t.subTab === activeSubTab;
-    const matchStream = (activeSubTab === 'domain_benchmarks' || activeSubTab === 'daily_quests') 
-      ? t.stream === selectedStream 
-      : activeSubTab === 'all_tests'
-        ? (t.stream === selectedStream || t.subTab === 'aptitude_logic' || t.subTab === 'soft_skills_ethics' || t.subTab === 'recruiter_drives' || searchQuery.trim().length > 0)
-        : true;
+    // Delete/exclude any tests from other fields unless they are universal aptitude or soft skills
+    const matchStream = (t.subTab === 'aptitude_logic' || t.subTab === 'soft_skills_ethics')
+      ? true
+      : t.stream === selectedStream;
     const matchSearch = t.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       t.skillTags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) ||
       t.benchmarkEntity.name.toLowerCase().includes(searchQuery.toLowerCase());
