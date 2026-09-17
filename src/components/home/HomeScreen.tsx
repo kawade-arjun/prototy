@@ -98,17 +98,17 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
   ];
 
   return (
-    <div className="space-y-16 py-4 sm:py-8 max-w-6xl mx-auto animate-fadeIn relative [perspective:1000px]">
+    <div className="space-y-16 py-4 sm:py-8 max-w-6xl mx-auto animate-fadeIn relative">
       
       {/* 3D DYNAMIC ISOMETRIC BACKGROUND MESH & FLOATING 3D SPHERES */}
       <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden rounded-3xl">
         {/* 3D Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
         
-        {/* 3D Ambient Glowing Floating Orbs */}
-        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-indigo-500/15 via-purple-500/15 to-cyan-500/15 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute top-72 -left-20 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-[600px] -right-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+        {/* Optimized Ambient Glowing Floating Orbs */}
+        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[250px] sm:h-[350px] bg-gradient-to-tr from-indigo-500/10 via-purple-500/10 to-cyan-500/10 rounded-full blur-2xl sm:blur-3xl transform-gpu" />
+        <div className="absolute top-72 -left-20 w-60 sm:w-80 h-60 sm:h-80 bg-indigo-600/10 rounded-full blur-2xl sm:blur-3xl pointer-events-none transform-gpu hidden sm:block" />
+        <div className="absolute top-[600px] -right-20 w-60 sm:w-96 h-60 sm:h-96 bg-cyan-500/10 rounded-full blur-2xl sm:blur-3xl pointer-events-none transform-gpu hidden sm:block" />
       </div>
 
       {/* SECTION 1: HERO WELCOME BANNER */}
