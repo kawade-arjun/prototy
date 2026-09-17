@@ -1173,7 +1173,7 @@ export const RecruiterPortal: React.FC = () => {
                     onChange={(e: any) => setNewTestStream(e.target.value)}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                   >
-                    <option value="tech_ai">Computer Science & AI</option>
+                    <option value="tech_ai">Engineering</option>
                     <option value="commerce_finance">Commerce & Quantitative Finance</option>
                     <option value="ui_ux">UI/UX Design & Spatial Systems</option>
                     <option value="law_governance">Law & Public Policy</option>

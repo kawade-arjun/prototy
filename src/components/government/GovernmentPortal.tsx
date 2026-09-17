@@ -406,7 +406,7 @@ export const GovernmentPortal: React.FC = () => {
                 {[
                   { id: 'all', label: 'All Disciplines' },
                   { id: 'ayush', label: 'Ayush & Bio' },
-                  { id: 'tech', label: 'Tech & AI' },
+                  { id: 'tech', label: 'Engineering' },
                   { id: 'finance', label: 'Finance' },
                   { id: 'law', label: 'Law & Policy' }
                 ].map(f => (

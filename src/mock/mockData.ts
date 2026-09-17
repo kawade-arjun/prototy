@@ -11,7 +11,7 @@ import {
 export const ACADEMIC_STREAMS: StreamMetadata[] = [
   {
     id: 'tech_ai',
-    name: 'Tech & AI',
+    name: 'Engineering',
     badge: 'IIT Bombay Benchmark',
     institution: 'IIT Bombay',
     sandboxTitle: 'Monaco Code Sandbox (Judge0 Isolated Container)',

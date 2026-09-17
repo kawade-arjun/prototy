@@ -257,7 +257,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   onChange={(e) => setSignupStream(e.target.value as AcademicStream)}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 >
-                  <option value="tech_ai">Tech & AI (Computer Science & Engineering)</option>
+                  <option value="tech_ai">Engineering (Computer Science & AI)</option>
                   <option value="commerce_finance">Commerce & Finance (Financial Engineering)</option>
                   <option value="healthcare_bio">Healthcare & Bio-Sciences (Integrative Medicine)</option>
                   <option value="law_governance">Law & Governance (Corporate & Tech Law)</option>

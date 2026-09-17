@@ -4,7 +4,7 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
   tech_ai: {
     id: 'STU-TECH-001',
     streamId: 'tech_ai',
-    streamName: 'Tech & AI',
+    streamName: 'Engineering',
     name: 'Arjun Kawade',
     avatarInitials: 'AK',
     degree: 'B.Tech in Computer Science & Engineering (AI & Distributed Systems)',

@@ -37,7 +37,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
 
   // Rotating target disciplines for animated hero text
   const rotatingDisciplines = [
-    { title: 'Tech & AI Engineers', institute: 'IIT Bombay', color: 'from-indigo-500 to-cyan-500' },
+    { title: 'Engineering Scholars', institute: 'IIT Bombay', color: 'from-indigo-500 to-cyan-500' },
     { title: 'FinTech & Finance Scholars', institute: 'SRCC Delhi', color: 'from-emerald-500 to-teal-500' },
     { title: 'Ayush & Medical Practitioners', institute: 'AIIMS & AIIA New Delhi', color: 'from-amber-500 to-orange-500' },
     { title: 'Corporate Law Specialists', institute: 'NLSIU Bengaluru', color: 'from-purple-500 to-indigo-500' },
