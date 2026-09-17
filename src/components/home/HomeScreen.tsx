@@ -69,33 +69,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
     }
   };
 
-  const disciplineDetails: Record<AcademicStream, { icon: React.ReactNode; institute: string; color: string }> = {
-    tech_ai: {
-      icon: <Cpu className="w-4 h-4 text-indigo-500" />,
-      institute: 'IIT Bombay • Dept of CSE',
-      color: 'indigo'
-    },
-    commerce_finance: {
-      icon: <TrendingUp className="w-4 h-4 text-emerald-500" />,
-      institute: 'SRCC Delhi • Finance & FinTech',
-      color: 'emerald'
-    },
-    healthcare_bio: {
-      icon: <Activity className="w-4 h-4 text-amber-500" />,
-      institute: 'AIIMS & AIIA New Delhi • Ayush & Bio-Health',
-      color: 'amber'
-    },
-    law_governance: {
-      icon: <Scale className="w-4 h-4 text-purple-500" />,
-      institute: 'NLSIU Bengaluru • Corporate Law',
-      color: 'purple'
-    },
-    ui_ux: {
-      icon: <Palette className="w-4 h-4 text-pink-500" />,
-      institute: 'NID Ahmedabad • Interaction Design',
-      color: 'pink'
-    }
-  };
 
   const architectureSteps = [
     {
@@ -312,9 +285,27 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                 </p>
               </div>
 
-              {/* Discipline Switcher Dropdown (Only 5 Academic Discipline Fields, No Student Names) */}
-              <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-white/[0.06]">
-                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
+              {/* Feature Highlights List */}
+              <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2 border-t border-slate-100 dark:border-white/[0.06]">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                  <span>Proctored Sandboxes & 0–100 Competency Index</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                  <span>ATS Resume Diagnostic Studio & AI Skill Gap Engine</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                  <span>DigiLocker Living Resume & Verified Credential Ledger</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Discipline Dropdown & Launch Workspace Button */}
+            <div className="space-y-3 pt-1">
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
                   <span>Select Academic Field:</span>
                   <span className="text-[10px] font-mono text-indigo-600 dark:text-cyan-400 font-bold">
                     5 Disciplines
@@ -325,7 +316,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                   <select
                     value={activeTabField}
                     onChange={(e) => handleSelectStudentField(e.target.value as AcademicStream)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-indigo-200 dark:border-indigo-500/30 bg-white dark:bg-[#0c1222] text-slate-900 dark:text-white font-bold text-xs shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none cursor-pointer appearance-none pr-10"
+                    className="w-full px-3.5 py-2 rounded-xl border border-indigo-200 dark:border-indigo-500/30 bg-white dark:bg-[#0c1222] text-slate-900 dark:text-white font-bold text-xs shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none cursor-pointer appearance-none pr-10"
                   >
                     {allStudents.map((stu) => (
                       <option key={stu.id} value={stu.streamId}>
@@ -335,19 +326,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                   </select>
                   <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
-              </div>
-            </div>
-
-            {/* Selected Disciplinary Field Summary */}
-            <div className="space-y-3 pt-1">
-              <div className="p-3.5 rounded-xl bg-white/90 dark:bg-[#0d1424] border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white">
-                <div className="flex items-center gap-2 truncate">
-                  {disciplineDetails[activeTabField]?.icon}
-                  <span className="truncate">{activeStudent.streamName}</span>
-                </div>
-                <span className="text-[11px] font-mono font-bold text-indigo-600 dark:text-cyan-400 bg-indigo-50 dark:bg-indigo-950 px-2 py-0.5 rounded-lg border border-indigo-200 dark:border-indigo-800 shrink-0">
-                  {disciplineDetails[activeTabField]?.institute}
-                </span>
               </div>
 
               <button
