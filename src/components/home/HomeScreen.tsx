@@ -209,28 +209,30 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
 
       </div>
 
-      {/* SECTION 2: INTERACTIVE CORE SUBSTRATE ARCHITECTURE (HIGH CONTRAST & CLEAR VISIBILITY) */}
-      <div className="space-y-6 rounded-3xl bg-slate-900 text-white border-2 border-indigo-500/40 p-6 sm:p-8 relative overflow-hidden shadow-2xl">
-        <div className="absolute -top-24 -right-24 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
+      {/* SECTION 2: INTERACTIVE CORE SUBSTRATE ARCHITECTURE (ADAPTIVE GLASSMORPHIC THEME) */}
+      <div className="space-y-6 rounded-3xl bg-gradient-to-br from-indigo-50/90 via-white to-cyan-50/80 dark:from-[#0b1224] dark:via-[#0f1932] dark:to-[#0b1224] border-2 border-indigo-200 dark:border-indigo-500/40 p-6 sm:p-8 relative overflow-hidden shadow-xl transition-colors">
+        {/* Glow accent in top right */}
+        <div className="absolute -top-24 -right-24 w-72 h-72 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
         
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-indigo-100 dark:border-white/[0.08] pb-5 relative z-10">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/30 text-cyan-300 text-xs font-mono font-bold border border-indigo-400/40 mb-2">
-              <Layers className="w-3.5 h-3.5 text-cyan-400" />
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-cyan-300 text-xs font-mono font-extrabold border border-indigo-200 dark:border-indigo-500/40 mb-2.5">
+              <Layers className="w-4 h-4 text-indigo-600 dark:text-cyan-400" />
               <span>CORE ARCHITECTURE ENGINE</span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">How CareerLens Substrate Works</h3>
+            <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">How CareerLens Substrate Works</h3>
           </div>
 
-          <div className="flex items-center gap-2 bg-slate-950 p-1.5 rounded-2xl border border-slate-800">
+          <div className="flex items-center gap-2 bg-white/80 dark:bg-[#070d1a]/80 p-1.5 rounded-2xl border border-slate-200 dark:border-white/[0.1] shadow-inner">
             {architectureSteps.map((item) => (
               <button
                 key={item.step}
                 onClick={() => setActiveArchitectureStep(item.step)}
                 className={`px-4 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${
                   activeArchitectureStep === item.step
-                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                    ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-md shadow-indigo-600/30'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
                 }`}
               >
                 Pillar {item.step}
@@ -239,30 +241,33 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
           </div>
         </div>
 
-        {/* Selected Architecture Pillar Detail (High Contrast White Text on Dark Container) */}
+        {/* Selected Architecture Pillar Detail (Light / Dark Adaptive Glassmorphic Layout) */}
         {architectureSteps.map((pillar) => {
           if (pillar.step !== activeArchitectureStep) return null;
           return (
-            <div key={pillar.step} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center pt-2 animate-fadeIn">
-              <div className="md:col-span-2 space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-2xl bg-indigo-500/30 border border-indigo-400/40 shrink-0">
+            <div key={pillar.step} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center pt-2 animate-fadeIn relative z-10">
+              <div className="md:col-span-2 space-y-4">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-600/30 shrink-0">
                     {pillar.icon}
                   </div>
                   <div>
-                    <span className="text-xs font-mono font-extrabold text-cyan-300 uppercase tracking-wider">{pillar.badge}</span>
-                    <h4 className="text-xl font-black text-white">{pillar.title}</h4>
+                    <span className="text-xs font-mono font-black text-indigo-600 dark:text-cyan-400 uppercase tracking-wider">{pillar.badge}</span>
+                    <h4 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">{pillar.title}</h4>
                   </div>
                 </div>
-                <p className="text-sm font-semibold text-slate-100 leading-relaxed bg-slate-800/90 p-4.5 rounded-2xl border border-slate-700/80">
+                
+                <p className="text-sm font-semibold text-slate-700 dark:text-slate-200 leading-relaxed bg-white/90 dark:bg-[#121b33] p-5 rounded-2xl border border-slate-200/90 dark:border-white/[0.08] shadow-sm">
                   {pillar.desc}
                 </p>
               </div>
 
-              <div className="p-6 rounded-2xl bg-slate-950 border border-indigo-500/30 flex flex-col justify-center items-center text-center space-y-2 shadow-lg">
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">Platform Capability</span>
-                <span className="text-base sm:text-lg font-black text-emerald-400">{pillar.metric}</span>
-                <span className="text-[11px] font-semibold text-slate-300">Verified System Substrate</span>
+              <div className="p-6 rounded-2xl bg-white dark:bg-[#121b33] border-2 border-indigo-200 dark:border-indigo-500/30 flex flex-col justify-center items-center text-center space-y-2.5 shadow-md">
+                <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-mono">Platform Capability</span>
+                <span className="text-base sm:text-lg font-black text-indigo-700 dark:text-emerald-400 bg-indigo-50 dark:bg-indigo-950/60 px-4 py-1.5 rounded-xl border border-indigo-200 dark:border-indigo-800/60">
+                  {pillar.metric}
+                </span>
+                <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400">Verified System Substrate</span>
               </div>
             </div>
           );
