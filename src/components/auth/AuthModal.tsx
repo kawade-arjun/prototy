@@ -128,9 +128,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <h3 className="font-extrabold text-xl text-slate-900 dark:text-white tracking-tight">
                   Career<span className="text-indigo-600 dark:text-indigo-400">Lens</span> Gateway
                 </h3>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 flex items-center gap-1">
-                  <ShieldCheck className="w-3 h-3" /> DigiLocker PKI
-                </span>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 National Sovereign Talent & Verified Credentials Infrastructure
