@@ -18,7 +18,8 @@ import {
   Lock,
   Menu,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  CheckCircle2
 } from 'lucide-react';
 
 import { useStudent } from '../../context/StudentContext';
@@ -43,46 +44,21 @@ export const StudentPortal: React.FC = () => {
   return (
     <div className="space-y-6">
       
-      {/* Student Quick-HUD Status Ribbon */}
-      <div className="glass-panel rounded-3xl p-5 space-y-4 transition-colors">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-500 p-0.5 shadow-md">
-                <div className="w-full h-full bg-white dark:bg-[#0d1322] rounded-[14px] flex items-center justify-center font-bold text-indigo-600 dark:text-white text-xs">
-                  {activeStudent.avatarInitials}
-                </div>
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-base text-slate-900 dark:text-white">{activeStudent.name}</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-500/10 dark:text-indigo-300 dark:border-indigo-500/20">
-                    {activeStudent.streamName}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400">
-                  <span>{activeStudent.degree}</span>
-                  <span>•</span>
-                  <span>{activeStudent.digiLockerId}</span>
-                </div>
-              </div>
+      {/* Student Profile Header Ribbon */}
+      <div className="glass-panel rounded-3xl p-4 sm:p-5 transition-colors">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-500 p-0.5 shadow-md shrink-0">
+            <div className="w-full h-full bg-white dark:bg-[#0d1322] rounded-[14px] flex items-center justify-center font-bold text-indigo-600 dark:text-white text-xs">
+              {activeStudent.avatarInitials}
             </div>
           </div>
-
-          {/* Real-time telemetry badges */}
-          <div className="flex flex-wrap items-center gap-2.5">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100/90 dark:bg-slate-900/80 border border-slate-200 dark:border-white/[0.06] text-xs">
-              <span className="text-slate-500 dark:text-slate-400">ATS Score:</span>
-              <span className="font-black text-indigo-600 dark:text-cyan-400">{activeStudent.atsScore}/100</span>
-            </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-300 text-xs font-semibold">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-              <span>DigiLocker Verified</span>
-            </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 dark:bg-indigo-500/10 dark:border-indigo-500/20 dark:text-indigo-300 text-xs font-semibold">
-              <Lock className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-              <span>DPDP Masked</span>
-            </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Blue Tick Badge in front of the name */}
+            <CheckCircle2 className="w-4.5 h-4.5 text-blue-500 fill-blue-500 text-white shrink-0" />
+            <span className="font-extrabold text-base sm:text-lg text-slate-900 dark:text-white">{activeStudent.name}</span>
+            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/80 dark:bg-indigo-500/15 dark:text-indigo-300 dark:border-indigo-500/30">
+              {activeStudent.streamName}
+            </span>
           </div>
         </div>
       </div>

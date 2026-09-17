@@ -10,8 +10,11 @@ import {
   Calendar, 
   Trash2, 
   Bell, 
-  Globe 
+  Globe,
+  Sun,
+  Moon
 } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -19,6 +22,7 @@ interface SettingsModalProps {
 }
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
+  const { theme, toggleTheme } = useTheme();
   const [activeSubTab, setActiveSubTab] = useState<'bookmarks' | 'privacy' | 'preferences'>('bookmarks');
   const [anonymousMode, setAnonymousMode] = useState(false);
   const [maskContactDetails, setMaskContactDetails] = useState(true);
@@ -230,6 +234,26 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
 
           {activeSubTab === 'preferences' && (
             <div className="space-y-3">
+              {/* Appearance & Theme Mode Switcher */}
+              <div className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/40">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-cyan-400 flex items-center justify-center shrink-0">
+                    {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-600" />}
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 dark:text-white">Appearance & Theme</div>
+                    <div className="text-[11px] text-slate-500">Currently active: {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}</div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-sm transition-all active:scale-95 cursor-pointer"
+                >
+                  Switch to {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                </button>
+              </div>
+
               <div className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/40">
                 <div className="flex items-center gap-3">
                   <Bell className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
