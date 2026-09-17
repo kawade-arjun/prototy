@@ -92,10 +92,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 : 'bg-rose-50 border-rose-200 text-rose-700 dark:bg-rose-500/10 dark:border-rose-500/30 dark:text-rose-300'
             }`}>
               <span>
-                {currentRole === 'student' && `🎓 Student Workspace: ${activeStudent.streamName}`}
-                {currentRole === 'college' && '🏛️ Institutional TPO Command Center'}
-                {currentRole === 'recruiter' && '💼 Corporate Talent Console'}
-                {currentRole === 'government' && '🇮🇳 National Policy Observatory'}
+                {currentRole === 'student' && `Student Workspace: ${activeStudent.streamName}`}
+                {currentRole === 'college' && 'Institutional TPO Command Center'}
+                {currentRole === 'recruiter' && 'Corporate Talent Console'}
+                {currentRole === 'government' && 'National Policy Observatory'}
               </span>
             </div>
           </div>
@@ -122,7 +122,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </button>
 
-          {/* Streak Badge: Only 8 🔥 (without text "8-Day Streak") */}
+          {/* Streak Badge: 8 with Flame icon */}
           <div 
             className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/25 dark:text-amber-300 text-xs font-black shadow-sm"
             title="8-Day Active Streak"

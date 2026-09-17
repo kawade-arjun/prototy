@@ -35,10 +35,31 @@ import {
   HelpCircle, 
   Compass, 
   ExternalLink,
-  ChevronDown
+  ChevronDown,
+  TrendingUp,
+  Scale,
+  Palette,
+  Award
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useStudent } from '../../../context/StudentContext';
+
+const getStreamIcon = (streamId: string, className = "w-4 h-4") => {
+  switch (streamId) {
+    case 'tech_ai':
+      return <Cpu className={className} />;
+    case 'commerce_finance':
+      return <TrendingUp className={className} />;
+    case 'healthcare_bio':
+      return <Activity className={className} />;
+    case 'law_governance':
+      return <Scale className={className} />;
+    case 'ui_ux':
+      return <Palette className={className} />;
+    default:
+      return <Cpu className={className} />;
+  }
+};
 
 export const Tab2ProctoredSandbox: React.FC = () => {
   const { theme } = useTheme();
@@ -76,12 +97,12 @@ export const Tab2ProctoredSandbox: React.FC = () => {
 
   // Sub-tabs definition with colors & icons (All Tests tab placed before Daily Quests)
   const subTabs = [
-    { id: 'all_tests' as AssessmentSubTab, label: '📋 All Tests', duration: 'All', color: 'text-indigo-600 border-indigo-500/30 bg-indigo-500/10 dark:text-cyan-400 dark:border-cyan-500/30 dark:bg-cyan-500/10' },
-    { id: 'daily_quests' as AssessmentSubTab, label: '🔥 Daily Quests', duration: '5–10 Mins', color: 'text-amber-500 border-amber-500/30 bg-amber-500/10' },
-    { id: 'domain_benchmarks' as AssessmentSubTab, label: '🎯 Domain-Specific Benchmarks', duration: '30–60 Mins', color: 'text-emerald-500 border-emerald-500/30 bg-emerald-500/10' },
-    { id: 'recruiter_drives' as AssessmentSubTab, label: '🏢 Recruiter Drives', duration: '45–90 Mins', color: 'text-purple-500 border-purple-500/30 bg-purple-500/10' },
-    { id: 'aptitude_logic' as AssessmentSubTab, label: '⚡ Aptitude & Logic', duration: '30–45 Mins', color: 'text-blue-500 border-blue-500/30 bg-blue-500/10' },
-    { id: 'soft_skills_ethics' as AssessmentSubTab, label: '💬 Soft Skills & Ethics', duration: '15–30 Mins', color: 'text-indigo-500 border-indigo-500/30 bg-indigo-500/10' }
+    { id: 'all_tests' as AssessmentSubTab, label: 'All Tests', duration: 'All', color: 'text-indigo-600 border-indigo-500/30 bg-indigo-500/10 dark:text-cyan-400 dark:border-cyan-500/30 dark:bg-cyan-500/10' },
+    { id: 'daily_quests' as AssessmentSubTab, label: 'Daily Quests', duration: '5–10 Mins', color: 'text-amber-500 border-amber-500/30 bg-amber-500/10' },
+    { id: 'domain_benchmarks' as AssessmentSubTab, label: 'Domain-Specific Benchmarks', duration: '30–60 Mins', color: 'text-emerald-500 border-emerald-500/30 bg-emerald-500/10' },
+    { id: 'recruiter_drives' as AssessmentSubTab, label: 'Recruiter Drives', duration: '45–90 Mins', color: 'text-purple-500 border-purple-500/30 bg-purple-500/10' },
+    { id: 'aptitude_logic' as AssessmentSubTab, label: 'Aptitude & Logic', duration: '30–45 Mins', color: 'text-blue-500 border-blue-500/30 bg-blue-500/10' },
+    { id: 'soft_skills_ethics' as AssessmentSubTab, label: 'Soft Skills & Ethics', duration: '15–30 Mins', color: 'text-indigo-500 border-indigo-500/30 bg-indigo-500/10' }
   ];
 
   // Active stream metadata
@@ -210,7 +231,9 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               onClick={() => setShowStreamDropdown(!showStreamDropdown)}
               className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-[#0d1424] border border-slate-200 dark:border-white/[0.08] hover:border-indigo-500 transition-all text-xs font-bold text-slate-900 dark:text-white shadow-sm"
             >
-              <span className="text-base">{currentStreamMeta.icon}</span>
+              <div className="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-cyan-400 flex items-center justify-center">
+                {getStreamIcon(currentStreamMeta.id, "w-4 h-4")}
+              </div>
               <div className="text-left">
                 <div className="text-[9px] text-slate-400 uppercase font-semibold">Discipline</div>
                 <div className="text-xs font-extrabold text-indigo-600 dark:text-cyan-400">{currentStreamMeta.name}</div>
@@ -233,7 +256,9 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                         : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.05]'
                     }`}
                   >
-                    <span>{s.icon}</span>
+                    <div className={`p-1.5 rounded-lg ${selectedStream === s.id ? 'bg-white/20 text-white' : 'bg-slate-200/60 dark:bg-white/10 text-slate-700 dark:text-slate-300'} flex items-center justify-center shrink-0`}>
+                      {getStreamIcon(s.id, "w-3.5 h-3.5")}
+                    </div>
                     <div className="truncate">
                       <div>{s.name}</div>
                       <div className="text-[10px] font-normal opacity-80">{s.badge}</div>
@@ -565,7 +590,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                     <div className="text-slate-400 text-[11px] font-bold">Case #{idx + 1}:</div>
                     <div className="text-slate-200"><strong className="text-slate-400">Input:</strong> {sc.input}</div>
                     <div className="text-emerald-400"><strong className="text-slate-400">Expected:</strong> {sc.expected}</div>
-                    <div className="text-[11px] text-slate-500 font-sans mt-1">💡 {sc.explanation}</div>
+                    <div className="text-[11px] text-slate-500 font-sans mt-1">{sc.explanation}</div>
                   </div>
                 ))}
               </div>
@@ -641,7 +666,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                 <div className="p-6 overflow-y-auto space-y-5 text-white">
                   <div className="flex items-center justify-between">
                     <h3 className="text-base font-bold flex items-center gap-2">
-                      📈 Interactive LBO Debt Waterfall & IRR Modeler
+                      Interactive LBO Debt Waterfall & IRR Modeler
                     </h3>
                     <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-amber-500/20 text-amber-300">
                       Automated Mathematical Audit Engine
@@ -683,7 +708,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               {activeTest.stream === 'ui_ux' && (
                 <div className="p-6 overflow-y-auto space-y-5 text-white">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-base font-bold">🎨 Live WCAG 2.2 / 3.0 AAA Spatial & Contrast Auditor</h3>
+                    <h3 className="text-base font-bold">Live WCAG 2.2 / 3.0 AAA Spatial & Contrast Auditor</h3>
                     <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-purple-500/20 text-purple-300">
                       DOM Accessibility Tree Parser
                     </span>
@@ -717,7 +742,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               {activeTest.stream === 'law_governance' && (
                 <div className="p-6 overflow-y-auto space-y-5 text-white">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-base font-bold">⚖️ Statutory Contract & NDA Clause Risk Parser</h3>
+                    <h3 className="text-base font-bold">Statutory Contract & NDA Clause Risk Parser</h3>
                     <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-rose-500/20 text-rose-300">
                       DPDP Act 2023 Statutory Rules
                     </span>
@@ -743,7 +768,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               {activeTest.stream === 'healthcare_bio' && (
                 <div className="p-6 overflow-y-auto space-y-5 text-white">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-base font-bold">🧬 Biostatistical Clinical Trial Validator</h3>
+                    <h3 className="text-base font-bold">Biostatistical Clinical Trial Validator</h3>
                     <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-teal-500/20 text-teal-300">
                       Kaplan-Meier Survival Curves
                     </span>
@@ -778,7 +803,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                 <div className="text-center space-y-1.5">
                   <h4 className="text-base font-black text-white">Anti-Cheat Notice</h4>
                   <p className="text-xs text-amber-200 leading-relaxed">
-                    ⚠️ External clipboard paste blocked by Proctoring Guard. Raw implementation is required.
+                    External clipboard paste blocked by Proctoring Guard. Raw implementation is required.
                   </p>
                   <p className="text-[11px] text-slate-400">
                     This attempt has been logged in your recruiter audit report (Flag #{antiCheatFlags}).
@@ -895,7 +920,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
             {diagnosticReportTest.awardedBadge && (
               <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-slate-50 dark:via-[#090e1c] to-indigo-500/10 border border-amber-500/30 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center font-bold text-lg shrink-0">
-                  🎖️
+                  <Award className="w-5 h-5 text-amber-500" />
                 </div>
                 <div>
                   <div className="text-[10px] font-bold uppercase text-amber-700 dark:text-amber-400">
@@ -913,7 +938,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#080d1a] border border-slate-200 dark:border-white/[0.08] space-y-2">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-bold text-slate-900 dark:text-white">
-                    🎯 Minimum Skill-Bridge Recommendation:
+                    Minimum Skill-Bridge Recommendation:
                   </span>
                   <span className="text-slate-500 font-mono">
                     {diagnosticReportTest.skillBridgeRecommendation.duration}

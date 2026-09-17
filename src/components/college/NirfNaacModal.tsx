@@ -9,10 +9,32 @@ import {
   Sparkles,
   Lock,
   Printer,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Cpu,
+  TrendingUp,
+  Activity,
+  Scale,
+  Palette
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { DEPARTMENT_COHORTS } from '../../mock/collegeData';
+
+const getDeptIcon = (deptId: string, className = "w-3.5 h-3.5") => {
+  switch (deptId) {
+    case 'DEPT-CSE':
+      return <Cpu className={className} />;
+    case 'DEPT-COMM':
+      return <TrendingUp className={className} />;
+    case 'DEPT-BIO':
+      return <Activity className={className} />;
+    case 'DEPT-LAW':
+      return <Scale className={className} />;
+    case 'DEPT-DES':
+      return <Palette className={className} />;
+    default:
+      return <Building2 className={className} />;
+  }
+};
 
 interface NirfNaacModalProps {
   onClose: () => void;
@@ -27,7 +49,7 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
     confetti({ particleCount: 70, spread: 80 });
     setTimeout(() => {
       setIsExporting(false);
-      alert(`✅ Official ${reportType} Institutional Accreditation Ledger downloaded. Digitally signed with SHA-256 sovereign hash seal.`);
+      alert(`Official ${reportType} Institutional Accreditation Ledger downloaded. Digitally signed with SHA-256 sovereign hash seal.`);
     }, 800);
   };
 
@@ -150,8 +172,10 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-sans">
                   {DEPARTMENT_COHORTS.map((c) => (
                     <tr key={c.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
-                      <td className="p-2.5 font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                        <span>{c.icon}</span>
+                      <td className="p-2.5 font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span className="p-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center">
+                          {getDeptIcon(c.id, "w-3.5 h-3.5")}
+                        </span>
                         <span>{c.name}</span>
                       </td>
                       <td className="p-2.5 font-mono">{c.totalStudents}</td>

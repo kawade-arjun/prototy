@@ -73,7 +73,7 @@ export const ASSESSMENT_TESTS: AssessmentTest[] = [
     ],
     strengthsDemonstrated: ['Zero-day prompt injection mitigation', 'Strict pydantic type serialization'],
     deficitsDetected: ['None - pristine execution.'],
-    awardedBadge: '🔥 Day 8 Habit Pioneer'
+    awardedBadge: 'Day 8 Habit Pioneer'
   },
   {
     id: 'QUEST-102',

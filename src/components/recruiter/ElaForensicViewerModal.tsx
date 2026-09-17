@@ -328,7 +328,7 @@ export const ElaForensicViewerModal: React.FC<ElaForensicViewerModalProps> = ({
               }`}
             >
               <Ban className="w-3.5 h-3.5" />
-              <span>{isQuarantined ? 'Profile Quarantined ⛔' : 'Quarantine Profile'}</span>
+              <span>{isQuarantined ? 'Profile Quarantined' : 'Quarantine Profile'}</span>
             </button>
           </div>
 

@@ -26,7 +26,11 @@ import {
   ExternalLink,
   Flame,
   Terminal,
-  Clock
+  Clock,
+  TrendingUp,
+  Activity,
+  Scale,
+  Palette
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useTheme } from '../../context/ThemeContext';
@@ -39,6 +43,23 @@ import {
 import { NirfNaacModal } from './NirfNaacModal';
 import { DriveRosterModal } from './DriveRosterModal';
 import { CollegeElaInspectorModal } from './CollegeElaInspectorModal';
+
+const getDeptIcon = (deptId: string, className = "w-4 h-4") => {
+  switch (deptId) {
+    case 'DEPT-CSE':
+      return <Cpu className={className} />;
+    case 'DEPT-COMM':
+      return <TrendingUp className={className} />;
+    case 'DEPT-BIO':
+      return <Activity className={className} />;
+    case 'DEPT-LAW':
+      return <Scale className={className} />;
+    case 'DEPT-DES':
+      return <Palette className={className} />;
+    default:
+      return <Building2 className={className} />;
+  }
+};
 
 export const CollegePortal: React.FC = () => {
   const { theme } = useTheme();
@@ -275,7 +296,9 @@ export const CollegePortal: React.FC = () => {
                   <div className="space-y-3">
                     {/* Header */}
                     <div className="flex items-center justify-between">
-                      <span className="text-2xl">{dept.icon}</span>
+                      <div className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                        {getDeptIcon(dept.id, "w-5 h-5")}
+                      </div>
                       <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
                         {dept.shortCode} DEPT
                       </span>
@@ -475,8 +498,10 @@ export const CollegePortal: React.FC = () => {
                   className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2.5"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-slate-900 dark:text-white text-xs flex items-center gap-1.5">
-                      <span>{dept.icon}</span>
+                    <span className="font-bold text-slate-900 dark:text-white text-xs flex items-center gap-2">
+                      <span className="p-1 rounded bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center">
+                        {getDeptIcon(dept.id, "w-3.5 h-3.5")}
+                      </span>
                       <span>{dept.name}</span>
                     </span>
                     <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/30">

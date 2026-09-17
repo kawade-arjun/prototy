@@ -17,7 +17,12 @@ import {
   Layers, 
   Flame,
   Award,
-  ChevronRight
+  ChevronRight,
+  Cpu,
+  TrendingUp,
+  Activity,
+  Scale,
+  Palette
 } from 'lucide-react';
 
 interface HomeScreenProps {
@@ -38,37 +43,37 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
     onSelectRole('student');
   };
 
-  const disciplineDetails: Record<AcademicStream, { emoji: string; institute: string; highlight: string; color: string; badgeColor: string }> = {
+  const disciplineDetails: Record<AcademicStream, { icon: React.ReactNode; institute: string; highlight: string; color: string; badgeColor: string }> = {
     tech_ai: {
-      emoji: '💻',
+      icon: <Cpu className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />,
       institute: 'IIT Bombay • Dept of CSE',
       highlight: 'Monaco IDE Sandbox, Distributed Systems & Deep Learning (PyTorch / vLLM)',
       color: 'from-blue-600 to-indigo-600',
       badgeColor: 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-300 dark:border-blue-500/30'
     },
     commerce_finance: {
-      emoji: '📈',
+      icon: <TrendingUp className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />,
       institute: 'SRCC Delhi • Finance & FinTech',
       highlight: 'LBO & DCF Formula Sandbox, Financial Modeling, SEC Edgar & ESG Analytics',
       color: 'from-emerald-600 to-teal-600',
       badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/30'
     },
     healthcare_bio: {
-      emoji: '🧬',
+      icon: <Activity className="w-5 h-5 text-amber-600 dark:text-amber-400" />,
       institute: 'AIIMS & AllA New Delhi • Ayush & Bio-Health',
       highlight: 'NAMASTE to WHO ICD-11 Dual-Ontology, Ayush Pharmacovigilance & Clinical Trials',
       color: 'from-amber-600 to-orange-600',
       badgeColor: 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/10 dark:text-amber-300 dark:border-amber-500/30'
     },
     law_governance: {
-      emoji: '⚖️',
+      icon: <Scale className="w-5 h-5 text-purple-600 dark:text-purple-400" />,
       institute: 'NLSIU Bengaluru • Corporate Law',
       highlight: 'India DPDP Act 2023 Statutory Compliance, Cross-Border M&A & Fiduciary Tokenization',
       color: 'from-purple-600 to-violet-600',
       badgeColor: 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-500/10 dark:text-purple-300 dark:border-purple-500/30'
     },
     ui_ux: {
-      emoji: '🎨',
+      icon: <Palette className="w-5 h-5 text-pink-600 dark:text-pink-400" />,
       institute: 'NID Ahmedabad • Interaction Design & HCI',
       highlight: 'WCAG 2.2 AAA Accessibility Sandbox, Design Tokens & Design Systems',
       color: 'from-pink-600 to-rose-600',
@@ -184,8 +189,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                         }`}
                       >
                         <div className="flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-2">
-                            <span className="text-lg">{meta.emoji}</span>
+                          <div className="flex items-center gap-2.5">
+                            <div className="p-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/80">
+                              {meta.icon}
+                            </div>
                             <div>
                               <div className="text-xs font-bold text-slate-900 dark:text-white leading-tight">
                                 {stu.streamName}

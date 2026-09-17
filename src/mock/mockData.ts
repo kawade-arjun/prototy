@@ -16,7 +16,7 @@ export const ACADEMIC_STREAMS: StreamMetadata[] = [
     institution: 'IIT Bombay',
     sandboxTitle: 'Monaco Code Sandbox (Judge0 Isolated Container)',
     targetRoles: ['AI Research Intern', 'GenAI / ML Engineer', 'Full-Stack Developer'],
-    icon: '💻'
+    icon: 'cpu'
   },
   {
     id: 'commerce_finance',
@@ -25,7 +25,7 @@ export const ACADEMIC_STREAMS: StreamMetadata[] = [
     institution: 'SRCC / NMIMS',
     sandboxTitle: 'Dynamic 3-Statement & DCF Financial Modeling Simulator',
     targetRoles: ['Quant Analyst', 'Investment Banking Analyst', 'Equity Research'],
-    icon: '📈'
+    icon: 'trending-up'
   },
   {
     id: 'ui_ux',
@@ -34,7 +34,7 @@ export const ACADEMIC_STREAMS: StreamMetadata[] = [
     institution: 'NID Ahmedabad',
     sandboxTitle: 'Live WCAG 2.2 AA Accessibility & Spatial Layout Audit',
     targetRoles: ['Product Designer', 'Design Systems Architect', 'UX Researcher'],
-    icon: '🎨'
+    icon: 'palette'
   },
   {
     id: 'law_governance',
@@ -43,7 +43,7 @@ export const ACADEMIC_STREAMS: StreamMetadata[] = [
     institution: 'NLSIU Bangalore',
     sandboxTitle: 'Statutory NDA & Contract Clause Risk Parser',
     targetRoles: ['Technology Associate', 'Corporate Legal Counsel', 'Compliance Officer'],
-    icon: '⚖️'
+    icon: 'scale'
   },
   {
     id: 'healthcare_bio',
@@ -52,7 +52,7 @@ export const ACADEMIC_STREAMS: StreamMetadata[] = [
     institution: 'AIIMS New Delhi',
     sandboxTitle: 'Single-cell RNA-seq Workflow Validator',
     targetRoles: ['Clinical Bio-Statistician', 'Bioinformatician', 'Genomic Data Analyst'],
-    icon: '🧬'
+    icon: 'activity'
   }
 ];
 

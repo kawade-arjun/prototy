@@ -39,7 +39,7 @@ export const SovereignGrantModal: React.FC<SovereignGrantModalProps> = ({
     confetti({ particleCount: 75, spread: 80 });
     setTimeout(() => {
       setIsAllocating(false);
-      alert(`✅ Sovereign Skilling Grant of ₹${grantAmountCr} Cr successfully sanctioned for ${selectedState.stateName}! Official Ministry Sanction Order No. AYUSH-AICTE-FY26-089 generated.`);
+      alert(`Sovereign Skilling Grant of ₹${grantAmountCr} Cr successfully sanctioned for ${selectedState.stateName}! Official Ministry Sanction Order No. AYUSH-AICTE-FY26-089 generated.`);
       if (onGrantAllocated) {
         onGrantAllocated(selectedState.stateName, `₹${grantAmountCr} Cr`);
       }

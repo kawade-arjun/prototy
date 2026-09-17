@@ -110,7 +110,7 @@ export const CollegeElaInspectorModal: React.FC<CollegeElaInspectorModalProps> =
                 <span className={`text-[9px] px-1.5 py-0.2 rounded font-mono ${
                   doc.auditStatus === 'tampered' ? 'bg-rose-500 text-white font-bold' : 'bg-emerald-500 text-white font-bold'
                 }`}>
-                  {doc.auditStatus === 'tampered' ? '⚠️ ELA High' : '✓ Verified'}
+                  {doc.auditStatus === 'tampered' ? 'ELA High' : 'Verified'}
                 </span>
               </button>
             ))}

@@ -9,7 +9,8 @@ import {
   QrCode, 
   Copy, 
   Check, 
-  CheckCircle2
+  CheckCircle2,
+  Award
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -128,7 +129,9 @@ export const Tab7LivingResume: React.FC = () => {
         {activeStudent.livingResumeRankings.map((rank, i) => (
           <div key={i} className={`glass-panel p-5 rounded-2xl border ${rank.border} space-y-3 hover:-translate-y-1 transition-transform`}>
             <div className="flex items-center justify-between">
-              <span className="text-2xl">{rank.icon}</span>
+              <div className={`w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800/80 flex items-center justify-center ${rank.color}`}>
+                <Award className="w-4 h-4" />
+              </div>
               <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800/80 dark:text-slate-300">
                 {rank.badge}
               </span>
@@ -179,7 +182,7 @@ export const Tab7LivingResume: React.FC = () => {
 
         <div className="flex flex-wrap items-center justify-between text-xs text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-100 dark:border-white/[0.08]">
           <div className="flex items-center gap-4">
-            <span>Continuous Streak: <strong className="text-amber-600 dark:text-amber-300 font-bold">🔥 8 Days Active</strong></span>
+            <span>Continuous Streak: <strong className="text-amber-600 dark:text-amber-300 font-bold">8 Days Active</strong></span>
             <span>Longest Streak: <strong className="text-slate-900 dark:text-white font-bold">42 Days</strong></span>
             <span>Integrity: <strong className="text-emerald-600 dark:text-emerald-400 font-bold">100% Zero Flags</strong></span>
           </div>

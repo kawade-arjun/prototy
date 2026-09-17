@@ -125,7 +125,7 @@ export const RecruiterPortal: React.FC = () => {
               sender: 'recruiter',
               senderName: 'Corporate Talent Console (Audit Bot)',
               timestamp: 'Just now',
-              text: `🚨 URGENT FRAUD AUDIT NOTICE: Candidate Vikramaditya Rao (${candId}) flagged with ELA Discrepancy Index 0.884 (altered CGPA 9.85). Academic credential verification ledger paused pending registrar review.`,
+              text: `URGENT FRAUD AUDIT NOTICE: Candidate Vikramaditya Rao (${candId}) flagged with ELA Discrepancy Index 0.884 (altered CGPA 9.85). Academic credential verification ledger paused pending registrar review.`,
               isEncrypted: true
             }
           ]
@@ -721,7 +721,7 @@ export const RecruiterPortal: React.FC = () => {
                             </span>
                             {isTampered && (
                               <span className="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold">
-                                ⚠️ ELA High
+                                ELA High
                               </span>
                             )}
                           </div>

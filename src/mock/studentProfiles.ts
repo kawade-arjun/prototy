@@ -54,10 +54,10 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       ]
     },
     livingResumeRankings: [
-      { domain: 'AI & Machine Learning', percentile: '99.2nd', badge: 'Top 0.8%', icon: '🧠', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' },
-      { domain: 'Data Structures & Algorithms', percentile: '98.7th', badge: 'Top 1.3%', icon: '⚡', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' },
-      { domain: 'System Design & Scalability', percentile: '97.4th', badge: 'Top 2.6%', icon: '📐', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' },
-      { domain: 'Code Uniqueness & Veracity', percentile: '99.8th', badge: 'Top 0.2%', icon: '🛡️', color: 'text-purple-600 dark:text-purple-400', border: 'border-purple-200 dark:border-purple-500/30' }
+      { domain: 'AI & Machine Learning', percentile: '99.2nd', badge: 'Top 0.8%', icon: '', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' },
+      { domain: 'Data Structures & Algorithms', percentile: '98.7th', badge: 'Top 1.3%', icon: '', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' },
+      { domain: 'System Design & Scalability', percentile: '97.4th', badge: 'Top 2.6%', icon: '', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' },
+      { domain: 'Code Uniqueness & Veracity', percentile: '99.8th', badge: 'Top 0.2%', icon: '', color: 'text-purple-600 dark:text-purple-400', border: 'border-purple-200 dark:border-purple-500/30' }
     ],
     skillBridgeInterventions: [
       {
@@ -137,10 +137,10 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       ]
     },
     livingResumeRankings: [
-      { domain: 'Financial Valuation & DCF', percentile: '98.6th', badge: 'Top 1.4%', icon: '📈', color: 'text-amber-600 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-500/30' },
-      { domain: 'Quantitative Econometrics', percentile: '97.2nd', badge: 'Top 2.8%', icon: '📊', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' },
-      { domain: 'Corporate Finance & M&A', percentile: '96.5th', badge: 'Top 3.5%', icon: '💼', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' },
-      { domain: 'Audited Model Integrity', percentile: '99.5th', badge: 'Top 0.5%', icon: '🛡️', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' }
+      { domain: 'Financial Valuation & DCF', percentile: '98.6th', badge: 'Top 1.4%', icon: '', color: 'text-amber-600 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-500/30' },
+      { domain: 'Quantitative Econometrics', percentile: '97.2nd', badge: 'Top 2.8%', icon: '', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' },
+      { domain: 'Corporate Finance & M&A', percentile: '96.5th', badge: 'Top 3.5%', icon: '', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' },
+      { domain: 'Audited Model Integrity', percentile: '99.5th', badge: 'Top 0.5%', icon: '', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' }
     ],
     skillBridgeInterventions: [
       {
@@ -220,10 +220,10 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       ]
     },
     livingResumeRankings: [
-      { domain: 'Biomedical Informatics', percentile: '99.4th', badge: 'Top 0.6%', icon: '🧬', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' },
-      { domain: 'Ontology Mapping (ICD-11)', percentile: '99.9th', badge: 'Top 0.1%', icon: '🌐', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' },
-      { domain: 'Clinical Biostatistics', percentile: '97.8th', badge: 'Top 2.2%', icon: '📊', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' },
-      { domain: 'Phytopharmacology & GCP', percentile: '98.5th', badge: 'Top 1.5%', icon: '🌿', color: 'text-amber-600 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-500/30' }
+      { domain: 'Biomedical Informatics', percentile: '99.4th', badge: 'Top 0.6%', icon: '', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' },
+      { domain: 'Ontology Mapping (ICD-11)', percentile: '99.9th', badge: 'Top 0.1%', icon: '', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' },
+      { domain: 'Clinical Biostatistics', percentile: '97.8th', badge: 'Top 2.2%', icon: '', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' },
+      { domain: 'Phytopharmacology & GCP', percentile: '98.5th', badge: 'Top 1.5%', icon: '', color: 'text-amber-600 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-500/30' }
     ],
     skillBridgeInterventions: [
       {
@@ -303,10 +303,10 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       ]
     },
     livingResumeRankings: [
-      { domain: 'Data Protection (DPDP 2023)', percentile: '98.9th', badge: 'Top 1.1%', icon: '⚖️', color: 'text-purple-600 dark:text-purple-400', border: 'border-purple-200 dark:border-purple-500/30' },
-      { domain: 'Tech Contracts & Licensing', percentile: '98.1st', badge: 'Top 1.9%', icon: '📜', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' },
-      { domain: 'Statutory Risk Analysis', percentile: '97.5th', badge: 'Top 2.5%', icon: '🛡️', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' },
-      { domain: 'M&A Due Diligence', percentile: '96.8th', badge: 'Top 3.2%', icon: '💼', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' }
+      { domain: 'Data Protection (DPDP 2023)', percentile: '98.9th', badge: 'Top 1.1%', icon: '', color: 'text-purple-600 dark:text-purple-400', border: 'border-purple-200 dark:border-purple-500/30' },
+      { domain: 'Tech Contracts & Licensing', percentile: '98.1st', badge: 'Top 1.9%', icon: '', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' },
+      { domain: 'Statutory Risk Analysis', percentile: '97.5th', badge: 'Top 2.5%', icon: '', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' },
+      { domain: 'M&A Due Diligence', percentile: '96.8th', badge: 'Top 3.2%', icon: '', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' }
     ],
     skillBridgeInterventions: [
       {
@@ -386,10 +386,10 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       ]
     },
     livingResumeRankings: [
-      { domain: 'Accessibility & WCAG 2.2', percentile: '99.3rd', badge: 'Top 0.7%', icon: '🎨', color: 'text-pink-600 dark:text-pink-400', border: 'border-pink-200 dark:border-pink-500/30' },
-      { domain: 'Design Systems Architecture', percentile: '98.8th', badge: 'Top 1.2%', icon: '✨', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' },
-      { domain: 'Spatial & Multimodal UI', percentile: '98.2nd', badge: 'Top 1.8%', icon: '🕶️', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' },
-      { domain: 'Interaction & Micro-Motion', percentile: '97.9th', badge: 'Top 2.1%', icon: '⚡', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' }
+      { domain: 'Accessibility & WCAG 2.2', percentile: '99.3rd', badge: 'Top 0.7%', icon: '', color: 'text-pink-600 dark:text-pink-400', border: 'border-pink-200 dark:border-pink-500/30' },
+      { domain: 'Design Systems Architecture', percentile: '98.8th', badge: 'Top 1.2%', icon: '', color: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-200 dark:border-indigo-500/30' },
+      { domain: 'Spatial & Multimodal UI', percentile: '98.2nd', badge: 'Top 1.8%', icon: '', color: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-200 dark:border-cyan-500/30' },
+      { domain: 'Interaction & Micro-Motion', percentile: '97.9th', badge: 'Top 2.1%', icon: '', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' }
     ],
     skillBridgeInterventions: [
       {

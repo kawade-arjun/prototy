@@ -293,11 +293,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   onChange={(e) => setSignupStream(e.target.value as AcademicStream)}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 >
-                  <option value="tech_ai">💻 Tech & AI (Computer Science & Engineering)</option>
-                  <option value="commerce_finance">📈 Commerce & Finance (Financial Engineering)</option>
-                  <option value="healthcare_bio">🧬 Healthcare & Bio-Sciences (Integrative Medicine)</option>
-                  <option value="law_governance">⚖️ Law & Governance (Corporate & Tech Law)</option>
-                  <option value="ui_ux">🎨 UI/UX Design (Human-Computer Interaction)</option>
+                  <option value="tech_ai">Tech & AI (Computer Science & Engineering)</option>
+                  <option value="commerce_finance">Commerce & Finance (Financial Engineering)</option>
+                  <option value="healthcare_bio">Healthcare & Bio-Sciences (Integrative Medicine)</option>
+                  <option value="law_governance">Law & Governance (Corporate & Tech Law)</option>
+                  <option value="ui_ux">UI/UX Design (Human-Computer Interaction)</option>
                 </select>
               </div>
             )}
@@ -388,7 +388,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               className="w-full py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/40 dark:text-emerald-300 dark:border-emerald-500/30 font-bold text-xs flex items-center justify-center gap-2 transition-all"
             >
               <Fingerprint className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              <span>🇮🇳 Sign in with DigiLocker / MeriPehchaan (National SSO)</span>
+              <span>Sign in with DigiLocker / MeriPehchaan (National SSO)</span>
             </button>
 
             {/* Fast Demo Bypass */}

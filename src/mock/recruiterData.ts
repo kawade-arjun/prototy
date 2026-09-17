@@ -160,7 +160,7 @@ export const RECRUITER_CANDIDATES: RecruiterCandidate[] = [
   {
     id: 'CAND-984',
     name: 'Arjun Kawade',
-    avatar: '👨‍💻',
+    avatar: 'AK',
     college: 'IIT Bombay',
     stream: 'tech_ai',
     streamLabel: 'Tech & AI',
@@ -191,7 +191,7 @@ export const RECRUITER_CANDIDATES: RecruiterCandidate[] = [
   {
     id: 'CAND-742',
     name: 'Priya Sharma',
-    avatar: '👩‍💼',
+    avatar: 'PS',
     college: 'SRCC Delhi',
     stream: 'commerce_finance',
     streamLabel: 'Commerce & Finance',
@@ -215,7 +215,7 @@ export const RECRUITER_CANDIDATES: RecruiterCandidate[] = [
   {
     id: 'CAND-619',
     name: 'Rohan Mehta',
-    avatar: '👨‍🎨',
+    avatar: 'RM',
     college: 'NID Ahmedabad',
     stream: 'ui_ux',
     streamLabel: 'UI/UX Design',
@@ -246,7 +246,7 @@ export const RECRUITER_CANDIDATES: RecruiterCandidate[] = [
   {
     id: 'CAND-811',
     name: 'Vikramaditya Rao',
-    avatar: '👨‍🎓',
+    avatar: 'VR',
     college: 'Apex Institute of Technology',
     stream: 'tech_ai',
     streamLabel: 'Tech & AI',
@@ -263,7 +263,7 @@ export const RECRUITER_CANDIDATES: RecruiterCandidate[] = [
     vectorSimilarity: 68.2,
     atsScore: 78,
     fraudRisk: 'tamper_suspect',
-    fraudBadgeText: '⚠️ Tamper Suspect (ELA High)',
+    fraudBadgeText: 'Tamper Suspect (ELA High)',
     badges: ['Flagged by CV2 ELA Engine', 'Digital Seal Mismatch'],
     interviewStatus: 'none',
     elaTelemetry: {
@@ -283,7 +283,7 @@ export const RECRUITER_CANDIDATES: RecruiterCandidate[] = [
   {
     id: 'CAND-503',
     name: 'Ananya Iyer',
-    avatar: '👩‍⚖️',
+    avatar: 'AI',
     college: 'NLSIU Bengaluru',
     stream: 'law_governance',
     streamLabel: 'Law & Governance',
@@ -307,7 +307,7 @@ export const RECRUITER_CANDIDATES: RecruiterCandidate[] = [
   {
     id: 'CAND-429',
     name: 'Dr. Pooja Nair',
-    avatar: '👩‍🔬',
+    avatar: 'PN',
     college: 'AIIMS New Delhi',
     stream: 'healthcare_bio',
     streamLabel: 'Healthcare & Bio',
@@ -331,7 +331,7 @@ export const RECRUITER_CANDIDATES: RecruiterCandidate[] = [
   {
     id: 'CAND-338',
     name: 'Devansh Gupta',
-    avatar: '👨‍💻',
+    avatar: 'DG',
     college: 'BITS Pilani',
     stream: 'tech_ai',
     streamLabel: 'Tech & AI',
@@ -355,7 +355,7 @@ export const RECRUITER_CANDIDATES: RecruiterCandidate[] = [
   {
     id: 'CAND-214',
     name: 'Sneha Kulkarni',
-    avatar: '👩‍💻',
+    avatar: 'SK',
     college: 'COEP Pune',
     stream: 'tech_ai',
     streamLabel: 'Tech & AI',
@@ -649,7 +649,7 @@ export const INITIAL_CHAT_THREADS: RecruiterChatThread[] = [
     recipientName: 'Prof. K. Ramanathan',
     recipientRole: 'Head of Placements & Industry Relations',
     recipientOrg: 'IIT Bombay',
-    avatar: '🏛️',
+    avatar: 'IITB',
     unreadCount: 1,
     lastMessageTime: '10:45 AM',
     channelType: 'tpo_channel',
@@ -686,7 +686,7 @@ export const INITIAL_CHAT_THREADS: RecruiterChatThread[] = [
     recipientName: 'Priya Sharma',
     recipientRole: 'Quant Finance Applicant',
     recipientOrg: 'SRCC Delhi',
-    avatar: '👩‍💼',
+    avatar: 'PS',
     unreadCount: 0,
     lastMessageTime: 'Yesterday',
     channelType: 'candidate_channel',

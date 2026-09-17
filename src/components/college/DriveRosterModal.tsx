@@ -32,7 +32,7 @@ export const DriveRosterModal: React.FC<DriveRosterModalProps> = ({ onClose }) =
     confetti({ particleCount: 70, spread: 80 });
     setTimeout(() => {
       setIsExporting(false);
-      alert(`✅ 100% Verified Drive Roster for ${selectedDrive.companyName} exported! Stamped with DigiLocker PKI hash seals. Zero Ghost Resumes guaranteed.`);
+      alert(`100% Verified Drive Roster for ${selectedDrive.companyName} exported! Stamped with DigiLocker PKI hash seals. Zero Ghost Resumes guaranteed.`);
     }, 800);
   };
 
