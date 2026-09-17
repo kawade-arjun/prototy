@@ -317,7 +317,7 @@ export const RecruiterPortal: React.FC = () => {
               </div>
               <div className="flex flex-col text-left truncate">
                 <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono uppercase tracking-wider">
-                  Mobile Menu • Recruiter Console
+                  Recruiter Console Tab
                 </span>
                 <span className="text-xs font-extrabold truncate text-indigo-600 dark:text-cyan-400 flex items-center gap-1.5">
                   {activeConsoleTab === 'pipeline' && <BarChart3 className="w-3.5 h-3.5" />}

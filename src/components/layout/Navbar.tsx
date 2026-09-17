@@ -8,7 +8,8 @@ import {
   Sparkles,
   Sun,
   Moon,
-  Settings
+  Settings,
+  User
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -57,9 +58,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 dark:text-white flex items-center">
                 Career<span className="gradient-text-indigo">Lens</span>
               </span>
-              <span className="text-[8px] sm:text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-200 border border-indigo-200/60 dark:border-indigo-500/30">
-                Material 3
-              </span>
             </div>
             <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium hidden md:block">
               National Verified Competency & Regulatory Infrastructure
@@ -76,7 +74,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="whitespace-nowrap">Lvl 6 • 2,450 XP</span>
           </div>
 
-          {/* Streak Badge: 8 with Flame icon */}
+          {/* Streak Badge */}
           <div 
             className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-amber-100/80 dark:bg-amber-900/40 text-amber-900 dark:text-amber-200 text-xs font-black"
             title="8-Day Active Streak"
@@ -115,7 +113,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 p-0.5 shadow-sm group-hover:scale-105 transition-transform">
               <div className="w-full h-full bg-white dark:bg-[#151B28] rounded-full flex items-center justify-center text-xs font-bold text-indigo-600 dark:text-white">
-                {currentRole === 'student' ? activeStudent.avatarInitials : currentRole === 'college' ? 'TPO' : currentRole === 'recruiter' ? 'HR' : currentRole === 'government' ? 'GOV' : 'CL'}
+                {currentRole === 'student' ? activeStudent.avatarInitials : currentRole === 'college' ? 'TPO' : currentRole === 'recruiter' ? 'HR' : currentRole === 'government' ? 'GOV' : <User className="w-4 h-4 text-indigo-600 dark:text-cyan-400" />}
               </div>
             </div>
             <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 dark:bg-emerald-400 border-2 border-white dark:border-[#0B0E14]" />

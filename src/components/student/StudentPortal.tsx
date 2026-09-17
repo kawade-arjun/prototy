@@ -103,7 +103,7 @@ export const StudentPortal: React.FC = () => {
               </div>
               <div className="flex flex-col text-left truncate">
                 <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono uppercase tracking-wider">
-                  Mobile Menu • Tab {currentTabObj.num} of 7
+                  Tab {currentTabObj.num} of 7
                 </span>
                 <span className="text-xs font-extrabold truncate flex items-center gap-1.5 text-indigo-600 dark:text-cyan-400">
                   {currentTabObj.icon}
