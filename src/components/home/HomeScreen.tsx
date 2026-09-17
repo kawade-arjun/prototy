@@ -39,7 +39,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
   const [activeTabField, setActiveTabField] = useState<AcademicStream>(selectedStream);
   const [currentDisciplineIndex, setCurrentDisciplineIndex] = useState(0);
   const [activeArchitectureStep, setActiveArchitectureStep] = useState<number>(1);
-  const [liveCandidateCount, setLiveCandidateCount] = useState(142850);
   const [showDemoModal, setShowDemoModal] = useState(false);
 
   // Rotating target disciplines for animated hero text
@@ -58,14 +57,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
     }, 3200);
     return () => clearInterval(interval);
   }, [rotatingDisciplines.length]);
-
-  // Simulate live background telemetry ticker
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLiveCandidateCount((prev) => prev + Math.floor(Math.random() * 3) + 1);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
 
   const handleSelectStudentField = (streamId: AcademicStream) => {
     setActiveTabField(streamId);
@@ -145,25 +136,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
       {/* AMBIENT BACKGROUND GLOW BLOBS */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-cyan-500/10 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" />
       <div className="absolute top-96 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
-
-      {/* LIVE TOP TELEMETRY TICKER BAR */}
-      <div className="glass-panel p-3 rounded-2xl bg-slate-900/90 dark:bg-[#070b14]/90 text-white border border-indigo-500/20 shadow-lg flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-          <span className="text-slate-400">NATIONAL TELEMETRY:</span>
-          <span className="font-bold text-cyan-300">{liveCandidateCount.toLocaleString()} Verified Candidates</span>
-        </div>
-        <div className="hidden sm:flex items-center gap-4 text-slate-300">
-          <span>🏫 480+ Universities</span>
-          <span>💼 1,250+ Enterprise Partners</span>
-          <span className="text-emerald-400 font-bold">🏛️ NEP 2020 Active</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[10px] font-bold">
-            LIVE REGISTRY
-          </span>
-        </div>
-      </div>
 
       {/* SECTION 1: HERO WELCOME BANNER */}
       <div className="text-center space-y-6 relative pt-2 sm:pt-4">
