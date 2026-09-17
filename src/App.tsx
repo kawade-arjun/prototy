@@ -7,11 +7,12 @@ import { StudentPortal } from './components/student/StudentPortal';
 import { CollegePortal } from './components/college/CollegePortal';
 import { RecruiterPortal } from './components/recruiter/RecruiterPortal';
 import { GovernmentPortal } from './components/government/GovernmentPortal';
+import { HomeScreen } from './components/home/HomeScreen';
 import { AuthModal } from './components/auth/AuthModal';
 import { ShieldCheck, Lock } from 'lucide-react';
 
 const AppContent: React.FC = () => {
-  const [currentRole, setCurrentRole] = useState<UserRole>('student');
+  const [currentRole, setCurrentRole] = useState<UserRole | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   return (
@@ -20,11 +21,13 @@ const AppContent: React.FC = () => {
       <Navbar 
         currentRole={currentRole} 
         onRoleChange={setCurrentRole}
+        onGoHome={() => setCurrentRole(null)}
         onOpenAuthModal={() => setIsAuthOpen(true)}
       />
 
       {/* Main Workspace Viewport */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {currentRole === null && <HomeScreen onSelectRole={setCurrentRole} />}
         {currentRole === 'student' && <StudentPortal />}
         {currentRole === 'college' && <CollegePortal />}
         {currentRole === 'recruiter' && <RecruiterPortal />}

@@ -22,7 +22,7 @@ import confetti from 'canvas-confetti';
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
-  currentRole: UserRole;
+  currentRole: UserRole | null;
   onRoleChange: (role: UserRole) => void;
 }
 
@@ -35,7 +35,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const { allStudents, selectedStream, setStudentStream } = useStudent();
 
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
-  const [selectedRole, setSelectedRole] = useState<UserRole>(currentRole);
+  const [selectedRole, setSelectedRole] = useState<UserRole>(currentRole || 'student');
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('arjun.kawade@iitb.ac.in');
   const [password, setPassword] = useState('••••••••••••');
