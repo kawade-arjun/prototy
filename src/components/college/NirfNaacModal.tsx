@@ -201,7 +201,7 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 text-xs">
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <div className="font-bold text-indigo-600 dark:text-cyan-400">Fortune 500 Enterprises</div>
+                <div className="font-bold text-indigo-600 dark:text-cyan-400">Tier-1 Industry Enterprises</div>
                 <div className="text-lg font-black text-slate-900 dark:text-white mt-1">28 Companies</div>
                 <div className="text-[10px] text-slate-500">Microsoft, Google, Goldman Sachs</div>
               </div>

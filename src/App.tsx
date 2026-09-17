@@ -9,11 +9,13 @@ import { RecruiterPortal } from './components/recruiter/RecruiterPortal';
 import { GovernmentPortal } from './components/government/GovernmentPortal';
 import { HomeScreen } from './components/home/HomeScreen';
 import { AuthModal } from './components/auth/AuthModal';
+import { SettingsModal } from './components/common/SettingsModal';
 import { ShieldCheck, Lock } from 'lucide-react';
 
 const AppContent: React.FC = () => {
   const [currentRole, setCurrentRole] = useState<UserRole | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col ambient-bg text-slate-900 dark:text-slate-100 font-sans transition-colors duration-200">
@@ -23,6 +25,7 @@ const AppContent: React.FC = () => {
         onRoleChange={setCurrentRole}
         onGoHome={() => setCurrentRole(null)}
         onOpenAuthModal={() => setIsAuthOpen(true)}
+        onOpenSettings={() => setIsSettingsOpen(true)}
       />
 
       {/* Main Workspace Viewport */}
@@ -40,6 +43,12 @@ const AppContent: React.FC = () => {
         onClose={() => setIsAuthOpen(false)}
         currentRole={currentRole}
         onRoleChange={setCurrentRole}
+      />
+
+      {/* Global Settings & Preferences Modal */}
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
       />
 
       {/* Global Footer */}

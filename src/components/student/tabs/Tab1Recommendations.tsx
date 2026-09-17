@@ -130,7 +130,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
         </div>
       </div>
 
-      {/* 1. Resume AI Studio Section */}
+      {/* 1. Resume AI Studio & Competency Radar Section */}
       <div className="space-y-5">
         <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.08] pb-3">
           <div className="flex items-center gap-3">
@@ -138,125 +138,323 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               <FileText className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">1. Resume AI Studio</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Quantified metrics breakdown & parsability diagnostics</p>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">1. Resume AI Studio & Competency Radar</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Quantified metrics breakdown, interactive suggestions & 6-axis radar matrix</p>
             </div>
           </div>
-          <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">ATS Engine v4.2</span>
+          <span className="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 px-2.5 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800/40">
+            Interactive Diagnostics
+          </span>
         </div>
 
-        {/* ATS Score Overview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {/* ATS Overview & Spider Web Graph Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
           
           {/* Main 0-100 Circular Gauge */}
-          <div className="glass-panel p-6 rounded-2xl flex flex-col items-center justify-center text-center relative overflow-hidden group">
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Overall ATS Score</div>
+          <div className="lg:col-span-2 glass-panel p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-around gap-6 relative overflow-hidden group">
+            {/* Circular Gauge */}
+            <div className="flex flex-col items-center text-center">
+              <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Overall ATS Score</div>
+              <div className="relative flex items-center justify-center my-2">
+                <svg className="w-28 h-28 transform -rotate-90">
+                  <circle
+                    cx="56"
+                    cy="56"
+                    r="46"
+                    stroke={theme === 'dark' ? '#172238' : '#e2e8f0'}
+                    strokeWidth="9"
+                    fill="transparent"
+                  />
+                  <circle
+                    cx="56"
+                    cy="56"
+                    r="46"
+                    stroke="url(#atsGradient2)"
+                    strokeWidth="9"
+                    strokeDasharray={289}
+                    strokeDashoffset={289 - (289 * atsResult.overallScore) / 100}
+                    strokeLinecap="round"
+                    fill="transparent"
+                    className="transition-all duration-700 ease-out"
+                  />
+                  <defs>
+                    <linearGradient id="atsGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#6366f1" />
+                      <stop offset="50%" stopColor="#06b6d4" />
+                      <stop offset="100%" stopColor="#10b981" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div className="absolute flex flex-col items-center">
+                  <span className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{atsResult.overallScore}</span>
+                  <span className="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase">Out of 100</span>
+                </div>
+              </div>
+              <div className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-500/25">
+                <Check className="w-3 h-3" /> Industry Benchmark Ready
+              </div>
+            </div>
+
+            {/* 6-Axis SVG Spider Web (Radar) Graph */}
+            <div className="flex flex-col items-center justify-center space-y-1">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-cyan-400">
+                Competency Radar Matrix
+              </div>
+              
+              {/* Spider Web Chart SVG */}
+              <div className="relative w-52 h-48 flex items-center justify-center">
+                <svg viewBox="0 0 240 220" className="w-full h-full overflow-visible">
+                  <defs>
+                    <radialGradient id="radarGrad" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#6366f1" stopOpacity="0.4" />
+                      <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.15" />
+                    </radialGradient>
+                  </defs>
+
+                  {/* Concentric Hexagon Web Rings (20%, 40%, 60%, 80%, 100%) */}
+                  {[0.2, 0.4, 0.6, 0.8, 1.0].map((scale, idx) => {
+                    const cx = 120, cy = 110, r = 75 * scale;
+                    const points = [0, 1, 2, 3, 4, 5].map((i) => {
+                      const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
+                      return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
+                    }).join(' ');
+                    return (
+                      <polygon
+                        key={idx}
+                        points={points}
+                        fill="none"
+                        stroke={theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}
+                        strokeWidth="1"
+                        strokeDasharray={scale === 1.0 ? '0' : '2 2'}
+                      />
+                    );
+                  })}
+
+                  {/* Axis Spokes from Center */}
+                  {[0, 1, 2, 3, 4, 5].map((i) => {
+                    const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
+                    const x2 = 120 + 75 * Math.cos(angle);
+                    const y2 = 110 + 75 * Math.sin(angle);
+                    return (
+                      <line
+                        key={i}
+                        x1="120"
+                        y1="110"
+                        x2={x2}
+                        y2={y2}
+                        stroke={theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}
+                        strokeWidth="1"
+                      />
+                    );
+                  })}
+
+                  {/* Dynamic Candidate Data Polygon */}
+                  {(() => {
+                    const values = [
+                      atsResult.quantifiedMetricsScore / 100,
+                      atsResult.keywordDensityScore / 100,
+                      atsResult.formattingParsabilityScore / 100,
+                      Math.min(activeStudent.compositeScore / 100, 0.98),
+                      Math.min((atsResult.overallScore + 4) / 100, 0.96),
+                      Math.min((atsResult.quantifiedMetricsScore + 6) / 100, 0.98)
+                    ];
+                    const polyPoints = values.map((val, i) => {
+                      const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
+                      const r = 75 * val;
+                      return `${120 + r * Math.cos(angle)},${110 + r * Math.sin(angle)}`;
+                    }).join(' ');
+
+                    return (
+                      <>
+                        <polygon
+                          points={polyPoints}
+                          fill="url(#radarGrad)"
+                          stroke="#6366f1"
+                          strokeWidth="2.5"
+                          className="transition-all duration-700 ease-out"
+                        />
+                        {/* Dots on Vertices */}
+                        {values.map((val, i) => {
+                          const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
+                          const r = 75 * val;
+                          const cx = 120 + r * Math.cos(angle);
+                          const cy = 110 + r * Math.sin(angle);
+                          return (
+                            <circle
+                              key={i}
+                              cx={cx}
+                              cy={cy}
+                              r="3.5"
+                              fill="#06b6d4"
+                              stroke="#ffffff"
+                              strokeWidth="1.5"
+                              className="transition-all duration-700 ease-out"
+                            />
+                          );
+                        })}
+                      </>
+                    );
+                  })()}
+
+                  {/* Axis Text Labels */}
+                  <text x="120" y="24" textAnchor="middle" className="text-[8px] font-bold fill-indigo-600 dark:fill-indigo-300">Metrics</text>
+                  <text x="200" y="70" textAnchor="start" className="text-[8px] font-bold fill-cyan-600 dark:fill-cyan-300">Keywords</text>
+                  <text x="200" y="155" textAnchor="start" className="text-[8px] font-bold fill-emerald-600 dark:fill-emerald-300">Parsability</text>
+                  <text x="120" y="198" textAnchor="middle" className="text-[8px] font-bold fill-amber-600 dark:fill-amber-300">Sandbox</text>
+                  <text x="40" y="155" textAnchor="end" className="text-[8px] font-bold fill-purple-600 dark:fill-purple-300">Problem Solving</text>
+                  <text x="40" y="70" textAnchor="end" className="text-[8px] font-bold fill-indigo-600 dark:fill-indigo-300">Architecture</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          {/* 3 Interactive Sub Score Cards with Live Suggestions */}
+          <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
             
-            <div className="relative flex items-center justify-center my-3">
-              <svg className="w-32 h-32 transform -rotate-90">
-                <circle
-                  cx="64"
-                  cy="64"
-                  r="52"
-                  stroke={theme === 'dark' ? '#172238' : '#e2e8f0'}
-                  strokeWidth="10"
-                  fill="transparent"
-                />
-                <circle
-                  cx="64"
-                  cy="64"
-                  r="52"
-                  stroke="url(#atsGradient2)"
-                  strokeWidth="10"
-                  strokeDasharray={326}
-                  strokeDashoffset={326 - (326 * atsResult.overallScore) / 100}
-                  strokeLinecap="round"
-                  fill="transparent"
-                  className="transition-all duration-1000 ease-out"
-                />
-                <defs>
-                  <linearGradient id="atsGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#6366f1" />
-                    <stop offset="50%" stopColor="#06b6d4" />
-                    <stop offset="100%" stopColor="#10b981" />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <div className="absolute flex flex-col items-center">
-                <span className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">{atsResult.overallScore}</span>
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Out of 100</span>
+            {/* Sub Score 1: Quantified Metrics */}
+            <div className="glass-panel p-4 rounded-2xl flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
+                  <span>Quantified Metrics</span>
+                  <span className="text-indigo-600 dark:text-indigo-400 font-mono text-xs">{atsResult.quantifiedMetricsScore}%</span>
+                </div>
+                <div className="w-full h-2 bg-slate-200 dark:bg-[#172238] rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-indigo-500 to-cyan-400 rounded-full transition-all duration-700 shadow-sm" 
+                    style={{ width: `${atsResult.quantifiedMetricsScore}%` }}
+                  />
+                </div>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-snug">
+                  Assesses measurable impact & numerical outcomes.
+                </p>
+              </div>
+
+              {/* Dynamic Suggestions Buttons */}
+              <div className="space-y-1.5 pt-1 border-t border-slate-100 dark:border-white/[0.06]">
+                <div className="text-[9px] font-bold uppercase text-slate-400">Actionable Suggestions:</div>
+                <button
+                  onClick={() => {
+                    const newM = Math.min(atsResult.quantifiedMetricsScore + 5, 99);
+                    const newOverall = Math.min(Math.round((newM * 0.35) + (atsResult.keywordDensityScore * 0.35) + (atsResult.formattingParsabilityScore * 0.30)), 99);
+                    setAtsResult({ ...atsResult, quantifiedMetricsScore: newM, overallScore: newOverall });
+                    confetti({ particleCount: 20, spread: 40 });
+                  }}
+                  className="w-full text-left p-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
+                >
+                  <span>+ Include % latency reduction (+5%)</span>
+                  <Zap className="w-3 h-3 text-indigo-500 shrink-0" />
+                </button>
+                <button
+                  onClick={() => {
+                    const newM = Math.min(atsResult.quantifiedMetricsScore + 4, 99);
+                    const newOverall = Math.min(Math.round((newM * 0.35) + (atsResult.keywordDensityScore * 0.35) + (atsResult.formattingParsabilityScore * 0.30)), 99);
+                    setAtsResult({ ...atsResult, quantifiedMetricsScore: newM, overallScore: newOverall });
+                    confetti({ particleCount: 20, spread: 40 });
+                  }}
+                  className="w-full text-left p-1.5 rounded-lg bg-indigo-50/60 hover:bg-indigo-100 dark:bg-indigo-950/30 dark:hover:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200/70 dark:border-indigo-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
+                >
+                  <span>+ Quantify project scale (+4%)</span>
+                  <Zap className="w-3 h-3 text-indigo-500 shrink-0" />
+                </button>
               </div>
             </div>
 
-            <div className="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-500/25">
-              <Check className="w-3.5 h-3.5" /> Fortune 500 Ready
-            </div>
-          </div>
+            {/* Sub Score 2: Keyword Saturation */}
+            <div className="glass-panel p-4 rounded-2xl flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
+                  <span>Keyword Saturation</span>
+                  <span className="text-cyan-600 dark:text-cyan-400 font-mono text-xs">{atsResult.keywordDensityScore}%</span>
+                </div>
+                <div className="w-full h-2 bg-slate-200 dark:bg-[#172238] rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-cyan-500 to-emerald-400 rounded-full transition-all duration-700 shadow-sm" 
+                    style={{ width: `${atsResult.keywordDensityScore}%` }}
+                  />
+                </div>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-snug">
+                  Semantic mapping against high-demand tokens.
+                </p>
+              </div>
 
-          {/* Sub Score 1: Quantified Metrics */}
-          <div className="glass-panel p-5 rounded-2xl flex flex-col justify-between space-y-3">
-            <div>
-              <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
-                <span>Quantified Metrics</span>
-                <span className="text-indigo-600 dark:text-indigo-400 font-mono text-sm">{atsResult.quantifiedMetricsScore}%</span>
+              {/* Dynamic Suggestions Buttons */}
+              <div className="space-y-1.5 pt-1 border-t border-slate-100 dark:border-white/[0.06]">
+                <div className="text-[9px] font-bold uppercase text-slate-400">Actionable Suggestions:</div>
+                <button
+                  onClick={() => {
+                    const newK = Math.min(atsResult.keywordDensityScore + 6, 99);
+                    const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (newK * 0.35) + (atsResult.formattingParsabilityScore * 0.30)), 99);
+                    setAtsResult({ ...atsResult, keywordDensityScore: newK, overallScore: newOverall });
+                    confetti({ particleCount: 20, spread: 40 });
+                  }}
+                  className="w-full text-left p-1.5 rounded-lg bg-cyan-50 hover:bg-cyan-100 dark:bg-cyan-950/40 dark:hover:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
+                >
+                  <span>+ Inject vLLM & Docker tokens (+6%)</span>
+                  <Zap className="w-3 h-3 text-cyan-500 shrink-0" />
+                </button>
+                <button
+                  onClick={() => {
+                    const newK = Math.min(atsResult.keywordDensityScore + 5, 99);
+                    const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (newK * 0.35) + (atsResult.formattingParsabilityScore * 0.30)), 99);
+                    setAtsResult({ ...atsResult, keywordDensityScore: newK, overallScore: newOverall });
+                    confetti({ particleCount: 20, spread: 40 });
+                  }}
+                  className="w-full text-left p-1.5 rounded-lg bg-cyan-50/60 hover:bg-cyan-100 dark:bg-cyan-950/30 dark:hover:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 border border-cyan-200/70 dark:border-cyan-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
+                >
+                  <span>+ Align 2026 taxonomy (+5%)</span>
+                  <Zap className="w-3 h-3 text-cyan-500 shrink-0" />
+                </button>
               </div>
-              <div className="w-full h-2.5 bg-slate-200 dark:bg-[#172238] rounded-full overflow-hidden my-2.5">
-                <div 
-                  className="h-full bg-gradient-to-r from-indigo-500 to-cyan-400 rounded-full transition-all duration-700 shadow-sm" 
-                  style={{ width: `${atsResult.quantifiedMetricsScore}%` }}
-                />
-              </div>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
-                Assesses measurable impact (% throughput increase, latency reduction, cost savings).
-              </p>
             </div>
-            <div className="text-[10px] font-mono text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-1 rounded border border-emerald-200 dark:border-emerald-800/40">
-              Benchmark: Top 92nd percentile
-            </div>
-          </div>
 
-          {/* Sub Score 2: Keyword Saturation */}
-          <div className="glass-panel p-5 rounded-2xl flex flex-col justify-between space-y-3">
-            <div>
-              <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
-                <span>Keyword Saturation</span>
-                <span className="text-cyan-600 dark:text-cyan-400 font-mono text-sm">{atsResult.keywordDensityScore}%</span>
+            {/* Sub Score 3: Formatting Parsability */}
+            <div className="glass-panel p-4 rounded-2xl flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
+                  <span>Formatting Parsability</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-mono text-xs">{atsResult.formattingParsabilityScore}%</span>
+                </div>
+                <div className="w-full h-2 bg-slate-200 dark:bg-[#172238] rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-700 shadow-sm" 
+                    style={{ width: `${atsResult.formattingParsabilityScore}%` }}
+                  />
+                </div>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-snug">
+                  Single-column ATS parsable semantic hierarchy.
+                </p>
               </div>
-              <div className="w-full h-2.5 bg-slate-200 dark:bg-[#172238] rounded-full overflow-hidden my-2.5">
-                <div 
-                  className="h-full bg-gradient-to-r from-cyan-500 to-emerald-400 rounded-full transition-all duration-700 shadow-sm" 
-                  style={{ width: `${atsResult.keywordDensityScore}%` }}
-                />
-              </div>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
-                Semantic mapping against 2026 high-velocity tokens (vLLM, Triton, DPDP Act).
-              </p>
-            </div>
-            <div className="text-[10px] font-mono text-cyan-700 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/40 px-2 py-1 rounded border border-cyan-200 dark:border-cyan-800/40">
-              Coverage: High Frequency
-            </div>
-          </div>
 
-          {/* Sub Score 3: Formatting Parsability */}
-          <div className="glass-panel p-5 rounded-2xl flex flex-col justify-between space-y-3">
-            <div>
-              <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
-                <span>Formatting Parsability</span>
-                <span className="text-emerald-600 dark:text-emerald-400 font-mono text-sm">{atsResult.formattingParsabilityScore}%</span>
+              {/* Dynamic Suggestions Buttons */}
+              <div className="space-y-1.5 pt-1 border-t border-slate-100 dark:border-white/[0.06]">
+                <div className="text-[9px] font-bold uppercase text-slate-400">Actionable Suggestions:</div>
+                <button
+                  onClick={() => {
+                    const newF = Math.min(atsResult.formattingParsabilityScore + 4, 99);
+                    const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (atsResult.keywordDensityScore * 0.35) + (newF * 0.30)), 99);
+                    setAtsResult({ ...atsResult, formattingParsabilityScore: newF, overallScore: newOverall });
+                    confetti({ particleCount: 20, spread: 40 });
+                  }}
+                  className="w-full text-left p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
+                >
+                  <span>+ Use single-column format (+4%)</span>
+                  <Zap className="w-3 h-3 text-emerald-500 shrink-0" />
+                </button>
+                <button
+                  onClick={() => {
+                    const newF = Math.min(atsResult.formattingParsabilityScore + 4, 99);
+                    const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (atsResult.keywordDensityScore * 0.35) + (newF * 0.30)), 99);
+                    setAtsResult({ ...atsResult, formattingParsabilityScore: newF, overallScore: newOverall });
+                    confetti({ particleCount: 20, spread: 40 });
+                  }}
+                  className="w-full text-left p-1.5 rounded-lg bg-emerald-50/60 hover:bg-emerald-100 dark:bg-emerald-950/30 dark:hover:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200/70 dark:border-emerald-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
+                >
+                  <span>+ Normalize date tokens (+4%)</span>
+                  <Zap className="w-3 h-3 text-emerald-500 shrink-0" />
+                </button>
               </div>
-              <div className="w-full h-2.5 bg-slate-200 dark:bg-[#172238] rounded-full overflow-hidden my-2.5">
-                <div 
-                  className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-700 shadow-sm" 
-                  style={{ width: `${atsResult.formattingParsabilityScore}%` }}
-                />
-              </div>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
-                Single-column ATS parsable semantic hierarchy, UTF-8 compliant typography.
-              </p>
             </div>
-            <div className="text-[10px] font-mono text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-1 rounded border border-emerald-200 dark:border-emerald-800/40">
-              Structure: Zero Parsing Errors
-            </div>
+
           </div>
         </div>
 

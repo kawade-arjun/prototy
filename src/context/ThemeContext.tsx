@@ -9,7 +9,7 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: 'dark',
+  theme: 'light',
   toggleTheme: () => {},
   setTheme: () => {}
 });
@@ -19,9 +19,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('careerlens-theme') as Theme | null;
       if (saved === 'light' || saved === 'dark') return saved;
-      if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
     }
-    return 'dark';
+    return 'light';
   });
 
   useEffect(() => {

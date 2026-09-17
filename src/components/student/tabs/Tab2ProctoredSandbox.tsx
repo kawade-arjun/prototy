@@ -856,9 +856,9 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-[11px] font-bold text-slate-500 uppercase">National Percentile</div>
+                <div className="text-[11px] font-bold text-slate-500 uppercase">Benchmark Rank</div>
                 <div className="text-2xl font-black text-indigo-600 dark:text-cyan-400">
-                  {diagnosticReportTest.percentile || 98.4}th
+                  Top 2% Tier
                 </div>
               </div>
             </div>

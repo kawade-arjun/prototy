@@ -207,62 +207,29 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             </div>
           </div>
 
-          {/* If Student Role Selected: Show 5 Disciplinary Student Field Cards */}
+          {/* If Student Role Selected: Show Disciplinary Profile Dropdown */}
           {selectedRole === 'student' && authMode === 'signin' && (
-            <div className="p-4 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-500/20 space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-indigo-950 dark:text-indigo-200 flex items-center gap-1.5">
+            <div className="p-3.5 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-500/20 space-y-2">
+              <label className="text-xs font-bold text-indigo-950 dark:text-indigo-200 flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
                   <Zap className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                  Explore 5 Disciplinary Student Fields (1-Click Switch):
+                  Select Academic Field Persona:
                 </span>
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
+                <span className="text-[10px] text-slate-500 font-mono font-normal">
                   {allStudents.length} Verified Personas
                 </span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {allStudents.map((stu) => {
-                  const isCurrent = selectedStream === stu.streamId;
-                  return (
-                    <button
-                      key={stu.id}
-                      type="button"
-                      onClick={() => handleDisciplineSelect(stu.streamId)}
-                      className={`p-2.5 rounded-xl border text-left transition-all flex items-center gap-2.5 ${
-                        isCurrent
-                          ? 'border-indigo-600 bg-white dark:bg-[#151f35] text-slate-900 dark:text-white shadow-md ring-2 ring-indigo-500/30'
-                          : 'border-slate-200 dark:border-white/[0.08] bg-white/70 dark:bg-slate-900/50 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800/80'
-                      }`}
-                    >
-                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs ${
-                        isCurrent
-                          ? 'bg-indigo-600 text-white'
-                          : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
-                      }`}>
-                        {stu.avatarInitials}
-                      </div>
-
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between gap-1">
-                          <span className="text-xs font-bold truncate text-slate-900 dark:text-white">
-                            {stu.name}
-                          </span>
-                          <span className="text-[10px] font-black text-indigo-600 dark:text-cyan-400">
-                            {stu.compositeScore}/100
-                          </span>
-                        </div>
-                        <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
-                          {stu.streamName} • {stu.institution.split('(')[0]}
-                        </div>
-                      </div>
-
-                      {isCurrent && (
-                        <CheckCircle2 className="w-4 h-4 text-indigo-600 dark:text-cyan-400 shrink-0" />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
+              </label>
+              <select
+                value={selectedStream}
+                onChange={(e) => handleDisciplineSelect(e.target.value as any)}
+                className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              >
+                {allStudents.map((stu) => (
+                  <option key={stu.id} value={stu.streamId}>
+                    {stu.streamName} • {stu.name} ({stu.compositeScore}/100) — {stu.institution.split('(')[0]}
+                  </option>
+                ))}
+              </select>
             </div>
           )}
 
@@ -346,13 +313,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             {authMode === 'signup' && (
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  DigiLocker / APAAR Student ID (Optional)
+                  {selectedRole === 'student'
+                    ? 'DigiLocker / APAAR Student ID (Optional)'
+                    : selectedRole === 'college'
+                    ? 'Institutional AISHE Code (Optional)'
+                    : selectedRole === 'recruiter'
+                    ? 'Corporate GSTIN / CIN (Optional)'
+                    : 'National Cadre / Designation ID (Optional)'}
                 </label>
                 <input
                   type="text"
                   value={digiLockerInput}
                   onChange={(e) => setDigiLockerInput(e.target.value)}
-                  placeholder="DL-IN-2026-992140"
+                  placeholder={selectedRole === 'student' ? 'DL-IN-2026-992140' : 'REG-IN-2026-X88'}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 />
               </div>
