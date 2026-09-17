@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && touch dist/.nojekyll && cp dist/index.html dist/404.html && rm -rf docs && cp -r dist docs",
+    "build": "tsc && vite build && mv dist/index.dev.html dist/index.html && touch dist/.nojekyll && cp dist/index.html dist/404.html && cp dist/index.html ./index.html && cp dist/404.html ./404.html && touch ./.nojekyll && rm -rf ./assets && cp -r dist/assets ./assets && rm -rf docs && cp -r dist docs",
     "preview": "vite preview"
   },
   "dependencies": {
