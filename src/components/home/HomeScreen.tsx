@@ -161,38 +161,26 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
             <span>Launch Portal Selection</span>
             <ArrowRight className="w-4 h-4" />
           </button>
-          
-          <button
-            onClick={() => setShowDemoModal(true)}
-            className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white dark:bg-[#121828] hover:bg-amber-50 dark:hover:bg-[#1a2338] text-slate-800 dark:text-slate-200 border border-[#D9D0C1] dark:border-amber-500/30 font-bold text-xs sm:text-sm shadow-sm transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
-          >
-            <Play className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 fill-amber-600 dark:fill-amber-400" />
-            <span>Platform Overview</span>
-          </button>
         </div>
 
         {/* Feature Highlights Grid (Clean text with luxury formatting) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto pt-6 text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300">
           <div className="p-4 rounded-2xl bg-white/90 dark:bg-[#0e1424]/90 border border-[#E5DFD3] dark:border-amber-500/20 shadow-sm hover:border-amber-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
-            <Zap className="w-5 h-5 text-amber-500 group-hover:scale-110 transition-transform" />
             <span className="font-extrabold text-slate-900 dark:text-white">Accelerated AI Hiring</span>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">Skill Intelligence Engine</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-white/90 dark:bg-[#0e1424]/90 border border-[#E5DFD3] dark:border-amber-500/20 shadow-sm hover:border-emerald-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
-            <ShieldCheck className="w-5 h-5 text-emerald-500 group-hover:scale-110 transition-transform" />
             <span className="font-extrabold text-slate-900 dark:text-white">Tamper-Proof Verification</span>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">OpenCV ELA Forensic Scan</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-white/90 dark:bg-[#0e1424]/90 border border-[#E5DFD3] dark:border-amber-500/20 shadow-sm hover:border-purple-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
-            <BarChart3 className="w-5 h-5 text-indigo-500 group-hover:scale-110 transition-transform" />
             <span className="font-extrabold text-slate-900 dark:text-white">Automated Compliance</span>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">NIRF & NAAC Audit Reporting</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-white/90 dark:bg-[#0e1424]/90 border border-[#E5DFD3] dark:border-amber-500/20 shadow-sm hover:border-amber-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
-            <Lock className="w-5 h-5 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform" />
             <span className="font-extrabold text-slate-900 dark:text-white">Statutory Privacy</span>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">India DPDP Act 2023 Guardrails</span>
           </div>
@@ -200,22 +188,21 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
 
       </div>
 
-      {/* SECTION 2: INTERACTIVE CORE SUBSTRATE ARCHITECTURE (ADAPTIVE LUXURY GLASSMORPHIC THEME) */}
-      <div className="space-y-6 rounded-3xl bg-gradient-to-br from-amber-50/70 via-white to-amber-100/40 dark:from-[#0b101f] dark:via-[#0e1528] dark:to-[#0b101f] border-2 border-amber-200/80 dark:border-amber-500/30 p-6 sm:p-8 relative overflow-hidden shadow-xl transition-colors">
+      {/* SECTION 2: INTERACTIVE CORE SUBSTRATE ARCHITECTURE (CENTER ALIGNED) */}
+      <div className="space-y-6 rounded-3xl bg-gradient-to-br from-amber-50/70 via-white to-amber-100/40 dark:from-[#0b101f] dark:via-[#0e1528] dark:to-[#0b101f] border-2 border-amber-200/80 dark:border-amber-500/30 p-6 sm:p-8 relative overflow-hidden shadow-xl transition-colors text-center">
         {/* Glow accent in top right */}
         <div className="absolute -top-24 -right-24 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none" />
         
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-amber-200/60 dark:border-amber-500/20 pb-5 relative z-10">
-          <div>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-500/10 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 text-xs font-mono font-extrabold border border-amber-500/30 mb-2.5">
-              <Layers className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+        <div className="flex flex-col items-center justify-center gap-4 border-b border-amber-200/60 dark:border-amber-500/20 pb-5 relative z-10 text-center">
+          <div className="flex flex-col items-center text-center">
+            <div className="inline-flex items-center justify-center px-3.5 py-1.5 rounded-full bg-amber-500/10 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 text-xs font-mono font-extrabold border border-amber-500/30 mb-2.5">
               <span>CORE ARCHITECTURE ENGINE</span>
             </div>
             <h3 className="font-serif-luxury text-xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">How CareerLens Substrate Works</h3>
           </div>
 
-          <div className="flex items-center gap-2 bg-white/80 dark:bg-[#070d1a]/80 p-1.5 rounded-2xl border border-[#E5DFD3] dark:border-amber-500/25 shadow-inner">
+          <div className="flex flex-wrap items-center justify-center gap-2 bg-white/80 dark:bg-[#070d1a]/80 p-1.5 rounded-2xl border border-[#E5DFD3] dark:border-amber-500/25 shadow-inner mx-auto">
             {architectureSteps.map((item) => (
               <button
                 key={item.step}
@@ -236,7 +223,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
         {architectureSteps.map((pillar) => {
           if (pillar.step !== activeArchitectureStep) return null;
           return (
-            <div key={pillar.step} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center pt-2 animate-fadeIn relative z-10">
+            <div key={pillar.step} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center pt-2 animate-fadeIn relative z-10 text-left">
               <div className="md:col-span-2 space-y-4">
                 <div className="flex items-center gap-3.5">
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-600 to-yellow-500 text-white flex items-center justify-center shadow-md shadow-amber-600/30 shrink-0">

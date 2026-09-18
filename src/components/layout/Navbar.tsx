@@ -38,7 +38,17 @@ export const Navbar: React.FC<NavbarProps> = ({
   const { activeStudent } = useStudent();
   const [isSettingsMenuOpen, setIsSettingsMenuOpen] = useState(false);
   const [emailAlerts, setEmailAlerts] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
+
+  // Scroll listener for sticky compact title transition
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 15);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -67,37 +77,28 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full m3-surface-1 backdrop-blur-md transition-colors shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4 py-2.5">
+    <header className="sticky top-0 z-50 w-full py-2.5 transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center justify-center">
         
-        {/* Brand Logo - Click returns to Home Screen */}
-        <button 
-          onClick={handleHomeClick}
-          className="flex items-center gap-2 sm:gap-3.5 group cursor-pointer text-left focus:outline-none shrink-0"
-          title="Return to CareerLens Home Screen"
-        >
-          <div className="relative">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-500 text-white p-0.5 flex items-center justify-center shadow-md shadow-amber-600/20 group-hover:scale-105 transition-transform">
-              <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:rotate-12 transition-transform duration-300" />
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="font-serif-luxury font-extrabold text-lg sm:text-2xl tracking-tight text-slate-900 dark:text-white flex items-center">
-                Career<span className="gradient-text-gold font-sans font-black ml-0.5">Lens</span>
-              </span>
-              <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-widest bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/30">
-                Prestige Substrate
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium hidden md:block">
-              National Verified Competency & Regulatory Infrastructure
-            </p>
-          </div>
-        </button>
+        {/* Centered Brand Title - At top starts middle, on scroll sticks in top middle */}
+        <div className={`transition-all duration-300 ${
+          isScrolled 
+            ? 'px-6 py-1.5 rounded-full bg-white/90 dark:bg-[#080B10]/90 backdrop-blur-md border border-amber-500/30 shadow-lg shadow-amber-500/10 scale-95' 
+            : 'py-1'
+        }`}>
+          <button 
+            onClick={handleHomeClick}
+            className="flex items-center justify-center group cursor-pointer focus:outline-none"
+            title="Return to CareerLens Home Screen"
+          >
+            <span className="font-serif-luxury font-extrabold text-2xl sm:text-3xl tracking-tight text-slate-900 dark:text-white flex items-center">
+              Career<span className="gradient-text-gold font-sans font-black ml-0.5">Lens</span>
+            </span>
+          </button>
+        </div>
 
         {/* Right Controls: Level XP, Streak, Current Session Profile, Settings */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        <div className="absolute right-4 sm:right-8 flex items-center gap-1.5 sm:gap-2.5">
           
           {/* Level 6 XP Badge & Streak Badge - Only inside active user portal */}
           {currentRole !== null && (
@@ -117,7 +118,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </>
           )}
 
-          {/* 1. User Avatar Profile Button (Position Exchanged - Now First) */}
+          {/* 1. User Avatar Profile Button */}
           <button 
             onClick={onOpenAuthModal}
             className="relative group cursor-pointer focus:outline-none"
@@ -131,7 +132,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 dark:bg-emerald-400 border-2 border-white dark:border-[#0B0E14]" />
           </button>
 
-          {/* 2. Top-Right Settings Gear Button with Mobile Phone Style Options Dropdown (Now Second) */}
+          {/* 2. Top-Right Settings Gear Button */}
           <div className="relative" ref={settingsRef}>
             <button
               onClick={() => setIsSettingsMenuOpen(!isSettingsMenuOpen)}
