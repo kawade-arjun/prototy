@@ -1,4 +1,4 @@
-name: Deploy CareerLens to GitHub Pages
+name: Deploy CareerOptic to GitHub Pages
 
 on:
   push:
@@ -29,12 +29,18 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          cd frontend
+          npm ci
 
       - name: Build project
-        run: npm run build
+        run: |
+          cd frontend
+          npm run build
+          cp -r dist ../dist
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

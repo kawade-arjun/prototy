@@ -1,31 +1,13 @@
 {
-  "name": "careeroptic-platform",
+  "name": "careeroptic-workspace",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build && mv dist/index.dev.html dist/index.html && touch dist/.nojekyll && cp dist/index.html dist/404.html && cp dist/index.html ./index.html && cp dist/404.html ./404.html && touch ./.nojekyll && rm -rf ./assets && cp -r dist/assets ./assets && rm -rf docs && cp -r dist docs",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "lucide-react": "^0.468.0",
-    "@monaco-editor/react": "^4.6.0",
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^2.5.5",
-    "canvas-confetti": "^1.9.3"
-  },
-  "devDependencies": {
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "@types/canvas-confetti": "^1.9.0",
-    "@vitejs/plugin-react": "^4.3.4",
-    "typescript": "^5.6.3",
-    "vite": "^6.0.1",
-    "tailwindcss": "^3.4.16",
-    "postcss": "^8.4.49",
-    "autoprefixer": "^10.4.20"
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "build:frontend": "npm --prefix frontend run build",
+    "build:backend": "npm --prefix backend run build",
+    "build": "npm --prefix frontend run build && rm -rf dist docs assets && cp -r frontend/dist dist && cp -r frontend/dist docs && cp -r frontend/dist/assets assets && cp frontend/dist/index.html ./index.html && cp frontend/dist/404.html ./404.html && cp frontend/dist/.nojekyll ./.nojekyll",
+    "start": "npm --prefix backend start"
   }
 }
