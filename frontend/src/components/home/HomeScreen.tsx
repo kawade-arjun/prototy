@@ -37,86 +37,13 @@ interface HomeScreenProps {
   onOpenAuth?: (role: UserRole, mode?: 'signin' | 'signup') => void;
 }
 
-const STREAM_META: Record<string, {
-  name: string;
-  icon: React.ComponentType<{ className?: string }>;
-  color: string;
-  badgeBg: string;
-  badge: string;
-}> = {
-  tech_ai: {
-    name: 'Engineering',
-    icon: Cpu,
-    color: 'text-indigo-600 dark:text-indigo-400',
-    badgeBg: 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800/40',
-    badge: 'IIT Bombay • AI & Systems'
-  },
-  commerce_finance: {
-    name: 'Commerce & Finance',
-    icon: TrendingUp,
-    color: 'text-emerald-600 dark:text-emerald-400',
-    badgeBg: 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/40',
-    badge: 'SRCC Delhi • Quant Finance'
-  },
-  healthcare_bio: {
-    name: 'Healthcare & Bio-Sciences',
-    icon: Activity,
-    color: 'text-amber-600 dark:text-amber-400',
-    badgeBg: 'bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800/40',
-    badge: 'Ayush / AIIMS • Bio-Informatics'
-  },
-  law_governance: {
-    name: 'Law & Governance',
-    icon: Scale,
-    color: 'text-purple-600 dark:text-purple-400',
-    badgeBg: 'bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800/40',
-    badge: 'NLSIU Bengaluru • DPDP 2023'
-  },
-  ui_ux: {
-    name: 'UI/UX & Spatial HCI',
-    icon: Palette,
-    color: 'text-pink-600 dark:text-pink-400',
-    badgeBg: 'bg-pink-50 dark:bg-pink-950/50 text-pink-700 dark:text-pink-300 border-pink-200 dark:border-pink-800/40',
-    badge: 'NID Ahmedabad • WCAG 2.2 AAA'
-  }
-};
-
 export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth }) => {
   const { allStudents, selectedStream, setStudentStream, activeStudent } = useStudent();
-  const [activeTabField, setActiveTabField] = useState<AcademicStream>(selectedStream);
-  const [isDisciplineDropdownOpen, setIsDisciplineDropdownOpen] = useState(false);
-  const disciplineDropdownRef = useRef<HTMLDivElement>(null);
   const [currentDisciplineIndex, setCurrentDisciplineIndex] = useState(0);
   const [activeArchitectureStep, setActiveArchitectureStep] = useState<number>(1);
   const [showDemoModal, setShowDemoModal] = useState(false);
   const [highlightedRole, setHighlightedRole] = useState<string | null>(null);
   const [heroScrollOpacity, setHeroScrollOpacity] = useState(1);
-
-  useEffect(() => {
-    setActiveTabField(selectedStream);
-  }, [selectedStream]);
-
-  // Close dropdown on click outside or escape key
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (disciplineDropdownRef.current && !disciplineDropdownRef.current.contains(event.target as Node)) {
-        setIsDisciplineDropdownOpen(false);
-      }
-    };
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsDisciplineDropdownOpen(false);
-      }
-    };
-    if (isDisciplineDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      document.addEventListener('keydown', handleKeyDown);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isDisciplineDropdownOpen]);
 
   // Smooth scroll listener for hero brand title fade-out
   useEffect(() => {
@@ -156,16 +83,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
     }, 3200);
     return () => clearInterval(interval);
   }, [rotatingDisciplines.length]);
-
-  const handleSelectStudentField = (streamId: AcademicStream) => {
-    setActiveTabField(streamId);
-    setStudentStream(streamId);
-  };
-
-  const handleLaunchStudent = () => {
-    setStudentStream(activeTabField);
-    onSelectRole('student');
-  };
 
   const handleScrollToPortals = () => {
     const el = document.getElementById('portal-selection');
@@ -360,7 +277,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
           
           {/* PORTAL 1: STUDENT & JOB SEEKER */}
-          <div className={`glass-panel rounded-3xl p-5 sm:p-6 border-2 border-amber-500/30 dark:border-amber-500/40 flex flex-col justify-between space-y-5 relative shadow-lg hover:shadow-amber-500/20 hover:border-amber-500 transition-all duration-300 bg-gradient-to-br from-amber-50/50 via-white to-amber-100/30 dark:from-[#0d1322] dark:via-[#11192b] dark:to-[#0d1322] group ${isDisciplineDropdownOpen ? 'z-30' : 'z-10'}`}>
+          <div className="glass-panel rounded-3xl p-5 sm:p-6 border-2 border-amber-500/30 dark:border-amber-500/40 flex flex-col justify-between space-y-5 relative overflow-hidden shadow-lg hover:shadow-amber-500/20 hover:border-amber-500 transition-all duration-300 bg-gradient-to-br from-amber-50/50 via-white to-amber-100/30 dark:from-[#0d1322] dark:via-[#11192b] dark:to-[#0d1322] group">
             
             <div className="space-y-3.5">
               <div className="flex items-center justify-between">
@@ -398,118 +315,34 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
               </ul>
             </div>
 
-            {/* Discipline Dropdown & Dual Action Buttons */}
-            <div className="space-y-3 pt-1">
-              <div className="space-y-1.5">
-                <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
-                  <span>Select Academic Field:</span>
-                  <span className="text-[10px] font-mono text-amber-700 dark:text-amber-300 font-bold">
-                    5 Disciplines
-                  </span>
-                </label>
-
-                {/* Custom Glassmorphic Dropdown Trigger */}
-                <div className="relative" ref={disciplineDropdownRef}>
-                  {(() => {
-                    const currentStreamObj = allStudents.find((s) => s.streamId === activeTabField);
-                    const streamName = currentStreamObj ? currentStreamObj.streamName : 'Engineering';
-
-                    return (
-                      <>
-                        <button
-                          type="button"
-                          onClick={() => setIsDisciplineDropdownOpen((prev) => !prev)}
-                          className={`w-full px-4 py-2.5 rounded-xl border transition-all duration-200 flex items-center justify-between text-left cursor-pointer ${
-                            isDisciplineDropdownOpen
-                              ? 'border-amber-500 ring-2 ring-amber-500/20 bg-amber-50/50 dark:bg-amber-950/30 shadow-md'
-                              : 'border-amber-300/80 dark:border-amber-500/40 bg-white/95 dark:bg-[#0c1222]/95 hover:border-amber-500 dark:hover:border-amber-400 hover:bg-amber-50/30 dark:hover:bg-amber-950/20 shadow-sm'
-                          }`}
-                          aria-haspopup="listbox"
-                          aria-expanded={isDisciplineDropdownOpen}
-                        >
-                          <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
-                            {streamName}
-                          </span>
-                          <ChevronDown
-                            className={`w-4 h-4 text-amber-600 dark:text-amber-400 transition-transform duration-200 shrink-0 ${
-                              isDisciplineDropdownOpen ? 'rotate-180' : ''
-                            }`}
-                          />
-                        </button>
-
-                        {/* Bespoke Glassmorphic Dropdown Listbox */}
-                        {isDisciplineDropdownOpen && (
-                          <div
-                            role="listbox"
-                            className="absolute top-full left-0 right-0 mt-2 z-50 rounded-2xl bg-white dark:bg-[#0b101e] backdrop-blur-2xl border-2 border-amber-500/40 shadow-2xl shadow-amber-950/30 dark:shadow-black/90 p-1.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150"
-                          >
-                            {allStudents.map((stu) => {
-                              const isSelected = activeTabField === stu.streamId;
-
-                              return (
-                                <button
-                                  key={stu.id}
-                                  type="button"
-                                  role="option"
-                                  aria-selected={isSelected}
-                                  onClick={() => {
-                                    handleSelectStudentField(stu.streamId as AcademicStream);
-                                    setIsDisciplineDropdownOpen(false);
-                                  }}
-                                  className={`w-full px-3.5 py-2.5 rounded-xl flex items-center justify-between text-left transition-all duration-150 cursor-pointer ${
-                                    isSelected
-                                      ? 'bg-amber-500/15 border border-amber-500/50 text-amber-900 dark:text-amber-300 font-bold shadow-sm'
-                                      : 'hover:bg-amber-50/70 dark:hover:bg-slate-800/70 border border-transparent text-slate-700 dark:text-slate-200 font-medium'
-                                  }`}
-                                >
-                                  <span className="text-xs sm:text-sm font-bold">
-                                    {stu.streamName}
-                                  </span>
-
-                                  {isSelected && (
-                                    <div className="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-sm ml-2">
-                                      <Check className="w-3 h-3 stroke-[3]" />
-                                    </div>
-                                  )}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </>
-                    );
-                  })()}
-                </div>
-              </div>
-
-              <div className="space-y-2 pt-1">
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => onOpenAuth ? onOpenAuth('student', 'signin') : onSelectRole('student')}
-                    className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-900 dark:text-amber-200 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-95 cursor-pointer"
-                  >
-                    <LogIn className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
-                    <span>Sign In</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onOpenAuth ? onOpenAuth('student', 'signup') : onSelectRole('student')}
-                    className="py-2.5 px-3 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-amber-600/20 active:scale-95 transition-all cursor-pointer"
-                  >
-                    <UserPlus className="w-3.5 h-3.5 shrink-0" />
-                    <span>Sign Up</span>
-                  </button>
-                </div>
+            {/* Action Buttons */}
+            <div className="space-y-2 pt-2 border-t border-[#E5DFD3] dark:border-amber-500/20">
+              <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
-                  onClick={() => handleExploreStakeholder('student')}
-                  className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                  onClick={() => onOpenAuth ? onOpenAuth('student', 'signin') : onSelectRole('student')}
+                  className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-900 dark:text-amber-200 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-95 cursor-pointer"
                 >
-                  <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
-                  <span>Explore Overview</span>
+                  <LogIn className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                  <span>Sign In</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onOpenAuth ? onOpenAuth('student', 'signup') : onSelectRole('student')}
+                  className="py-2.5 px-3 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-amber-600/20 active:scale-95 transition-all cursor-pointer"
+                >
+                  <UserPlus className="w-3.5 h-3.5 shrink-0" />
+                  <span>Sign Up</span>
                 </button>
               </div>
+              <button
+                type="button"
+                onClick={() => handleExploreStakeholder('student')}
+                className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+              >
+                <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                <span>Explore Overview</span>
+              </button>
             </div>
           </div>
 
