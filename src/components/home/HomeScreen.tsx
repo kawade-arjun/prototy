@@ -132,15 +132,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
       {/* SECTION 1: HERO WELCOME BANNER */}
       <div className="text-center space-y-6 relative pt-2 sm:pt-4">
         
+        {/* Big CareerLens Brand Title at start below Navbar */}
+        <h1 className="font-serif-luxury font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-slate-900 dark:text-white text-center pt-2 pb-1">
+          Career<span className="gradient-text-gold font-sans font-black ml-0.5">Lens</span>
+        </h1>
+
         {/* Dynamic Hero Title with Rotating Discipline */}
-        <h1 className="tracking-tight max-w-5xl mx-auto leading-tight">
+        <h2 className="tracking-tight max-w-5xl mx-auto leading-tight">
           <span className="font-serif-luxury text-lg sm:text-2xl md:text-3xl font-semibold text-slate-700 dark:text-slate-300 block mb-1">
             Empowering Next-Gen
           </span>
           <span className={`bg-gradient-to-r ${rotatingDisciplines[currentDisciplineIndex].color} bg-clip-text text-transparent transition-all duration-500 inline-block font-nexa-pro text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic`}>
             {rotatingDisciplines[currentDisciplineIndex].title}
           </span>
-        </h1>
+        </h2>
 
         {/* Hero Subtitle */}
         <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed font-normal">
