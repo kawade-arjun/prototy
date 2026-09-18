@@ -26,14 +26,17 @@ import {
   Target,
   PieChart,
   FileCheck,
-  Search
+  Search,
+  LogIn,
+  UserPlus
 } from 'lucide-react';
 
 interface HomeScreenProps {
   onSelectRole: (role: UserRole) => void;
+  onOpenAuth?: (role: UserRole, mode?: 'signin' | 'signup') => void;
 }
 
-export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
+export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth }) => {
   const { allStudents, selectedStream, setStudentStream, activeStudent } = useStudent();
   const [activeTabField, setActiveTabField] = useState<AcademicStream>(selectedStream);
   const [currentDisciplineIndex, setCurrentDisciplineIndex] = useState(0);
@@ -348,22 +351,32 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div className="space-y-2 pt-1">
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => onOpenAuth ? onOpenAuth('student', 'signin') : onSelectRole('student')}
+                    className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-900 dark:text-amber-200 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-95 cursor-pointer"
+                  >
+                    <LogIn className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                    <span>Sign In</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onOpenAuth ? onOpenAuth('student', 'signup') : onSelectRole('student')}
+                    className="py-2.5 px-3 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-amber-600/20 active:scale-95 transition-all cursor-pointer"
+                  >
+                    <UserPlus className="w-3.5 h-3.5 shrink-0" />
+                    <span>Sign Up</span>
+                  </button>
+                </div>
                 <button
                   type="button"
                   onClick={() => handleExploreStakeholder('student')}
-                  className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-800 dark:text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
+                  className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
                 >
                   <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>Explore Overview</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={handleLaunchStudent}
-                  className="py-2.5 px-3 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-amber-600/20 active:scale-95 transition-all cursor-pointer"
-                >
-                  <span>Enter Workspace</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform shrink-0" />
                 </button>
               </div>
             </div>
@@ -406,22 +419,32 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
               </ul>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <div className="space-y-2 pt-1">
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => onOpenAuth ? onOpenAuth('college', 'signin') : onSelectRole('college')}
+                  className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-900 dark:text-amber-200 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-95 cursor-pointer"
+                >
+                  <LogIn className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                  <span>Sign In</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onOpenAuth ? onOpenAuth('college', 'signup') : onSelectRole('college')}
+                  className="py-2.5 px-3 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-amber-600/20 active:scale-95 transition-all cursor-pointer"
+                >
+                  <UserPlus className="w-3.5 h-3.5 shrink-0" />
+                  <span>Sign Up</span>
+                </button>
+              </div>
               <button
                 type="button"
                 onClick={() => handleExploreStakeholder('college')}
-                className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-800 dark:text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
+                className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
               >
                 <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>Explore Overview</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => onSelectRole('college')}
-                className="py-2.5 px-3 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-amber-600/20 active:scale-95 transition-all cursor-pointer"
-              >
-                <span>Launch TPO Console</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform shrink-0" />
               </button>
             </div>
           </div>
@@ -463,22 +486,32 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
               </ul>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <div className="space-y-2 pt-1">
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => onOpenAuth ? onOpenAuth('recruiter', 'signin') : onSelectRole('recruiter')}
+                  className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-900 dark:text-amber-200 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-95 cursor-pointer"
+                >
+                  <LogIn className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                  <span>Sign In</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onOpenAuth ? onOpenAuth('recruiter', 'signup') : onSelectRole('recruiter')}
+                  className="py-2.5 px-3 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-amber-600/20 active:scale-95 transition-all cursor-pointer"
+                >
+                  <UserPlus className="w-3.5 h-3.5 shrink-0" />
+                  <span>Sign Up</span>
+                </button>
+              </div>
               <button
                 type="button"
                 onClick={() => handleExploreStakeholder('recruiter')}
-                className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-800 dark:text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
+                className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
               >
                 <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>Explore Overview</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => onSelectRole('recruiter')}
-                className="py-2.5 px-3 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-amber-600/20 active:scale-95 transition-all cursor-pointer"
-              >
-                <span>Enter Recruiter Console</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform shrink-0" />
               </button>
             </div>
           </div>
@@ -520,22 +553,32 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
               </ul>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <div className="space-y-2 pt-1">
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => onOpenAuth ? onOpenAuth('government', 'signin') : onSelectRole('government')}
+                  className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-900 dark:text-amber-200 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-95 cursor-pointer"
+                >
+                  <LogIn className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                  <span>Sign In</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onOpenAuth ? onOpenAuth('government', 'signup') : onSelectRole('government')}
+                  className="py-2.5 px-3 rounded-full bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-yellow-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-amber-700/20 active:scale-95 transition-all cursor-pointer"
+                >
+                  <UserPlus className="w-3.5 h-3.5 shrink-0" />
+                  <span>Sign Up</span>
+                </button>
+              </div>
               <button
                 type="button"
                 onClick={() => handleExploreStakeholder('government')}
-                className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-800 dark:text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
+                className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
               >
                 <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>Explore Overview</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => onSelectRole('government')}
-                className="py-2.5 px-3 rounded-full bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-yellow-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-amber-700/20 active:scale-95 transition-all cursor-pointer"
-              >
-                <span>Access Policy Center</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform shrink-0" />
               </button>
             </div>
           </div>

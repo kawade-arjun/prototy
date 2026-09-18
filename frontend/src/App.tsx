@@ -19,7 +19,15 @@ const AppContent: React.FC = () => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [settingsTab, setSettingsTab] = useState<'bookmarks' | 'privacy' | 'preferences'>('preferences');
+  const [authInitialRole, setAuthInitialRole] = useState<UserRole>('student');
+  const [authInitialMode, setAuthInitialMode] = useState<'signin' | 'signup'>('signin');
   const { isOnboardingOpen, setIsOnboardingOpen } = useStudent();
+
+  const handleOpenAuth = (role: UserRole = 'student', mode: 'signin' | 'signup' = 'signin') => {
+    setAuthInitialRole(role);
+    setAuthInitialMode(mode);
+    setIsAuthOpen(true);
+  };
 
   const handleOpenSettings = (tab?: 'bookmarks' | 'privacy' | 'preferences') => {
     if (tab) {
@@ -37,13 +45,18 @@ const AppContent: React.FC = () => {
         currentRole={currentRole} 
         onRoleChange={setCurrentRole}
         onGoHome={() => setCurrentRole(null)}
-        onOpenAuthModal={() => setIsAuthOpen(true)}
+        onOpenAuthModal={() => handleOpenAuth(currentRole || 'student', 'signin')}
         onOpenSettings={handleOpenSettings}
       />
 
       {/* Main Workspace Viewport - Fluidly auto-adapts to laptop, tablet, or mobile devices */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-1 pb-4 sm:pb-6 transition-all">
-        {currentRole === null && <HomeScreen onSelectRole={setCurrentRole} />}
+        {currentRole === null && (
+          <HomeScreen 
+            onSelectRole={setCurrentRole} 
+            onOpenAuth={handleOpenAuth}
+          />
+        )}
         {currentRole === 'student' && <StudentPortal />}
         {currentRole === 'college' && <CollegePortal />}
         {currentRole === 'recruiter' && <RecruiterPortal />}
@@ -56,6 +69,8 @@ const AppContent: React.FC = () => {
         onClose={() => setIsAuthOpen(false)}
         currentRole={currentRole}
         onRoleChange={setCurrentRole}
+        initialRole={authInitialRole}
+        initialMode={authInitialMode}
       />
 
       {/* Student Onboarding & Profile Builder Wizard */}

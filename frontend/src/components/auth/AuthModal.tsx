@@ -24,18 +24,22 @@ interface AuthModalProps {
   onClose: () => void;
   currentRole: UserRole | null;
   onRoleChange: (role: UserRole) => void;
+  initialRole?: UserRole;
+  initialMode?: 'signin' | 'signup';
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({
   isOpen,
   onClose,
   currentRole,
-  onRoleChange
+  onRoleChange,
+  initialRole,
+  initialMode
 }) => {
   const { allStudents, selectedStream, setStudentStream, login, register, setIsOnboardingOpen } = useStudent();
 
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
-  const [selectedRole, setSelectedRole] = useState<UserRole>(currentRole || 'student');
+  const [selectedRole, setSelectedRole] = useState<UserRole>(initialRole || currentRole || 'student');
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('arjun.test@careeroptic.dev');
   const [password, setPassword] = useState('Password123!');
@@ -48,6 +52,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (isOpen) {
+      if (initialRole) setSelectedRole(initialRole);
+      if (initialMode) setAuthMode(initialMode);
+      setErrorMessage(null);
+      setSuccessMessage(null);
+    }
+  }, [isOpen, initialRole, initialMode]);
 
   if (!isOpen) return null;
 
