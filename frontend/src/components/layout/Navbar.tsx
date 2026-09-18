@@ -16,6 +16,7 @@ import {
   Globe,
   SlidersHorizontal,
   ChevronRight,
+  LogOut,
   X
 } from 'lucide-react';
 
@@ -35,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onGoHome
 }) => {
   const { theme, toggleTheme } = useTheme();
-  const { activeStudent } = useStudent();
+  const { activeStudent, currentUser, logout } = useStudent();
   const [isSettingsMenuOpen, setIsSettingsMenuOpen] = useState(false);
   const [emailAlerts, setEmailAlerts] = useState(true);
   const [scrollY, setScrollY] = useState(0);
@@ -265,6 +266,31 @@ export const Navbar: React.FC<NavbarProps> = ({
                       className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
                     />
                   </div>
+
+                  {/* Sign Out Option */}
+                  {currentRole !== null && (
+                    <button
+                      onClick={() => {
+                        logout();
+                        onRoleChange(null);
+                        setIsSettingsMenuOpen(false);
+                      }}
+                      className="w-full p-2.5 rounded-xl flex items-center justify-between text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors group cursor-pointer text-left"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-7 h-7 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
+                          <LogOut className="w-3.5 h-3.5" />
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold">Sign Out</div>
+                          <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                            {currentUser?.email || 'End active session'}
+                          </div>
+                        </div>
+                      </div>
+                      <LogOut className="w-3.5 h-3.5 text-rose-400 group-hover:translate-x-0.5 transition-transform" />
+                    </button>
+                  )}
                 </div>
 
                 {/* Footer: Open Full Settings Modal Button */}
