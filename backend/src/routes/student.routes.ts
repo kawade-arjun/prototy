@@ -20,7 +20,7 @@ const calculateCompletion = (data: any): number => {
 router.get('/profile', authenticateToken, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user?.id;
-    const result = await query('SELECT * FROM student_profiles WHERE user_id = $1', [userId]);
+    const result = await query('SELECT * FROM public.student_profiles WHERE user_id = $1', [userId]);
 
     if (result.rows.length === 0) {
       res.status(404).json({ success: false, message: 'Student profile not found.' });
@@ -59,7 +59,7 @@ router.put('/onboarding', authenticateToken, async (req: AuthRequest, res: Respo
 
     // Upsert student profile
     const updateResult = await query(
-      `INSERT INTO student_profiles (
+      `INSERT INTO public.student_profiles (
         user_id, full_name, phone, discipline, stream,
         technical_skills, soft_skills, custom_skills,
         institution_name, degree, passing_year, cgpa_or_percentage,
@@ -73,20 +73,20 @@ router.put('/onboarding', authenticateToken, async (req: AuthRequest, res: Respo
         $16, NOW()
       )
       ON CONFLICT (user_id) DO UPDATE SET
-        full_name = COALESCE($2, student_profiles.full_name),
-        phone = COALESCE($3, student_profiles.phone),
-        discipline = COALESCE($4, student_profiles.discipline),
-        stream = COALESCE($5, student_profiles.stream),
-        technical_skills = COALESCE($6, student_profiles.technical_skills),
-        soft_skills = COALESCE($7, student_profiles.soft_skills),
-        custom_skills = COALESCE($8, student_profiles.custom_skills),
-        institution_name = COALESCE($9, student_profiles.institution_name),
-        degree = COALESCE($10, student_profiles.degree),
-        passing_year = COALESCE($11, student_profiles.passing_year),
-        cgpa_or_percentage = COALESCE($12, student_profiles.cgpa_or_percentage),
-        resume_url = COALESCE($13, student_profiles.resume_url),
-        resume_extracted_skills = COALESCE($14, student_profiles.resume_extracted_skills),
-        aspirations_text = COALESCE($15, student_profiles.aspirations_text),
+        full_name = COALESCE($2, public.student_profiles.full_name),
+        phone = COALESCE($3, public.student_profiles.phone),
+        discipline = COALESCE($4, public.student_profiles.discipline),
+        stream = COALESCE($5, public.student_profiles.stream),
+        technical_skills = COALESCE($6, public.student_profiles.technical_skills),
+        soft_skills = COALESCE($7, public.student_profiles.soft_skills),
+        custom_skills = COALESCE($8, public.student_profiles.custom_skills),
+        institution_name = COALESCE($9, public.student_profiles.institution_name),
+        degree = COALESCE($10, public.student_profiles.degree),
+        passing_year = COALESCE($11, public.student_profiles.passing_year),
+        cgpa_or_percentage = COALESCE($12, public.student_profiles.cgpa_or_percentage),
+        resume_url = COALESCE($13, public.student_profiles.resume_url),
+        resume_extracted_skills = COALESCE($14, public.student_profiles.resume_extracted_skills),
+        aspirations_text = COALESCE($15, public.student_profiles.aspirations_text),
         completion_percentage = $16,
         updated_at = NOW()
       RETURNING *`,

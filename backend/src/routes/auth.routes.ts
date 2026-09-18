@@ -17,7 +17,7 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
     }
 
     // Check if user exists
-    const existing = await query('SELECT id FROM users WHERE email = $1', [email.toLowerCase().trim()]);
+    const existing = await query('SELECT id FROM public.users WHERE email = $1', [email.toLowerCase().trim()]);
     if (existing.rows.length > 0) {
       res.status(409).json({ success: false, message: 'An account with this email already exists.' });
       return;
@@ -29,7 +29,7 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
 
     // Insert user
     const userResult = await query(
-      'INSERT INTO users (email, password_hash, role) VALUES ($1, $2, $3) RETURNING id, email, role, created_at',
+      'INSERT INTO public.users (email, password_hash, role) VALUES ($1, $2, $3) RETURNING id, email, role, created_at',
       [email.toLowerCase().trim(), passwordHash, role]
     );
     const newUser = userResult.rows[0];
@@ -37,7 +37,7 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
     // If student, create initial student_profile record
     if (role === 'student') {
       await query(
-        'INSERT INTO student_profiles (user_id, full_name, completion_percentage) VALUES ($1, $2, $3)',
+        'INSERT INTO public.student_profiles (user_id, full_name, completion_percentage) VALUES ($1, $2, $3)',
         [newUser.id, full_name || email.split('@')[0], 15]
       );
     }
@@ -78,7 +78,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     }
 
     const userResult = await query(
-      'SELECT id, email, password_hash, role FROM users WHERE email = $1',
+      'SELECT id, email, password_hash, role FROM public.users WHERE email = $1',
       [email.toLowerCase().trim()]
     );
 
@@ -98,7 +98,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     // Fetch profile if student
     let profile = null;
     if (user.role === 'student') {
-      const profileResult = await query('SELECT * FROM student_profiles WHERE user_id = $1', [user.id]);
+      const profileResult = await query('SELECT * FROM public.student_profiles WHERE user_id = $1', [user.id]);
       if (profileResult.rows.length > 0) {
         profile = profileResult.rows[0];
       }
@@ -132,7 +132,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
 router.get('/me', authenticateToken, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const userId = req.user?.id;
-    const userResult = await query('SELECT id, email, role, created_at FROM users WHERE id = $1', [userId]);
+    const userResult = await query('SELECT id, email, role, created_at FROM public.users WHERE id = $1', [userId]);
 
     if (userResult.rows.length === 0) {
       res.status(404).json({ success: false, message: 'User not found.' });
@@ -143,7 +143,7 @@ router.get('/me', authenticateToken, async (req: AuthRequest, res: Response): Pr
     let profile = null;
 
     if (user.role === 'student') {
-      const profileResult = await query('SELECT * FROM student_profiles WHERE user_id = $1', [userId]);
+      const profileResult = await query('SELECT * FROM public.student_profiles WHERE user_id = $1', [userId]);
       if (profileResult.rows.length > 0) {
         profile = profileResult.rows[0];
       }
