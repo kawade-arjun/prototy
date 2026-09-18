@@ -340,19 +340,19 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
           </div>
 
           {/* PORTAL 2: COLLEGE PLACEMENT CELL (TPO) */}
-          <div className="glass-panel rounded-3xl p-5 sm:p-6 border-2 border-emerald-500/30 hover:border-emerald-500/60 flex flex-col justify-between space-y-5 relative overflow-hidden shadow-lg hover:shadow-emerald-500/20 transition-all duration-300 bg-gradient-to-br from-emerald-50/50 via-white to-teal-50/40 dark:from-[#081512] dark:via-[#0c1a16] dark:to-[#081512] group">
+          <div className="glass-panel rounded-3xl p-5 sm:p-6 border-2 border-amber-500/30 hover:border-amber-500/60 flex flex-col justify-between space-y-5 relative overflow-hidden shadow-lg hover:shadow-amber-500/20 transition-all duration-300 bg-gradient-to-br from-amber-50/50 via-white to-orange-50/40 dark:from-[#161208] dark:via-[#1c170b] dark:to-[#161208] group">
             <div className="space-y-3.5">
               <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-md shadow-emerald-600/20 group-hover:scale-105 transition-transform">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 to-orange-500 text-white flex items-center justify-center shadow-md shadow-amber-600/20 group-hover:scale-105 transition-transform">
                   <Building2 className="w-5 h-5" />
                 </div>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30">
                   Institutional
                 </span>
               </div>
 
               <div>
-                <h3 className="font-serif-luxury text-lg sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                <h3 className="font-serif-luxury text-lg sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                   College Placement Cell (TPO)
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
@@ -360,17 +360,17 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                 </p>
               </div>
 
-              <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2 border-t border-[#E5DFD3] dark:border-emerald-500/20">
+              <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2 border-t border-[#E5DFD3] dark:border-amber-500/20">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>Branch-by-Branch Cohort Skill Heatmaps</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>1-Click NIRF & NAAC 5.2.1 Audit Reports</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>OpenCV ELA Marksheet Fraud Inspector</span>
                 </li>
               </ul>
@@ -379,7 +379,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
             <button
               type="button"
               onClick={() => onSelectRole('college')}
-              className="w-full py-2.5 px-4 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 active:scale-95 transition-all cursor-pointer group-hover:bg-emerald-500"
+              className="w-full py-2.5 px-4 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md shadow-amber-600/20 active:scale-95 transition-all cursor-pointer"
             >
               <span>Launch TPO Command Center</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
