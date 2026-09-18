@@ -38,16 +38,29 @@ export const Navbar: React.FC<NavbarProps> = ({
   const { activeStudent } = useStudent();
   const [isSettingsMenuOpen, setIsSettingsMenuOpen] = useState(false);
   const [emailAlerts, setEmailAlerts] = useState(true);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const settingsRef = useRef<HTMLDivElement>(null);
 
-  // Scroll listener for smooth brand size morphing animation
+  // 60fps/120fps GPU-accelerated scroll listener directly tied to scroll position
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 25);
+    let ticking = false;
+    const updateScroll = () => {
+      const scrollY = window.scrollY;
+      const progress = Math.min(1, Math.max(0, scrollY / 140));
+      setScrollProgress(progress);
+      ticking = false;
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   // Close dropdown on click outside
@@ -76,26 +89,37 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
   };
 
+  // Continuous GPU scale calculation: from 1.0 (top) down to 0.48 (scrolled)
+  const brandScale = 1 - scrollProgress * 0.52;
+
   return (
-    <header className="sticky top-0 z-50 w-full py-2 transition-all duration-500 ease-out pointer-events-none">
+    <header className="sticky top-0 z-50 w-full py-2.5 pointer-events-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center justify-center">
         
-        {/* Centered Brand Title with fluid morphing animation */}
-        <div className={`pointer-events-auto transition-all duration-500 ease-out transform-gpu flex items-center justify-center text-center ${
-          isScrolled 
-            ? 'px-6 py-1.5 rounded-full bg-white/90 dark:bg-[#080B10]/90 backdrop-blur-md border border-amber-500/30 shadow-xl shadow-amber-500/10 scale-95' 
-            : 'px-4 py-4 sm:py-6 bg-transparent border-transparent shadow-none scale-100'
-        }`}>
+        {/* Centered Brand Title with 60fps continuous scroll-driven GPU scale */}
+        <div 
+          className="pointer-events-auto flex items-center justify-center text-center rounded-full transition-all duration-150"
+          style={{
+            backgroundColor: `rgba(${theme === 'dark' ? '8, 11, 16' : '255, 255, 255'}, ${scrollProgress * 0.92})`,
+            backdropFilter: scrollProgress > 0.05 ? 'blur(16px)' : 'none',
+            WebkitBackdropFilter: scrollProgress > 0.05 ? 'blur(16px)' : 'none',
+            borderColor: `rgba(245, 158, 11, ${scrollProgress * 0.35})`,
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            boxShadow: scrollProgress > 0.3 ? '0 10px 30px -5px rgba(245, 158, 11, 0.15)' : 'none',
+            padding: `${Math.max(4, 12 - scrollProgress * 8)}px ${Math.max(16, 28 - scrollProgress * 12)}px`,
+          }}
+        >
           <button 
             onClick={handleHomeClick}
-            className="flex items-center justify-center group cursor-pointer focus:outline-none"
+            className="flex items-center justify-center group cursor-pointer focus:outline-none origin-center transform-gpu will-change-transform"
+            style={{
+              transform: `scale(${brandScale})`,
+              transition: 'transform 0.04s cubic-bezier(0.1, 1, 0.1, 1)'
+            }}
             title="Return to CareerLens Home Screen"
           >
-            <span className={`font-serif-luxury font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center transition-all duration-500 ease-out ${
-              isScrolled
-                ? 'text-xl sm:text-2xl'
-                : 'text-4xl sm:text-6xl md:text-7xl drop-shadow-sm'
-            }`}>
+            <span className="font-serif-luxury font-extrabold text-3xl sm:text-5xl md:text-6xl tracking-tight text-slate-900 dark:text-white flex items-center whitespace-nowrap drop-shadow-sm">
               Career<span className="gradient-text-gold font-sans font-black ml-0.5">Lens</span>
             </span>
           </button>
