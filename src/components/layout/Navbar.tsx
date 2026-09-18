@@ -41,12 +41,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isScrolled, setIsScrolled] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
 
-  // Scroll listener for sticky compact title transition
+  // Scroll listener for smooth brand size morphing animation
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 15);
+      setIsScrolled(window.scrollY > 25);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -77,28 +77,32 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full py-2.5 transition-all duration-300">
+    <header className="sticky top-0 z-50 w-full py-2 transition-all duration-500 ease-out pointer-events-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center justify-center">
         
-        {/* Centered Brand Title - At top starts middle, on scroll sticks in top middle */}
-        <div className={`transition-all duration-300 ${
+        {/* Centered Brand Title with fluid morphing animation */}
+        <div className={`pointer-events-auto transition-all duration-500 ease-out transform-gpu flex items-center justify-center text-center ${
           isScrolled 
-            ? 'px-6 py-1.5 rounded-full bg-white/90 dark:bg-[#080B10]/90 backdrop-blur-md border border-amber-500/30 shadow-lg shadow-amber-500/10 scale-95' 
-            : 'py-1'
+            ? 'px-6 py-1.5 rounded-full bg-white/90 dark:bg-[#080B10]/90 backdrop-blur-md border border-amber-500/30 shadow-xl shadow-amber-500/10 scale-95' 
+            : 'px-4 py-4 sm:py-6 bg-transparent border-transparent shadow-none scale-100'
         }`}>
           <button 
             onClick={handleHomeClick}
             className="flex items-center justify-center group cursor-pointer focus:outline-none"
             title="Return to CareerLens Home Screen"
           >
-            <span className="font-serif-luxury font-extrabold text-2xl sm:text-3xl tracking-tight text-slate-900 dark:text-white flex items-center">
+            <span className={`font-serif-luxury font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center transition-all duration-500 ease-out ${
+              isScrolled
+                ? 'text-xl sm:text-2xl'
+                : 'text-4xl sm:text-6xl md:text-7xl drop-shadow-sm'
+            }`}>
               Career<span className="gradient-text-gold font-sans font-black ml-0.5">Lens</span>
             </span>
           </button>
         </div>
 
         {/* Right Controls: Level XP, Streak, Current Session Profile, Settings */}
-        <div className="absolute right-4 sm:right-8 flex items-center gap-1.5 sm:gap-2.5">
+        <div className="pointer-events-auto absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 flex items-center gap-1.5 sm:gap-2.5">
           
           {/* Level 6 XP Badge & Streak Badge - Only inside active user portal */}
           {currentRole !== null && (
