@@ -5,7 +5,6 @@ import { useStudent } from '../../context/StudentContext';
 import { 
   Flame, 
   Award, 
-  Compass,
   Sun,
   Moon,
   Settings,

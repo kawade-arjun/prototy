@@ -9,7 +9,6 @@ import {
   Sparkles, 
   GraduationCap, 
   Cpu, 
-  Compass, 
   BookOpen, 
   Award, 
   ArrowRight, 

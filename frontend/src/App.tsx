@@ -12,7 +12,7 @@ import { AuthPopupModal } from './components/auth/AuthPopupModal';
 import { SettingsModal } from './components/common/SettingsModal';
 import { StudentOnboardingModal } from './components/student/onboarding/StudentOnboardingModal';
 import { useStudent } from './context/StudentContext';
-import { ShieldCheck, Lock, Compass } from 'lucide-react';
+import { ShieldCheck, Lock } from 'lucide-react';
 
 const AppContent: React.FC = () => {
   const [currentRole, setCurrentRole] = useState<UserRole | null>(null);
@@ -101,7 +101,6 @@ const AppContent: React.FC = () => {
         {/* National Sovereign Tag (Moved to bottom of page) */}
         <div className="flex justify-center pb-2">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 text-xs sm:text-sm font-extrabold shadow-sm transition-transform hover:scale-105">
-            <Compass className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
             <span className="uppercase tracking-widest text-[11px] font-mono">National Sovereign Talent & Placement Substrate</span>
           </div>
         </div>

@@ -22,7 +22,6 @@ import {
   Layers,
   Terminal,
   Play,
-  Compass,
   Target,
   PieChart,
   FileCheck,
@@ -1182,7 +1181,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
             <div className="p-6 rounded-3xl bg-gradient-to-br from-amber-50/60 via-white to-amber-100/30 dark:from-[#090e1a] dark:via-[#0e1628] dark:to-[#090e1a] border border-amber-500/30 space-y-4 shadow-md flex flex-col justify-between">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Compass className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <h4 className="font-serif-luxury font-bold text-slate-900 dark:text-white text-sm sm:text-base">NEP 2020 Policy Directive Engine Pipeline</h4>
                 </div>
                 <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-extrabold border border-emerald-500/30">Automated Directives</span>

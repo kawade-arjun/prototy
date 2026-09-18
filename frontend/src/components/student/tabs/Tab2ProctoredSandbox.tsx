@@ -33,7 +33,6 @@ import {
   Maximize2, 
   RefreshCw, 
   HelpCircle, 
-  Compass, 
   ExternalLink,
   ChevronDown,
   TrendingUp,

@@ -17,7 +17,6 @@ import {
   Fingerprint,
   Mail,
   User,
-  Compass,
   Cpu,
   TrendingUp,
   Activity,

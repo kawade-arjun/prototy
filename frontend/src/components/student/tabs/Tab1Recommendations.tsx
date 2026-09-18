@@ -15,7 +15,6 @@ import {
   Download, 
   TrendingUp, 
   TrendingDown, 
-  Compass, 
   Briefcase, 
   Flame, 
   Check, 
@@ -378,7 +377,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
-              <Compass className="w-5 h-5" />
+              <Cpu className="w-5 h-5" />
             </div>
             <div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">2. AI Skill Gap Analysis Studio</h3>
