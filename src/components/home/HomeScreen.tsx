@@ -132,16 +132,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
       {/* SECTION 1: HERO WELCOME BANNER */}
       <div className="text-center space-y-6 relative pt-2 sm:pt-4">
         
-        {/* Top Sovereign Tag */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 text-xs sm:text-sm font-extrabold shadow-sm transition-transform hover:scale-105">
-          <Compass className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
-          <span className="uppercase tracking-widest text-[11px] font-mono">National Sovereign Talent & Placement Substrate</span>
-        </div>
-
         {/* Dynamic Hero Title with Rotating Discipline */}
-        <h1 className="font-serif-luxury text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white max-w-5xl mx-auto leading-tight">
-          Empowering Next-Gen <br className="hidden sm:inline" />
-          <span className={`bg-gradient-to-r ${rotatingDisciplines[currentDisciplineIndex].color} bg-clip-text text-transparent transition-all duration-500 inline-block font-nexa-pro font-black italic`}>
+        <h1 className="tracking-tight max-w-5xl mx-auto leading-tight">
+          <span className="font-serif-luxury text-lg sm:text-2xl md:text-3xl font-semibold text-slate-700 dark:text-slate-300 block mb-1">
+            Empowering Next-Gen
+          </span>
+          <span className={`bg-gradient-to-r ${rotatingDisciplines[currentDisciplineIndex].color} bg-clip-text text-transparent transition-all duration-500 inline-block font-nexa-pro text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic`}>
             {rotatingDisciplines[currentDisciplineIndex].title}
           </span>
         </h1>

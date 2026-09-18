@@ -10,7 +10,7 @@ import { GovernmentPortal } from './components/government/GovernmentPortal';
 import { HomeScreen } from './components/home/HomeScreen';
 import { AuthModal } from './components/auth/AuthModal';
 import { SettingsModal } from './components/common/SettingsModal';
-import { ShieldCheck, Lock } from 'lucide-react';
+import { ShieldCheck, Lock, Compass } from 'lucide-react';
 
 const AppContent: React.FC = () => {
   const [currentRole, setCurrentRole] = useState<UserRole | null>(null);
@@ -63,9 +63,17 @@ const AppContent: React.FC = () => {
         initialTab={settingsTab}
       />
 
-      {/* Global Footer */}
-      <footer className="border-t border-slate-200 dark:border-white/[0.08] bg-white/70 dark:bg-[#070a11]/70 backdrop-blur-md py-6 mt-12 text-xs text-slate-500 dark:text-slate-400 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* Global Footer & Sovereign Substrate Banner at Bottom */}
+      <footer className="border-t border-slate-200 dark:border-white/[0.08] bg-white/70 dark:bg-[#070a11]/70 backdrop-blur-md py-6 mt-12 text-xs text-slate-500 dark:text-slate-400 transition-colors space-y-4">
+        {/* National Sovereign Tag (Moved to bottom of page) */}
+        <div className="flex justify-center pb-2">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 text-xs sm:text-sm font-extrabold shadow-sm transition-transform hover:scale-105">
+            <Compass className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+            <span className="uppercase tracking-widest text-[11px] font-mono">National Sovereign Talent & Placement Substrate</span>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-100 dark:border-white/[0.06] pt-4">
           <div className="flex flex-wrap items-center gap-3">
             <span className="font-extrabold text-slate-800 dark:text-slate-200">
               Career<span className="text-indigo-600 dark:text-indigo-400">Lens</span>
