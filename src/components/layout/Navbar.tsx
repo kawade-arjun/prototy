@@ -38,16 +38,14 @@ export const Navbar: React.FC<NavbarProps> = ({
   const { activeStudent } = useStudent();
   const [isSettingsMenuOpen, setIsSettingsMenuOpen] = useState(false);
   const [emailAlerts, setEmailAlerts] = useState(true);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
   const settingsRef = useRef<HTMLDivElement>(null);
 
   // 60fps/120fps GPU-accelerated scroll listener directly tied to scroll position
   useEffect(() => {
     let ticking = false;
     const updateScroll = () => {
-      const scrollY = window.scrollY;
-      const progress = Math.min(1, Math.max(0, scrollY / 140));
-      setScrollProgress(progress);
+      setScrollY(window.scrollY);
       ticking = false;
     };
 
@@ -89,20 +87,21 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
   };
 
-  // Continuous GPU scale calculation: from 1.0 (top) down to 0.48 (scrolled)
-  const brandScale = 1 - scrollProgress * 0.52;
+  // Seamless Handover Opacity: Starts fading in only after scrollY > 50px (when hero title has faded out)
+  const navOpacity = Math.min(1, Math.max(0, (scrollY - 50) / 40));
 
   return (
     <header className="sticky top-0 z-50 w-full py-2.5 pointer-events-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center justify-center">
         
-        {/* Compact Sticky Brand Title - Fades in when scrolled down, hidden at top */}
+        {/* Compact Sticky Brand Title - Handover animation (Zero overlap with Hero Title) */}
         <div 
-          className={`transition-all duration-300 transform-gpu flex items-center justify-center text-center px-5 py-1.5 rounded-full bg-white/90 dark:bg-[#080B10]/90 backdrop-blur-md border border-amber-500/30 shadow-lg shadow-amber-500/10 ${
-            scrollProgress > 0.2 
-              ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto' 
-              : 'opacity-0 scale-90 -translate-y-2 pointer-events-none'
-          }`}
+          className="transition-all duration-200 transform-gpu flex items-center justify-center text-center px-5 py-1.5 rounded-full bg-white/90 dark:bg-[#080B10]/90 backdrop-blur-md border border-amber-500/30 shadow-lg shadow-amber-500/10"
+          style={{
+            opacity: navOpacity,
+            transform: `scale(${0.9 + navOpacity * 0.1}) translateY(${(1 - navOpacity) * -6}px)`,
+            pointerEvents: navOpacity > 0.5 ? 'auto' : 'none',
+          }}
         >
           <button 
             onClick={handleHomeClick}

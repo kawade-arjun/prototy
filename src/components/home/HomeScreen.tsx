@@ -40,6 +40,17 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
   const [activeArchitectureStep, setActiveArchitectureStep] = useState<number>(1);
   const [showDemoModal, setShowDemoModal] = useState(false);
   const [highlightedRole, setHighlightedRole] = useState<string | null>(null);
+  const [heroScrollOpacity, setHeroScrollOpacity] = useState(1);
+
+  // Smooth scroll listener for hero brand title fade-out
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      setHeroScrollOpacity(Math.max(0, 1 - scrollY / 70));
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleExploreStakeholder = (role: 'student' | 'college' | 'recruiter' | 'government') => {
     const targetId = `deep-dive-${role}`;
@@ -132,17 +143,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
       {/* SECTION 1: HERO WELCOME BANNER */}
       <div className="text-center space-y-6 relative pt-2 sm:pt-4">
         
-        {/* Big CareerLens Brand Title at start below Navbar */}
-        <h1 className="font-serif-luxury font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-slate-900 dark:text-white text-center pt-2 pb-1">
+        {/* Big CareerLens Brand Title at start below Navbar (fades out smoothly on scroll down) */}
+        <h1 
+          className="font-serif-luxury font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-slate-900 dark:text-white text-center pt-2 pb-1 transition-opacity duration-150 transform-gpu"
+          style={{ opacity: heroScrollOpacity }}
+        >
           Career<span className="gradient-text-gold font-sans font-black ml-0.5">Lens</span>
         </h1>
 
-        {/* Dynamic Hero Title with Rotating Discipline */}
+        {/* Dynamic Hero Title with Rotating Discipline (Non-italic) */}
         <h2 className="tracking-tight max-w-5xl mx-auto leading-tight">
           <span className="font-serif-luxury text-lg sm:text-2xl md:text-3xl font-semibold text-slate-700 dark:text-slate-300 block mb-1">
             Empowering Next-Gen
           </span>
-          <span className={`bg-gradient-to-r ${rotatingDisciplines[currentDisciplineIndex].color} bg-clip-text text-transparent transition-all duration-500 inline-block font-nexa-pro text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic`}>
+          <span className={`bg-gradient-to-r ${rotatingDisciplines[currentDisciplineIndex].color} bg-clip-text text-transparent transition-all duration-500 inline-block font-nexa-pro text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black`}>
             {rotatingDisciplines[currentDisciplineIndex].title}
           </span>
         </h2>
