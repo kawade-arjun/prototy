@@ -5,7 +5,7 @@ import { useStudent } from '../../context/StudentContext';
 import { 
   Flame, 
   Award, 
-  Sparkles,
+  Compass,
   Sun,
   Moon,
   Settings,
@@ -78,7 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         >
           <div className="relative">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-500 text-white p-0.5 flex items-center justify-center shadow-md shadow-amber-600/20 group-hover:scale-105 transition-transform">
-              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:rotate-12 transition-transform duration-300" />
+              <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:rotate-12 transition-transform duration-300" />
             </div>
           </div>
           <div>

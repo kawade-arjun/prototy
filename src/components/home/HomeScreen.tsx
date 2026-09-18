@@ -131,7 +131,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
         
         {/* Top Sovereign Tag */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 text-xs sm:text-sm font-extrabold shadow-sm transition-transform hover:scale-105">
-          <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 animate-spin-slow" />
+          <Compass className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
           <span className="uppercase tracking-widest text-[11px] font-mono">National Sovereign Talent & Placement Substrate</span>
         </div>
 
@@ -349,7 +349,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                   onClick={() => handleExploreStakeholder('student')}
                   className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-800 dark:text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                  <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>Explore Overview</span>
                 </button>
                 <button
@@ -407,7 +407,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                 onClick={() => handleExploreStakeholder('college')}
                 className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-800 dark:text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>Explore Overview</span>
               </button>
               <button
@@ -464,7 +464,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                 onClick={() => handleExploreStakeholder('recruiter')}
                 className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-800 dark:text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>Explore Overview</span>
               </button>
               <button
@@ -521,7 +521,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                 onClick={() => handleExploreStakeholder('government')}
                 className="py-2.5 px-3 rounded-full bg-white dark:bg-[#101728] border border-amber-500/40 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-800 dark:text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>Explore Overview</span>
               </button>
               <button
