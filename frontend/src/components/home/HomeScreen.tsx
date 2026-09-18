@@ -338,9 +338,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
               <button
                 type="button"
                 onClick={() => handleExploreStakeholder('student')}
-                className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center transition-all cursor-pointer"
               >
-                <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>Explore Overview</span>
               </button>
             </div>
@@ -405,9 +404,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
               <button
                 type="button"
                 onClick={() => handleExploreStakeholder('college')}
-                className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center transition-all cursor-pointer"
               >
-                <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>Explore Overview</span>
               </button>
             </div>
@@ -472,9 +470,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
               <button
                 type="button"
                 onClick={() => handleExploreStakeholder('recruiter')}
-                className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center transition-all cursor-pointer"
               >
-                <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>Explore Overview</span>
               </button>
             </div>
@@ -539,9 +536,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
               <button
                 type="button"
                 onClick={() => handleExploreStakeholder('government')}
-                className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                className="w-full py-2 px-3 rounded-full bg-slate-100/70 hover:bg-slate-200/80 dark:bg-slate-800/40 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-xs flex items-center justify-center transition-all cursor-pointer"
               >
-                <Compass className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>Explore Overview</span>
               </button>
             </div>
@@ -556,7 +552,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
         {/* Section Header & Quick Anchor Navigation */}
         <div className="text-center space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-300 text-xs font-mono font-extrabold">
-            <Compass className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             <span>STAKEHOLDER ARCHITECTURE OVERVIEW</span>
           </div>
           <h2 className="font-serif-luxury text-2xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
