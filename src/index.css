@@ -4,71 +4,76 @@
 
 @layer base {
   body {
-    @apply bg-slate-100 text-slate-900 dark:bg-[#0b0e14] dark:text-slate-100 overflow-x-hidden antialiased;
+    @apply bg-[#FAF8F5] text-[#1C1917] dark:bg-[#080B10] dark:text-slate-100 overflow-x-hidden antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 
-/* Material Design 3 Ambient Tonal Background */
+/* Luxury Editorial Typography Class */
+.font-serif-luxury {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Luxury Real Estate Ambient Tonal Background */
 .ambient-bg {
-  @apply bg-[#F4F5FA] dark:bg-[#0B0E14];
+  @apply bg-[#FAF8F5] dark:bg-[#080B10];
   background-image: 
-    radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.06) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.05) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.04) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(212, 175, 55, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(197, 160, 89, 0.06) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(184, 134, 11, 0.05) 0px, transparent 50%);
 }
 
 .dark .ambient-bg {
   background-image: 
-    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.09) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(212, 175, 55, 0.14) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(197, 160, 89, 0.10) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(230, 198, 135, 0.08) 0px, transparent 50%);
 }
 
-/* Material Design 3 Surface Container Primitives (Surface 0 to 3) */
+/* Surface Primitives for Luxury Estate Layout */
 .m3-surface-0 {
-  @apply bg-[#F4F5FA] dark:bg-[#0B0E14];
+  @apply bg-[#FAF8F5] dark:bg-[#080B10];
 }
 
 .m3-surface-1 {
-  @apply bg-[#EAECEF] dark:bg-[#131722] border border-slate-200/80 dark:border-white/[0.06];
+  @apply bg-[#F3EFE6] dark:bg-[#0E131F] border border-[#E5DFD3] dark:border-amber-500/20;
 }
 
 .m3-surface-2 {
-  @apply bg-white dark:bg-[#1A202E] border border-slate-200/90 dark:border-white/[0.08] shadow-sm;
+  @apply bg-white dark:bg-[#131929] border border-[#E5DFD3] dark:border-amber-500/25 shadow-sm;
 }
 
 .m3-surface-3 {
-  @apply bg-white dark:bg-[#202738] border border-slate-300/80 dark:border-white/[0.12] shadow-xl;
+  @apply bg-white dark:bg-[#1A2236] border border-[#D9D0C1] dark:border-amber-500/35 shadow-xl;
 }
 
-/* Backward compatible glass-panel mapping to Material Design 3 Surface Cards */
+/* Glass panel mapping to Luxury Estate Cards */
 .glass-panel {
-  @apply bg-white dark:bg-[#151B28] border border-slate-200/80 dark:border-white/[0.08] shadow-sm rounded-3xl transition-all duration-200;
+  @apply bg-white dark:bg-[#0E131F] border border-[#E8E2D5] dark:border-amber-500/20 shadow-sm rounded-3xl transition-all duration-200;
 }
 
 .glass-panel-hover {
   transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
 }
 .glass-panel-hover:hover {
-  @apply bg-white dark:bg-[#1C2436] border-indigo-300 dark:border-indigo-500/40 shadow-md -translate-y-0.5;
+  @apply bg-white dark:bg-[#151D2F] border-amber-400/50 dark:border-amber-500/40 shadow-md -translate-y-0.5;
 }
 
 .glass-panel-glow {
-  @apply bg-white dark:bg-[#1E273A] border border-indigo-200 dark:border-indigo-500/40 shadow-lg rounded-3xl;
+  @apply bg-white dark:bg-[#131A2B] border border-amber-300 dark:border-amber-500/40 shadow-lg rounded-3xl;
 }
 
-/* Material Design 3 Button Components */
+/* Luxury Button Components */
 .m3-btn-filled {
-  @apply rounded-full px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm hover:shadow-md active:scale-[0.98] transition-all flex items-center justify-center gap-2;
+  @apply rounded-full px-6 py-2.5 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs shadow-md shadow-amber-600/20 hover:shadow-amber-500/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2;
 }
 
 .m3-btn-tonal {
-  @apply rounded-full px-5 py-2.5 bg-indigo-100 hover:bg-indigo-200 text-indigo-900 dark:bg-indigo-900/40 dark:hover:bg-indigo-900/60 dark:text-indigo-200 font-bold text-xs active:scale-[0.98] transition-all flex items-center justify-center gap-2;
+  @apply rounded-full px-5 py-2.5 bg-amber-100/90 hover:bg-amber-200 text-amber-950 dark:bg-amber-500/20 dark:hover:bg-amber-500/30 dark:text-amber-200 border border-amber-300/60 dark:border-amber-500/30 font-bold text-xs active:scale-[0.98] transition-all flex items-center justify-center gap-2;
 }
 
 .m3-btn-outlined {
-  @apply rounded-full px-5 py-2.5 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold text-xs active:scale-[0.98] transition-all flex items-center justify-center gap-2;
+  @apply rounded-full px-5 py-2.5 border border-[#D9D0C1] dark:border-amber-500/30 text-slate-800 dark:text-slate-200 hover:bg-amber-50 dark:hover:bg-amber-950/40 font-bold text-xs active:scale-[0.98] transition-all flex items-center justify-center gap-2;
 }
 
 .m3-chip {
@@ -76,11 +81,11 @@
 }
 
 .m3-chip-active {
-  @apply bg-indigo-600 text-white shadow-sm dark:bg-indigo-500;
+  @apply bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-sm dark:from-amber-500 dark:to-amber-400;
 }
 
 .m3-chip-inactive {
-  @apply bg-slate-200/80 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700;
+  @apply bg-[#EAE4D8] text-slate-800 dark:bg-slate-800/90 dark:text-slate-300 hover:bg-amber-100 dark:hover:bg-slate-700;
 }
 
 /* Custom scrollbar */
@@ -89,21 +94,25 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  @apply bg-slate-100 dark:bg-[#0B0E14];
+  @apply bg-[#FAF8F5] dark:bg-[#080B10];
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 dark:bg-slate-800 rounded-full hover:bg-slate-400 dark:hover:bg-slate-700;
+  @apply bg-[#D9D0C1] dark:bg-slate-800 rounded-full hover:bg-amber-400/50 dark:hover:bg-amber-500/50;
 }
 
 /* Gradient text helpers */
+.gradient-text-gold {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-700 via-amber-500 to-yellow-600 dark:from-amber-200 dark:via-yellow-300 dark:to-amber-400;
+}
+
 .gradient-text-indigo {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 dark:from-indigo-400 dark:via-indigo-300 dark:to-cyan-400;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-500 dark:from-amber-300 dark:via-yellow-200 dark:to-amber-400;
 }
 
 .gradient-text-emerald {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-emerald-700 to-teal-600 dark:from-emerald-300 dark:via-teal-200 dark:to-cyan-400;
 }
 
 .gradient-text-amber {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600 dark:from-amber-400 dark:via-orange-300 dark:to-rose-400;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-700 to-orange-600 dark:from-amber-300 dark:via-amber-200 dark:to-yellow-400;
 }

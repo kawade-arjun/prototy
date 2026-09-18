@@ -118,15 +118,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       <div className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-white/[0.09] shadow-2xl transition-all">
         
         {/* Top Header Glow Ribbon */}
-        <div className="p-6 border-b border-slate-200 dark:border-white/[0.08] flex items-center justify-between">
+        <div className="p-6 border-b border-slate-200 dark:border-amber-500/20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-indigo-600/10 dark:bg-indigo-500/20 border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+            <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-extrabold text-xl text-slate-900 dark:text-white tracking-tight">
-                  Career<span className="text-indigo-600 dark:text-indigo-400">Lens</span> Gateway
+                <h3 className="font-serif-luxury font-bold text-2xl text-slate-900 dark:text-white tracking-tight">
+                  Career<span className="gradient-text-gold font-sans font-black ml-0.5">Lens</span> Gateway
                 </h3>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400">

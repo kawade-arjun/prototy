@@ -115,15 +115,15 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
       <div className="text-center space-y-6 relative pt-2 sm:pt-4">
         
         {/* Top Sovereign Tag */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-200/80 text-indigo-700 dark:bg-indigo-500/15 dark:border-indigo-500/30 dark:text-indigo-300 text-xs sm:text-sm font-bold shadow-sm transition-transform hover:scale-105">
-          <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0 animate-spin-slow" />
-          <span>National Sovereign Talent & Placement Substrate</span>
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 text-xs sm:text-sm font-extrabold shadow-sm transition-transform hover:scale-105">
+          <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 animate-spin-slow" />
+          <span className="uppercase tracking-widest text-[11px] font-mono">National Sovereign Talent & Placement Substrate</span>
         </div>
 
         {/* Dynamic Hero Title with Rotating Discipline */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 dark:text-white max-w-5xl mx-auto leading-tight">
+        <h1 className="font-serif-luxury text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white max-w-5xl mx-auto leading-tight">
           Empowering Next-Gen <br className="hidden sm:inline" />
-          <span className={`bg-gradient-to-r ${rotatingDisciplines[currentDisciplineIndex].color} bg-clip-text text-transparent transition-all duration-500 inline-block`}>
+          <span className={`bg-gradient-to-r ${rotatingDisciplines[currentDisciplineIndex].color} bg-clip-text text-transparent transition-all duration-500 inline-block font-sans font-black italic`}>
             {rotatingDisciplines[currentDisciplineIndex].title}
           </span>
         </h1>
@@ -138,7 +138,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
         <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
           <button
             onClick={handleScrollToPortals}
-            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-xs sm:text-sm shadow-xl shadow-indigo-600/30 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs sm:text-sm shadow-xl shadow-amber-600/30 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
           >
             <span>Launch Portal Selection</span>
             <ArrowRight className="w-4 h-4" />
@@ -146,35 +146,35 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
           
           <button
             onClick={() => setShowDemoModal(true)}
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white dark:bg-[#121828] hover:bg-slate-100 dark:hover:bg-[#1a2338] text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-white/[0.1] font-bold text-xs sm:text-sm shadow-sm transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+            className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white dark:bg-[#121828] hover:bg-amber-50 dark:hover:bg-[#1a2338] text-slate-800 dark:text-slate-200 border border-[#D9D0C1] dark:border-amber-500/30 font-bold text-xs sm:text-sm shadow-sm transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
           >
-            <Play className="w-3.5 h-3.5 text-indigo-600 dark:text-cyan-400 fill-indigo-600 dark:fill-cyan-400" />
+            <Play className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 fill-amber-600 dark:fill-amber-400" />
             <span>Platform Overview</span>
           </button>
         </div>
 
-        {/* Feature Highlights Grid (Clean text with no unsubstantiated numbers) */}
+        {/* Feature Highlights Grid (Clean text with luxury formatting) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto pt-6 text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300">
-          <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#0c1222]/80 border border-slate-200/80 dark:border-white/[0.06] shadow-sm hover:border-indigo-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
+          <div className="p-4 rounded-2xl bg-white/90 dark:bg-[#0e1424]/90 border border-[#E5DFD3] dark:border-amber-500/20 shadow-sm hover:border-amber-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
             <Zap className="w-5 h-5 text-amber-500 group-hover:scale-110 transition-transform" />
             <span className="font-extrabold text-slate-900 dark:text-white">Accelerated AI Hiring</span>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">Skill Intelligence Engine</span>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#0c1222]/80 border border-slate-200/80 dark:border-white/[0.06] shadow-sm hover:border-emerald-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
+          <div className="p-4 rounded-2xl bg-white/90 dark:bg-[#0e1424]/90 border border-[#E5DFD3] dark:border-amber-500/20 shadow-sm hover:border-emerald-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
             <ShieldCheck className="w-5 h-5 text-emerald-500 group-hover:scale-110 transition-transform" />
             <span className="font-extrabold text-slate-900 dark:text-white">Tamper-Proof Verification</span>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">OpenCV ELA Forensic Scan</span>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#0c1222]/80 border border-slate-200/80 dark:border-white/[0.06] shadow-sm hover:border-purple-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
+          <div className="p-4 rounded-2xl bg-white/90 dark:bg-[#0e1424]/90 border border-[#E5DFD3] dark:border-amber-500/20 shadow-sm hover:border-purple-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
             <BarChart3 className="w-5 h-5 text-indigo-500 group-hover:scale-110 transition-transform" />
             <span className="font-extrabold text-slate-900 dark:text-white">Automated Compliance</span>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">NIRF & NAAC Audit Reporting</span>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white/80 dark:bg-[#0c1222]/80 border border-slate-200/80 dark:border-white/[0.06] shadow-sm hover:border-cyan-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
-            <Lock className="w-5 h-5 text-cyan-500 group-hover:scale-110 transition-transform" />
+          <div className="p-4 rounded-2xl bg-white/90 dark:bg-[#0e1424]/90 border border-[#E5DFD3] dark:border-amber-500/20 shadow-sm hover:border-amber-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
+            <Lock className="w-5 h-5 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform" />
             <span className="font-extrabold text-slate-900 dark:text-white">Statutory Privacy</span>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">India DPDP Act 2023 Guardrails</span>
           </div>
@@ -182,30 +182,30 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
 
       </div>
 
-      {/* SECTION 2: INTERACTIVE CORE SUBSTRATE ARCHITECTURE (ADAPTIVE GLASSMORPHIC THEME) */}
-      <div className="space-y-6 rounded-3xl bg-gradient-to-br from-indigo-50/90 via-white to-cyan-50/80 dark:from-[#0b1224] dark:via-[#0f1932] dark:to-[#0b1224] border-2 border-indigo-200 dark:border-indigo-500/40 p-6 sm:p-8 relative overflow-hidden shadow-xl transition-colors">
+      {/* SECTION 2: INTERACTIVE CORE SUBSTRATE ARCHITECTURE (ADAPTIVE LUXURY GLASSMORPHIC THEME) */}
+      <div className="space-y-6 rounded-3xl bg-gradient-to-br from-amber-50/70 via-white to-amber-100/40 dark:from-[#0b101f] dark:via-[#0e1528] dark:to-[#0b101f] border-2 border-amber-200/80 dark:border-amber-500/30 p-6 sm:p-8 relative overflow-hidden shadow-xl transition-colors">
         {/* Glow accent in top right */}
-        <div className="absolute -top-24 -right-24 w-72 h-72 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-24 -right-24 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none" />
         
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-indigo-100 dark:border-white/[0.08] pb-5 relative z-10">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-amber-200/60 dark:border-amber-500/20 pb-5 relative z-10">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-cyan-300 text-xs font-mono font-extrabold border border-indigo-200 dark:border-indigo-500/40 mb-2.5">
-              <Layers className="w-4 h-4 text-indigo-600 dark:text-cyan-400" />
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-500/10 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 text-xs font-mono font-extrabold border border-amber-500/30 mb-2.5">
+              <Layers className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               <span>CORE ARCHITECTURE ENGINE</span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">How CareerLens Substrate Works</h3>
+            <h3 className="font-serif-luxury text-xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">How CareerLens Substrate Works</h3>
           </div>
 
-          <div className="flex items-center gap-2 bg-white/80 dark:bg-[#070d1a]/80 p-1.5 rounded-2xl border border-slate-200 dark:border-white/[0.1] shadow-inner">
+          <div className="flex items-center gap-2 bg-white/80 dark:bg-[#070d1a]/80 p-1.5 rounded-2xl border border-[#E5DFD3] dark:border-amber-500/25 shadow-inner">
             {architectureSteps.map((item) => (
               <button
                 key={item.step}
                 onClick={() => setActiveArchitectureStep(item.step)}
                 className={`px-4 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${
                   activeArchitectureStep === item.step
-                    ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-md shadow-indigo-600/30'
-                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                    ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-md shadow-amber-600/30'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-amber-50 dark:hover:bg-slate-800'
                 }`}
               >
                 Pillar {item.step}
@@ -214,19 +214,19 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
           </div>
         </div>
 
-        {/* Selected Architecture Pillar Detail (Light / Dark Adaptive Glassmorphic Layout) */}
+        {/* Selected Architecture Pillar Detail */}
         {architectureSteps.map((pillar) => {
           if (pillar.step !== activeArchitectureStep) return null;
           return (
             <div key={pillar.step} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center pt-2 animate-fadeIn relative z-10">
               <div className="md:col-span-2 space-y-4">
                 <div className="flex items-center gap-3.5">
-                  <div className="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-600/30 shrink-0">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-600 to-yellow-500 text-white flex items-center justify-center shadow-md shadow-amber-600/30 shrink-0">
                     {pillar.icon}
                   </div>
                   <div>
-                    <span className="text-xs font-mono font-black text-indigo-600 dark:text-cyan-400 uppercase tracking-wider">{pillar.badge}</span>
-                    <h4 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">{pillar.title}</h4>
+                    <span className="text-xs font-mono font-black text-amber-600 dark:text-amber-400 uppercase tracking-wider">{pillar.badge}</span>
+                    <h4 className="font-serif-luxury text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">{pillar.title}</h4>
                   </div>
                 </div>
                 
@@ -235,9 +235,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                 </p>
               </div>
 
-              <div className="p-6 rounded-2xl bg-white dark:bg-[#121b33] border-2 border-indigo-200 dark:border-indigo-500/30 flex flex-col justify-center items-center text-center space-y-2.5 shadow-md">
+              <div className="p-6 rounded-2xl bg-white dark:bg-[#121b33] border-2 border-amber-200 dark:border-amber-500/30 flex flex-col justify-center items-center text-center space-y-2.5 shadow-md">
                 <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-mono">Platform Capability</span>
-                <span className="text-base sm:text-lg font-black text-indigo-700 dark:text-emerald-400 bg-indigo-50 dark:bg-indigo-950/60 px-4 py-1.5 rounded-xl border border-indigo-200 dark:border-indigo-800/60">
+                <span className="text-base sm:text-lg font-black text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 px-4 py-1.5 rounded-xl border border-amber-200 dark:border-amber-800/60">
                   {pillar.metric}
                 </span>
                 <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400">Verified System Substrate</span>
@@ -247,15 +247,15 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
         })}
       </div>
 
-      {/* SECTION 3: PORTAL SELECTION GRID (SLIGHTLY COMPACT BOX SIZES) */}
-      <div id="portal-selection" className="space-y-6 pt-6 border-t border-slate-200/80 dark:border-white/[0.08]">
+      {/* SECTION 3: PORTAL SELECTION GRID (LUXURY ESTATE CARD SHOWCASE) */}
+      <div id="portal-selection" className="space-y-6 pt-6 border-t border-[#E5DFD3] dark:border-amber-500/20">
         
         {/* Section Header */}
         <div className="text-center space-y-2">
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+          <h2 className="font-serif-luxury text-2xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
             Select Stakeholder Portal
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-xl mx-auto font-medium">
             Choose your role to enter your dedicated interactive command workspace
           </p>
         </div>
@@ -264,20 +264,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
           
           {/* PORTAL 1: STUDENT & JOB SEEKER */}
-          <div className="glass-panel rounded-3xl p-5 sm:p-6 border-2 border-indigo-500/40 dark:border-indigo-500/50 flex flex-col justify-between space-y-5 relative overflow-hidden shadow-lg hover:shadow-indigo-500/20 hover:border-indigo-500 transition-all duration-300 bg-gradient-to-br from-indigo-50/50 via-white to-cyan-50/40 dark:from-[#0b1020] dark:via-[#0e1628] dark:to-[#0b1020] group">
+          <div className="glass-panel rounded-3xl p-5 sm:p-6 border-2 border-amber-500/30 dark:border-amber-500/40 flex flex-col justify-between space-y-5 relative overflow-hidden shadow-lg hover:shadow-amber-500/20 hover:border-amber-500 transition-all duration-300 bg-gradient-to-br from-amber-50/50 via-white to-amber-100/30 dark:from-[#0d1322] dark:via-[#11192b] dark:to-[#0d1322] group">
             
             <div className="space-y-3.5">
               <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-600/30 group-hover:scale-105 transition-transform">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 to-yellow-500 text-white flex items-center justify-center shadow-md shadow-amber-600/30 group-hover:scale-105 transition-transform">
                   <GraduationCap className="w-5 h-5" />
                 </div>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide bg-indigo-100 text-indigo-800 dark:bg-indigo-500/20 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/30">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-500/30">
                   Multi-Disciplinary
                 </span>
               </div>
 
               <div>
-                <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                <h3 className="font-serif-luxury text-lg sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                   Student & Job Seeker
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
@@ -286,17 +286,17 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
               </div>
 
               {/* Feature Highlights List */}
-              <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2 border-t border-slate-100 dark:border-white/[0.06]">
+              <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2 border-t border-[#E5DFD3] dark:border-amber-500/20">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>Proctored Sandboxes & 0–100 Competency Index</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>ATS Resume Diagnostic Studio & AI Skill Gap Engine</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>DigiLocker Living Resume & Verified Credential Ledger</span>
                 </li>
               </ul>
@@ -307,7 +307,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
               <div className="space-y-1.5">
                 <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
                   <span>Select Academic Field:</span>
-                  <span className="text-[10px] font-mono text-indigo-600 dark:text-cyan-400 font-bold">
+                  <span className="text-[10px] font-mono text-amber-700 dark:text-amber-300 font-bold">
                     5 Disciplines
                   </span>
                 </label>
@@ -316,7 +316,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                   <select
                     value={activeTabField}
                     onChange={(e) => handleSelectStudentField(e.target.value as AcademicStream)}
-                    className="w-full px-3.5 py-2 rounded-xl border border-indigo-200 dark:border-indigo-500/30 bg-white dark:bg-[#0c1222] text-slate-900 dark:text-white font-bold text-xs shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none cursor-pointer appearance-none pr-10"
+                    className="w-full px-3.5 py-2 rounded-xl border border-amber-300 dark:border-amber-500/40 bg-white dark:bg-[#0c1222] text-slate-900 dark:text-white font-bold text-xs shadow-sm focus:ring-2 focus:ring-amber-500 focus:outline-none cursor-pointer appearance-none pr-10"
                   >
                     {allStudents.map((stu) => (
                       <option key={stu.id} value={stu.streamId}>
@@ -324,14 +324,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                       </option>
                     ))}
                   </select>
-                  <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <ChevronDown className="w-4 h-4 text-amber-600 dark:text-amber-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
 
               <button
                 type="button"
                 onClick={handleLaunchStudent}
-                className="w-full py-2.5 px-4 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md shadow-indigo-600/20 active:scale-95 transition-all cursor-pointer group-hover:bg-indigo-500"
+                className="w-full py-2.5 px-4 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md shadow-amber-600/20 active:scale-95 transition-all cursor-pointer"
               >
                 <span>Enter Student Workspace</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -343,16 +343,16 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
           <div className="glass-panel rounded-3xl p-5 sm:p-6 border-2 border-emerald-500/30 hover:border-emerald-500/60 flex flex-col justify-between space-y-5 relative overflow-hidden shadow-lg hover:shadow-emerald-500/20 transition-all duration-300 bg-gradient-to-br from-emerald-50/50 via-white to-teal-50/40 dark:from-[#081512] dark:via-[#0c1a16] dark:to-[#081512] group">
             <div className="space-y-3.5">
               <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-md shadow-emerald-600/20 group-hover:scale-105 transition-transform">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-md shadow-emerald-600/20 group-hover:scale-105 transition-transform">
                   <Building2 className="w-5 h-5" />
                 </div>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30">
                   Institutional
                 </span>
               </div>
 
               <div>
-                <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                <h3 className="font-serif-luxury text-lg sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                   College Placement Cell (TPO)
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
@@ -360,7 +360,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                 </p>
               </div>
 
-              <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2 border-t border-slate-100 dark:border-white/[0.06]">
+              <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2 border-t border-[#E5DFD3] dark:border-emerald-500/20">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   <span>Branch-by-Branch Cohort Skill Heatmaps</span>
@@ -390,16 +390,16 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
           <div className="glass-panel rounded-3xl p-5 sm:p-6 border-2 border-amber-500/30 hover:border-amber-500/60 flex flex-col justify-between space-y-5 relative overflow-hidden shadow-lg hover:shadow-amber-500/20 transition-all duration-300 bg-gradient-to-br from-amber-50/50 via-white to-orange-50/40 dark:from-[#161208] dark:via-[#1c170b] dark:to-[#161208] group">
             <div className="space-y-3.5">
               <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-2xl bg-amber-600 text-white flex items-center justify-center shadow-md shadow-amber-600/20 group-hover:scale-105 transition-transform">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 to-orange-500 text-white flex items-center justify-center shadow-md shadow-amber-600/20 group-hover:scale-105 transition-transform">
                   <Briefcase className="w-5 h-5" />
                 </div>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30">
                   Employers
                 </span>
               </div>
 
               <div>
-                <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                <h3 className="font-serif-luxury text-lg sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                   Corporate Recruiter
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
@@ -407,7 +407,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                 </p>
               </div>
 
-              <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2 border-t border-slate-100 dark:border-white/[0.06]">
+              <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2 border-t border-[#E5DFD3] dark:border-amber-500/20">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>Composite Skill AI Scoring Engine</span>
@@ -426,7 +426,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
             <button
               type="button"
               onClick={() => onSelectRole('recruiter')}
-              className="w-full py-2.5 px-4 rounded-full bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md shadow-amber-600/20 active:scale-95 transition-all cursor-pointer group-hover:bg-amber-500"
+              className="w-full py-2.5 px-4 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md shadow-amber-600/20 active:scale-95 transition-all cursor-pointer"
             >
               <span>Enter Recruiter Console</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -434,19 +434,19 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
           </div>
 
           {/* PORTAL 4: GOVERNMENT & POLICY OBSERVATORY */}
-          <div className="glass-panel rounded-3xl p-5 sm:p-6 border-2 border-rose-500/30 hover:border-rose-500/60 flex flex-col justify-between space-y-5 relative overflow-hidden shadow-lg hover:shadow-rose-500/20 transition-all duration-300 bg-gradient-to-br from-rose-50/50 via-white to-pink-50/40 dark:from-[#18090d] dark:via-[#200d12] dark:to-[#18090d] group">
+          <div className="glass-panel rounded-3xl p-5 sm:p-6 border-2 border-amber-500/30 hover:border-amber-500/60 flex flex-col justify-between space-y-5 relative overflow-hidden shadow-lg hover:shadow-amber-500/20 transition-all duration-300 bg-gradient-to-br from-amber-50/50 via-white to-orange-50/40 dark:from-[#181109] dark:via-[#20160b] dark:to-[#181109] group">
             <div className="space-y-3.5">
               <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-2xl bg-rose-600 text-white flex items-center justify-center shadow-md shadow-rose-600/20 group-hover:scale-105 transition-transform">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-700 to-yellow-600 text-white flex items-center justify-center shadow-md shadow-amber-700/20 group-hover:scale-105 transition-transform">
                   <Landmark className="w-5 h-5" />
                 </div>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-300 border border-rose-200 dark:border-rose-500/30">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30">
                   Regulatory
                 </span>
               </div>
 
               <div>
-                <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
+                <h3 className="font-serif-luxury text-lg sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                   Government & AICTE
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
@@ -454,17 +454,17 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
                 </p>
               </div>
 
-              <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2 border-t border-slate-100 dark:border-white/[0.06]">
+              <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2 border-t border-[#E5DFD3] dark:border-amber-500/20">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>State-Wise Skill Deficit Heatmap (Supply/Demand)</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>National Ayush Observatory (NAMASTE to ICD-11)</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>Empirical NEP 2020 Syllabus Directives</span>
                 </li>
               </ul>
@@ -473,7 +473,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
             <button
               type="button"
               onClick={() => onSelectRole('government')}
-              className="w-full py-2.5 px-4 rounded-full bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md shadow-rose-600/20 active:scale-95 transition-all cursor-pointer group-hover:bg-rose-500"
+              className="w-full py-2.5 px-4 rounded-full bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-yellow-600 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md shadow-amber-700/20 active:scale-95 transition-all cursor-pointer"
             >
               <span>Access Policy Observatory</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

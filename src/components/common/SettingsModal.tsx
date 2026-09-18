@@ -89,13 +89,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-6 border-b border-slate-200 dark:border-white/[0.08] flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/40">
+        <div className="p-6 border-b border-[#E5DFD3] dark:border-amber-500/20 flex items-center justify-between bg-amber-50/50 dark:bg-[#0a0e18]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-600/20">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 to-yellow-500 text-white flex items-center justify-center shadow-md shadow-amber-600/20">
               <Settings className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-extrabold text-slate-900 dark:text-white leading-tight">
+              <h2 className="font-serif-luxury font-bold text-xl text-slate-900 dark:text-white leading-tight">
                 Settings & System Controls
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
