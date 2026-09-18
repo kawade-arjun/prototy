@@ -469,25 +469,19 @@ export const RoleAuthPage: React.FC<RoleAuthPageProps> = ({
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {STREAM_OPTIONS.map((opt) => {
                             const isChosen = studentStreamChoice === opt.id;
-                            const StreamIcon = opt.icon;
                             return (
                               <button
                                 key={opt.id}
                                 type="button"
                                 onClick={() => setStudentStreamChoice(opt.id)}
-                                className={`p-2.5 rounded-xl border text-left transition-all flex items-center gap-2.5 cursor-pointer ${
+                                className={`px-3.5 py-2.5 rounded-xl border text-left transition-all flex items-center justify-between cursor-pointer ${
                                   isChosen
-                                    ? `border-amber-500 bg-amber-500/15 text-slate-950 dark:text-white font-bold shadow-sm`
-                                    : `border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-[#080d18] text-slate-600 dark:text-slate-400 hover:border-slate-300`
+                                    ? `border-amber-500 bg-amber-500/15 text-amber-900 dark:text-amber-300 font-bold shadow-sm`
+                                    : `border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-[#080d18] text-slate-700 dark:text-slate-300 hover:border-slate-300 font-medium`
                                 }`}
                               >
-                                <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
-                                  isChosen ? 'bg-amber-500 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
-                                }`}>
-                                  <StreamIcon className="w-3.5 h-3.5" />
-                                </div>
-                                <span className="text-xs font-semibold truncate">{opt.name}</span>
-                                {isChosen && <Check className="w-3.5 h-3.5 text-amber-500 ml-auto shrink-0" />}
+                                <span className="text-xs font-bold truncate">{opt.name}</span>
+                                {isChosen && <Check className="w-3.5 h-3.5 text-amber-500 shrink-0" />}
                               </button>
                             );
                           })}

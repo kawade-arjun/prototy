@@ -411,15 +411,15 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                 {/* Custom Glassmorphic Dropdown Trigger */}
                 <div className="relative" ref={disciplineDropdownRef}>
                   {(() => {
-                    const activeMeta = STREAM_META[activeTabField] || STREAM_META.tech_ai;
-                    const ActiveDisciplineIcon = activeMeta.icon;
+                    const currentStreamObj = allStudents.find((s) => s.streamId === activeTabField);
+                    const streamName = currentStreamObj ? currentStreamObj.streamName : 'Engineering';
 
                     return (
                       <>
                         <button
                           type="button"
                           onClick={() => setIsDisciplineDropdownOpen((prev) => !prev)}
-                          className={`w-full px-3.5 py-2.5 rounded-xl border transition-all duration-200 flex items-center justify-between text-left cursor-pointer ${
+                          className={`w-full px-4 py-2.5 rounded-xl border transition-all duration-200 flex items-center justify-between text-left cursor-pointer ${
                             isDisciplineDropdownOpen
                               ? 'border-amber-500 ring-2 ring-amber-500/20 bg-amber-50/50 dark:bg-amber-950/30 shadow-md'
                               : 'border-amber-300/80 dark:border-amber-500/40 bg-white/95 dark:bg-[#0c1222]/95 hover:border-amber-500 dark:hover:border-amber-400 hover:bg-amber-50/30 dark:hover:bg-amber-950/20 shadow-sm'
@@ -427,29 +427,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                           aria-haspopup="listbox"
                           aria-expanded={isDisciplineDropdownOpen}
                         >
-                          <div className="flex items-center gap-2.5 min-w-0">
-                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border ${activeMeta.badgeBg}`}>
-                              <ActiveDisciplineIcon className={`w-4 h-4 ${activeMeta.color}`} />
-                            </div>
-                            <div className="min-w-0">
-                              <div className="text-xs font-bold text-slate-900 dark:text-white truncate">
-                                {activeMeta.name}
-                              </div>
-                              <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
-                                {activeMeta.badge}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-2 shrink-0 pl-2">
-                            <span className="text-[10px] uppercase font-bold tracking-wider text-amber-700 dark:text-amber-400 bg-amber-100/80 dark:bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-500/20">
-                              Change
-                            </span>
-                            <ChevronDown
-                              className={`w-4 h-4 text-amber-600 dark:text-amber-400 transition-transform duration-200 ${
-                                isDisciplineDropdownOpen ? 'rotate-180' : ''
-                              }`}
-                            />
-                          </div>
+                          <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
+                            {streamName}
+                          </span>
+                          <ChevronDown
+                            className={`w-4 h-4 text-amber-600 dark:text-amber-400 transition-transform duration-200 shrink-0 ${
+                              isDisciplineDropdownOpen ? 'rotate-180' : ''
+                            }`}
+                          />
                         </button>
 
                         {/* Bespoke Glassmorphic Dropdown Listbox */}
@@ -458,15 +443,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                             role="listbox"
                             className="absolute top-full left-0 right-0 mt-2 z-50 rounded-2xl bg-white dark:bg-[#0b101e] backdrop-blur-2xl border-2 border-amber-500/40 shadow-2xl shadow-amber-950/30 dark:shadow-black/90 p-1.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150"
                           >
-                            <div className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 border-b border-slate-100 dark:border-slate-800/80 mb-1 flex items-center justify-between">
-                              <span>Select Academic Track</span>
-                              <span className="text-amber-600 dark:text-amber-400 font-mono font-bold">5 Tracks</span>
-                            </div>
-
                             {allStudents.map((stu) => {
                               const isSelected = activeTabField === stu.streamId;
-                              const meta = STREAM_META[stu.streamId as AcademicStream] || STREAM_META.tech_ai;
-                              const ItemIcon = meta.icon;
 
                               return (
                                 <button
@@ -478,32 +456,15 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                                     handleSelectStudentField(stu.streamId as AcademicStream);
                                     setIsDisciplineDropdownOpen(false);
                                   }}
-                                  className={`w-full p-2.5 rounded-xl flex items-center justify-between text-left transition-all duration-150 cursor-pointer ${
+                                  className={`w-full px-3.5 py-2.5 rounded-xl flex items-center justify-between text-left transition-all duration-150 cursor-pointer ${
                                     isSelected
-                                      ? 'bg-gradient-to-r from-amber-500/15 via-amber-500/10 to-transparent border border-amber-500/50 text-amber-950 dark:text-white shadow-sm'
-                                      : 'hover:bg-amber-50/70 dark:hover:bg-slate-800/70 border border-transparent text-slate-700 dark:text-slate-200'
+                                      ? 'bg-amber-500/15 border border-amber-500/50 text-amber-900 dark:text-amber-300 font-bold shadow-sm'
+                                      : 'hover:bg-amber-50/70 dark:hover:bg-slate-800/70 border border-transparent text-slate-700 dark:text-slate-200 font-medium'
                                   }`}
                                 >
-                                  <div className="flex items-center gap-2.5 min-w-0">
-                                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border ${meta.badgeBg}`}>
-                                      <ItemIcon className={`w-4 h-4 ${meta.color}`} />
-                                    </div>
-                                    <div className="min-w-0">
-                                      <div className="text-xs font-bold truncate flex items-center gap-1.5">
-                                        <span className={isSelected ? 'text-amber-600 dark:text-amber-400 font-extrabold' : ''}>
-                                          {stu.streamName}
-                                        </span>
-                                        {isSelected && (
-                                          <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-500 text-white font-extrabold uppercase">
-                                            Active
-                                          </span>
-                                        )}
-                                      </div>
-                                      <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
-                                        {meta.badge}
-                                      </div>
-                                    </div>
-                                  </div>
+                                  <span className="text-xs sm:text-sm font-bold">
+                                    {stu.streamName}
+                                  </span>
 
                                   {isSelected && (
                                     <div className="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-sm ml-2">
