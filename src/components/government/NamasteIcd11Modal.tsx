@@ -85,7 +85,7 @@ export const NamasteIcd11Modal: React.FC<NamasteIcd11ModalProps> = ({ onClose })
                 Global Employability for Indian Ayush Scholars (WHO ICD-11 Integration)
               </div>
               <p>
-                CareerLens standardizes classical Indian traditional medicine concepts from the Ministry of Ayush <strong>NAMASTE portal</strong> into the World Health Organization's <strong>ICD-11 Traditional Medicine Module 2 (TM-2)</strong>. Certified Indian BAMS & MD graduates gain verified credentials accepted by global healthcare systems, research registries, and insurance underwriters worldwide.
+                CareerOptic standardizes classical Indian traditional medicine concepts from the Ministry of Ayush <strong>NAMASTE portal</strong> into the World Health Organization's <strong>ICD-11 Traditional Medicine Module 2 (TM-2)</strong>. Certified Indian BAMS & MD graduates gain verified credentials accepted by global healthcare systems, research registries, and insurance underwriters worldwide.
               </p>
             </div>
           </div>

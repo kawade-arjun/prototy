@@ -106,34 +106,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button 
             onClick={handleHomeClick}
             className="flex items-center justify-center group cursor-pointer focus:outline-none"
-            title="Return to CareerLens Home Screen"
+            title="Return to CareerOptic Home Screen"
           >
             <span className="font-serif-luxury font-extrabold text-base sm:text-lg md:text-xl tracking-tight text-slate-900 dark:text-white flex items-center whitespace-nowrap">
-              Career<span className="gradient-text-gold font-sans font-black ml-0.5">Lens</span>
+              Career<span className="gradient-text-gold font-sans font-black ml-0.5">Optic</span>
             </span>
           </button>
         </div>
 
-        {/* Right Controls: Level XP, Streak, Current Session Profile, Settings */}
+        {/* Right Controls: Current Session Profile, Settings */}
         <div className="pointer-events-auto absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 flex items-center gap-1.5 sm:gap-2.5">
-          
-          {/* Level 6 XP Badge & Streak Badge - Only inside active user portal */}
-          {currentRole !== null && (
-            <>
-              <div className="hidden xs:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100/90 text-amber-950 border border-amber-300/60 dark:bg-amber-500/20 dark:text-amber-200 dark:border-amber-500/30 text-xs font-bold shadow-xs">
-                <Award className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
-                <span className="whitespace-nowrap">Lvl 6 • 2,450 XP</span>
-              </div>
-
-              <div 
-                className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-950 dark:text-amber-200 text-xs font-black shadow-xs"
-                title="8-Day Active Streak"
-              >
-                <span>8</span>
-                <Flame className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-              </div>
-            </>
-          )}
 
           {/* 1. User Avatar Profile Button */}
           <button 

@@ -204,7 +204,7 @@ def sumOfDistancesInTree(n: int, edges: List[List[int]]) -> List[int]:
       title: 'Disjoint Set Union & Forest Partitioning Lab',
       duration: '45 Mins',
       type: 'Interactive Sandbox Blueprint',
-      url: 'careerlens.in/labs/dsu-graphs'
+      url: 'careeroptic.in/labs/dsu-graphs'
     }
   },
   {

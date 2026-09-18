@@ -143,12 +143,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
       {/* SECTION 1: HERO WELCOME BANNER */}
       <div className="text-center space-y-4 relative pt-0">
         
-        {/* Big CareerLens Brand Title at start below Navbar (fades out smoothly on scroll down) */}
+        {/* Big CareerOptic Brand Title at start below Navbar (fades out smoothly on scroll down) */}
         <h1 
           className="font-serif-luxury font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-slate-900 dark:text-white text-center pt-0 pb-1 transition-opacity duration-150 transform-gpu"
           style={{ opacity: heroScrollOpacity }}
         >
-          Career<span className="gradient-text-gold font-sans font-black ml-0.5">Lens</span>
+          Career<span className="gradient-text-gold font-sans font-black ml-0.5">Optic</span>
         </h1>
 
         {/* Dynamic Hero Title with Rotating Discipline (Non-italic) */}
@@ -163,7 +163,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
 
         {/* Hero Subtitle */}
         <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed font-normal">
-          CareerLens unifies Students, Institutions, Recruiters, and Government Regulators into one 
+          CareerOptic unifies Students, Institutions, Recruiters, and Government Regulators into one 
           verifiable competency network powered by real-time skill diagnostics and transparent placement matching.
         </p>
 
@@ -214,7 +214,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
             <div className="inline-flex items-center justify-center px-3.5 py-1.5 rounded-full bg-amber-500/10 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 text-xs font-mono font-extrabold border border-amber-500/30 mb-2.5">
               <span>CORE ARCHITECTURE ENGINE</span>
             </div>
-            <h3 className="font-serif-luxury text-xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">How CareerLens Substrate Works</h3>
+            <h3 className="font-serif-luxury text-xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">How CareerOptic Substrate Works</h3>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-2 bg-white/80 dark:bg-[#070d1a]/80 p-1.5 rounded-2xl border border-[#E5DFD3] dark:border-amber-500/25 shadow-inner mx-auto">
@@ -1240,7 +1240,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.08] pb-4">
               <div className="flex items-center gap-2.5">
                 <Sparkles className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
-                <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">CareerLens</h3>
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">CareerOptic</h3>
               </div>
               <button
                 onClick={() => setShowDemoModal(false)}

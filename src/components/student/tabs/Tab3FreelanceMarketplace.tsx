@@ -190,13 +190,13 @@ export const Tab3FreelanceMarketplace: React.FC = () => {
       setGeneratedProposal(
 `Dear ${gig.client} Team,
 
-I am writing to submit my proposal for "${gig.title}". As a verified scholar ranked in the ${activeStudent.nationalPercentile} percentile on the CareerLens ${activeStudent.benchmarkBadge.split('•')[0].trim()} sandbox, I have hands-on experience directly addressing your project requirements:
+I am writing to submit my proposal for "${gig.title}". As a verified scholar ranked in the ${activeStudent.nationalPercentile} percentile on the CareerOptic ${activeStudent.benchmarkBadge.split('•')[0].trim()} sandbox, I have hands-on experience directly addressing your project requirements:
 
 1. Technical Alignment: I have implemented production-ready solutions utilizing ${gig.skills.slice(0, 3).join(', ')}, aligned with the rigorous curriculum of ${activeStudent.institution}.
 2. Verified Credential Integrity: My competencies have been validated through 3-tier proctored assessments (with tamper-proof OpenCV ELA and pyHanko cryptographic signatures).
 3. Delivery Timeline: I can complete this deliverable within ${gig.duration} for your benchmark budget of ${gig.budget}.
 
-You can view my verified Living Resume, benchmark scores, and sovereign credential ledger at: careerlens.in/verify/${activeStudent.digiLockerId}.
+You can view my verified Living Resume, benchmark scores, and sovereign credential ledger at: careeroptic.in/verify/${activeStudent.digiLockerId}.
 
 Best regards,
 ${activeStudent.name}

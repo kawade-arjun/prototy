@@ -126,7 +126,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="font-serif-luxury font-bold text-2xl text-slate-900 dark:text-white tracking-tight">
-                  Career<span className="gradient-text-gold font-sans font-black ml-0.5">Lens</span> Gateway
+                  Career<span className="gradient-text-gold font-sans font-black ml-0.5">Optic</span> Gateway
                 </h3>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400">

@@ -184,7 +184,7 @@ export const RECRUITER_CANDIDATES: RecruiterCandidate[] = [
       date: '2026-09-19',
       time: '14:30 IST',
       round: 'Round 1: Distributed Kernel Concurrency',
-      meetingUrl: 'meet.google.com/xyz-careerlens-984',
+      meetingUrl: 'meet.google.com/xyz-careeroptic-984',
       interviewer: 'Dr. Satya Ramanathan (Principal Research Lead)'
     }
   },

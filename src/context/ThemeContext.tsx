@@ -17,7 +17,7 @@ const ThemeContext = createContext<ThemeContextType>({
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('careerlens-theme') as Theme | null;
+      const saved = (localStorage.getItem('careeroptic-theme') || localStorage.getItem('careerlens-theme')) as Theme | null;
       if (saved === 'light' || saved === 'dark') return saved;
     }
     return 'light';
@@ -32,7 +32,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       root.classList.add('light');
       root.classList.remove('dark');
     }
-    localStorage.setItem('careerlens-theme', theme);
+    localStorage.setItem('careeroptic-theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {

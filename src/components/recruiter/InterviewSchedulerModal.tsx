@@ -36,7 +36,7 @@ export const InterviewSchedulerModal: React.FC<InterviewSchedulerModalProps> = (
   const [selectedDate, setSelectedDate] = useState('2026-09-21');
   const [selectedTime, setSelectedTime] = useState('14:00 IST');
   const [interviewerName, setInterviewerName] = useState('Dr. Satya Ramanathan (Principal Research Lead)');
-  const [meetingUrl, setMeetingUrl] = useState(`meet.google.com/careerlens-${candidate.id.toLowerCase()}-r1`);
+  const [meetingUrl, setMeetingUrl] = useState(`meet.google.com/careeroptic-${candidate.id.toLowerCase()}-r1`);
 
   const handleConfirm = () => {
     confetti({ particleCount: 70, spread: 80 });
@@ -203,7 +203,7 @@ export const InterviewSchedulerModal: React.FC<InterviewSchedulerModalProps> = (
               />
               <button
                 type="button"
-                onClick={() => setMeetingUrl(`meet.google.com/careerlens-${Math.random().toString(36).substring(7)}`)}
+                onClick={() => setMeetingUrl(`meet.google.com/careeroptic-${Math.random().toString(36).substring(7)}`)}
                 className="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
               >
                 Regenerate

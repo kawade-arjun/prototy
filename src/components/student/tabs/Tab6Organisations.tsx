@@ -37,12 +37,12 @@ const ORGANISATIONS_LIST: OrgProfile[] = [
     verifiedStatus: 'Verified Enterprise Partner',
     description: 'Pioneering global cloud infrastructure, foundational AI models, and enterprise software systems.',
     hiringCriteria: [
-      'Verified Score >= 82% on CareerLens Sandbox',
+      'Verified Score >= 82% on CareerOptic Sandbox',
       'Hands-on expertise in vLLM, distributed CUDA, or systems programming',
       '0% credential discrepancy on 3-tier pre-flight audit'
     ],
     interviewProcess: [
-      'Round 1: Waived for CareerLens Top 5% verified candidates',
+      'Round 1: Waived for CareerOptic Top 5% verified candidates',
       'Round 2: Architecture & Distributed Systems Deep Dive (45 mins)',
       'Round 3: Values & Executive Alignment'
     ],
@@ -63,7 +63,7 @@ const ORGANISATIONS_LIST: OrgProfile[] = [
       'Demonstrated kernel optimization and memory coalescing principles'
     ],
     interviewProcess: [
-      'Round 1: CareerLens Verified Code Sandbox submission review',
+      'Round 1: CareerOptic Verified Code Sandbox submission review',
       'Round 2: GPU Architecture & Parallel Algorithms panel'
     ],
     activeVacanciesCount: 8,
@@ -106,7 +106,7 @@ const ORGANISATIONS_LIST: OrgProfile[] = [
       'CFA Level 1 verified curriculum alignment'
     ],
     interviewProcess: [
-      'Round 1: Waived for CareerLens Top 5% verified finance scholars',
+      'Round 1: Waived for CareerOptic Top 5% verified finance scholars',
       'Round 2: Dynamic LBO Modeling & Credit Risk Defense (45 mins)',
       'Round 3: Managing Director Interview'
     ],
@@ -314,7 +314,7 @@ const ORGANISATIONS_LIST: OrgProfile[] = [
       'Pristine Lighthouse/axe-core pass on submitted design token components'
     ],
     interviewProcess: [
-      'Round 1: Waived for CareerLens Top 5% verified UI/UX scholars',
+      'Round 1: Waived for CareerOptic Top 5% verified UI/UX scholars',
       'Round 2: Live Token Architecture & Color Space Inspection (45 mins)'
     ],
     activeVacanciesCount: 8,

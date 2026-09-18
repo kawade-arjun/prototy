@@ -76,7 +76,7 @@ const AppContent: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-100 dark:border-white/[0.06] pt-4">
           <div className="flex flex-wrap items-center gap-3">
             <span className="font-extrabold text-slate-800 dark:text-slate-200">
-              Career<span className="text-indigo-600 dark:text-indigo-400">Lens</span>
+              Career<span className="gradient-text-gold font-sans font-black ml-0.5">Optic</span>
             </span>
             <span>•</span>
             <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-semibold">

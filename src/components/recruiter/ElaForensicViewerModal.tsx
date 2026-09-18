@@ -301,7 +301,7 @@ export const ElaForensicViewerModal: React.FC<ElaForensicViewerModalProps> = ({
           
           <div className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
             <Lock className="w-3.5 h-3.5 text-emerald-500" />
-            <span>Guaranteed 0% Credential Fraud under CareerLens Sovereign Audit Protocol</span>
+            <span>Guaranteed 0% Credential Fraud under CareerOptic Sovereign Audit Protocol</span>
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto">
