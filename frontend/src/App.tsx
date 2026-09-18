@@ -8,7 +8,7 @@ import { CollegePortal } from './components/college/CollegePortal';
 import { RecruiterPortal } from './components/recruiter/RecruiterPortal';
 import { GovernmentPortal } from './components/government/GovernmentPortal';
 import { HomeScreen } from './components/home/HomeScreen';
-import { AuthModal } from './components/auth/AuthModal';
+import { RoleAuthPage } from './components/auth/RoleAuthPage';
 import { SettingsModal } from './components/common/SettingsModal';
 import { StudentOnboardingModal } from './components/student/onboarding/StudentOnboardingModal';
 import { useStudent } from './context/StudentContext';
@@ -16,17 +16,18 @@ import { ShieldCheck, Lock, Compass } from 'lucide-react';
 
 const AppContent: React.FC = () => {
   const [currentRole, setCurrentRole] = useState<UserRole | null>(null);
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [authView, setAuthView] = useState<{ role: UserRole; mode: 'signin' | 'signup' } | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [settingsTab, setSettingsTab] = useState<'bookmarks' | 'privacy' | 'preferences'>('preferences');
-  const [authInitialRole, setAuthInitialRole] = useState<UserRole>('student');
-  const [authInitialMode, setAuthInitialMode] = useState<'signin' | 'signup'>('signin');
   const { isOnboardingOpen, setIsOnboardingOpen } = useStudent();
 
   const handleOpenAuth = (role: UserRole = 'student', mode: 'signin' | 'signup' = 'signin') => {
-    setAuthInitialRole(role);
-    setAuthInitialMode(mode);
-    setIsAuthOpen(true);
+    setAuthView({ role, mode });
+  };
+
+  const handleGoHome = () => {
+    setCurrentRole(null);
+    setAuthView(null);
   };
 
   const handleOpenSettings = (tab?: 'bookmarks' | 'privacy' | 'preferences') => {
@@ -43,15 +44,29 @@ const AppContent: React.FC = () => {
       {/* Top Global Navigation Bar - Automatically responsive for mobile & desktop */}
       <Navbar 
         currentRole={currentRole} 
-        onRoleChange={setCurrentRole}
-        onGoHome={() => setCurrentRole(null)}
+        onRoleChange={(role) => {
+          setAuthView(null);
+          setCurrentRole(role);
+        }}
+        onGoHome={handleGoHome}
         onOpenAuthModal={() => handleOpenAuth(currentRole || 'student', 'signin')}
         onOpenSettings={handleOpenSettings}
       />
 
       {/* Main Workspace Viewport - Fluidly auto-adapts to laptop, tablet, or mobile devices */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-1 pb-4 sm:pb-6 transition-all">
-        {currentRole === null && (
+        {currentRole === null && authView !== null && (
+          <RoleAuthPage
+            role={authView.role}
+            initialMode={authView.mode}
+            onBack={() => setAuthView(null)}
+            onSuccess={(role) => {
+              setAuthView(null);
+              setCurrentRole(role);
+            }}
+          />
+        )}
+        {currentRole === null && authView === null && (
           <HomeScreen 
             onSelectRole={setCurrentRole} 
             onOpenAuth={handleOpenAuth}
@@ -62,16 +77,6 @@ const AppContent: React.FC = () => {
         {currentRole === 'recruiter' && <RecruiterPortal />}
         {currentRole === 'government' && <GovernmentPortal />}
       </main>
-
-      {/* Login & Sign-Up Modal Gateway */}
-      <AuthModal
-        isOpen={isAuthOpen}
-        onClose={() => setIsAuthOpen(false)}
-        currentRole={currentRole}
-        onRoleChange={setCurrentRole}
-        initialRole={authInitialRole}
-        initialMode={authInitialMode}
-      />
 
       {/* Student Onboarding & Profile Builder Wizard */}
       <StudentOnboardingModal

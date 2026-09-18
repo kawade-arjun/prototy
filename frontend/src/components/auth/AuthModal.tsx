@@ -121,17 +121,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setEmail(emails[stream]);
   };
 
-  const handleCompleteAuth = async (instantMode = false) => {
-    if (instantMode) {
-      onRoleChange(selectedRole);
-      if (selectedRole === 'student' && authMode === 'signup') {
-        setStudentStream(signupStream);
-      }
-      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
-      onClose();
-      return;
-    }
-
+  const handleCompleteAuth = async () => {
     setLoading(true);
     setErrorMessage(null);
     setSuccessMessage(null);
@@ -415,8 +405,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <div className="space-y-2.5 pt-2">
             <button
               disabled={loading}
-              onClick={() => handleCompleteAuth(false)}
-              className={`w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all active:scale-[0.99] ${
+              onClick={() => handleCompleteAuth()}
+              className={`w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all active:scale-[0.99] cursor-pointer ${
                 loading ? 'opacity-70 cursor-not-allowed' : ''
               }`}
             >
@@ -431,15 +421,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
-            </button>
-
-            {/* Fast Demo Bypass */}
-            <button
-              onClick={() => handleCompleteAuth(true)}
-              className="w-full py-2 rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
-            >
-              <Zap className="w-3.5 h-3.5 text-amber-500" />
-              <span>Instant Demo Access (Skip Authentication)</span>
             </button>
           </div>
 
