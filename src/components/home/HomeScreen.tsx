@@ -127,7 +127,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
   ];
 
   return (
-    <div className="space-y-16 py-4 sm:py-8 max-w-6xl mx-auto animate-fadeIn relative">
+    <div className="space-y-12 pt-0 pb-8 max-w-6xl mx-auto animate-fadeIn relative">
       
       {/* 3D DYNAMIC ISOMETRIC BACKGROUND MESH & FLOATING 3D SPHERES */}
       <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden rounded-3xl">
@@ -141,11 +141,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
       </div>
 
       {/* SECTION 1: HERO WELCOME BANNER */}
-      <div className="text-center space-y-6 relative pt-2 sm:pt-4">
+      <div className="text-center space-y-4 relative pt-0">
         
         {/* Big CareerLens Brand Title at start below Navbar (fades out smoothly on scroll down) */}
         <h1 
-          className="font-serif-luxury font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-slate-900 dark:text-white text-center pt-2 pb-1 transition-opacity duration-150 transform-gpu"
+          className="font-serif-luxury font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-slate-900 dark:text-white text-center pt-0 pb-1 transition-opacity duration-150 transform-gpu"
           style={{ opacity: heroScrollOpacity }}
         >
           Career<span className="gradient-text-gold font-sans font-black ml-0.5">Lens</span>

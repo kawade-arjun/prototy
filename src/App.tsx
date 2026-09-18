@@ -39,7 +39,7 @@ const AppContent: React.FC = () => {
       />
 
       {/* Main Workspace Viewport - Fluidly auto-adapts to laptop, tablet, or mobile devices */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 transition-all">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-1 pb-4 sm:pb-6 transition-all">
         {currentRole === null && <HomeScreen onSelectRole={setCurrentRole} />}
         {currentRole === 'student' && <StudentPortal />}
         {currentRole === 'college' && <CollegePortal />}
