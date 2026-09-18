@@ -32,24 +32,29 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   currentRole,
   onRoleChange
 }) => {
-  const { allStudents, selectedStream, setStudentStream } = useStudent();
+  const { allStudents, selectedStream, setStudentStream, login, register, setIsOnboardingOpen } = useStudent();
 
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
   const [selectedRole, setSelectedRole] = useState<UserRole>(currentRole || 'student');
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('arjun.kawade@iitb.ac.in');
-  const [password, setPassword] = useState('••••••••••••');
-  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('arjun.test@careeroptic.dev');
+  const [password, setPassword] = useState('Password123!');
+  const [fullName, setFullName] = useState('Arjun Kawade');
   const [signupStream, setSignupStream] = useState<AcademicStream>('tech_ai');
   const [digiLockerInput, setDigiLockerInput] = useState('DL-IN-2026-XXXXXX');
   const [agreeDpdp, setAgreeDpdp] = useState(true);
+
+  // API Interaction State
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
   const roleDetails: Record<UserRole, { title: string; defaultEmail: string; icon: React.ReactNode; color: string; bg: string; border: string }> = {
     student: {
       title: 'Student & Scholar',
-      defaultEmail: 'arjun.kawade@iitb.ac.in',
+      defaultEmail: 'arjun.test@careeroptic.dev',
       icon: <GraduationCap className="w-5 h-5" />,
       color: 'text-indigo-600 dark:text-indigo-400',
       bg: 'bg-indigo-50 dark:bg-indigo-950/40',
@@ -83,13 +88,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
   const handleRoleSelect = (role: UserRole) => {
     setSelectedRole(role);
-    setEmail(roleDetails[role].defaultEmail);
+    setErrorMessage(null);
+    if (role === 'student') {
+      setEmail('arjun.test@careeroptic.dev');
+    } else {
+      setEmail(roleDetails[role].defaultEmail);
+    }
   };
 
   const handleDisciplineSelect = (stream: AcademicStream) => {
     setStudentStream(stream);
     const emails: Record<AcademicStream, string> = {
-      tech_ai: 'arjun.kawade@iitb.ac.in',
+      tech_ai: 'arjun.test@careeroptic.dev',
       commerce_finance: 'priya.venkatesh@srcc.du.ac.in',
       healthcare_bio: 'rohan.vaidya@nia.nic.in',
       law_governance: 'ananya.deshmukh@nls.ac.in',
@@ -98,19 +108,51 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setEmail(emails[stream]);
   };
 
-  const handleCompleteAuth = (instantMode = false) => {
-    onRoleChange(selectedRole);
-    if (selectedRole === 'student' && authMode === 'signup') {
-      setStudentStream(signupStream);
+  const handleCompleteAuth = async (instantMode = false) => {
+    if (instantMode) {
+      onRoleChange(selectedRole);
+      if (selectedRole === 'student' && authMode === 'signup') {
+        setStudentStream(signupStream);
+      }
+      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+      onClose();
+      return;
     }
-    confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
-    onClose();
-  };
 
-  const handleDigiLockerLogin = () => {
-    confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
-    onRoleChange(selectedRole);
-    onClose();
+    setLoading(true);
+    setErrorMessage(null);
+    setSuccessMessage(null);
+
+    try {
+      if (authMode === 'signup') {
+        await register(email, password, selectedRole, fullName);
+        setSuccessMessage('Account created successfully! Launching onboarding...');
+        confetti({ particleCount: 90, spread: 70 });
+        setTimeout(() => {
+          onRoleChange(selectedRole);
+          onClose();
+          if (selectedRole === 'student') {
+            setIsOnboardingOpen(true);
+          }
+        }, 800);
+      } else {
+        const res = await login(email, password);
+        setSuccessMessage('Signed in successfully!');
+        confetti({ particleCount: 70, spread: 60 });
+        setTimeout(() => {
+          onRoleChange(selectedRole);
+          onClose();
+          if (selectedRole === 'student' && (!res.profile || res.profile.completion_percentage < 80)) {
+            setIsOnboardingOpen(true);
+          }
+        }, 600);
+      }
+    } catch (err: any) {
+      console.error('Auth error:', err);
+      setErrorMessage(err.message || 'Authentication error. Please check your credentials.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -328,6 +370,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               </div>
             )}
 
+            {errorMessage && (
+              <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs flex items-center gap-2">
+                <X className="w-4 h-4 flex-shrink-0" />
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
+            {successMessage && (
+              <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
+                <span>{successMessage}</span>
+              </div>
+            )}
+
             <div className="flex items-center gap-2 pt-1">
               <input
                 type="checkbox"
@@ -345,11 +401,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           {/* Action Buttons */}
           <div className="space-y-2.5 pt-2">
             <button
+              disabled={loading}
               onClick={() => handleCompleteAuth(false)}
-              className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all active:scale-[0.99]"
+              className={`w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all active:scale-[0.99] ${
+                loading ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
             >
-              <span>{authMode === 'signin' ? 'Sign In to Console' : 'Create Sovereign Account'}</span>
-              <ArrowRight className="w-4 h-4" />
+              {loading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span>Connecting to Sovereign Gateway...</span>
+                </>
+              ) : (
+                <>
+                  <span>{authMode === 'signin' ? 'Sign In to Console' : 'Create Sovereign Account'}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
             </button>
 
             {/* Fast Demo Bypass */}

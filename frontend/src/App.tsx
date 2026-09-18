@@ -10,6 +10,8 @@ import { GovernmentPortal } from './components/government/GovernmentPortal';
 import { HomeScreen } from './components/home/HomeScreen';
 import { AuthModal } from './components/auth/AuthModal';
 import { SettingsModal } from './components/common/SettingsModal';
+import { StudentOnboardingModal } from './components/student/onboarding/StudentOnboardingModal';
+import { useStudent } from './context/StudentContext';
 import { ShieldCheck, Lock, Compass } from 'lucide-react';
 
 const AppContent: React.FC = () => {
@@ -17,6 +19,7 @@ const AppContent: React.FC = () => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [settingsTab, setSettingsTab] = useState<'bookmarks' | 'privacy' | 'preferences'>('preferences');
+  const { isOnboardingOpen, setIsOnboardingOpen } = useStudent();
 
   const handleOpenSettings = (tab?: 'bookmarks' | 'privacy' | 'preferences') => {
     if (tab) {
@@ -53,6 +56,12 @@ const AppContent: React.FC = () => {
         onClose={() => setIsAuthOpen(false)}
         currentRole={currentRole}
         onRoleChange={setCurrentRole}
+      />
+
+      {/* Student Onboarding & Profile Builder Wizard */}
+      <StudentOnboardingModal
+        isOpen={isOnboardingOpen}
+        onClose={() => setIsOnboardingOpen(false)}
       />
 
       {/* Global Settings & Preferences Modal */}

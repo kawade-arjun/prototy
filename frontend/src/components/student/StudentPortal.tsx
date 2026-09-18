@@ -27,7 +27,7 @@ import { MetaVerifiedBadge } from '../common/MetaVerifiedBadge';
 export const StudentPortal: React.FC = () => {
   const [activeTab, setActiveTab] = useState<StudentTab>('recommendations');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { activeStudent } = useStudent();
+  const { activeStudent, customProfile, setIsOnboardingOpen } = useStudent();
 
   const tabs: { id: StudentTab; label: string; num: string; icon: React.ReactNode; category: string }[] = [
     { id: 'recommendations', label: 'Recommendations Studio', num: '1', icon: <Sparkles className="w-3.5 h-3.5" />, category: 'Diagnostics' },
@@ -45,7 +45,7 @@ export const StudentPortal: React.FC = () => {
     <div className="space-y-6">
       
       {/* Student Profile Header Ribbon */}
-      <div className="glass-panel rounded-3xl p-4 sm:p-5 transition-colors">
+      <div className="glass-panel rounded-3xl p-4 sm:p-5 transition-colors flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-500 p-0.5 shadow-md shrink-0">
             <div className="w-full h-full bg-white dark:bg-[#0d1322] rounded-[14px] flex items-center justify-center font-bold text-indigo-600 dark:text-white text-xs">
@@ -57,9 +57,32 @@ export const StudentPortal: React.FC = () => {
             <MetaVerifiedBadge className="w-5 h-5" />
             <span className="font-extrabold text-base sm:text-lg text-slate-900 dark:text-white">{activeStudent.name}</span>
             <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/80 dark:bg-indigo-500/15 dark:text-indigo-300 dark:border-indigo-500/30">
-              {activeStudent.streamName}
+              {customProfile?.stream || activeStudent.streamName}
             </span>
           </div>
+        </div>
+
+        {/* Profile Completion & Onboarding Trigger */}
+        <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+          <div className="text-left sm:text-right">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-200">
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+              <span>Profile {customProfile?.completion_percentage || 85}% Complete</span>
+            </div>
+            <div className="w-28 sm:w-32 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 mt-1 overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full"
+                style={{ width: `${customProfile?.completion_percentage || 85}%` }}
+              />
+            </div>
+          </div>
+
+          <button
+            onClick={() => setIsOnboardingOpen(true)}
+            className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-sm transition-all hover:scale-105 active:scale-95"
+          >
+            {customProfile?.completion_percentage && customProfile.completion_percentage >= 100 ? 'Update Profile' : 'Complete Builder'}
+          </button>
         </div>
       </div>
 
