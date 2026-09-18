@@ -141,7 +141,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole }) => {
         {/* Dynamic Hero Title with Rotating Discipline */}
         <h1 className="font-serif-luxury text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white max-w-5xl mx-auto leading-tight">
           Empowering Next-Gen <br className="hidden sm:inline" />
-          <span className={`bg-gradient-to-r ${rotatingDisciplines[currentDisciplineIndex].color} bg-clip-text text-transparent transition-all duration-500 inline-block font-serif-luxury font-extrabold italic`}>
+          <span className={`bg-gradient-to-r ${rotatingDisciplines[currentDisciplineIndex].color} bg-clip-text text-transparent transition-all duration-500 inline-block font-nexa-pro font-black italic`}>
             {rotatingDisciplines[currentDisciplineIndex].title}
           </span>
         </h1>

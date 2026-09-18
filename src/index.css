@@ -14,6 +14,11 @@
   font-family: 'Playfair Display', Georgia, serif;
 }
 
+/* Nexa Pro Modern Geometric Typography Class */
+.font-nexa-pro {
+  font-family: 'Nexa Pro', 'Nexa', 'Plus Jakarta Sans', 'Outfit', system-ui, -apple-system, sans-serif;
+}
+
 /* Luxury Real Estate Ambient Tonal Background */
 .ambient-bg {
   @apply bg-[#FAF8F5] dark:bg-[#080B10];
