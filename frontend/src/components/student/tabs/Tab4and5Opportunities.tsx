@@ -4,7 +4,7 @@ import { OpportunityListing } from '../../../types';
 import { 
   Briefcase, 
   GraduationCap, 
-  Sparkles, 
+  Cpu, 
   MapPin, 
   Calendar, 
   CheckCircle2, 
@@ -59,11 +59,11 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
       {/* Header Banner */}
       <div className={`rounded-3xl glass-panel p-8 ${
         isInternship 
-          ? 'bg-gradient-to-r from-blue-50/70 via-white to-indigo-50/70 dark:from-blue-950/30 dark:via-slate-900 dark:to-indigo-950/30' 
-          : 'bg-gradient-to-r from-emerald-50/70 via-white to-cyan-50/70 dark:from-emerald-950/30 dark:via-slate-900 dark:to-cyan-950/30'
+          ? 'bg-gradient-to-r from-amber-50/70 via-white to-orange-50/70 dark:from-amber-950/30 dark:via-slate-900 dark:to-orange-950/30' 
+          : 'bg-gradient-to-r from-orange-50/70 via-white to-amber-50/70 dark:from-orange-950/30 dark:via-slate-900 dark:to-amber-950/30'
       }`}>
         <div className="max-w-3xl space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 dark:bg-indigo-500/10 dark:border-indigo-500/20 dark:text-indigo-400 text-xs font-bold">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-xs font-bold">
             {isInternship ? <GraduationCap className="w-3.5 h-3.5" /> : <Briefcase className="w-3.5 h-3.5" />}
             <span>{isInternship ? 'TAB 4 • INTERNSHIPS HUB' : 'TAB 5 • JOBS HUB'}</span>
           </div>
@@ -71,7 +71,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
             {isInternship ? 'Verified University & Industry Internships' : 'High-Impact Full-Time Engineering & Finance Roles'}
           </h2>
           <p className="text-sm text-slate-600 dark:text-slate-300">
-            Every listing carries a traceable ID (e.g. <span className="font-mono text-indigo-600 dark:text-cyan-300 font-bold">INT-MSFT-101</span>, <span className="font-mono text-indigo-600 dark:text-cyan-300 font-bold">JOB-RZP-402</span>) with click-to-analyze AI cutoff score comparison.
+            Every listing carries a traceable ID (e.g. <span className="font-mono text-amber-600 dark:text-amber-300 font-bold">INT-MSFT-101</span>, <span className="font-mono text-amber-600 dark:text-amber-300 font-bold">JOB-RZP-402</span>) with click-to-analyze AI cutoff score comparison.
           </p>
         </div>
       </div>
@@ -85,7 +85,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
             placeholder="Search by Traceable ID (e.g. JOB-MSFT-901), title, company, or skills..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-indigo-500 shadow-sm"
+            className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-amber-500 shadow-sm"
           />
         </div>
         <div className="flex items-center gap-2">
@@ -93,7 +93,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
             onClick={() => setOnlyMyField(!onlyMyField)}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
               onlyMyField 
-                ? 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-600/20 dark:text-indigo-300 dark:border-indigo-500/30 shadow-sm' 
+                ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-600/20 dark:text-amber-300 dark:border-amber-500/30 shadow-sm' 
                 : 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-white/[0.08]'
             }`}
           >
@@ -115,11 +115,11 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
           return (
             <div
               key={opp.id}
-              className="glass-panel p-6 rounded-2xl hover:border-indigo-400 transition-all space-y-4 flex flex-col justify-between shadow-sm hover:shadow-lg"
+              className="glass-panel p-6 rounded-2xl hover:border-amber-400 transition-all space-y-4 flex flex-col justify-between shadow-sm hover:shadow-lg"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-950/80 dark:text-cyan-300 dark:border-indigo-800">
+                  <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-950/80 dark:text-amber-300 dark:border-amber-800">
                     {opp.id}
                   </span>
                   <span className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
@@ -128,7 +128,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
                 </div>
 
                 <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white hover:text-amber-600 dark:hover:text-amber-300 transition-colors">
                     {opp.title}
                   </h3>
                   <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -170,9 +170,9 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
                 <div className="flex items-center justify-between gap-2 pt-1">
                   <button
                     onClick={() => handleOpenAnalysis(opp)}
-                    className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-indigo-600 border border-indigo-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-indigo-400 dark:border-indigo-900/40 text-xs font-bold transition-all"
+                    className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-amber-600 border border-amber-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-amber-400 dark:border-amber-900/40 text-xs font-bold transition-all"
                   >
-                    <Sparkles className="w-3.5 h-3.5" />
+                    <Cpu className="w-3.5 h-3.5" />
                     <span>Run AI Skill & Test Analysis</span>
                   </button>
 
@@ -182,7 +182,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
                     className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-md ${
                       isApplied 
                         ? 'bg-slate-200 text-slate-500 dark:bg-slate-800 dark:text-slate-400 cursor-not-allowed'
-                        : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/20 active:scale-95'
+                        : 'bg-amber-600 hover:bg-amber-500 text-white shadow-amber-600/20 active:scale-95'
                     }`}
                   >
                     {isApplied ? 'Applied ✓' : 'Direct Apply'}
@@ -200,7 +200,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
           <div className="glass-panel-glow max-w-xl w-full rounded-3xl p-7 border space-y-5">
             <div className="flex items-start justify-between">
               <div>
-                <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-950 dark:text-cyan-300 dark:border-indigo-800">
+                <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800">
                   {selectedOpp.id}
                 </span>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-2">{selectedOpp.title}</h3>
@@ -233,7 +233,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
 
             <div className="space-y-2">
               <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-cyan-400" />
+                <Cpu className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                 Tailored Interview Preparation Tips
               </h4>
               <ul className="space-y-2">
@@ -242,7 +242,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
                   'Be prepared to explain your tamper-proof sovereign badge credentials'
                 ]).map((tip, idx) => (
                   <li key={idx} className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2 bg-slate-50 dark:bg-slate-900/60 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800/80">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
                     <span>{tip}</span>
                   </li>
                 ))}
@@ -258,7 +258,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
               </button>
               <button
                 onClick={() => handleFastTrackApply(selectedOpp.id)}
-                className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/30"
+                className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-lg shadow-amber-600/30"
               >
                 Fast-Track Direct Apply
               </button>

@@ -30,7 +30,7 @@ export interface GeminiSkillGapAnalysis {
 
 export const analyzeResumeWithGemini = async (
   resumeText: string,
-  discipline: string,
+  discipline: string = 'Engineering & Technology',
   apiKey?: string
 ): Promise<GeminiResumeAnalysis> => {
   const key = apiKey || getGeminiApiKey();
@@ -103,15 +103,16 @@ ${resumeText}
 };
 
 export const analyzeSkillGapWithGemini = async (
-  candidateSkills: string[],
+  candidateSkills: string[] | string,
   jobDescription: string,
-  discipline: string,
+  discipline: string = 'Engineering & Technology',
   apiKey?: string
 ): Promise<GeminiSkillGapAnalysis> => {
   const key = apiKey || getGeminiApiKey();
 
   if (key) {
     try {
+      const skillsStr = Array.isArray(candidateSkills) ? candidateSkills.join(', ') : candidateSkills;
       const prompt = `You are an AI Skill Gap & Career Differential Analysis Engine for ${discipline}.
 Compare the candidate's verified skills against the target Job Description and output a VALID JSON object (and ONLY JSON, no markdown codeblocks or extra text) with this exact schema:
 {
@@ -126,7 +127,7 @@ Compare the candidate's verified skills against the target Job Description and o
   "summary": "Executive summary string."
 }
 
-Candidate Verified Skills: ${candidateSkills.join(', ')}
+Candidate Verified Skills: ${skillsStr}
 
 Target Job Description:
 """
@@ -158,7 +159,7 @@ ${jobDescription}
   // Backend Prototype Fallback when no key is configured
   return {
     matchPercentage: 86,
-    matchedSkills: candidateSkills.slice(0, 4),
+    matchedSkills: Array.isArray(candidateSkills) ? candidateSkills.slice(0, 4) : [candidateSkills],
     missingSkills: ['Kubernetes Orchestration', 'Distributed Memory Caching', 'SEC Edgar Financial Auditing'].slice(0, 2),
     bridgePlan: [
       { step: 1, title: 'Container Microservices', action: 'Complete 15-minute isolated Docker sandbox test in evaluation portal', duration: '3 Days' },

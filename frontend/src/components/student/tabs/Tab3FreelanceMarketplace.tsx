@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { 
   Briefcase, 
-  Sparkles, 
   Star, 
   Clock, 
   CheckCircle, 
   Send, 
   Copy, 
   ShieldCheck, 
-  Filter 
+  Filter,
+  Cpu
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -188,19 +188,12 @@ export const Tab3FreelanceMarketplace: React.FC = () => {
     setTimeout(() => {
       setIsGenerating(false);
       setGeneratedProposal(
-`Dear ${gig.client} Team,
-
-I am writing to submit my proposal for "${gig.title}". As a verified scholar ranked in the ${activeStudent.nationalPercentile} percentile on the CareerOptic ${activeStudent.benchmarkBadge.split('•')[0].trim()} sandbox, I have hands-on experience directly addressing your project requirements:
-
-1. Technical Alignment: I have implemented production-ready solutions utilizing ${gig.skills.slice(0, 3).join(', ')}, aligned with the rigorous curriculum of ${activeStudent.institution}.
-2. Verified Credential Integrity: My competencies have been validated through 3-tier proctored assessments (with tamper-proof OpenCV ELA and pyHanko cryptographic signatures).
-3. Delivery Timeline: I can complete this deliverable within ${gig.duration} for your benchmark budget of ${gig.budget}.
-
-You can view my verified Living Resume, benchmark scores, and sovereign credential ledger at: careeroptic.in/verify/${activeStudent.digiLockerId}.
-
-Best regards,
-${activeStudent.name}
-${activeStudent.degree}`
+        `Dear ${gig.client},\n\nI am writing to express my strong interest in your micro-gig "${gig.title}". As a candidate verified in ${activeStudent.streamName}, my verified skills directly align with your requirements.\n\n` +
+        `• Verified Benchmark Percentile: Top ${100 - activeStudent.compositeScore}% (${activeStudent.compositeScore}% Composite Score)\n` +
+        `• Primary Competencies: ${gig.skills.join(', ')}\n` +
+        `• Cryptographic ID: ${activeStudent.id}\n\n` +
+        `I am available to commence work immediately and guarantee delivery within ${gig.duration}.\n\n` +
+        `Best regards,\n${activeStudent.name}`
       );
     }, 600);
   };
@@ -212,17 +205,16 @@ ${activeStudent.degree}`
   };
 
   const handleSendProposal = () => {
-    confetti({ particleCount: 50, spread: 60 });
-    alert(`Proposal submitted to ${selectedGig?.client} with verified sovereign credentials badge attached!`);
+    alert(`Proposal submitted to ${selectedGig?.client}! Escrow pre-allocated upon milestone verification.`);
     setSelectedGig(null);
   };
 
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* Header Banner */}
-      <div className="rounded-3xl glass-panel p-8 bg-gradient-to-r from-cyan-50/70 via-white to-indigo-50/70 dark:from-cyan-950/30 dark:via-slate-900 dark:to-indigo-950/30">
+      <div className="rounded-3xl glass-panel p-8 bg-gradient-to-r from-amber-50/70 via-white to-orange-50/70 dark:from-amber-950/30 dark:via-slate-900 dark:to-orange-950/30">
         <div className="max-w-3xl space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 dark:bg-cyan-500/10 dark:border-cyan-500/20 dark:text-cyan-400 text-xs font-bold">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-xs font-bold">
             <Briefcase className="w-3.5 h-3.5" />
             <span>TAB 3 • VERIFIED FREELANCE MARKETPLACE</span>
           </div>
@@ -251,12 +243,12 @@ ${activeStudent.degree}`
         </div>
         <div className="glass-panel p-5 rounded-2xl space-y-1">
           <div className="text-xs text-slate-500 dark:text-slate-400">On-Time Delivery Rate</div>
-          <div className="text-2xl font-black text-cyan-600 dark:text-cyan-400">100%</div>
+          <div className="text-2xl font-black text-amber-600 dark:text-amber-400">100%</div>
           <div className="text-[10px] text-slate-500">Zero deadline breaches</div>
         </div>
         <div className="glass-panel p-5 rounded-2xl space-y-1">
           <div className="text-xs text-slate-500 dark:text-slate-400">Platform Reputation Tier</div>
-          <div className="text-2xl font-black text-indigo-600 dark:text-indigo-400">Top Rated Plus</div>
+          <div className="text-2xl font-black text-amber-600 dark:text-amber-400">Top Rated Plus</div>
           <div className="text-[10px] text-slate-500">Verified Sovereign Badge Active</div>
         </div>
       </div>
@@ -268,7 +260,7 @@ ${activeStudent.degree}`
           onClick={() => setOnlyMyField(!onlyMyField)}
           className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border shrink-0 ${
             onlyMyField 
-              ? 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-600/20 dark:text-indigo-300 dark:border-indigo-500/30 shadow-sm' 
+              ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-600/20 dark:text-amber-300 dark:border-amber-500/30 shadow-sm' 
               : 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-white/[0.08]'
           }`}
         >
@@ -281,7 +273,7 @@ ${activeStudent.degree}`
             onClick={() => setSelectedTag(tag)}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
               selectedTag === tag 
-                ? 'bg-indigo-600 text-white shadow-md' 
+                ? 'bg-amber-600 text-white shadow-md' 
                 : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -295,11 +287,11 @@ ${activeStudent.degree}`
         {filteredGigs.map((gig) => (
           <div
             key={gig.id}
-            className="glass-panel p-6 rounded-2xl hover:border-cyan-400 transition-all space-y-3 flex flex-col justify-between shadow-sm hover:shadow-lg"
+            className="glass-panel p-6 rounded-2xl hover:border-amber-400 transition-all space-y-3 flex flex-col justify-between shadow-sm hover:shadow-lg"
           >
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[11px] font-bold px-2.5 py-1 rounded-lg bg-cyan-50 dark:bg-slate-900 text-cyan-800 dark:text-cyan-300 border border-cyan-200 dark:border-slate-700">
+                <span className="font-mono text-[11px] font-bold px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-slate-900 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-slate-700">
                   {gig.id}
                 </span>
                 <span className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
@@ -307,7 +299,7 @@ ${activeStudent.degree}`
                 </span>
               </div>
 
-              <h3 className="font-bold text-slate-900 dark:text-white text-base hover:text-indigo-600 dark:hover:text-cyan-300 transition-colors">
+              <h3 className="font-bold text-slate-900 dark:text-white text-base hover:text-amber-600 dark:hover:text-amber-300 transition-colors">
                 {gig.title}
               </h3>
               
@@ -339,9 +331,9 @@ ${activeStudent.degree}`
 
               <button
                 onClick={() => handleOpenAiProposal(gig)}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md shadow-indigo-600/20 transition-all active:scale-95"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md shadow-amber-600/20 transition-all active:scale-95"
               >
-                <Sparkles className="w-3.5 h-3.5" />
+                <Cpu className="w-3.5 h-3.5" />
                 <span>AI Proposal Generator</span>
               </button>
             </div>
@@ -356,7 +348,7 @@ ${activeStudent.degree}`
             <div className="flex items-start justify-between">
               <div>
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+                  <Cpu className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white">AI Proposal Generator</h3>
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Benchmark-backed, personalized pitch for {selectedGig.id}</p>
@@ -371,7 +363,7 @@ ${activeStudent.degree}`
 
             {isGenerating ? (
               <div className="p-8 flex flex-col items-center justify-center space-y-2">
-                <Sparkles className="w-8 h-8 text-cyan-600 dark:text-cyan-400 animate-spin" />
+                <Cpu className="w-8 h-8 text-amber-600 dark:text-amber-400 animate-spin" />
                 <span className="text-xs text-slate-600 dark:text-slate-300">Synthesizing verified benchmarks & project tokens...</span>
               </div>
             ) : (
@@ -380,7 +372,7 @@ ${activeStudent.degree}`
                   value={generatedProposal}
                   onChange={(e) => setGeneratedProposal(e.target.value)}
                   rows={10}
-                  className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 text-xs text-slate-900 dark:text-slate-200 font-mono focus:outline-none focus:border-indigo-500 leading-relaxed"
+                  className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 text-xs text-slate-900 dark:text-slate-200 font-mono focus:outline-none focus:border-amber-500 leading-relaxed"
                 />
 
                 <div className="flex items-center justify-between text-xs">
@@ -408,7 +400,7 @@ ${activeStudent.degree}`
               <button
                 onClick={handleSendProposal}
                 disabled={isGenerating}
-                className="flex items-center gap-2 px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30"
+                className="flex items-center gap-2 px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-lg shadow-amber-600/30"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>Submit Proposal</span>

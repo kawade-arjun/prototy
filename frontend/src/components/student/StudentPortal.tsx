@@ -7,7 +7,7 @@ import { Tab4and5Opportunities } from './tabs/Tab4and5Opportunities';
 import { Tab6Organisations } from './tabs/Tab6Organisations';
 import { Tab7LivingResume } from './tabs/Tab7LivingResume';
 import { 
-  Sparkles, 
+  Target, 
   Terminal, 
   Briefcase, 
   GraduationCap, 
@@ -30,7 +30,7 @@ export const StudentPortal: React.FC = () => {
   const { activeStudent, customProfile, setIsOnboardingOpen } = useStudent();
 
   const tabs: { id: StudentTab; label: string; num: string; icon: React.ReactNode; category: string }[] = [
-    { id: 'recommendations', label: 'Recommendations Studio', num: '1', icon: <Sparkles className="w-3.5 h-3.5" />, category: 'Diagnostics' },
+    { id: 'recommendations', label: 'Recommendations Studio', num: '1', icon: <Target className="w-3.5 h-3.5" />, category: 'Diagnostics' },
     { id: 'sandbox', label: 'Tests & Skill Verification', num: '2', icon: <Terminal className="w-3.5 h-3.5" />, category: 'Evaluation' },
     { id: 'freelance', label: 'Freelance Marketplace', num: '3', icon: <Briefcase className="w-3.5 h-3.5" />, category: 'Opportunities' },
     { id: 'internships', label: 'Internships Hub', num: '4', icon: <GraduationCap className="w-3.5 h-3.5" />, category: 'Opportunities' },
@@ -47,8 +47,8 @@ export const StudentPortal: React.FC = () => {
       {/* Student Profile Header Ribbon */}
       <div className="glass-panel rounded-3xl p-4 sm:p-5 transition-colors flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-500 p-0.5 shadow-md shrink-0">
-            <div className="w-full h-full bg-white dark:bg-[#0d1322] rounded-[14px] flex items-center justify-center font-bold text-indigo-600 dark:text-white text-xs">
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-amber-600 via-orange-500 to-amber-400 p-0.5 shadow-md shrink-0">
+            <div className="w-full h-full bg-white dark:bg-[#0d1322] rounded-[14px] flex items-center justify-center font-bold text-amber-600 dark:text-amber-400 text-xs">
               {activeStudent.avatarInitials}
             </div>
           </div>
@@ -56,7 +56,7 @@ export const StudentPortal: React.FC = () => {
             {/* Meta Verified Blue Tick Badge in front of the name */}
             <MetaVerifiedBadge className="w-5 h-5" />
             <span className="font-extrabold text-base sm:text-lg text-slate-900 dark:text-white">{activeStudent.name}</span>
-            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/80 dark:bg-indigo-500/15 dark:text-indigo-300 dark:border-indigo-500/30">
+            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200/80 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30">
               {customProfile?.stream || activeStudent.streamName}
             </span>
           </div>
@@ -66,12 +66,11 @@ export const StudentPortal: React.FC = () => {
         <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
           <div className="text-left sm:text-right">
             <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-200">
-              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
               <span>Profile {customProfile?.completion_percentage || 85}% Complete</span>
             </div>
             <div className="w-28 sm:w-32 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 mt-1 overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full"
+                className="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-400 rounded-full"
                 style={{ width: `${customProfile?.completion_percentage || 85}%` }}
               />
             </div>
@@ -79,7 +78,7 @@ export const StudentPortal: React.FC = () => {
 
           <button
             onClick={() => setIsOnboardingOpen(true)}
-            className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-sm transition-all hover:scale-105 active:scale-95"
+            className="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-sm transition-all hover:scale-105 active:scale-95"
           >
             {customProfile?.completion_percentage && customProfile.completion_percentage >= 100 ? 'Update Profile' : 'Complete Builder'}
           </button>
@@ -96,12 +95,12 @@ export const StudentPortal: React.FC = () => {
             className="w-full m3-surface-2 rounded-2xl p-3 border border-slate-200/80 dark:border-white/[0.08] shadow-md flex items-center justify-between gap-3 text-slate-900 dark:text-white font-bold text-xs"
           >
             {/* Left 3 Horizontal Lines Icon */}
-            <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+            <div className="w-8 h-8 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-sm">
               <Menu className="w-4 h-4" />
             </div>
 
             {/* Centered Active Tab Name */}
-            <div className="flex-1 flex items-center justify-center gap-2 text-center text-xs sm:text-sm font-extrabold text-indigo-600 dark:text-cyan-400 truncate">
+            <div className="flex-1 flex items-center justify-center gap-2 text-center text-xs sm:text-sm font-extrabold text-amber-600 dark:text-amber-400 truncate">
               {currentTabObj.icon}
               <span className="truncate">{currentTabObj.label}</span>
             </div>
@@ -109,7 +108,7 @@ export const StudentPortal: React.FC = () => {
             {/* Right Chevron Indicator */}
             <div className="flex items-center gap-1 text-slate-400 shrink-0">
               {isMobileMenuOpen ? (
-                <ChevronUp className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
+                <ChevronUp className="w-5 h-5 text-amber-600 dark:text-amber-400" />
               ) : (
                 <ChevronDown className="w-5 h-5 text-slate-400" />
               )}
@@ -130,13 +129,13 @@ export const StudentPortal: React.FC = () => {
                     }}
                     className={`w-full flex items-center justify-between p-3 rounded-xl text-xs font-bold transition-all ${
                       isActive
-                        ? 'bg-indigo-600 text-white shadow-md'
+                        ? 'bg-amber-600 text-white shadow-md'
                         : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80'
                     }`}
                   >
                     <div className="flex items-center gap-3 truncate">
                       <span className={`text-[10px] font-mono font-bold w-6 h-6 rounded-lg flex items-center justify-center shrink-0 ${
-                        isActive ? 'bg-indigo-700 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                        isActive ? 'bg-amber-700 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
                       }`}>
                         {tab.num}
                       </span>
@@ -147,7 +146,7 @@ export const StudentPortal: React.FC = () => {
                     </div>
                     
                     <span className={`text-[10px] px-2 py-0.5 rounded-md font-mono shrink-0 ${
-                      isActive ? 'bg-indigo-700/80 text-white' : 'bg-slate-100 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400'
+                      isActive ? 'bg-amber-700/80 text-white' : 'bg-slate-100 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400'
                     }`}>
                       {tab.category}
                     </span>
@@ -169,19 +168,19 @@ export const StudentPortal: React.FC = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex-1 flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-full text-xs font-bold transition-all duration-200 relative group ${
                     isActive
-                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                      ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20'
                       : 'text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-slate-800'
                   }`}
                 >
                   <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-full transition-colors ${
                     isActive 
-                      ? 'bg-indigo-700 text-white' 
+                      ? 'bg-amber-700 text-white' 
                       : 'bg-slate-300/80 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
                   }`}>
                     {tab.num}
                   </span>
                   
-                  <span className={isActive ? 'text-white' : 'text-slate-500 group-hover:text-indigo-600 dark:text-slate-400 dark:group-hover:text-indigo-400 transition-colors'}>
+                  <span className={isActive ? 'text-white' : 'text-slate-500 group-hover:text-amber-600 dark:text-slate-400 dark:group-hover:text-amber-400 transition-colors'}>
                     {tab.icon}
                   </span>
                   

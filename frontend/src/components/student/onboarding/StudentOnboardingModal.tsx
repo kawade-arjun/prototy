@@ -6,7 +6,6 @@ import {
   Plus, 
   Upload, 
   FileText, 
-  Sparkles, 
   GraduationCap, 
   Cpu, 
   BookOpen, 
@@ -260,10 +259,9 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
           <div className="space-y-1.5 pt-1">
             <div className="flex items-center justify-between text-xs">
               <span className="font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                 Profile Completion Status:
               </span>
-              <span className="font-mono font-bold text-indigo-600 dark:text-cyan-400">
+              <span className="font-mono font-bold text-amber-600 dark:text-amber-400">
                 {completionPercentage}% Complete
               </span>
             </div>
@@ -271,7 +269,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
             {/* Progress Track */}
             <div className="w-full h-2.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-indigo-500 via-cyan-500 to-emerald-500 transition-all duration-500 rounded-full"
+                className="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-400 transition-all duration-500 rounded-full"
                 style={{ width: `${completionPercentage}%` }}
               />
             </div>

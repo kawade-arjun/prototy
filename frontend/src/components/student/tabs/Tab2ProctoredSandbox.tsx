@@ -21,11 +21,9 @@ import {
   ArrowUpRight, 
   Search, 
   Layers, 
-  Zap, 
   FileText, 
   Check, 
   X, 
-  Sparkles, 
   Activity, 
   BarChart3, 
   Cpu, 
@@ -120,12 +118,12 @@ export const Tab2ProctoredSandbox: React.FC = () => {
 
   // Sub-tabs definition with colors & icons (All Tests tab placed before Daily Quests)
   const subTabs = [
-    { id: 'all_tests' as AssessmentSubTab, label: 'All Tests', duration: 'All', color: 'text-indigo-600 border-indigo-500/30 bg-indigo-500/10 dark:text-cyan-400 dark:border-cyan-500/30 dark:bg-cyan-500/10' },
+    { id: 'all_tests' as AssessmentSubTab, label: 'All Tests', duration: 'All', color: 'text-amber-600 border-amber-500/30 bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30 dark:bg-amber-500/10' },
     { id: 'daily_quests' as AssessmentSubTab, label: 'Daily Quests', duration: '5–10 Mins', color: 'text-amber-500 border-amber-500/30 bg-amber-500/10' },
     { id: 'domain_benchmarks' as AssessmentSubTab, label: 'Domain-Specific Benchmarks', duration: '30–60 Mins', color: 'text-emerald-500 border-emerald-500/30 bg-emerald-500/10' },
     { id: 'recruiter_drives' as AssessmentSubTab, label: 'Recruiter Drives', duration: '45–90 Mins', color: 'text-purple-500 border-purple-500/30 bg-purple-500/10' },
-    { id: 'aptitude_logic' as AssessmentSubTab, label: 'Aptitude & Logic', duration: '30–45 Mins', color: 'text-blue-500 border-blue-500/30 bg-blue-500/10' },
-    { id: 'soft_skills_ethics' as AssessmentSubTab, label: 'Soft Skills & Ethics', duration: '15–30 Mins', color: 'text-indigo-500 border-indigo-500/30 bg-indigo-500/10' }
+    { id: 'aptitude_logic' as AssessmentSubTab, label: 'Aptitude & Logic', duration: '30–45 Mins', color: 'text-orange-500 border-orange-500/30 bg-orange-500/10' },
+    { id: 'soft_skills_ethics' as AssessmentSubTab, label: 'Soft Skills & Ethics', duration: '15–30 Mins', color: 'text-amber-500 border-amber-500/30 bg-amber-500/10' }
   ];
 
   // Active stream metadata
@@ -992,12 +990,12 @@ export const Tab2ProctoredSandbox: React.FC = () => {
             </div>
 
             {/* Instant Profile Vector Update Notice */}
-            <div className="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800/40 flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-300 font-semibold">
-                <Sparkles className="w-4 h-4 text-indigo-600 dark:text-cyan-400" />
+            <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 flex items-center justify-between text-xs">
+              <div className="flex items-center gap-2 text-amber-700 dark:text-amber-300 font-semibold">
+                <ShieldCheck className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                 <span>Profile Vector Updated in pgvector • Recalculated Global Rank: Top 1.1%</span>
               </div>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-600 text-white font-bold">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-600 text-white font-bold">
                 Synchronized
               </span>
             </div>
