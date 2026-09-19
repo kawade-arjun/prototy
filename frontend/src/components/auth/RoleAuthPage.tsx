@@ -232,11 +232,6 @@ export const RoleAuthPage: React.FC<RoleAuthPageProps> = ({
       setErrorMessage('Please provide both email and password.');
       return;
     }
-    if (!agreeDpdp) {
-      setErrorMessage('Please accept the India DPDP Act 2023 statutory consent.');
-      return;
-    }
-
     setLoading(true);
     setErrorMessage(null);
     setSuccessMessage(null);
@@ -550,21 +545,6 @@ export const RoleAuthPage: React.FC<RoleAuthPageProps> = ({
                     placeholder={config.idPlaceholder}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50/70 dark:bg-[#080d18] text-slate-900 dark:text-white text-xs font-mono focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"
                   />
-                </div>
-
-                {/* Statutory DPDP Consent */}
-                <div className="pt-2">
-                  <label className="flex items-start gap-2.5 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={agreeDpdp}
-                      onChange={(e) => setAgreeDpdp(e.target.checked)}
-                      className="mt-0.5 rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4"
-                    />
-                    <span className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
-                      I agree to the <span className="font-semibold text-slate-700 dark:text-slate-200">India DPDP Act 2023</span> statutory disclosures, sovereign zero-knowledge cryptographic credential ledger storage, and verified audit protocols.
-                    </span>
-                  </label>
                 </div>
 
                 {/* Submit Action Button */}
