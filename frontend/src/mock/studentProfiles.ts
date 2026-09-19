@@ -35,23 +35,13 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       'AI Research Intern'
     ],
     atsBreakdown: {
-      overallScore: 94,
-      quantifiedMetricsScore: 96,
-      keywordDensityScore: 94,
-      formattingParsabilityScore: 96,
-      strengths: [
-        'Strong quantified latency metrics: "Reduced inference latency by 41% using vLLM PagedAttention and Triton kernels"',
-        'Pristine Judge0 verification: Top 0.8% memory-bounded C++20 distributed cache execution',
-        'Zero code plagiarism: SHA-256 commit tree verified against 1.2M national repositories'
-      ],
-      weaknesses: [
-        'Lacks explicit enterprise governance disclosures under India DPDP Act 2023',
-        'Missing multi-tenant cost-per-token economics breakdown in systems documentation'
-      ],
-      actionableSuggestions: [
-        'Add a benchmark metric comparing throughput at concurrency levels of 1,000+ requests/sec',
-        'Complete the DPDP Act 2023 Statutory Clause test in the Sandbox to earn a Dual-Governance Badge'
-      ]
+      overallScore: 85,
+      quantifiedMetricsScore: 85,
+      keywordDensityScore: 85,
+      formattingParsabilityScore: 85,
+      strengths: [],
+      weaknesses: [],
+      actionableSuggestions: []
     },
     livingResumeRankings: [
       { domain: 'AI & Machine Learning', percentile: '99.2nd', badge: 'Top 0.8%', icon: '', color: 'text-amber-600 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-500/30' },
@@ -118,23 +108,13 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       'Private Equity Associate'
     ],
     atsBreakdown: {
-      overallScore: 91,
-      quantifiedMetricsScore: 94,
-      keywordDensityScore: 89,
-      formattingParsabilityScore: 93,
-      strengths: [
-        'Pristine financial waterfall modeling: Audited 10-year LBO model cleared circular interest calculations without errors',
-        'Quantified portfolio impact: "Constructed multi-factor risk arbitrage strategy yielding 1.84 Sharpe ratio on NSE 500"',
-        'Verified CFA Institute Ethics & Quantitative Methods coursework linked to DigiLocker'
-      ],
-      weaknesses: [
-        'Missing stress-testing tables for severe macroeconomic rate-hike shocks (> 150 bps RBI repo hike)',
-        'Lacks automated XBRL financial statement ingestion scripts'
-      ],
-      actionableSuggestions: [
-        'Include a sensitivity tornado chart measuring impact of WACC and terminal growth variance',
-        'Complete the quantitative macro liquidity quest in Sandbox Tab 2'
-      ]
+      overallScore: 85,
+      quantifiedMetricsScore: 85,
+      keywordDensityScore: 85,
+      formattingParsabilityScore: 85,
+      strengths: [],
+      weaknesses: [],
+      actionableSuggestions: []
     },
     livingResumeRankings: [
       { domain: 'Financial Valuation & DCF', percentile: '98.6th', badge: 'Top 1.4%', icon: '', color: 'text-amber-600 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-500/30' },
@@ -205,19 +185,9 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       quantifiedMetricsScore: 92,
       keywordDensityScore: 96,
       formattingParsabilityScore: 94,
-      strengths: [
-        'National Hackathon Winner (SIH PS 26044): Built bidirectional ontology crosswalk between NAMASTE and ICD-11',
-        'Empirical biostatistics: Validated clinical trial survival model clearing log-rank test (p < 0.001)',
-        'DigiLocker verified CCIM registration and Ayush practitioner credentials'
-      ],
-      weaknesses: [
-        'Sample size in observational herbal clinical registry is under 1,500 longitudinal patient records',
-        'Lacks FHIR-HL7 interoperability adapter for modern hospital electronic medical records'
-      ],
-      actionableSuggestions: [
-        'Map 50 additional rare botanical formulations to the WHO Traditional Medicine Chapter 2',
-        'Publish an open-source reproducibility script for survival rate modeling'
-      ]
+      strengths: [],
+      weaknesses: [],
+      actionableSuggestions: []
     },
     livingResumeRankings: [
       { domain: 'Biomedical Informatics', percentile: '99.4th', badge: 'Top 0.6%', icon: '', color: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-500/30' },
@@ -288,19 +258,9 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       quantifiedMetricsScore: 89,
       keywordDensityScore: 97,
       formattingParsabilityScore: 95,
-      strengths: [
-        'Authored statutory DPDP compliance framework: 100% clause mapping for Data Fiduciary obligations (§8)',
-        'Moot court champion: 1st Place at NLSIU National Technology Law Moot on Generative AI Copyright & Liability',
-        'Pre-vetted Bar Council student fellowship credentials validated via DigiLocker PKI'
-      ],
-      weaknesses: [
-        'Lacks quantifiable financial liability matrices under Section 33 statutory penalties',
-        'Limited direct exposure to patent litigation claims for neuromorphic semiconductors'
-      ],
-      actionableSuggestions: [
-        'Draft an end-to-end Consent Manager agreement compliant with MeitY notified guidelines',
-        'Complete the automated NDA risk parsing quest in Sandbox Tab 2'
-      ]
+      strengths: [],
+      weaknesses: [],
+      actionableSuggestions: []
     },
     livingResumeRankings: [
       { domain: 'Data Protection (DPDP 2023)', percentile: '98.9th', badge: 'Top 1.1%', icon: '', color: 'text-amber-600 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-500/30' },
@@ -371,19 +331,9 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
       quantifiedMetricsScore: 93,
       keywordDensityScore: 95,
       formattingParsabilityScore: 98,
-      strengths: [
-        'Perfect accessibility score: 100% Lighthouse & axe-core pass on multi-theme token system',
-        'Spatial interface award: Designed visionOS clinical dashboard clearing 7:1 contrast under variable lighting',
-        'Certified W3C Accessibility Specialist badge stamped via DigiLocker'
-      ],
-      weaknesses: [
-        'Lacks B2B SaaS conversion-rate optimization (CRO) cohort data in public portfolio',
-        'Needs documented CI/CD automated visual regression testing pipeline'
-      ],
-      actionableSuggestions: [
-        'Publish an interactive storybook showcase demonstrating keyboard navigation focus rings',
-        'Complete the WCAG AAA Sandbox challenge in Tab 2 to refresh benchmark score'
-      ]
+      strengths: [],
+      weaknesses: [],
+      actionableSuggestions: []
     },
     livingResumeRankings: [
       { domain: 'Accessibility & WCAG 2.2', percentile: '99.3rd', badge: 'Top 0.7%', icon: '', color: 'text-amber-600 dark:text-amber-400', border: 'border-amber-200 dark:border-amber-500/30' },
