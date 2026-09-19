@@ -365,16 +365,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
           </div>
         </div>
 
-        {/* Gemini Detailed Executive Diagnostic Summary */}
-        {geminiResumeResult?.executiveSummary && (
-          <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-500/30 space-y-1 text-xs text-slate-700 dark:text-slate-200 leading-relaxed shadow-sm">
-            <span className="font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider text-[10px] font-mono block">
-              Executive Strategic Diagnostic Summary:
-            </span>
-            <p>{geminiResumeResult.executiveSummary}</p>
-          </div>
-        )}
-
         {/* 3 Actionable Cards: Strengths, Weaknesses, Suggestions */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           
@@ -405,7 +395,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
           <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-orange-500 space-y-3 bg-orange-50/40 dark:bg-orange-950/10">
             <div className="flex items-center justify-between text-orange-700 dark:text-orange-400 font-bold text-xs uppercase tracking-wider">
               <span>Weaknesses & Risk Impact</span>
-              <span className="text-[10px] font-mono text-orange-600 dark:text-orange-400">⚠️ Risk Flag</span>
             </div>
             <ul className="space-y-2.5">
               {(geminiResumeResult?.detailedWeaknesses || atsResult.weaknesses).map((wk: any, idx) => (
@@ -430,7 +419,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               <span>Actionable Fixes</span>
             </div>
             <ul className="space-y-2.5">
-              {atsResult.actionableSuggestions.map((sug, idx) => (
+              {(geminiResumeResult?.actionableRecommendations || atsResult.actionableSuggestions).map((sug, idx) => (
                 <li key={idx} className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2.5 leading-relaxed">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-1.5" />
                   <span>{sug}</span>
@@ -440,33 +429,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
           </div>
 
         </div>
-
-        {/* Line-by-Line AI Bullet Point Rewrites (Original vs Gemini Improved) */}
-        {geminiResumeResult?.bulletPointRewrites && geminiResumeResult.bulletPointRewrites.length > 0 && (
-          <div className="glass-panel p-5 rounded-2xl space-y-3 border-amber-300/50 dark:border-amber-500/30">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
-              <span>Line-by-Line AI Bullet Point Rewrites (Original vs. Gemini Optimized)</span>
-              <span className="text-[10px] font-mono text-amber-600 dark:text-amber-400">⚡ High Impact</span>
-            </div>
-            <div className="space-y-3">
-              {geminiResumeResult.bulletPointRewrites.map((rewrite, i) => (
-                <div key={i} className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#090d18] border border-slate-200 dark:border-white/[0.06] text-xs space-y-1.5">
-                  <div>
-                    <span className="text-[9px] font-mono text-slate-400 uppercase font-bold block">Original:</span>
-                    <p className="text-slate-500 line-through">{rewrite.original}</p>
-                  </div>
-                  <div>
-                    <span className="text-[9px] font-mono text-amber-600 dark:text-amber-400 uppercase font-bold block">Gemini AI Optimized Rewrite:</span>
-                    <p className="text-slate-900 dark:text-white font-bold">{rewrite.improved}</p>
-                  </div>
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-100 dark:border-white/[0.06]">
-                    <strong>Rationale: </strong>{rewrite.explanation}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
 
       {/* 2. AI Skill Gap Analysis Studio */}

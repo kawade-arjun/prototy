@@ -150,76 +150,109 @@ ${resumeText}
     }
   }
 
-  // Deep Heuristic Prototype Diagnostic Fallback when no key is configured yet
+  // Dynamic Resume Text Analyzer for local/prototype mode
+  const cleanLines = resumeText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+  
+  // Extract key phrases / metric lines from candidate text
+  const metricLines = cleanLines.filter(l => /\d+%|\d+\+|\b\d+\b/i.test(l));
+  const techSkillMatches = Array.from(new Set(
+    (resumeText.match(/\b(Python|JavaScript|TypeScript|React|Node|FastAPI|Docker|Kubernetes|AWS|SQL|PostgreSQL|PyTorch|TensorFlow|Java|C\+\+|Go|Git|REST|GraphQL|MongoDB|CI\/CD|Redis)\b/gi) || [])
+      .map(s => s.trim())
+  ));
+
+  // Calculate dynamic scores based on actual text characteristics
+  const metricCount = metricLines.length;
+  const quantifiedMetricsScore = Math.min(65 + (metricCount * 8), 98);
+  const keywordDensityScore = Math.min(60 + (techSkillMatches.length * 6), 96);
+  const formattingBypassScore = Math.min(85 + Math.min(cleanLines.length, 10), 98);
+  const overallScore = Math.round((quantifiedMetricsScore * 0.35) + (keywordDensityScore * 0.35) + (formattingBypassScore * 0.30));
+
+  // Generate dynamic strengths based on candidate's actual text
+  const detailedStrengths: DetailedStrength[] = [];
+  if (techSkillMatches.length > 0) {
+    detailedStrengths.push({
+      title: 'Strong Technical Stack Alignment',
+      description: `Resume contains verified domain keywords: ${techSkillMatches.slice(0, 4).join(', ')}.`,
+      evidence: `Skills identified: ${techSkillMatches.join(', ')}`
+    });
+  } else {
+    detailedStrengths.push({
+      title: 'Clean Functional Structure',
+      description: 'Resume structure follows standard chronological ATS section guidelines.',
+      evidence: cleanLines[0] || 'Standard Candidate Profile'
+    });
+  }
+
+  if (metricLines.length > 0) {
+    detailedStrengths.push({
+      title: 'Quantified Impact & Scale',
+      description: 'Experience items include measurable performance metrics and outcomes.',
+      evidence: metricLines[0].substring(0, 100)
+    });
+  } else {
+    detailedStrengths.push({
+      title: 'Clear Technical Project Experience',
+      description: 'Demonstrates hands-on engineering involvement across active projects.',
+      evidence: cleanLines[1] || 'Hands-on project experience'
+    });
+  }
+
+  detailedStrengths.push({
+    title: 'ATS-Optimized Formatting',
+    description: 'Clean single-column layout ensures 100% parser readability across major recruiters.',
+    evidence: 'Standard single-column hierarchy'
+  });
+
+  // Generate dynamic weaknesses based on actual text
+  const detailedWeaknesses: DetailedWeakness[] = [];
+  if (metricLines.length < 2) {
+    detailedWeaknesses.push({
+      title: 'Sparse Quantitative Impact Metrics',
+      description: 'Bullet points focus on tasks rather than measurable numerical outcomes.',
+      impact: 'Including quantitative metrics increases ATS recruiter callback rates.'
+    });
+  }
+  if (techSkillMatches.length < 5) {
+    detailedWeaknesses.push({
+      title: 'Unlisted Cloud & Infrastructure Tokens',
+      description: 'Missing explicit mentions of containerization (Docker, Kubernetes) or CI/CD pipelines.',
+      impact: 'May reduce score on automated enterprise ATS keyword screeners.'
+    });
+  }
+  if (detailedWeaknesses.length === 0) {
+    detailedWeaknesses.push({
+      title: 'Leadership & Mentorship Scope',
+      description: 'Could further emphasize team leadership, code review volume, or cross-functional ownership.',
+      impact: 'Enhances evaluation for Senior and Lead engineering positions.'
+    });
+  }
+
+  // Dynamic recommendations
+  const actionableRecommendations = [
+    `Incorporate numerical metrics (% latency reduction, user scale) into key experience bullets.`,
+    `Ensure core skills (${techSkillMatches.length > 0 ? techSkillMatches.slice(0, 3).join(', ') : 'Docker, AWS, SQL'}) are highlighted in your top summary section.`,
+    `Add links to live production API endpoints or GitHub repositories alongside project titles.`
+  ];
+
   return {
-    overallScore: 92,
-    executiveSummary: `The candidate presents an exceptional, high-impact resume tailored for ${discipline}. Demonstrates strong ownership in asynchronous Python microservices, pgvector embedding similarity search, and statutory 3-tier credential verification. Single-column format ensures 100% ATS parser compatibility.`,
-    quantifiedMetricsScore: 90,
-    keywordDensityScore: 94,
-    formattingBypassScore: 96,
-    impactActionVerbsScore: 88,
-    strengths: [
-      'High-Scale Vector Architecture',
-      'Multi-Modal Forensic Verification Integrity',
-      'Clean Single-Column ATS Layout'
-    ],
-    weaknesses: [
-      'Sparse Mentorship & Cross-Functional Scale Metrics',
-      'Unlisted Cloud Orchestration Keywords'
-    ],
-    detailedStrengths: [
-      {
-        title: 'High-Scale Vector Architecture',
-        description: 'Demonstrates clear quantitative latency and scale metrics in vector search implementation.',
-        evidence: 'Optimized pgvector cosine distance search achieving sub-45ms latency across 100,000+ candidate vectors.'
-      },
-      {
-        title: 'Multi-Modal Forensic Verification Integrity',
-        description: 'Integrates statutory DigiLocker PKI and Donut OCR transformer models into verifiable credentials.',
-        evidence: 'Built multi-tier certificate verification system integrating DigiLocker PKI, vendor API registries, and Donut OCR.'
-      },
-      {
-        title: 'Clean Single-Column ATS Layout',
-        description: 'Uses clean semantic headers and standard typography ensuring zero parsing errors across Workday, Greenhouse, and Lever.',
-        evidence: 'Single-column text layout with standard ASCII bullet points.'
-      }
-    ],
-    detailedWeaknesses: [
-      {
-        title: 'Sparse Mentorship & Cross-Functional Scale Metrics',
-        description: 'Bullet points focus heavily on individual technical deliverables rather than cross-functional leadership.',
-        impact: 'May reduce evaluation score for Senior / Lead engineering roles.'
-      },
-      {
-        title: 'Unlisted Cloud Orchestration Keywords',
-        description: 'Missing explicit mentions of Kubernetes deployment manifests, Helm charts, and Prometheus monitoring.',
-        impact: 'Slightly reduces match confidence against DevOps-heavy job descriptions.'
-      }
-    ],
-    missingKeywords: ['Kubernetes', 'vLLM Acceleration', 'Prometheus Telemetry', 'gRPC Microservices'],
-    actionableRecommendations: [
-      'Incorporate team collaboration and code review volume into experience bullet points.',
-      'Explicitly list cloud orchestration tools (Kubernetes, Helm) to maximize automated ATS scanner ranking.',
-      'Add link to live production API endpoints alongside GitHub repository links.'
-    ],
-    extractedSkills: ['Python 3.12', 'FastAPI', 'pgvector', 'PyTorch', 'Docker', 'DigiLocker PKI', 'React', 'TypeScript'],
-    bulletPointRewrites: [
-      {
-        original: 'Engineered 384-dimensional skill vector embedding pipeline using sentence-transformers/all-MiniLM-L6-v2',
-        improved: 'Architected high-throughput 384-dimensional vector embedding engine with sentence-transformers/all-MiniLM-L6-v2, reducing vectorization overhead by 38%',
-        explanation: 'Enhances impact by highlighting quantitative overhead reduction (38%) alongside architecture ownership.'
-      },
-      {
-        original: 'Built multi-tier certificate verification system integrating DigiLocker PKI, vendor API registries, and Donut OCR',
-        improved: 'Engineered 3-tier forensic certificate verification engine with DigiLocker PKI and Donut OCR, processing 10,000+ records with zero fraud false-positives',
-        explanation: 'Adds volume metric (10,000+ records) and zero fraud SLA guarantee.'
-      }
-    ],
+    overallScore,
+    executiveSummary: `Analysis of candidate profile (${cleanLines[0] || 'Uploaded Resume'}): Demonstrates active technical experience with an overall ATS match score of ${overallScore}/100.`,
+    quantifiedMetricsScore,
+    keywordDensityScore,
+    formattingBypassScore,
+    impactActionVerbsScore: Math.min(75 + metricCount * 5, 95),
+    strengths: detailedStrengths.map(s => s.title),
+    weaknesses: detailedWeaknesses.map(w => w.title),
+    detailedStrengths,
+    detailedWeaknesses,
+    missingKeywords: ['Kubernetes', 'CI/CD Pipelines', 'System Architecture', 'Cloud Deployment'],
+    actionableRecommendations,
+    extractedSkills: techSkillMatches.length > 0 ? techSkillMatches : ['Software Engineering', 'Problem Solving', 'Git'],
+    bulletPointRewrites: [],
     sectionScores: [
-      { section: 'Summary & Strategic Positioning', score: 94, "feedback": "Clear, professional executive summary highlighting specialized domain focus." },
-      { section: 'Technical Skills & Competencies', score: 96, "feedback": "Excellent technical hierarchy separating languages, frameworks, and infrastructure." },
-      { section: 'Experience & Scale Metrics', score: 88, "feedback": "Strong metric density; expand on leadership scale metrics." },
-      { section: 'Education & Academic Standing', score: 92, "feedback": "Pristine academic credentials from National Institute of Technology." }
+      { section: 'Executive Positioning', score: overallScore, feedback: 'Clear technical focus across profile.' },
+      { section: 'Technical Competencies', score: keywordDensityScore, feedback: 'Good framework representation.' },
+      { section: 'Experience & Scale Metrics', score: quantifiedMetricsScore, feedback: 'Expand on numerical scale metrics.' }
     ]
   };
 };
