@@ -63,8 +63,10 @@ const AppContent: React.FC = () => {
         onOpenSettings={handleOpenSettings}
       />
 
-      {/* Main Workspace Viewport - Fluidly auto-adapts to laptop, tablet, or mobile devices */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-1 pb-4 sm:pb-6 transition-all">
+      {/* Main Workspace Viewport - Full bleed sidebar alignment when portal active */}
+      <main className={`flex-1 w-full pt-1 pb-4 sm:pb-6 transition-all ${
+        currentRole === null ? 'max-w-7xl mx-auto px-3 sm:px-6 lg:px-8' : 'px-2 sm:px-4 lg:px-6'
+      }`}>
         {currentRole === null && (
           <HomeScreen 
             onSelectRole={setCurrentRole} 
