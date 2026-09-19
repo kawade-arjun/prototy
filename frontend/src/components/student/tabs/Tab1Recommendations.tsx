@@ -24,6 +24,15 @@ import {
 import confetti from 'canvas-confetti';
 
 import { useStudent } from '../../../context/StudentContext';
+import { 
+  getGeminiApiKey, 
+  setGeminiApiKey, 
+  analyzeResumeWithGemini, 
+  analyzeSkillGapWithGemini,
+  GeminiResumeAnalysis,
+  GeminiSkillGapAnalysis
+} from '../../../services/geminiService';
+import { Key, AlertCircle } from 'lucide-react';
 
 interface Tab1Props {
   onSelectOpportunity?: (opp: OpportunityListing) => void;
@@ -36,12 +45,29 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
   const [isAnalyzingResume, setIsAnalyzingResume] = useState(false);
   const [showAiResumeModal, setShowAiResumeModal] = useState(false);
 
+  // Gemini API Key State
+  const [geminiApiKey, setGeminiApiKeyInput] = useState<string>(getGeminiApiKey());
+  const [showApiKeyDrawer, setShowApiKeyDrawer] = useState<boolean>(!getGeminiApiKey());
+  const [geminiError, setGeminiError] = useState<string | null>(null);
+
+  // Resume Text State for Analysis
+  const [customResumeText, setCustomResumeText] = useState<string>(
+    `${activeStudent.name}\n${activeStudent.degree} at ${activeStudent.institution}\nSkills: ${activeStudent.verifiedSkills.join(', ')}\nSummary: ${activeStudent.summary}`
+  );
+
   // Skill Gap State
   const [gapMode, setGapMode] = useState<'jobId' | 'pasteJd'>('jobId');
   const [selectedJobId, setSelectedJobId] = useState('JOB-MSFT-901');
   const [pastedJd, setPastedJd] = useState('');
   const [isDiffing, setIsDiffing] = useState(false);
   const [diffComplete, setDiffComplete] = useState(true);
+  const [geminiSkillGapResult, setGeminiSkillGapResult] = useState<GeminiSkillGapAnalysis | null>(null);
+
+  const handleSaveApiKey = (key: string) => {
+    setGeminiApiKey(key);
+    setGeminiApiKeyInput(key);
+    setGeminiError(null);
+  };
 
   // Sync with active student profile change
   React.useEffect(() => {
@@ -56,31 +82,73 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
   const [feedType, setFeedType] = useState<'all' | 'gig' | 'internship' | 'job'>('all');
   const [selectedOpportunityForModal, setSelectedOpportunityForModal] = useState<OpportunityListing | null>(null);
 
-  const handleAnalyzeResume = () => {
+  const handleAnalyzeResume = async () => {
     setIsAnalyzingResume(true);
-    setTimeout(() => {
+    setGeminiError(null);
+    try {
+      if (geminiApiKey) {
+        const geminiRes = await analyzeResumeWithGemini(
+          customResumeText || activeStudent.summary,
+          activeStudent.streamName,
+          geminiApiKey
+        );
+        setAtsResult({
+          overallScore: geminiRes.overallScore,
+          quantifiedMetricsScore: geminiRes.quantifiedMetricsScore,
+          keywordDensityScore: geminiRes.keywordDensityScore,
+          formattingParsabilityScore: geminiRes.formattingBypassScore,
+          strengths: geminiRes.strengths,
+          weaknesses: geminiRes.weaknesses,
+          actionableSuggestions: geminiRes.actionableRecommendations
+        });
+      } else {
+        setTimeout(() => {
+          setAtsResult({
+            ...activeStudent.atsBreakdown,
+            overallScore: Math.min(activeStudent.atsBreakdown.overallScore + 3, 98),
+            quantifiedMetricsScore: Math.min(activeStudent.atsBreakdown.quantifiedMetricsScore + 2, 99),
+            keywordDensityScore: Math.min(activeStudent.atsBreakdown.keywordDensityScore + 3, 98),
+            strengths: [
+              ...activeStudent.atsBreakdown.strengths,
+              `Verified ${activeStudent.streamName} Sandbox badge boosted computational score by +3%`
+            ]
+          });
+        }, 800);
+      }
+    } catch (err: any) {
+      console.error('Gemini Resume Error:', err);
+      setGeminiError(err.message || 'Gemini API Error. Please verify your Gemini API Key.');
+    } finally {
       setIsAnalyzingResume(false);
-      setAtsResult({
-        ...activeStudent.atsBreakdown,
-        overallScore: Math.min(activeStudent.atsBreakdown.overallScore + 3, 98),
-        quantifiedMetricsScore: Math.min(activeStudent.atsBreakdown.quantifiedMetricsScore + 2, 99),
-        keywordDensityScore: Math.min(activeStudent.atsBreakdown.keywordDensityScore + 3, 98),
-        strengths: [
-          ...activeStudent.atsBreakdown.strengths,
-          `Verified ${activeStudent.streamName} Sandbox badge boosted computational score by +3%`
-        ]
-      });
-      confetti({ particleCount: 50, spread: 60 });
-    }, 1000);
+    }
   };
 
-  const handleRunDiff = () => {
+  const handleRunDiff = async () => {
     setIsDiffing(true);
-    setTimeout(() => {
-      setIsDiffing(false);
+    setGeminiError(null);
+    try {
+      const selectedOpp = MOCK_OPPORTUNITIES.find(o => o.id === selectedJobId);
+      const targetJdText = gapMode === 'pasteJd' ? pastedJd : (
+        selectedOpp ? `${selectedOpp.title}\nRequirements & Skills: ${selectedOpp.tags.join(', ')}\n${selectedOpp.description}` : ''
+      );
+
+      if (geminiApiKey && targetJdText) {
+        const result = await analyzeSkillGapWithGemini(
+          activeStudent.verifiedSkills,
+          targetJdText,
+          activeStudent.streamName,
+          geminiApiKey
+        );
+        setGeminiSkillGapResult(result);
+      }
       setDiffComplete(true);
-      confetti({ particleCount: 40 });
-    }, 800);
+    } catch (err: any) {
+      console.error('Gemini Skill Gap Error:', err);
+      setGeminiError(err.message || 'Gemini API Error. Please check your Gemini API Key.');
+      setDiffComplete(true);
+    } finally {
+      setIsDiffing(false);
+    }
   };
 
   // Only show opportunities matching the student's disciplinary field
@@ -90,6 +158,64 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
   return (
     <div className="space-y-8 animate-fadeIn">
+      {/* Gemini API Key Configuration Banner */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-cyan-500/10 border border-amber-500/30 space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center font-bold shrink-0">
+              <Key className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Google Gemini AI Integration</h4>
+                <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold border ${
+                  geminiApiKey ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/30' : 'bg-amber-500/20 text-amber-800 dark:text-amber-300 border-amber-500/30'
+                }`}>
+                  {geminiApiKey ? 'Gemini API Key Active' : 'Key Required for Real AI'}
+                </span>
+              </div>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                {geminiApiKey ? 'Powered by Google Gemini 1.5 Flash for live Resume Analysis & Skill Gap Differentials.' : 'Paste your Gemini API Key below to enable real AI Resume Analysis & Skill Gap evaluation.'}
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setShowApiKeyDrawer(!showApiKeyDrawer)}
+            className="px-3.5 py-1.5 rounded-xl bg-slate-900 dark:bg-white/10 hover:bg-slate-800 text-white text-xs font-bold transition-all shrink-0 cursor-pointer"
+          >
+            {showApiKeyDrawer ? 'Hide Key Setup' : 'Configure Gemini API Key'}
+          </button>
+        </div>
+
+        {/* Expandable Key Setup Input */}
+        {showApiKeyDrawer && (
+          <div className="pt-3 border-t border-slate-200 dark:border-white/[0.08] flex flex-col sm:flex-row items-center gap-3">
+            <input
+              type="password"
+              value={geminiApiKey}
+              onChange={(e) => handleSaveApiKey(e.target.value)}
+              placeholder="Paste your Google Gemini API Key (AIzaSy...)"
+              className="flex-1 w-full px-3.5 py-2 rounded-xl bg-white dark:bg-[#070b14] border border-slate-200 dark:border-white/[0.1] text-xs text-slate-900 dark:text-white font-mono focus:ring-2 focus:ring-amber-500 focus:outline-none"
+            />
+            <button
+              onClick={() => handleSaveApiKey(geminiApiKey)}
+              className="w-full sm:w-auto px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold shadow-md cursor-pointer"
+            >
+              Save Key
+            </button>
+          </div>
+        )}
+
+        {/* Error Alert */}
+        {geminiError && (
+          <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-500/30 text-rose-700 dark:text-rose-300 text-xs font-semibold flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
+            <span>{geminiError}</span>
+          </div>
+        )}
+      </div>
+
       {/* 1. Resume AI Studio & Competency Radar Section */}
       <div className="space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-white/[0.08] pb-3">
@@ -197,7 +323,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     const newM = Math.min(atsResult.quantifiedMetricsScore + 5, 99);
                     const newOverall = Math.min(Math.round((newM * 0.35) + (atsResult.keywordDensityScore * 0.35) + (atsResult.formattingParsabilityScore * 0.30)), 99);
                     setAtsResult({ ...atsResult, quantifiedMetricsScore: newM, overallScore: newOverall });
-                    confetti({ particleCount: 20, spread: 40 });
                   }}
                   className="w-full text-left p-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
                 >
@@ -209,7 +334,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     const newM = Math.min(atsResult.quantifiedMetricsScore + 4, 99);
                     const newOverall = Math.min(Math.round((newM * 0.35) + (atsResult.keywordDensityScore * 0.35) + (atsResult.formattingParsabilityScore * 0.30)), 99);
                     setAtsResult({ ...atsResult, quantifiedMetricsScore: newM, overallScore: newOverall });
-                    confetti({ particleCount: 20, spread: 40 });
                   }}
                   className="w-full text-left p-1.5 rounded-lg bg-indigo-50/60 hover:bg-indigo-100 dark:bg-indigo-950/30 dark:hover:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200/70 dark:border-indigo-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
                 >
@@ -245,7 +369,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     const newK = Math.min(atsResult.keywordDensityScore + 6, 99);
                     const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (newK * 0.35) + (atsResult.formattingParsabilityScore * 0.30)), 99);
                     setAtsResult({ ...atsResult, keywordDensityScore: newK, overallScore: newOverall });
-                    confetti({ particleCount: 20, spread: 40 });
                   }}
                   className="w-full text-left p-1.5 rounded-lg bg-cyan-50 hover:bg-cyan-100 dark:bg-cyan-950/40 dark:hover:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
                 >
@@ -257,7 +380,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     const newK = Math.min(atsResult.keywordDensityScore + 5, 99);
                     const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (newK * 0.35) + (atsResult.formattingParsabilityScore * 0.30)), 99);
                     setAtsResult({ ...atsResult, keywordDensityScore: newK, overallScore: newOverall });
-                    confetti({ particleCount: 20, spread: 40 });
                   }}
                   className="w-full text-left p-1.5 rounded-lg bg-cyan-50/60 hover:bg-cyan-100 dark:bg-cyan-950/30 dark:hover:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 border border-cyan-200/70 dark:border-cyan-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
                 >
@@ -293,7 +415,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     const newF = Math.min(atsResult.formattingParsabilityScore + 4, 99);
                     const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (atsResult.keywordDensityScore * 0.35) + (newF * 0.30)), 99);
                     setAtsResult({ ...atsResult, formattingParsabilityScore: newF, overallScore: newOverall });
-                    confetti({ particleCount: 20, spread: 40 });
                   }}
                   className="w-full text-left p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
                 >
@@ -305,7 +426,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     const newF = Math.min(atsResult.formattingParsabilityScore + 4, 99);
                     const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (atsResult.keywordDensityScore * 0.35) + (newF * 0.30)), 99);
                     setAtsResult({ ...atsResult, formattingParsabilityScore: newF, overallScore: newOverall });
-                    confetti({ particleCount: 20, spread: 40 });
                   }}
                   className="w-full text-left p-1.5 rounded-lg bg-emerald-50/60 hover:bg-emerald-100 dark:bg-emerald-950/30 dark:hover:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200/70 dark:border-emerald-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
                 >
@@ -696,6 +816,71 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
               </div>
 
+              {/* Gemini AI Generated Skill Gap Result Banner */}
+              {geminiSkillGapResult && (
+                <div className="p-6 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-indigo-950/40 to-slate-900 border border-cyan-500/40 space-y-4 animate-fadeIn text-white">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 flex items-center justify-center font-bold">
+                        <Cpu className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-bold uppercase tracking-wider text-cyan-300">Google Gemini Skill Gap Analysis Result</h4>
+                        <p className="text-xs text-slate-300">{geminiSkillGapResult.summary}</p>
+                      </div>
+                    </div>
+                    <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+                      Match: {geminiSkillGapResult.matchPercentage}%
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+                    <div className="p-3.5 rounded-xl bg-[#070b14] border border-white/[0.08] space-y-2">
+                      <div className="text-emerald-400 font-bold flex items-center gap-1.5">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Matched Requirements:
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {geminiSkillGapResult.matchedSkills.map((s, i) => (
+                          <span key={i} className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px]">
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-[#070b14] border border-white/[0.08] space-y-2">
+                      <div className="text-rose-400 font-bold flex items-center gap-1.5">
+                        <XCircle className="w-4 h-4 text-rose-400" /> High-Yield Deficits:
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {geminiSkillGapResult.missingSkills.map((s, i) => (
+                          <span key={i} className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[11px]">
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {geminiSkillGapResult.bridgePlan && (
+                    <div className="space-y-2 pt-2 border-t border-white/[0.08]">
+                      <h5 className="text-xs font-bold uppercase tracking-wider text-amber-400">Gemini Recommended Skill-Bridge Action Plan:</h5>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        {geminiSkillGapResult.bridgePlan.map((bp) => (
+                          <div key={bp.step} className="p-3 rounded-xl bg-[#050810] border border-white/[0.08] space-y-1">
+                            <div className="flex items-center justify-between text-[10px] text-amber-400 font-bold">
+                              <span>Step #{bp.step}: {bp.title}</span>
+                              <span className="text-slate-400">{bp.duration}</span>
+                            </div>
+                            <p className="text-[11px] text-slate-300 font-sans">{bp.action}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* Minimum Skill-Bridge Section (Discipline Specific) */}
               <div className="p-6 rounded-2xl glass-panel border border-indigo-200 dark:border-cyan-500/30 space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -730,7 +915,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                       </div>
                       <button 
                         onClick={() => {
-                          confetti({ particleCount: 40 });
                           alert(`Enrolled in ${item.title}!`);
                         }}
                         className="text-xs text-indigo-600 dark:text-cyan-400 font-bold flex items-center gap-1 pt-2 hover:underline"
@@ -951,7 +1135,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               </button>
               <button
                 onClick={() => {
-                  confetti({ particleCount: 60 });
                   alert(`Direct Fast-Track Application submitted for ${selectedOpportunityForModal.id} using pre-verified credentials!`);
                   setSelectedOpportunityForModal(null);
                 }}
@@ -1022,7 +1205,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 </button>
                 <button
                   onClick={() => {
-                    confetti({ particleCount: 60 });
                     alert('Generated ATS Compliant PDF exported with embedded digital sovereign cryptographic signature!');
                     setShowAiResumeModal(false);
                   }}

@@ -201,14 +201,12 @@ export const Tab2ProctoredSandbox: React.FC = () => {
         totalCount: 4,
         details: 'All 4/4 Judge0 Test Suites Cleared in 14ms. P99 Memory Overhead < 4MB. Ready for Submission.'
       });
-      confetti({ particleCount: 60, spread: 70 });
     }, 1200);
   };
 
   // Final Submit Test in Modal
   const handleSubmitTest = () => {
     if (!activeTest) return;
-    confetti({ particleCount: 100, spread: 90 });
     const finishedTest = { ...activeTest, status: 'completed' as const, score: 96, percentile: 98.9 };
     setActiveTest(null);
     setDiagnosticReportTest(finishedTest);

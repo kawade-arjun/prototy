@@ -204,7 +204,6 @@ export const AuthPopupModal: React.FC<AuthPopupModalProps> = ({
 
         await register(email, password, role, displayName);
         setSuccessMessage('Account created successfully! Redirecting...');
-        confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
 
         setTimeout(() => {
           onSuccess(role);
@@ -216,7 +215,6 @@ export const AuthPopupModal: React.FC<AuthPopupModalProps> = ({
       } else {
         const res = await login(email, password);
         setSuccessMessage('Signed in successfully! Launching workspace...');
-        confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
 
         setTimeout(() => {
           onSuccess(role);
