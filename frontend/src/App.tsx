@@ -14,6 +14,8 @@ import { StudentOnboardingModal } from './components/student/onboarding/StudentO
 import { useStudent } from './context/StudentContext';
 import { ShieldCheck, Lock } from 'lucide-react';
 
+import { AIChatbotWidget } from './components/common/AIChatbotWidget';
+
 const AppContent: React.FC = () => {
   const [currentRole, setCurrentRole] = useState<UserRole | null>(null);
   const [authModal, setAuthModal] = useState<{ role: UserRole; mode: 'signin' | 'signup' } | null>(null);
@@ -95,6 +97,9 @@ const AppContent: React.FC = () => {
         isLoggedIn={currentRole !== null}
         initialTab={settingsTab}
       />
+
+      {/* Global AI Conversational Chatbot Widget */}
+      <AIChatbotWidget />
 
       {/* Global Footer & Sovereign Substrate Banner at Bottom */}
       <footer className="border-t border-slate-200 dark:border-white/[0.08] bg-white/70 dark:bg-[#070a11]/70 backdrop-blur-md py-6 mt-12 text-xs text-slate-500 dark:text-slate-400 transition-colors space-y-4">

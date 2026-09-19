@@ -23,18 +23,34 @@ export const Tab7LivingResume: React.FC = () => {
   const [hoveredDay, setHoveredDay] = useState<{ id: number; commits: number; date: string } | null>(null);
   const [copiedHash, setCopiedHash] = useState(false);
 
-  // Generate 52-week activity heatmap (52 weeks x 7 days = 364 days)
+  // Generate 52-week activity heatmap (52 weeks x 7 days = 364 days) with realistic LeetCode sparse density
   const generateHeatmapDays = () => {
     const days = [];
-    const seed = [0, 1, 2, 4, 1, 0, 3, 2, 4, 3, 1, 0, 2, 4, 4, 1, 2, 3, 0, 2];
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     for (let i = 0; i < 364; i++) {
-      const intensity = seed[(i * 7 + 13) % seed.length];
-      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const week = Math.floor(i / 7);
+      const dayOfWeek = i % 7;
+      let intensity = 0;
+
+      // Sparse activity pattern: ~70% Level 0, with realistic streak clusters
+      if ((week % 4 === 1 || week % 7 === 2 || week === 14 || week === 28 || week === 42 || week === 50) && dayOfWeek < 5) {
+        const pseudo = (i * 37 + 17) % 100;
+        if (pseudo > 82) intensity = 4;
+        else if (pseudo > 60) intensity = 3;
+        else if (pseudo > 35) intensity = 2;
+        else intensity = 1;
+      } else {
+        const pseudo = (i * 13 + 7) % 100;
+        if (pseudo > 94) intensity = 2;
+        else if (pseudo > 84) intensity = 1;
+        else intensity = 0;
+      }
+
       const approxMonth = monthNames[Math.floor((i / 364) * 12)];
       days.push({
         id: i,
         intensity,
-        commits: intensity * 3 + (intensity > 0 ? 1 : 0),
+        commits: intensity === 0 ? 0 : intensity * 2 + (i % 3),
         date: `${approxMonth} ${((i % 28) + 1)}`
       });
     }
@@ -57,18 +73,34 @@ export const Tab7LivingResume: React.FC = () => {
     setTimeout(() => setCopiedHash(false), 2000);
   };
 
+  // Authentic LeetCode / GitHub Heatmap Color Palette
   const intensityColors = theme === 'dark' ? [
-    'bg-[#12192a]',
-    'bg-emerald-950/60 border border-emerald-800/40',
-    'bg-emerald-700/60',
-    'bg-emerald-500',
-    'bg-emerald-400 shadow-sm shadow-emerald-400/50'
+    'bg-[#161b22] border border-[#30363d]/40',
+    'bg-[#0e4429]',
+    'bg-[#006d32]',
+    'bg-[#26a641]',
+    'bg-[#39d353] shadow-sm shadow-[#39d353]/40'
   ] : [
-    'bg-slate-200',
-    'bg-emerald-100 border border-emerald-300',
-    'bg-emerald-400',
-    'bg-emerald-500',
-    'bg-emerald-600 shadow-sm shadow-emerald-500/30'
+    'bg-[#ebedf0]',
+    'bg-[#9be9a8]',
+    'bg-[#40c463]',
+    'bg-[#30a14e]',
+    'bg-[#216e39] shadow-sm shadow-[#216e39]/30'
+  ];
+
+  const monthsHeader = [
+    { label: 'Jan', week: 0 },
+    { label: 'Feb', week: 4 },
+    { label: 'Mar', week: 8 },
+    { label: 'Apr', week: 13 },
+    { label: 'May', week: 17 },
+    { label: 'Jun', week: 22 },
+    { label: 'Jul', week: 26 },
+    { label: 'Aug', week: 30 },
+    { label: 'Sep', week: 35 },
+    { label: 'Oct', week: 39 },
+    { label: 'Nov', week: 44 },
+    { label: 'Dec', week: 48 },
   ];
 
   return (
@@ -79,10 +111,14 @@ export const Tab7LivingResume: React.FC = () => {
           <div className="max-w-2xl space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/30 dark:text-amber-400 text-xs font-bold">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>TAB 7 • THE LIVING RESUME ({activeStudent.streamName.toUpperCase()} VERIFIABLE DOSSIER)</span>
+              <span>TAB 7 • DASHBOARD ({activeStudent.streamName.toUpperCase()} VERIFIABLE DOSSIER)</span>
             </div>
-            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-              {activeStudent.name} • Living Credential Ledger
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+              <span>{activeStudent.name}</span>
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#1D9BF0] text-white shrink-0 shadow-sm" title="Meta Verified">
+                <Check className="w-3 h-3 stroke-[3]" />
+              </span>
+              <span>• Living Credential Ledger</span>
             </h2>
             <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               {activeStudent.summary}
@@ -132,28 +168,53 @@ export const Tab7LivingResume: React.FC = () => {
               <Calendar className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               52-Week Verified Problem Solving & Sandbox Commit Heatmap
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">1,248 verified sandbox submissions in the last 12 months</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">412 verified sandbox submissions in the last 12 months</p>
           </div>
           <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
             <span>Less</span>
             {intensityColors.map((color, idx) => (
-              <span key={idx} className={`w-3.5 h-3.5 rounded-sm ${color}`} />
+              <span key={idx} className={`w-3.5 h-3.5 rounded-[2.5px] ${color}`} />
             ))}
             <span>More</span>
           </div>
         </div>
 
-        {/* Heatmap Grid (52 columns of 7 rows) */}
+        {/* Heatmap Grid with LeetCode Style Month Axis & Spacing */}
         <div className="overflow-x-auto pb-2">
-          <div className="grid grid-flow-col grid-rows-7 gap-1.5 min-w-[760px]">
-            {heatmapDays.map((d) => (
-              <div
-                key={d.id}
-                onMouseEnter={() => setHoveredDay(d)}
-                onMouseLeave={() => setHoveredDay(null)}
-                className={`w-3 h-3 rounded-sm ${intensityColors[d.intensity]} transition-all duration-150 hover:scale-150 cursor-pointer`}
-              />
-            ))}
+          <div className="min-w-[760px] space-y-1.5">
+            {/* Month Header Axis */}
+            <div className="flex text-[10px] font-mono text-slate-400 dark:text-slate-500 pl-6 relative h-4">
+              {monthsHeader.map((m) => (
+                <span
+                  key={m.label}
+                  className="absolute"
+                  style={{ left: `calc(${m.week} * 1.83% + 24px)` }}
+                >
+                  {m.label}
+                </span>
+              ))}
+            </div>
+
+            {/* Heatmap Grid (7 rows x 52 columns) */}
+            <div className="flex items-start gap-2">
+              {/* Day Labels */}
+              <div className="flex flex-col justify-between text-[9px] font-mono text-slate-400 dark:text-slate-500 h-[88px] pt-0.5 select-none shrink-0">
+                <span>Mon</span>
+                <span>Wed</span>
+                <span>Fri</span>
+              </div>
+
+              <div className="grid grid-flow-col grid-rows-7 gap-[3px] flex-1">
+                {heatmapDays.map((d) => (
+                  <div
+                    key={d.id}
+                    onMouseEnter={() => setHoveredDay(d)}
+                    onMouseLeave={() => setHoveredDay(null)}
+                    className={`w-[11px] h-[11px] rounded-[2.5px] ${intensityColors[d.intensity]} transition-all duration-150 hover:ring-2 hover:ring-amber-400 hover:scale-125 cursor-pointer`}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -166,7 +227,7 @@ export const Tab7LivingResume: React.FC = () => {
 
           {hoveredDay && (
             <div className="text-amber-600 dark:text-amber-400 font-mono font-bold">
-              {hoveredDay.commits} verified tests on {hoveredDay.date}
+              {hoveredDay.commits === 0 ? 'No submissions' : `${hoveredDay.commits} verified tests`} on {hoveredDay.date}
             </div>
           )}
         </div>

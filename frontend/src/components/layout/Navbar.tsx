@@ -16,7 +16,8 @@ import {
   SlidersHorizontal,
   ChevronRight,
   LogOut,
-  X
+  X,
+  Check
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -128,7 +129,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {currentRole === 'student' ? activeStudent.avatarInitials : currentRole === 'college' ? 'TPO' : currentRole === 'recruiter' ? 'HR' : currentRole === 'government' ? 'GOV' : <User className="w-4 h-4 text-amber-600 dark:text-amber-400" />}
               </div>
             </div>
-            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-amber-500 dark:bg-amber-400 border-2 border-white dark:border-[#0B0E14]" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#1D9BF0] text-white flex items-center justify-center border-2 border-white dark:border-[#0B0E14]" title="Meta Verified">
+              <Check className="w-2 h-2 stroke-[3]" />
+            </span>
           </button>
 
           {/* 2. Top-Right Settings Gear Button */}

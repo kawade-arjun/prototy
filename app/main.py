@@ -227,3 +227,74 @@ async def api_extract_skills_from_resume(request: ResumeTextRequest):
     """Run complete resume extraction pipeline: NER pre-filtering -> LLM extraction."""
     result = await process_resume_skill_extraction(request.resume_text)
     return result
+
+
+class ChatMessage(BaseModel):
+    role: str = Field(..., description="'user' or 'assistant'")
+    content: str = Field(..., description="Message content")
+
+
+class ChatRequest(BaseModel):
+    message: str = Field(..., min_length=1, description="Current user query")
+    history: Optional[List[ChatMessage]] = Field(default=[], description="Previous conversation turns")
+
+
+class ChatResponse(BaseModel):
+    success: bool
+    response: str
+    suggested_actions: List[str]
+
+
+@app.post("/api/chat", response_model=ChatResponse)
+async def api_chat_assistant(request: ChatRequest):
+    """Conversational AI Assistant endpoint handling user queries with domain knowledge."""
+    query = request.message.strip().lower()
+
+    if any(k in query for k in ["digilocker", "auth", "login", "identity", "aadhaar", "pki"]):
+        resp = (
+            "CareerLens uses DigiLocker OAuth2 consent integration with the National Academic Depository. "
+            "We only retrieve verified academic degrees and marksheet status. "
+            "Raw identity documents, biometric data, and Aadhaar numbers are NEVER stored on our servers."
+        )
+        actions = ["How do certificate tiers work?", "Explain skill embeddings", "Proctored assessment rules"]
+    elif any(k in query for k in ["tier", "certificate", "verify", "ocr", "donut", "marksheet"]):
+        resp = (
+            "We enforce a strict 3-tier certificate verification framework:\n"
+            "• Tier 1 (Emerald): DigiLocker PKI digital signatures.\n"
+            "• Tier 2 (Blue): Direct automated API lookup against vendor registries (Coursera, AWS, Google).\n"
+            "• Tier 3 (Amber): Visual pattern inspection via Donut OCR transformer model."
+        )
+        actions = ["Upload a certificate", "View my verified dossier", "How does pgvector matching work?"]
+    elif any(k in query for k in ["vector", "embedding", "pgvector", "minilm", "matching", "role"]):
+        resp = (
+            "Skills and role requirements are converted into 384-dimensional dense vectors using "
+            "the Hugging Face sentence-transformers/all-MiniLM-L6-v2 model. "
+            "We index vectors using pgvector cosine distance to produce non-biased candidate-to-role match percentages."
+        )
+        actions = ["View matched opportunities", "Check my skill graph", "Take an assessment"]
+    elif any(k in query for k in ["assessment", "proctor", "monaco", "coding", "judge0", "test"]):
+        resp = (
+            "Assessments are proctored across 3 stages: Aptitude & Reasoning, Domain Live Coding (with Monaco Editor & Judge0 test cases), and Soft Skills Situational Judgment. "
+            "Fullscreen mode is required, and window tab-switches are flagged to your provenance record."
+        )
+        actions = ["Start Tech Assessment", "View Provenance Audit", "Skill Gap Roadmap"]
+    elif any(k in query for k in ["gap", "roadmap", "learn", "course", "curriculum"]):
+        resp = (
+            "Your personalized Learning Path highlights skill gaps between your current competency vector and target role criteria. "
+            "Each module includes an explicit 'Why recommended' one-liner explaining its impact on role closure."
+        )
+        actions = ["View Learning Path", "Explore Matched Jobs", "Update Profile Skills"]
+    else:
+        resp = (
+            "Welcome to CareerLens AI Assistant! I can help you navigate DigiLocker verification, "
+            "3-tier credential audits, pgvector skill matching, proctored assessments, and personalized learning roadmaps. "
+            "What would you like to explore?"
+        )
+        actions = ["How does DigiLocker work?", "What are 3-tier certificates?", "Explain pgvector matching", "Assessment rules"]
+
+    return ChatResponse(
+        success=True,
+        response=resp,
+        suggested_actions=actions
+    )
+

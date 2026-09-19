@@ -115,7 +115,7 @@
 }
 
 .gradient-text-emerald {
-  @apply text-emerald-700 dark:text-emerald-300;
+  @apply text-amber-700 dark:text-amber-300;
 }
 
 .gradient-text-amber {

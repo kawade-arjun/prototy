@@ -115,3 +115,18 @@ async def test_api_certificate_verify_json_endpoint():
         data = resp.json()
         assert "verified" in data
         assert "verification_tier" in data
+
+
+@pytest.mark.asyncio
+async def test_api_chat_assistant_endpoint():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        resp = await client.post("/api/chat", json={
+            "message": "How does DigiLocker verification work?"
+        })
+        assert resp.status_code == 200
+        data = resp.json()
+        assert data["success"] is True
+        assert "DigiLocker" in data["response"]
+        assert len(data["suggested_actions"]) > 0
+

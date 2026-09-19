@@ -3,6 +3,7 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 import { Navbar } from './Navbar';
+import { AIChatbotWidget } from './AIChatbotWidget';
 
 export const LayoutWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
@@ -12,6 +13,7 @@ export const LayoutWrapper: React.FC<{ children: React.ReactNode }> = ({ childre
     return (
       <main className="flex-1 w-full flex items-center justify-center p-4">
         {children}
+        <AIChatbotWidget />
       </main>
     );
   }
@@ -24,6 +26,7 @@ export const LayoutWrapper: React.FC<{ children: React.ReactNode }> = ({ childre
           {children}
         </main>
       </div>
+      <AIChatbotWidget />
     </>
   );
 };

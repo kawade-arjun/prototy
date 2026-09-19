@@ -14,11 +14,12 @@ import {
   GraduationCap, 
   Search, 
   Building2, 
-  UserCheck, 
+  LayoutDashboard, 
   Bookmark,
   Menu,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Check
 } from 'lucide-react';
 
 import { useStudent } from '../../context/StudentContext';
@@ -31,15 +32,16 @@ export const StudentPortal: React.FC = () => {
   const tabs: { id: StudentTab; label: string; icon: React.ReactNode }[] = [
     { id: 'recommendations', label: 'Recommendations', icon: <Target className="w-4 h-4" /> },
     { id: 'sandbox', label: 'Assessments', icon: <Terminal className="w-4 h-4" /> },
-    { id: 'profile', label: 'Resume', icon: <UserCheck className="w-4 h-4" /> },
     { id: 'jobs', label: 'Jobs', icon: <Search className="w-4 h-4" /> },
     { id: 'internships', label: 'Internships', icon: <GraduationCap className="w-4 h-4" /> },
     { id: 'freelance', label: 'Freelance', icon: <Briefcase className="w-4 h-4" /> },
     { id: 'organisations', label: 'Organisations', icon: <Building2 className="w-4 h-4" /> },
+    { id: 'profile', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
     { id: 'settings', label: 'Bookmarks & Settings', icon: <Bookmark className="w-4 h-4" /> }
   ];
 
   const currentTabObj = tabs.find(t => t.id === activeTab) || tabs[0];
+
 
   return (
     <div className="space-y-6">
@@ -53,7 +55,12 @@ export const StudentPortal: React.FC = () => {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-extrabold text-base sm:lg text-slate-900 dark:text-white">{activeStudent.name}</span>
+            <span className="font-extrabold text-base sm:lg text-slate-900 dark:text-white flex items-center gap-1.5">
+              {activeStudent.name}
+              <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#1D9BF0] text-white shrink-0 shadow-sm" title="Meta Verified">
+                <Check className="w-2.5 h-2.5 stroke-[3]" />
+              </span>
+            </span>
             <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200/80 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30">
               {customProfile?.stream || activeStudent.streamName}
             </span>
