@@ -158,64 +158,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
   return (
     <div className="space-y-8 animate-fadeIn">
-      {/* Gemini API Key Configuration Banner */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-cyan-500/10 border border-amber-500/30 space-y-3">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center font-bold shrink-0">
-              <Key className="w-4 h-4" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Google Gemini AI Integration</h4>
-                <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold border ${
-                  geminiApiKey ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/30' : 'bg-amber-500/20 text-amber-800 dark:text-amber-300 border-amber-500/30'
-                }`}>
-                  {geminiApiKey ? 'Gemini API Key Active' : 'Key Required for Real AI'}
-                </span>
-              </div>
-              <p className="text-xs text-slate-600 dark:text-slate-400">
-                {geminiApiKey ? 'Powered by Google Gemini 1.5 Flash for live Resume Analysis & Skill Gap Differentials.' : 'Paste your Gemini API Key below to enable real AI Resume Analysis & Skill Gap evaluation.'}
-              </p>
-            </div>
-          </div>
-
-          <button
-            onClick={() => setShowApiKeyDrawer(!showApiKeyDrawer)}
-            className="px-3.5 py-1.5 rounded-xl bg-slate-900 dark:bg-white/10 hover:bg-slate-800 text-white text-xs font-bold transition-all shrink-0 cursor-pointer"
-          >
-            {showApiKeyDrawer ? 'Hide Key Setup' : 'Configure Gemini API Key'}
-          </button>
-        </div>
-
-        {/* Expandable Key Setup Input */}
-        {showApiKeyDrawer && (
-          <div className="pt-3 border-t border-slate-200 dark:border-white/[0.08] flex flex-col sm:flex-row items-center gap-3">
-            <input
-              type="password"
-              value={geminiApiKey}
-              onChange={(e) => handleSaveApiKey(e.target.value)}
-              placeholder="Paste your Google Gemini API Key (AIzaSy...)"
-              className="flex-1 w-full px-3.5 py-2 rounded-xl bg-white dark:bg-[#070b14] border border-slate-200 dark:border-white/[0.1] text-xs text-slate-900 dark:text-white font-mono focus:ring-2 focus:ring-amber-500 focus:outline-none"
-            />
-            <button
-              onClick={() => handleSaveApiKey(geminiApiKey)}
-              className="w-full sm:w-auto px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold shadow-md cursor-pointer"
-            >
-              Save Key
-            </button>
-          </div>
-        )}
-
-        {/* Error Alert */}
-        {geminiError && (
-          <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-500/30 text-rose-700 dark:text-rose-300 text-xs font-semibold flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
-            <span>{geminiError}</span>
-          </div>
-        )}
-      </div>
-
       {/* 1. Resume AI Studio & Competency Radar Section */}
       <div className="space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-white/[0.08] pb-3">
