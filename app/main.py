@@ -24,6 +24,7 @@ from app.services.vector_sync_service import (
     find_matching_roles_for_student
 )
 from app.repositories.vector_repo import ModelMismatchError
+from app.modules.assessment.routes import router as assessment_router
 
 app = FastAPI(
     title="CareerOptic Vector Embedding & Matching Service",
@@ -38,6 +39,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(assessment_router)
 
 
 class TextEmbeddingRequest(BaseModel):

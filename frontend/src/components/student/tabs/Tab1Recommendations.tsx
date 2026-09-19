@@ -563,7 +563,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               disabled={isDiffing}
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs shadow-sm transition-all active:scale-95 disabled:opacity-50"
             >
-              <span>{isDiffing ? 'Calculating Vector Diff...' : 'Run Differential Analysis'}</span>
+              <span>{isDiffing ? 'Calculating Vector Diff...' : 'Run skill gap Analysis'}</span>
             </button>
           </div>
 
@@ -845,7 +845,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 <div className="p-6 rounded-2xl glass-panel border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] space-y-4">
                   <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/[0.06] pb-3">
                     <h5 className="text-xs font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 flex items-center gap-2">
-                       Recommended Skill-Bridge Action Plan
+                       Recommended Skill-Bridge Raodmap 
                     </h5>
                     <span className="text-[11px] font-mono font-bold text-amber-600 dark:text-amber-400">
                       Targeted Milestones
@@ -872,11 +872,11 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               </div>
 
               {/* Minimum Skill-Bridge Section (Discipline Specific) */}
-              <div className="p-6 rounded-2xl glass-panel border border-amber-200 dark:border-amber-500/30 space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              {/* <div className="p-6 rounded-2xl glass-panel border border-amber-200 dark:border-amber-500/30 space-y-4"> */}
+                {/* <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="flex items-center gap-2.5">
                     <div className="p-1.5 rounded-lg bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300">
-                      AI
+                      
                     </div>
                     <div>
                       <h4 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">
@@ -890,8 +890,8 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   <span className="text-xs font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/80 px-3 py-1 rounded-full border border-amber-200 dark:border-amber-800/60">
                     14% ATS Score Impact
                   </span>
-                </div>
-
+                </div> */}
+{/* 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {activeStudent.skillBridgeInterventions.map((item, idx) => (
                     <div key={idx} className="p-4 rounded-xl bg-slate-50 dark:bg-[#090e1c] border border-slate-200 dark:border-white/[0.08] hover:border-amber-400 transition-all space-y-2 flex flex-col justify-between">
@@ -913,9 +913,9 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                       </button>
                     </div>
                   ))}
-                </div>
+                </div> */}
 
-              </div>
+              {/* </div> */}
 
             </div>
           )}

@@ -79,7 +79,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
   const [customInputText, setCustomInputText] = useState('arr = [10, 20, 35, 50, 75]\ntarget = 85');
   const [customInputOutput, setCustomInputOutput] = useState<string | null>(null);
   const [sandboxOutput, setSandboxOutput] = useState<{
-    status: 'passed' | 'failed' | 'idle';
+    status: 'passed' | 'failed' | 'idle' | 'compile_error' | 'runtime_error' | 'timeout';
     passedCount: number;
     totalCount: number;
     details: string;
@@ -367,53 +367,58 @@ class Solution {
   };
 
   // Execute Sandbox Runner - Real Code & Verification Evaluator
-  const handleExecuteSandbox = () => {
+  const handleExecuteSandbox = async () => {
+    if (!activeTest) return;
     setIsRunningSandbox(true);
     setSandboxOutput(null);
 
-    setTimeout(() => {
-      setIsRunningSandbox(false);
-      const codeText = currentCode.trim();
+    const payload = {
+      source_code: currentCode,
+      language: editorLanguage,
+      assessment_id: activeTest.id
+    };
 
-      if (activeTest?.id === 'QUEST-2SUM') {
-        // Check if user wrote a valid Two Sum solution
-        const isDefaultOrEmpty = !codeText || (codeText.includes('pass') && !codeText.includes('return')) || codeText.endsWith('return []');
-        const hasValidLogic = (/seen|map|dict|hash|diff|complement/i.test(codeText) || /for\s+/i.test(codeText)) && /return\s+\[/i.test(codeText);
+    const endpoints = [
+      '/api/assessment/execute',
+      'http://localhost:8000/api/assessment/execute',
+      'http://127.0.0.1:8000/api/assessment/execute'
+    ];
 
-        if (hasValidLogic && !isDefaultOrEmpty) {
+    let executed = false;
+    for (const endpoint of endpoints) {
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          setIsRunningSandbox(false);
           setSandboxOutput({
-            status: 'passed',
-            passedCount: 3,
-            totalCount: 3,
-            details: 'All 3/3 Two Sum Test Cases Passed in 4ms! ✓\n• Test 1: [2, 7, 11, 15], target 9 -> Output [0, 1] (nums[0] + nums[1] = 9) ✓\n• Test 2: [3, 2, 4], target 6 -> Output [1, 2] (nums[1] + nums[2] = 6) ✓\n• Test 3: [3, 3], target 6 -> Output [0, 1] (nums[0] + nums[1] = 6) ✓'
+            status: data.status || 'failed',
+            passedCount: data.passedCount || 0,
+            totalCount: data.totalCount || 1,
+            details: data.details || 'Execution finished.'
           });
-        } else {
-          setSandboxOutput({
-            status: 'failed',
-            passedCount: 0,
-            totalCount: 3,
-            details: 'Test Suite Execution Failed (0/3 Test Cases Passed):\n• Test 1 ([2,7,11,15], target 9): Received [] | Expected [0, 1]\n• Test 2 ([3,2,4], target 6): Received [] | Expected [1, 2]\n• Test 3 ([3,3], target 6): Received [] | Expected [0, 1]\n\nReason: Code logic returned empty or unhandled output. Ensure you iterate through nums, store complement in hash map, and return matching indices [index1, index2].'
-          });
+          executed = true;
+          break;
         }
-      } else {
-        const hasLogic = /return\s+/i.test(codeText) || /print\s*\(/i.test(codeText) || /cout\s*<</i.test(codeText);
-        if (hasLogic && codeText.length > 40) {
-          setSandboxOutput({
-            status: 'passed',
-            passedCount: 4,
-            totalCount: 4,
-            details: 'All 4/4 Test Suites Cleared in 14ms. Memory Overhead < 4MB. Solution Validated.'
-          });
-        } else {
-          setSandboxOutput({
-            status: 'failed',
-            passedCount: 0,
-            totalCount: 4,
-            details: 'Test Execution Failed (0/4 Passed): Missing or incomplete solution logic. Please implement function return values before executing test cases.'
-          });
-        }
+      } catch (err) {
+        console.warn(`Assessment execution endpoint ${endpoint} failed:`, err);
       }
-    }, 900);
+    }
+
+    if (!executed) {
+      setIsRunningSandbox(false);
+      setSandboxOutput({
+        status: 'failed',
+        passedCount: 0,
+        totalCount: 1,
+        details: 'Execution Server Error: Unable to connect to code execution backend.'
+      });
+    }
   };
 
   // Final Submit Test in Modal & Clear Storage Lock
