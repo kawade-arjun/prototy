@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Sparkles } from 'lucide-react';
 import { 
   EMERGING_SKILLS_PREDICTIONS, 
   MOCK_OPPORTUNITIES 
