@@ -181,15 +181,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleAnalyzeResume}
-                disabled={isAnalyzingResume}
-                className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 active:scale-95"
-              >
-                <span>{isAnalyzingResume ? 'Scanning Resume Tokens...' : 'Run Deep AI ATS Audit'}</span>
-              </button>
-            </div>
           </div>
         )}
 
@@ -455,9 +446,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               <p className="text-xs text-slate-500 dark:text-slate-400">Dual Input Modes & Minimum Skill-Bridge Recommendations</p>
             </div>
           </div>
-          <span className="text-xs font-mono font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2.5 py-1 rounded-lg border border-amber-200 dark:border-amber-800/40">
-            Vector Embedding Diff
-          </span>
+         
         </div>
 
         {/* Input Switcher & Diff Cockpit */}
