@@ -12,7 +12,6 @@ import {
   Search, 
   Building 
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 import { useStudent } from '../../../context/StudentContext';
 
@@ -48,7 +47,6 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
   };
 
   const handleFastTrackApply = (id: string) => {
-    confetti({ particleCount: 60 });
     setAppliedJobs(prev => [...prev, id]);
     alert(`Application submitted for ${id}! Your verified credentials (${activeStudent.degree}) bypassed Round 1.`);
     setSelectedOpp(null);

@@ -10,7 +10,6 @@ import {
   Filter,
   Cpu
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 import { AcademicStream } from '../../../types';
 import { useStudent } from '../../../context/StudentContext';

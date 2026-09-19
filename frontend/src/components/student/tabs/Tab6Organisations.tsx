@@ -360,9 +360,9 @@ export const Tab6Organisations: React.FC = () => {
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* Header Banner */}
-      <div className="rounded-3xl glass-panel p-8 bg-gradient-to-r from-slate-100 via-white to-indigo-50 dark:from-slate-900 dark:via-indigo-950/30 dark:to-slate-900">
+      <div className="rounded-3xl glass-panel p-8 bg-gradient-to-r from-slate-100 via-white to-amber-50 dark:from-slate-900 dark:via-amber-950/20 dark:to-slate-900">
         <div className="max-w-3xl space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 dark:bg-indigo-500/10 dark:border-indigo-500/20 dark:text-indigo-400 text-xs font-bold">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-xs font-bold">
             <Building2 className="w-3.5 h-3.5" />
             <span>TAB 6 • ORGANISATIONS DIRECTORY ({activeStudent.streamName.toUpperCase()})</span>
           </div>
@@ -381,7 +381,7 @@ export const Tab6Organisations: React.FC = () => {
           <button
             onClick={() => setFilterType('all')}
             className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              filterType === 'all' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              filterType === 'all' ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             All Organisations
@@ -389,7 +389,7 @@ export const Tab6Organisations: React.FC = () => {
           <button
             onClick={() => setFilterType('corporate')}
             className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              filterType === 'corporate' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              filterType === 'corporate' ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             Corporate Partners
@@ -397,7 +397,7 @@ export const Tab6Organisations: React.FC = () => {
           <button
             onClick={() => setFilterType('academic')}
             className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              filterType === 'academic' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              filterType === 'academic' ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             Benchmark Institutes
@@ -409,7 +409,7 @@ export const Tab6Organisations: React.FC = () => {
             onClick={() => setOnlyMyField(!onlyMyField)}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border ${
               onlyMyField 
-                ? 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-600/20 dark:text-indigo-300 dark:border-indigo-500/30 shadow-sm' 
+                ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-600/20 dark:text-amber-300 dark:border-amber-500/30 shadow-sm' 
                 : 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-white/[0.08]'
             }`}
           >
@@ -428,11 +428,11 @@ export const Tab6Organisations: React.FC = () => {
           return (
             <div 
               key={org.id} 
-              className="glass-panel p-6 rounded-3xl flex flex-col justify-between space-y-4 hover:border-indigo-500 transition-all group shadow-sm hover:shadow-xl"
+              className="glass-panel p-6 rounded-3xl flex flex-col justify-between space-y-4 hover:border-amber-500 transition-all group shadow-sm hover:shadow-xl"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center font-black text-sm text-indigo-700 dark:text-indigo-300 shadow-inner">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 flex items-center justify-center font-black text-sm text-amber-700 dark:text-amber-300 shadow-inner">
                     {org.logo}
                   </div>
                   <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 ${
@@ -446,7 +446,7 @@ export const Tab6Organisations: React.FC = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-extrabold text-base text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                  <h3 className="font-extrabold text-base text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                     {org.name}
                   </h3>
                   <div className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -462,7 +462,7 @@ export const Tab6Organisations: React.FC = () => {
                 <div className="pt-2 border-t border-slate-100 dark:border-white/[0.06] space-y-2">
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-500 dark:text-slate-400">Cutoff Score:</span>
-                    <span className="font-black text-indigo-600 dark:text-cyan-400 font-mono">
+                    <span className="font-black text-amber-600 dark:text-amber-400 font-mono">
                       {org.benchmarkScoreRequired}% Verified
                     </span>
                   </div>
@@ -478,7 +478,7 @@ export const Tab6Organisations: React.FC = () => {
               <div className="pt-3 border-t border-slate-100 dark:border-white/[0.06]">
                 <button
                   onClick={() => setSelectedOrg(org)}
-                  className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white text-slate-700 dark:text-slate-200 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+                  className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 hover:bg-gradient-to-r hover:from-amber-600 hover:to-orange-500 hover:text-white dark:hover:from-amber-600 dark:hover:to-orange-500 dark:hover:text-white text-slate-700 dark:text-slate-200 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
                 >
                   <span>View Hiring Protocol</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -495,7 +495,7 @@ export const Tab6Organisations: React.FC = () => {
           <div className="glass-panel w-full max-w-lg rounded-3xl p-6 space-y-5 border border-slate-200 dark:border-white/[0.1] shadow-2xl">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center font-black text-sm text-indigo-700 dark:text-indigo-300">
+                <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950 flex items-center justify-center font-black text-sm text-amber-700 dark:text-amber-300">
                   {selectedOrg.logo}
                 </div>
                 <div>
@@ -542,7 +542,7 @@ export const Tab6Organisations: React.FC = () => {
                   alert(`Direct verified talent application dispatch sent to ${selectedOrg.name}!`);
                   setSelectedOrg(null);
                 }}
-                className="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md transition-all"
+                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white font-bold text-xs shadow-md transition-all"
               >
                 Dispatch Pre-Verified Living Resume to {selectedOrg.name}
               </button>

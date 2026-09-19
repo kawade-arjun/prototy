@@ -17,7 +17,6 @@ import {
   Landmark,
   ShieldCheck
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 interface AuthPopupModalProps {
   isOpen: boolean;
@@ -87,11 +86,11 @@ const PERSONA_CONFIGS: Record<UserRole, PersonaConfig> = {
     icon: Briefcase,
     defaultEmail: 'talent.partner@google.com',
     theme: {
-      gradient: 'from-indigo-600 via-indigo-500 to-cyan-500',
-      border: 'border-indigo-500/40',
-      badgeBg: 'bg-indigo-500/10 text-indigo-800 dark:text-indigo-300 border-indigo-500/30',
-      textAccent: 'text-indigo-600 dark:text-indigo-400',
-      buttonBg: 'bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 shadow-indigo-600/20'
+      gradient: 'from-orange-600 via-amber-600 to-amber-500',
+      border: 'border-orange-500/40',
+      badgeBg: 'bg-orange-500/10 text-orange-800 dark:text-orange-300 border-orange-500/30',
+      textAccent: 'text-orange-600 dark:text-orange-400',
+      buttonBg: 'bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 shadow-orange-600/20'
     },
     idLabel: 'Corporate CIN / GSTIN (Optional)',
     idPlaceholder: 'U72200MH2021PTC123456',

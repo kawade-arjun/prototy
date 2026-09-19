@@ -7,12 +7,10 @@ import {
   CheckCircle2, 
   X, 
   Send, 
-  Sparkles, 
   ShieldCheck,
   Link,
   ChevronRight
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { RecruiterCandidate } from '../../mock/recruiterData';
 
 interface InterviewSchedulerModalProps {
@@ -39,7 +37,6 @@ export const InterviewSchedulerModal: React.FC<InterviewSchedulerModalProps> = (
   const [meetingUrl, setMeetingUrl] = useState(`meet.google.com/careeroptic-${candidate.id.toLowerCase()}-r1`);
 
   const handleConfirm = () => {
-    confetti({ particleCount: 70, spread: 80 });
     onSchedule(candidate.id, {
       date: selectedDate,
       time: selectedTime,
@@ -56,16 +53,16 @@ export const InterviewSchedulerModal: React.FC<InterviewSchedulerModalProps> = (
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
-      <div className="glass-panel-glow w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-indigo-500/30 bg-white dark:bg-[#090e1a]">
+      <div className="glass-panel-glow w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-amber-500/30 bg-white dark:bg-[#090e1a]">
         
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-200 dark:border-white/[0.08] bg-slate-50/80 dark:bg-slate-900/60 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-indigo-600 text-white shadow-md shadow-indigo-600/20">
+            <div className="p-2 rounded-xl bg-amber-600 text-white shadow-md shadow-amber-600/20">
               <Calendar className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-600 dark:text-cyan-400">
+              <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
                 DIRECT INTERVIEW SCHEDULER • ENCRYPTED CALENDAR SYNC
               </div>
               <h2 className="text-base font-black text-slate-900 dark:text-white">
@@ -104,7 +101,7 @@ export const InterviewSchedulerModal: React.FC<InterviewSchedulerModalProps> = (
                 onClick={() => setSelectedRound('round_1')}
                 className={`p-3 rounded-xl border text-left transition-all ${
                   selectedRound === 'round_1'
-                    ? 'border-indigo-500 bg-indigo-50/80 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 shadow-sm'
+                    ? 'border-amber-500 bg-amber-50/80 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 shadow-sm'
                     : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-600 dark:text-slate-400'
                 }`}
               >
@@ -117,7 +114,7 @@ export const InterviewSchedulerModal: React.FC<InterviewSchedulerModalProps> = (
                 onClick={() => setSelectedRound('round_2')}
                 className={`p-3 rounded-xl border text-left transition-all ${
                   selectedRound === 'round_2'
-                    ? 'border-indigo-500 bg-indigo-50/80 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 shadow-sm'
+                    ? 'border-amber-500 bg-amber-50/80 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 shadow-sm'
                     : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-600 dark:text-slate-400'
                 }`}
               >
@@ -130,7 +127,7 @@ export const InterviewSchedulerModal: React.FC<InterviewSchedulerModalProps> = (
                 onClick={() => setSelectedRound('exec')}
                 className={`p-3 rounded-xl border text-left transition-all ${
                   selectedRound === 'exec'
-                    ? 'border-indigo-500 bg-indigo-50/80 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 shadow-sm'
+                    ? 'border-amber-500 bg-amber-50/80 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 shadow-sm'
                     : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-600 dark:text-slate-400'
                 }`}
               >
@@ -144,26 +141,26 @@ export const InterviewSchedulerModal: React.FC<InterviewSchedulerModalProps> = (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-indigo-500" />
+                <Calendar className="w-3.5 h-3.5 text-amber-500" />
                 <span>Date</span>
               </label>
               <input
                 type="date"
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
               />
             </div>
 
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-indigo-500" />
+                <Clock className="w-3.5 h-3.5 text-amber-500" />
                 <span>Time Slot</span>
               </label>
               <select
                 value={selectedTime}
                 onChange={(e) => setSelectedTime(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
               >
                 <option value="10:00 IST">10:00 AM IST (45 Mins)</option>
                 <option value="11:30 IST">11:30 AM IST (45 Mins)</option>
@@ -177,21 +174,21 @@ export const InterviewSchedulerModal: React.FC<InterviewSchedulerModalProps> = (
           {/* Interviewer */}
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-              <User className="w-3.5 h-3.5 text-indigo-500" />
+              <User className="w-3.5 h-3.5 text-amber-500" />
               <span>Assigned Panel Interviewer</span>
             </label>
             <input
               type="text"
               value={interviewerName}
               onChange={(e) => setInterviewerName(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
             />
           </div>
 
           {/* Auto Video URL */}
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-              <Video className="w-3.5 h-3.5 text-indigo-500" />
+              <Video className="w-3.5 h-3.5 text-amber-500" />
               <span>Auto-Generated Video Conference Bridge</span>
             </label>
             <div className="flex items-center gap-2">
@@ -199,7 +196,7 @@ export const InterviewSchedulerModal: React.FC<InterviewSchedulerModalProps> = (
                 type="text"
                 value={meetingUrl}
                 onChange={(e) => setMeetingUrl(e.target.value)}
-                className="flex-1 font-mono px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs text-indigo-600 dark:text-cyan-400 focus:outline-none focus:border-indigo-500"
+                className="flex-1 font-mono px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs text-amber-600 dark:text-amber-400 focus:outline-none focus:border-amber-500"
               />
               <button
                 type="button"
@@ -227,7 +224,7 @@ export const InterviewSchedulerModal: React.FC<InterviewSchedulerModalProps> = (
             </button>
             <button
               onClick={handleConfirm}
-              className="flex items-center gap-1.5 px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md shadow-indigo-600/20 active:scale-95 transition-all"
+              className="flex items-center gap-1.5 px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md shadow-amber-600/20 active:scale-95 transition-all"
             >
               <Send className="w-3.5 h-3.5" />
               <span>Confirm & Dispatch Invitation</span>

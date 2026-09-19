@@ -6,7 +6,6 @@ import {
   ShieldCheck, 
   CheckCircle2, 
   Building2, 
-  Sparkles,
   Lock,
   Printer,
   FileSpreadsheet,
@@ -16,7 +15,6 @@ import {
   Scale,
   Palette
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { DEPARTMENT_COHORTS } from '../../mock/collegeData';
 
 const getDeptIcon = (deptId: string, className = "w-3.5 h-3.5") => {
@@ -46,7 +44,6 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
 
   const handleDownload = () => {
     setIsExporting(true);
-    confetti({ particleCount: 70, spread: 80 });
     setTimeout(() => {
       setIsExporting(false);
       alert(`Official ${reportType} Institutional Accreditation Ledger downloaded. Digitally signed with SHA-256 sovereign hash seal.`);
@@ -134,7 +131,7 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
 
             <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-white/[0.08] space-y-0.5">
               <div className="text-[10px] text-slate-400 uppercase font-bold">Verified Median CTC</div>
-              <div className="text-2xl font-black text-indigo-600 dark:text-cyan-400">₹14.20 LPA</div>
+              <div className="text-2xl font-black text-teal-600 dark:text-teal-400">₹14.20 LPA</div>
               <div className="text-[10px] text-slate-500">DigiLocker verified offer letters</div>
             </div>
 
@@ -201,7 +198,7 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 text-xs">
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <div className="font-bold text-indigo-600 dark:text-cyan-400">Tier-1 Industry Enterprises</div>
+                <div className="font-bold text-teal-600 dark:text-teal-400">Tier-1 Industry Enterprises</div>
                 <div className="text-lg font-black text-slate-900 dark:text-white mt-1">28 Companies</div>
                 <div className="text-[10px] text-slate-500">Microsoft, Google, Goldman Sachs</div>
               </div>

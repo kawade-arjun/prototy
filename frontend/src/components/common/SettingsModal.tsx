@@ -62,7 +62,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       company: 'Microsoft',
       deadline: 'In 3 days',
       status: 'Application Under Review',
-      statusColor: 'text-indigo-700 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 border-indigo-200 dark:border-indigo-500/30'
+      statusColor: 'text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/30'
     },
     {
       id: 'JOB-RZP-402',
@@ -122,7 +122,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               >
                 <Bookmark className="w-3.5 h-3.5" />
                 <span>Saved & Tracker</span>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-indigo-700 text-white">
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-amber-600 text-white">
                   {savedOpportunities.length}
                 </span>
               </button>
@@ -167,11 +167,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 savedOpportunities.map((opp) => (
                   <div
                     key={opp.id}
-                    className="p-4 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-indigo-300 dark:hover:border-indigo-500/40 transition-all"
+                    className="p-4 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-amber-400 dark:hover:border-amber-500/40 transition-all"
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-[11px] font-bold text-indigo-600 dark:text-cyan-400">{opp.id}</span>
+                        <span className="font-mono text-[11px] font-bold text-amber-600 dark:text-amber-400">{opp.id}</span>
                         <span className="text-xs text-slate-400">•</span>
                         <span className="text-xs text-slate-600 dark:text-slate-300 flex items-center gap-1 font-medium">
                           <Building className="w-3 h-3 text-slate-400" /> {opp.company}
@@ -203,9 +203,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
           {currentTab === 'privacy' && (
             <div className="space-y-4">
-              <div className="p-4 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-500/25 space-y-2">
-                <div className="flex items-center gap-2 text-xs font-bold text-indigo-900 dark:text-indigo-200">
-                  <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+              <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-500/25 space-y-2">
+                <div className="flex items-center gap-2 text-xs font-bold text-amber-900 dark:text-amber-200">
+                  <ShieldCheck className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <span>India DPDP Act 2023 Statutory Protection Active</span>
                 </div>
                 <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -223,7 +223,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     type="checkbox"
                     checked={maskContactDetails}
                     onChange={(e) => setMaskContactDetails(e.target.checked)}
-                    className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                    className="h-4 w-4 rounded border-slate-300 text-amber-600 focus:ring-amber-500"
                   />
                 </div>
 
@@ -236,7 +236,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     type="checkbox"
                     checked={anonymousMode}
                     onChange={(e) => setAnonymousMode(e.target.checked)}
-                    className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                    className="h-4 w-4 rounded border-slate-300 text-amber-600 focus:ring-amber-500"
                   />
                 </div>
 
@@ -249,7 +249,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     type="checkbox"
                     checked={macroAnalyticsConsent}
                     onChange={(e) => setMacroAnalyticsConsent(e.target.checked)}
-                    className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                    className="h-4 w-4 rounded border-slate-300 text-amber-600 focus:ring-amber-500"
                   />
                 </div>
               </div>
@@ -261,8 +261,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               {/* Appearance & Theme Mode Switcher */}
               <div className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/40">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-cyan-400 flex items-center justify-center shrink-0">
-                    {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-600" />}
+                  <div className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                    {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-amber-600" />}
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-900 dark:text-white">Appearance & Theme</div>
@@ -272,7 +272,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 <button
                   type="button"
                   onClick={toggleTheme}
-                  className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-sm transition-all active:scale-95 cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-sm transition-all active:scale-95 cursor-pointer"
                 >
                   Switch to {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
                 </button>
@@ -280,7 +280,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
               <div className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/40">
                 <div className="flex items-center gap-3">
-                  <Bell className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <Bell className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <div>
                     <div className="text-xs font-bold text-slate-900 dark:text-white">Email Digest & Opportunity Alerts</div>
                     <div className="text-[11px] text-slate-500">Receive weekly matched internships & proctored drive invites</div>
@@ -290,7 +290,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   type="checkbox"
                   checked={emailNotifications}
                   onChange={(e) => setEmailNotifications(e.target.checked)}
-                  className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                  className="h-4 w-4 rounded border-slate-300 text-amber-600 focus:ring-amber-500"
                 />
               </div>
             </div>
@@ -304,7 +304,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           </span>
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md shadow-indigo-600/20 active:scale-95 transition-all"
+            className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-md shadow-amber-600/20 active:scale-95 transition-all"
           >
             Done & Save
           </button>

@@ -12,7 +12,6 @@ import {
   CheckCircle2,
   Award
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 import { useStudent } from '../../../context/StudentContext';
 
@@ -49,7 +48,6 @@ export const Tab7LivingResume: React.FC = () => {
     setIsRunningAudit(true);
     setTimeout(() => {
       setIsRunningAudit(false);
-      confetti({ particleCount: 70, spread: 70 });
       alert('3-Tier Credential Audit re-executed! All certificates cryptographically pristine.');
     }, 1200);
   };
@@ -77,7 +75,7 @@ export const Tab7LivingResume: React.FC = () => {
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* Header Banner */}
-      <div className="rounded-3xl glass-panel p-8 bg-gradient-to-r from-emerald-50/50 via-white to-indigo-50/50 dark:from-[#0d1424] dark:via-indigo-950/20 dark:to-purple-950/20">
+      <div className="rounded-3xl glass-panel p-8 bg-gradient-to-r from-emerald-50/50 via-white to-amber-50/50 dark:from-[#0d1424] dark:via-amber-950/20 dark:to-slate-900">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="max-w-2xl space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/30 dark:text-emerald-400 text-xs font-bold">
@@ -93,9 +91,9 @@ export const Tab7LivingResume: React.FC = () => {
             <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400 pt-1">
               <span className="font-semibold text-slate-700 dark:text-slate-200">{activeStudent.institution}</span>
               <span>•</span>
-              <span className="font-mono text-indigo-600 dark:text-cyan-400">{activeStudent.digiLockerId}</span>
+              <span className="font-mono text-amber-600 dark:text-amber-400">{activeStudent.digiLockerId}</span>
               <span>•</span>
-              <span className="px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/30 font-bold text-[10px]">
+              <span className="px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30 font-bold text-[10px]">
                 {activeStudent.benchmarkBadge}
               </span>
               <span className="px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 font-bold text-[10px] flex items-center gap-1">
@@ -111,15 +109,14 @@ export const Tab7LivingResume: React.FC = () => {
               disabled={isRunningAudit}
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 dark:bg-[#121a2e] dark:hover:bg-[#18233e] dark:text-slate-200 dark:border-white/[0.1] text-xs font-bold transition-all active:scale-95 shadow-sm"
             >
-              <Scan className={`w-4 h-4 text-indigo-600 dark:text-cyan-400 ${isRunningAudit ? 'animate-spin' : ''}`} />
+              <Scan className={`w-4 h-4 text-amber-600 dark:text-amber-400 ${isRunningAudit ? 'animate-spin' : ''}`} />
               <span>{isRunningAudit ? 'Auditing Forensic Signatures...' : 'Re-Run 3-Tier Audit'}</span>
             </button>
             <button
               onClick={() => {
-                confetti({ particleCount: 50 });
                 alert(`Sovereign Verifiable Credential QR Card for ${activeStudent.name} (${activeStudent.streamName}) exported!`);
               }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition-all"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white text-xs font-bold shadow-lg shadow-amber-600/30 transition-all"
             >
               <QrCode className="w-4 h-4" />
               <span>Export Sovereign QR</span>
@@ -192,7 +189,7 @@ export const Tab7LivingResume: React.FC = () => {
           </div>
 
           {hoveredDay && (
-            <div className="text-indigo-600 dark:text-cyan-300 font-mono font-bold">
+            <div className="text-amber-600 dark:text-amber-400 font-mono font-bold">
               {hoveredDay.commits} verified tests on {hoveredDay.date}
             </div>
           )}
@@ -204,7 +201,7 @@ export const Tab7LivingResume: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-cyan-50 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
+              <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
                 <Fingerprint className="w-5 h-5" />
               </div>
               <div>
@@ -218,7 +215,7 @@ export const Tab7LivingResume: React.FC = () => {
             <button
               onClick={() => setActiveVerifierTier(1)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                activeVerifierTier === 1 ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                activeVerifierTier === 1 ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Tier 1: pyHanko XMP
@@ -226,7 +223,7 @@ export const Tab7LivingResume: React.FC = () => {
             <button
               onClick={() => setActiveVerifierTier(2)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                activeVerifierTier === 2 ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                activeVerifierTier === 2 ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Tier 2: OpenCV ELA Forensics
@@ -234,7 +231,7 @@ export const Tab7LivingResume: React.FC = () => {
             <button
               onClick={() => setActiveVerifierTier(3)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                activeVerifierTier === 3 ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                activeVerifierTier === 3 ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Tier 3: DigiLocker PKI Ledger
@@ -247,7 +244,7 @@ export const Tab7LivingResume: React.FC = () => {
           {activeVerifierTier === 1 && (
             <div className="space-y-4 animate-fadeIn">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-indigo-700 dark:text-cyan-400 uppercase tracking-wider flex items-center gap-2">
+                <span className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   Tier 1: PDF XMP Digital Timestamp & PKI Signature Audit
                 </span>
@@ -256,10 +253,10 @@ export const Tab7LivingResume: React.FC = () => {
                 </span>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                Audited using <code className="text-indigo-600 dark:text-indigo-300 font-mono font-bold">pyHanko</code> cryptographic engine. Validates the PDF ByteRange signature and Sub-CA trust chain.
+                Audited using <code className="text-amber-600 dark:text-amber-400 font-mono font-bold">pyHanko</code> cryptographic engine. Validates the PDF ByteRange signature and Sub-CA trust chain.
               </p>
               <div className="p-4 rounded-xl bg-white dark:bg-[#0e1424] border border-slate-200 dark:border-white/[0.06] font-mono text-xs text-slate-700 dark:text-slate-300 space-y-1.5 shadow-sm">
-                <div>Engine: <span className="text-indigo-600 dark:text-cyan-300">{auditData.tier1_xmpTimestamp.engine}</span></div>
+                <div>Engine: <span className="text-amber-600 dark:text-amber-400">{auditData.tier1_xmpTimestamp.engine}</span></div>
                 <div>Timestamp: <span className="text-slate-900 dark:text-white">{auditData.tier1_xmpTimestamp.timestamp}</span></div>
                 <div>Certificate Authority: <span className="text-emerald-600 dark:text-emerald-400">{auditData.tier1_xmpTimestamp.certAuthority}</span></div>
                 <div>ByteRange Hash: <span className="text-slate-500 dark:text-slate-400">SHA-256 [0x92f1a84c...e81c710]</span></div>
@@ -270,7 +267,7 @@ export const Tab7LivingResume: React.FC = () => {
           {activeVerifierTier === 2 && (
             <div className="space-y-5 animate-fadeIn">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-indigo-700 dark:text-cyan-400 uppercase tracking-wider flex items-center gap-2">
+                <span className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   Tier 2: OpenCV Error Level Analysis (ELA) Pixel-Level Forensics
                 </span>
@@ -305,7 +302,7 @@ export const Tab7LivingResume: React.FC = () => {
           {activeVerifierTier === 3 && (
             <div className="space-y-4 animate-fadeIn">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-indigo-700 dark:text-cyan-400 uppercase tracking-wider flex items-center gap-2">
+                <span className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   Tier 3: Sovereign Verification via DigiLocker / Credly PKI Ledger
                 </span>
@@ -317,7 +314,7 @@ export const Tab7LivingResume: React.FC = () => {
                 Direct statutory API synchronization with Ministry of Electronics and IT (MeitY) DigiLocker sovereign repository.
               </p>
               <div className="p-4 rounded-xl bg-white dark:bg-[#0e1424] border border-slate-200 dark:border-white/[0.06] font-mono text-xs text-slate-700 dark:text-slate-300 space-y-2 shadow-sm">
-                <div>DigiLocker Record ID: <span className="text-indigo-600 dark:text-cyan-300">{auditData.tier3_sovereignPKI.digiLockerId}</span></div>
+                <div>DigiLocker Record ID: <span className="text-amber-600 dark:text-amber-400">{auditData.tier3_sovereignPKI.digiLockerId}</span></div>
                 <div className="flex items-center justify-between gap-2">
                   <div className="truncate">Public PKI Hash: <span className="text-emerald-600 dark:text-emerald-400">{auditData.tier3_sovereignPKI.ledgerHash}</span></div>
                   <button
@@ -350,7 +347,7 @@ export const Tab7LivingResume: React.FC = () => {
             </div>
 
             <div className="p-4 rounded-2xl bg-white dark:bg-[#090e1c] border border-slate-200 dark:border-white/[0.06] flex items-center gap-3 shadow-sm">
-              <div className="w-9 h-9 rounded-xl bg-cyan-50 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 flex items-center justify-center font-bold">
+              <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold">
                 ✓
               </div>
               <div>

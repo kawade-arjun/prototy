@@ -6,13 +6,11 @@ import {
   AlertCircle, 
   Download, 
   ShieldCheck, 
-  Sparkles,
   Lock,
   DollarSign,
   Building2,
   Send
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { STATE_TELEMETRY_DATA, StateTelemetry } from '../../mock/governmentData';
 
 interface SovereignGrantModalProps {
@@ -36,7 +34,6 @@ export const SovereignGrantModal: React.FC<SovereignGrantModalProps> = ({
 
   const handleConfirmGrant = () => {
     setIsAllocating(true);
-    confetti({ particleCount: 75, spread: 80 });
     setTimeout(() => {
       setIsAllocating(false);
       alert(`Sovereign Skilling Grant of ₹${grantAmountCr} Cr successfully sanctioned for ${selectedState.stateName}! Official Ministry Sanction Order No. AYUSH-AICTE-FY26-089 generated.`);

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { 
   Briefcase, 
   ShieldCheck, 
-  Sparkles, 
   Send, 
   Sliders, 
   AlertTriangle, 
@@ -29,7 +28,6 @@ import {
   Share2, 
   MessageSquare,
   ShieldAlert,
-  Zap,
   Flame,
   Award,
   BookOpen,
@@ -37,7 +35,6 @@ import {
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { useTheme } from '../../context/ThemeContext';
 import { 
   RECRUITER_CANDIDATES, 
@@ -105,7 +102,6 @@ export const RecruiterPortal: React.FC = () => {
 
     setTimeout(() => {
       setIsMatchingRunning(false);
-      confetti({ particleCount: 70, spread: 80 });
       setMatchingResultsSummary('Gale-Shapley Stable Marriage Matcher Cleared! 9 Optimal Pairs created with 0 blocking pairs.');
     }, 1200);
   };
@@ -208,7 +204,6 @@ export const RecruiterPortal: React.FC = () => {
 
     setAssessments(prev => [newAss, ...prev]);
     setAssessmentDeploySuccess(true);
-    confetti({ particleCount: 60, spread: 70 });
     setTimeout(() => setAssessmentDeploySuccess(false), 3000);
   };
 
@@ -228,7 +223,7 @@ export const RecruiterPortal: React.FC = () => {
     <div className="space-y-6 animate-fadeIn font-sans pb-12">
       
       {/* 1. CORPORATE TALENT CONSOLE HERO BANNER */}
-      <div className="glass-panel rounded-3xl p-6 sm:p-7 shadow-xl space-y-4 border border-amber-500/20 bg-gradient-to-r from-amber-500/5 via-transparent to-indigo-500/5">
+      <div className="glass-panel rounded-3xl p-6 sm:p-7 shadow-xl space-y-4 border border-amber-500/20 bg-gradient-to-r from-amber-500/5 via-transparent to-amber-500/5">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           
           <div className="space-y-1.5">
@@ -257,7 +252,7 @@ export const RecruiterPortal: React.FC = () => {
               disabled={isMatchingRunning}
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black shadow-lg shadow-amber-500/20 transition-all active:scale-95 disabled:opacity-75"
             >
-              <Sparkles className={`w-4 h-4 text-slate-950 ${isMatchingRunning ? 'animate-spin' : ''}`} />
+              <Cpu className={`w-4 h-4 text-slate-950 ${isMatchingRunning ? 'animate-spin' : ''}`} />
               <span>{isMatchingRunning ? 'Executing Stable Matching...' : 'Run Gale-Shapley Matcher'}</span>
             </button>
           </div>
@@ -268,7 +263,7 @@ export const RecruiterPortal: React.FC = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 pt-3 border-t border-slate-100 dark:border-white/[0.08]">
           <div className="p-3 rounded-xl bg-slate-50/80 dark:bg-[#080d1a]/80 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5">
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Hiring Speed Acceleration</div>
-            <div className="text-xl sm:text-2xl font-black text-indigo-600 dark:text-cyan-400">75% Faster</div>
+            <div className="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400">75% Faster</div>
             <div className="text-[10px] text-slate-500 dark:text-slate-400">Waives manual keyword screening</div>
           </div>
 
@@ -294,7 +289,7 @@ export const RecruiterPortal: React.FC = () => {
         {matchingResultsSummary && (
           <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between text-xs text-emerald-700 dark:text-emerald-300 font-bold animate-fadeIn">
             <span className="flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-emerald-500" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
               {matchingResultsSummary}
             </span>
             <button onClick={() => setMatchingResultsSummary(null)} className="text-[10px] uppercase underline">Dismiss</button>
@@ -312,14 +307,14 @@ export const RecruiterPortal: React.FC = () => {
             className="w-full m3-surface-2 rounded-2xl p-3.5 border border-slate-200/80 dark:border-white/[0.08] shadow-md flex items-center justify-between gap-3 text-slate-900 dark:text-white font-bold text-xs"
           >
             <div className="flex items-center gap-3 truncate">
-              <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+              <div className="w-8 h-8 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-sm">
                 <Menu className="w-4 h-4" />
               </div>
               <div className="flex flex-col text-left truncate">
                 <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono uppercase tracking-wider">
                   Recruiter Console Tab
                 </span>
-                <span className="text-xs font-extrabold truncate text-indigo-600 dark:text-cyan-400 flex items-center gap-1.5">
+                <span className="text-xs font-extrabold truncate text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
                   {activeConsoleTab === 'pipeline' && <BarChart3 className="w-3.5 h-3.5" />}
                   {activeConsoleTab === 'openings_analytics' && <Layers className="w-3.5 h-3.5" />}
                   {activeConsoleTab === 'assessment_studio' && <Terminal className="w-3.5 h-3.5" />}
@@ -334,7 +329,7 @@ export const RecruiterPortal: React.FC = () => {
             
             <div className="flex items-center gap-1 text-slate-400 shrink-0">
               {isMobileMenuOpen ? (
-                <ChevronUp className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
+                <ChevronUp className="w-5 h-5 text-amber-600 dark:text-amber-400" />
               ) : (
                 <ChevronDown className="w-5 h-5 text-slate-400" />
               )}
@@ -360,7 +355,7 @@ export const RecruiterPortal: React.FC = () => {
                     }}
                     className={`w-full flex items-center justify-between p-3 rounded-xl text-xs font-bold transition-all ${
                       isActive
-                        ? 'bg-indigo-600 text-white shadow-md'
+                        ? 'bg-amber-600 text-white shadow-md'
                         : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80'
                     }`}
                   >
@@ -383,7 +378,7 @@ export const RecruiterPortal: React.FC = () => {
             onClick={() => setActiveConsoleTab('pipeline')}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all shrink-0 border ${
               activeConsoleTab === 'pipeline'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20 border-indigo-600 dark:border-indigo-500'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20 border-amber-600 dark:border-amber-500'
                 : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -395,7 +390,7 @@ export const RecruiterPortal: React.FC = () => {
             onClick={() => setActiveConsoleTab('openings_analytics')}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all shrink-0 border ${
               activeConsoleTab === 'openings_analytics'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20 border-indigo-600 dark:border-indigo-500'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20 border-amber-600 dark:border-amber-500'
                 : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -407,7 +402,7 @@ export const RecruiterPortal: React.FC = () => {
             onClick={() => setActiveConsoleTab('assessment_studio')}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all shrink-0 border ${
               activeConsoleTab === 'assessment_studio'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20 border-indigo-600 dark:border-indigo-500'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20 border-amber-600 dark:border-amber-500'
                 : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -419,7 +414,7 @@ export const RecruiterPortal: React.FC = () => {
             onClick={() => setActiveConsoleTab('messaging')}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all shrink-0 border ${
               activeConsoleTab === 'messaging'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20 border-indigo-600 dark:border-indigo-500'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20 border-amber-600 dark:border-amber-500'
                 : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -452,7 +447,7 @@ export const RecruiterPortal: React.FC = () => {
               {activeStageFilter !== 'all' && (
                 <button
                   onClick={() => setActiveStageFilter('all')}
-                  className="text-[11px] font-bold text-indigo-600 dark:text-cyan-400 hover:underline flex items-center gap-1"
+                  className="text-[11px] font-bold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1"
                 >
                   <span>Reset Stage Filter (Show All 48)</span>
                 </button>
@@ -469,7 +464,7 @@ export const RecruiterPortal: React.FC = () => {
                     onClick={() => setActiveStageFilter(isSelected ? 'all' : stage.id)}
                     className={`p-2.5 rounded-xl border text-left transition-all relative ${
                       isSelected
-                        ? 'border-indigo-500 bg-indigo-50/90 dark:bg-indigo-950/60 shadow-md ring-2 ring-indigo-500/20'
+                        ? 'border-amber-500 bg-amber-50/90 dark:bg-amber-950/60 shadow-md ring-2 ring-amber-500/20'
                         : 'border-slate-200 dark:border-white/[0.06] bg-slate-50/70 dark:bg-[#080d1a]/70 hover:border-slate-300 dark:hover:border-white/[0.12]'
                     }`}
                   >
@@ -480,7 +475,7 @@ export const RecruiterPortal: React.FC = () => {
                       <span className="text-xs font-black text-slate-900 dark:text-white truncate">
                         {stage.shortLabel}
                       </span>
-                      <span className="text-xs font-mono font-black text-indigo-600 dark:text-cyan-400">
+                      <span className="text-xs font-mono font-black text-amber-600 dark:text-amber-400">
                         {stage.count}
                       </span>
                     </div>
@@ -495,20 +490,20 @@ export const RecruiterPortal: React.FC = () => {
           </div>
 
           {/* THE 40-40-20 COMPOSITE AI SCORING ENGINE & CUTOFF SLIDER */}
-          <div className="glass-panel p-4 sm:p-5 rounded-2xl space-y-4 shadow-md border border-indigo-500/20">
+          <div className="glass-panel p-4 sm:p-5 rounded-2xl space-y-4 shadow-md border border-amber-500/20">
             
             {/* Header with Formula Explanation */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/30">
+                  <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30">
                     OBJECTIVE EVALUATION FORMULA
                   </span>
                   <h3 className="text-base font-black text-slate-900 dark:text-white">
                     The 40-40-20 Composite AI Scoring Engine
                   </h3>
                 </div>
-                <div className="text-xs font-mono font-bold text-indigo-600 dark:text-cyan-400 bg-indigo-500/10 px-3 py-1 rounded-lg inline-block">
+                <div className="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-3 py-1 rounded-lg inline-block">
                   Composite Score = 40% (Proctored Sandbox) + 40% (Verified Projects) + 20% (DigiLocker Academics)
                 </div>
               </div>
@@ -540,7 +535,7 @@ export const RecruiterPortal: React.FC = () => {
             {/* 3 Formula Component Chips */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 border-t border-slate-100 dark:border-white/[0.08]">
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#080d1a] border border-slate-200/80 dark:border-white/[0.06] space-y-1">
-                <div className="flex items-center justify-between text-xs font-bold text-indigo-600 dark:text-cyan-400">
+                <div className="flex items-center justify-between text-xs font-bold text-amber-600 dark:text-amber-400">
                   <span>40% Proctored Sandbox</span>
                   <span className="font-mono">Weight: 0.40</span>
                 </div>
@@ -571,14 +566,14 @@ export const RecruiterPortal: React.FC = () => {
             </div>
 
             {/* DYNAMIC CUTOFF SLIDER BAR */}
-            <div className="p-4 rounded-xl bg-indigo-50/50 dark:bg-[#0c1322] border border-indigo-200/60 dark:border-indigo-900/40 space-y-2.5">
+            <div className="p-4 rounded-xl bg-amber-50/50 dark:bg-[#0c1322] border border-amber-200/60 dark:border-amber-900/40 space-y-2.5">
               <div className="flex items-center justify-between text-xs font-bold">
                 <div className="flex items-center gap-2">
-                  <Sliders className="w-4 h-4 text-indigo-600 dark:text-cyan-400" />
+                  <Sliders className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <span className="text-slate-900 dark:text-white">
                     Dynamic Shortlisting Cutoff Threshold:
                   </span>
-                  <span className="text-base font-black font-mono text-indigo-600 dark:text-cyan-400">
+                  <span className="text-base font-black font-mono text-amber-600 dark:text-amber-400">
                     {dynamicCutoff}%
                   </span>
                 </div>
@@ -599,7 +594,7 @@ export const RecruiterPortal: React.FC = () => {
                   step="1"
                   value={dynamicCutoff}
                   onChange={(e) => setDynamicCutoff(Number(e.target.value))}
-                  className="flex-1 h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-600 dark:accent-cyan-400"
+                  className="flex-1 h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-600 dark:accent-amber-400"
                 />
                 <span className="text-[10px] font-mono font-bold text-slate-400">95% Elite</span>
               </div>
@@ -624,7 +619,7 @@ export const RecruiterPortal: React.FC = () => {
                   placeholder="Filter by candidate, college, or role..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/[0.08] rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-indigo-500 shadow-sm"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/[0.08] rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-amber-500 shadow-sm"
                 />
               </div>
             </div>
@@ -648,7 +643,7 @@ export const RecruiterPortal: React.FC = () => {
                   return (
                     <div
                       key={cand.id}
-                      className="glass-panel p-4 sm:p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border border-emerald-500/20 hover:border-indigo-400 dark:hover:border-indigo-500/40 transition-all shadow-sm hover:shadow-md"
+                      className="glass-panel p-4 sm:p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border border-emerald-500/20 hover:border-amber-400 dark:hover:border-amber-500/40 transition-all shadow-sm hover:shadow-md"
                     >
                       {/* Candidate Profile Info */}
                       <div className="space-y-2 max-w-xl">
@@ -659,7 +654,7 @@ export const RecruiterPortal: React.FC = () => {
                           </span>
                           <span className="font-mono text-xs text-slate-400">({cand.id})</span>
                           
-                          <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-950 dark:text-indigo-300 dark:border-indigo-800 font-bold">
+                          <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800 font-bold">
                             {cand.college} • {cand.streamLabel}
                           </span>
 
@@ -681,7 +676,7 @@ export const RecruiterPortal: React.FC = () => {
                         </div>
 
                         <div className="text-xs text-slate-600 dark:text-slate-400">
-                          Target Role: <strong className="text-indigo-600 dark:text-cyan-300 font-bold">{cand.targetRole}</strong>
+                          Target Role: <strong className="text-amber-600 dark:text-amber-300 font-bold">{cand.targetRole}</strong>
                           <span className="mx-2">•</span>
                           <span className="text-slate-400 font-mono">Stage: {cand.stage.replace('_', ' ')}</span>
                           <span className="mx-2">•</span>
@@ -708,14 +703,14 @@ export const RecruiterPortal: React.FC = () => {
                         <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#080d1a] border border-slate-200/80 dark:border-white/[0.06] space-y-1 min-w-[170px]">
                           <div className="flex items-center justify-between text-[10px] font-bold">
                             <span className="text-slate-400 uppercase">Composite Score</span>
-                            <span className="text-indigo-600 dark:text-cyan-400 font-mono text-sm font-black">
+                            <span className="text-amber-600 dark:text-amber-400 font-mono text-sm font-black">
                               {cand.scores.composite}%
                             </span>
                           </div>
 
                           {/* 3-Section Weighted Bar */}
                           <div className="w-full h-1.5 rounded-full overflow-hidden flex bg-slate-200 dark:bg-slate-800">
-                            <div className="h-full bg-indigo-500" style={{ width: `${cand.scores.sandbox * 0.4}%` }} title="40% Sandbox" />
+                            <div className="h-full bg-amber-500" style={{ width: `${cand.scores.sandbox * 0.4}%` }} title="40% Sandbox" />
                             <div className="h-full bg-purple-500" style={{ width: `${cand.scores.projects * 0.4}%` }} title="40% Projects" />
                             <div className="h-full bg-emerald-500" style={{ width: `${cand.scores.academics * 0.2}%` }} title="20% Academics" />
                           </div>
@@ -753,7 +748,7 @@ export const RecruiterPortal: React.FC = () => {
                           ) : (
                             <button
                               onClick={() => setSchedulingCandidate(cand)}
-                              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-md shadow-indigo-600/20 active:scale-95 transition-all"
+                              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-md shadow-amber-600/20 active:scale-95 transition-all"
                             >
                               <Calendar className="w-3.5 h-3.5" />
                               <span>Schedule Round 1</span>
@@ -846,7 +841,7 @@ export const RecruiterPortal: React.FC = () => {
             <div>
               <div className="text-[10px] font-mono font-bold uppercase text-slate-400">Selected Corporate Opening</div>
               <h2 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
-                <Briefcase className="w-4 h-4 text-indigo-500" />
+                <Briefcase className="w-4 h-4 text-amber-500" />
                 <span>{selectedOpening.title}</span>
                 <span className="text-xs font-mono text-slate-400">({selectedOpening.id})</span>
               </h2>
@@ -857,7 +852,7 @@ export const RecruiterPortal: React.FC = () => {
               <select
                 value={selectedOpeningId}
                 onChange={(e) => setSelectedOpeningId(e.target.value)}
-                className="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 shadow-sm"
+                className="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 shadow-sm"
               >
                 {RECRUITER_OPENINGS.map(o => (
                   <option key={o.id} value={o.id}>
@@ -885,7 +880,7 @@ export const RecruiterPortal: React.FC = () => {
                 onClick={() => setActiveAnalyticsStep(s.step)}
                 className={`p-2.5 rounded-xl border text-center transition-all ${
                   activeAnalyticsStep === s.step
-                    ? 'border-indigo-500 bg-indigo-600 text-white shadow-md font-black'
+                    ? 'border-amber-500 bg-amber-600 text-white shadow-md font-black'
                     : 'border-slate-200 dark:border-white/[0.06] bg-white dark:bg-slate-900/60 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-bold'
                 } text-xs`}
               >
@@ -916,7 +911,7 @@ export const RecruiterPortal: React.FC = () => {
                 <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
                   <div className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Compensation & Meta</div>
                   <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
-                    <div>Salary / CTC: <strong className="text-indigo-600 dark:text-cyan-400">{selectedOpening.ctc}</strong></div>
+                    <div>Salary / CTC: <strong className="text-amber-600 dark:text-amber-400">{selectedOpening.ctc}</strong></div>
                     <div>Location: <strong>{selectedOpening.location}</strong></div>
                     <div>Hiring Manager: <strong>{selectedOpening.hiringManager}</strong></div>
                     <div>Budget Head: <span className="font-mono">{selectedOpening.overview.budgetHead}</span></div>
@@ -937,7 +932,7 @@ export const RecruiterPortal: React.FC = () => {
                 </div>
                 <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center">
                   <div className="text-[10px] text-slate-400 uppercase font-bold">New Unreviewed</div>
-                  <div className="text-2xl font-black text-blue-500">{selectedOpening.applicantStats.new}</div>
+                  <div className="text-2xl font-black text-amber-500">{selectedOpening.applicantStats.new}</div>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center">
                   <div className="text-[10px] text-slate-400 uppercase font-bold">Under Review</div>
@@ -945,7 +940,7 @@ export const RecruiterPortal: React.FC = () => {
                 </div>
                 <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center">
                   <div className="text-[10px] text-slate-400 uppercase font-bold">40-40-20 Shortlisted</div>
-                  <div className="text-2xl font-black text-indigo-500">{selectedOpening.applicantStats.shortlisted}</div>
+                  <div className="text-2xl font-black text-orange-500">{selectedOpening.applicantStats.shortlisted}</div>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-center">
                   <div className="text-[10px] text-slate-400 uppercase font-bold">Screening Rejected</div>
@@ -974,7 +969,7 @@ export const RecruiterPortal: React.FC = () => {
                   <div key={i} className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
                     <div>
                       <span className="font-bold text-slate-900 dark:text-white mr-2">{m.candidateName}</span>
-                      <span className="text-slate-400">• Key Demonstrated Match: <strong className="text-indigo-600 dark:text-cyan-400">{m.keyStrength}</strong></span>
+                      <span className="text-slate-400">• Key Demonstrated Match: <strong className="text-amber-600 dark:text-amber-400">{m.keyStrength}</strong></span>
                     </div>
                     <div className="font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md">
                       {m.similarity}% Match
@@ -1011,7 +1006,7 @@ export const RecruiterPortal: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                 <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
                   <div className="text-xs text-slate-400 font-bold">Average Candidate Score</div>
-                  <div className="text-2xl font-black text-indigo-600 dark:text-cyan-400">{selectedOpening.assessmentStats.avgScore}%</div>
+                  <div className="text-2xl font-black text-amber-600 dark:text-amber-400">{selectedOpening.assessmentStats.avgScore}%</div>
                 </div>
                 <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
                   <div className="text-xs text-slate-400 font-bold">Judge0 Pass Rate</div>
@@ -1051,14 +1046,14 @@ export const RecruiterPortal: React.FC = () => {
                       <tr key={c.id}>
                         <td className="p-3 font-bold text-slate-900 dark:text-white">{c.name}</td>
                         <td className="p-3 text-slate-500">{c.college}</td>
-                        <td className="p-3 font-mono font-bold text-indigo-600 dark:text-cyan-400">{c.scores.sandbox}%</td>
+                        <td className="p-3 font-mono font-bold text-amber-600 dark:text-amber-400">{c.scores.sandbox}%</td>
                         <td className="p-3 font-mono font-bold text-purple-600 dark:text-purple-400">{c.scores.projects}%</td>
                         <td className="p-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">{c.scores.academics}%</td>
                         <td className="p-3 font-mono font-black text-slate-900 dark:text-white">{c.scores.composite}%</td>
                         <td className="p-3">
                           <button
                             onClick={() => setSchedulingCandidate(c)}
-                            className="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-bold text-[10px]"
+                            className="px-2.5 py-1 rounded-lg bg-amber-600 text-white font-bold text-[10px]"
                           >
                             Schedule R1
                           </button>
@@ -1078,7 +1073,7 @@ export const RecruiterPortal: React.FC = () => {
                 <h3 className="text-base font-black text-slate-900 dark:text-white">Executive Talent Analytics & Export</h3>
                 <button
                   onClick={() => alert('Executive Talent Dossier (PDF/CSV) generated with cryptographic digital seal.')}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 text-white text-xs font-bold shadow-sm"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-600 text-white text-xs font-bold shadow-sm"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Export Talent Report (PDF/CSV)</span>
@@ -1090,7 +1085,7 @@ export const RecruiterPortal: React.FC = () => {
                 <div className="h-24 flex items-end gap-2 pt-4">
                   {[20, 35, 55, 80, 95, 75, 45, 20].map((h, i) => (
                     <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                      <div className="w-full bg-indigo-600/70 hover:bg-indigo-500 rounded-t transition-all" style={{ height: `${h}%` }} />
+                      <div className="w-full bg-amber-600/70 hover:bg-amber-500 rounded-t transition-all" style={{ height: `${h}%` }} />
                       <span className="text-[9px] font-mono text-slate-400">{50 + i * 6}%</span>
                     </div>
                   ))}
@@ -1106,7 +1101,7 @@ export const RecruiterPortal: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <button
                   onClick={() => alert('Batch Announcement dispatched to all 48 candidates!')}
-                  className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-left hover:border-indigo-500 transition-all"
+                  className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-left hover:border-amber-500 transition-all"
                 >
                   <div className="text-xs font-bold text-slate-900 dark:text-white">Broadcast Announcement</div>
                   <div className="text-[11px] text-slate-500 mt-1">Send interview window guidelines to active batch.</div>
@@ -1114,15 +1109,15 @@ export const RecruiterPortal: React.FC = () => {
 
                 <button
                   onClick={() => alert('Verified Shortlist synced with Workday / Darwinbox via Sovereign API!')}
-                  className="p-4 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-left hover:border-indigo-500 transition-all"
+                  className="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-left hover:border-amber-500 transition-all"
                 >
-                  <div className="text-xs font-bold text-indigo-700 dark:text-indigo-300">Sync to HRMS (Workday / Darwinbox)</div>
+                  <div className="text-xs font-bold text-amber-700 dark:text-amber-300">Sync to HRMS (Workday / Darwinbox)</div>
                   <div className="text-[11px] text-slate-500 mt-1">1-click automated API push with 0% data loss.</div>
                 </button>
 
                 <button
                   onClick={() => alert('Offer release deadline extended by 7 calendar days.')}
-                  className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-left hover:border-indigo-500 transition-all"
+                  className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-left hover:border-amber-500 transition-all"
                 >
                   <div className="text-xs font-bold text-slate-900 dark:text-white">Extend Offer Horizon</div>
                   <div className="text-[11px] text-slate-500 mt-1">Extend candidate acceptance window by 7 days.</div>
@@ -1142,7 +1137,7 @@ export const RecruiterPortal: React.FC = () => {
           
           <div className="glass-panel p-6 rounded-2xl space-y-5 shadow-md">
             <div>
-              <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/30">
+              <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30">
                 NATIVE TESTING SUITE • ZERO THIRD-PARTY TOOLS
               </span>
               <h2 className="text-xl font-black text-slate-900 dark:text-white mt-1">
@@ -1162,7 +1157,7 @@ export const RecruiterPortal: React.FC = () => {
                     type="text"
                     value={newTestTitle}
                     onChange={(e) => setNewTestTitle(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
                   />
                 </div>
 
@@ -1171,7 +1166,7 @@ export const RecruiterPortal: React.FC = () => {
                   <select
                     value={newTestStream}
                     onChange={(e: any) => setNewTestStream(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
                   >
                     <option value="tech_ai">Engineering</option>
                     <option value="commerce_finance">Commerce & Quantitative Finance</option>
@@ -1192,7 +1187,7 @@ export const RecruiterPortal: React.FC = () => {
                       type="checkbox"
                       checked={antiPasteEnabled}
                       onChange={(e) => setAntiPasteEnabled(e.target.checked)}
-                      className="rounded text-indigo-600 focus:ring-indigo-500"
+                      className="rounded text-amber-600 focus:ring-amber-500"
                     />
                     <span>Anti-Paste Guard (Blocks ChatGPT)</span>
                   </label>
@@ -1202,7 +1197,7 @@ export const RecruiterPortal: React.FC = () => {
                       type="checkbox"
                       checked={blurTrackerEnabled}
                       onChange={(e) => setBlurTrackerEnabled(e.target.checked)}
-                      className="rounded text-indigo-600 focus:ring-indigo-500"
+                      className="rounded text-amber-600 focus:ring-amber-500"
                     />
                     <span>Focus & Tab Blur Tracker (0/3 Flags)</span>
                   </label>
@@ -1212,7 +1207,7 @@ export const RecruiterPortal: React.FC = () => {
                       type="checkbox"
                       checked={sessionLockEnabled}
                       onChange={(e) => setSessionLockEnabled(e.target.checked)}
-                      className="rounded text-indigo-600 focus:ring-indigo-500"
+                      className="rounded text-amber-600 focus:ring-amber-500"
                     />
                     <span>Automated Countdown Session Lock</span>
                   </label>
@@ -1227,7 +1222,7 @@ export const RecruiterPortal: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md shadow-indigo-600/20 active:scale-95 transition-all"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md shadow-amber-600/20 active:scale-95 transition-all"
                 >
                   <Terminal className="w-4 h-4" />
                   <span>Deploy Assessment to Active Opening</span>
@@ -1296,7 +1291,7 @@ export const RecruiterPortal: React.FC = () => {
                     onClick={() => setActiveThreadId(t.id)}
                     className={`w-full p-3 rounded-xl border text-left transition-all ${
                       isSelected
-                        ? 'border-indigo-500 bg-white dark:bg-slate-900 shadow-sm'
+                        ? 'border-amber-500 bg-white dark:bg-slate-900 shadow-sm'
                         : 'border-transparent hover:bg-slate-100 dark:hover:bg-slate-900/40 text-slate-600 dark:text-slate-400'
                     }`}
                   >
@@ -1346,7 +1341,7 @@ export const RecruiterPortal: React.FC = () => {
                     <div
                       className={`max-w-md p-3 rounded-2xl text-xs leading-relaxed ${
                         isMe
-                          ? 'bg-indigo-600 text-white rounded-br-xs'
+                          ? 'bg-amber-600 text-white rounded-br-xs'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-bl-xs'
                       }`}
                     >
@@ -1364,11 +1359,11 @@ export const RecruiterPortal: React.FC = () => {
                 placeholder="Type encrypted message to TPO or Candidate..."
                 value={chatInputText}
                 onChange={(e) => setChatInputText(e.target.value)}
-                className="flex-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
+                className="flex-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
               />
               <button
                 type="submit"
-                className="p-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm transition-all"
+                className="p-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white shadow-sm transition-all"
               >
                 <Send className="w-4 h-4" />
               </button>

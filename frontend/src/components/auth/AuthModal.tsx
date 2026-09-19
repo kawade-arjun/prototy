@@ -4,7 +4,6 @@ import { useStudent } from '../../context/StudentContext';
 import { 
   ShieldCheck, 
   Lock, 
-  Sparkles, 
   X, 
   Eye, 
   EyeOff, 
@@ -15,9 +14,8 @@ import {
   ArrowRight, 
   CheckCircle2, 
   Fingerprint,
-  Zap
+  BookOpen
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -42,7 +40,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [selectedRole, setSelectedRole] = useState<UserRole>(initialRole || currentRole || 'student');
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('arjun.test@careeroptic.dev');
-  const [password, setPassword] = useState('Password123!');
+  const [password, setPassword] = useState('CareerOptic@2026');
   const [fullName, setFullName] = useState('Arjun Kawade');
   const [signupStream, setSignupStream] = useState<AcademicStream>('tech_ai');
   const [digiLockerInput, setDigiLockerInput] = useState('DL-IN-2026-XXXXXX');
@@ -69,9 +67,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       title: 'Student & Scholar',
       defaultEmail: 'arjun.test@careeroptic.dev',
       icon: <GraduationCap className="w-5 h-5" />,
-      color: 'text-indigo-600 dark:text-indigo-400',
-      bg: 'bg-indigo-50 dark:bg-indigo-950/40',
-      border: 'border-indigo-200 dark:border-indigo-500/30'
+      color: 'text-amber-600 dark:text-amber-400',
+      bg: 'bg-amber-50 dark:bg-amber-950/40',
+      border: 'border-amber-200 dark:border-amber-500/30'
     },
     college: {
       title: 'College TPO',
@@ -130,25 +128,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       if (authMode === 'signup') {
         await register(email, password, selectedRole, fullName);
         setSuccessMessage('Account created successfully! Launching onboarding...');
-        confetti({ particleCount: 90, spread: 70 });
         setTimeout(() => {
           onRoleChange(selectedRole);
           onClose();
           if (selectedRole === 'student') {
             setIsOnboardingOpen(true);
           }
-        }, 800);
+        }, 600);
       } else {
         const res = await login(email, password);
         setSuccessMessage('Signed in successfully!');
-        confetti({ particleCount: 70, spread: 60 });
         setTimeout(() => {
           onRoleChange(selectedRole);
           onClose();
           if (selectedRole === 'student' && (!res.profile || res.profile.completion_percentage < 80)) {
             setIsOnboardingOpen(true);
           }
-        }, 600);
+        }, 500);
       }
     } catch (err: any) {
       console.error('Auth error:', err);
@@ -166,7 +162,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         <div className="p-6 border-b border-slate-200 dark:border-amber-500/20 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
-              <Sparkles className="w-5 h-5" />
+              <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -195,7 +191,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               onClick={() => setAuthMode('signin')}
               className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
                 authMode === 'signin'
-                  ? 'bg-white dark:bg-[#162035] text-indigo-600 dark:text-white shadow-sm'
+                  ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
@@ -205,7 +201,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               onClick={() => setAuthMode('signup')}
               className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
                 authMode === 'signup'
-                  ? 'bg-white dark:bg-[#162035] text-indigo-600 dark:text-white shadow-sm'
+                  ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
@@ -233,11 +229,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     onClick={() => handleRoleSelect(role)}
                     className={`p-3 rounded-2xl border text-left transition-all flex flex-col items-center justify-center gap-1.5 ${
                       isSelected
-                        ? 'border-indigo-600 bg-indigo-50/70 text-indigo-700 dark:bg-indigo-600/20 dark:border-indigo-500 dark:text-white font-bold shadow-sm'
+                        ? 'border-amber-600 bg-amber-500/15 text-amber-700 dark:bg-amber-600/20 dark:border-amber-500 dark:text-amber-300 font-bold shadow-sm'
                         : 'border-slate-200 dark:border-white/[0.06] bg-slate-50/50 dark:bg-slate-900/40 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-white/[0.12]'
                     }`}
                   >
-                    <span className={isSelected ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400'}>
+                    <span className={isSelected ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}>
                       {info.icon}
                     </span>
                     <span className="text-[11px] font-semibold text-center leading-tight">
@@ -251,10 +247,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
           {/* If Student Role Selected: Show Disciplinary Profile Dropdown */}
           {selectedRole === 'student' && authMode === 'signin' && (
-            <div className="p-3.5 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-500/20 space-y-2">
-              <label className="text-xs font-bold text-indigo-950 dark:text-indigo-200 flex items-center justify-between">
+            <div className="p-3.5 rounded-2xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-500/20 space-y-2">
+              <label className="text-xs font-bold text-amber-950 dark:text-amber-200 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <Zap className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+                  <BookOpen className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                   Select Academic Field Persona:
                 </span>
                 <span className="text-[10px] text-slate-500 font-mono font-normal">
@@ -264,7 +260,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               <select
                 value={selectedStream}
                 onChange={(e) => handleDisciplineSelect(e.target.value as any)}
-                className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-indigo-500 focus:outline-none cursor-pointer"
+                className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-amber-500 focus:outline-none cursor-pointer"
               >
                 {allStudents.map((stu) => (
                   <option key={stu.id} value={stu.streamId}>
@@ -286,8 +282,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  placeholder="e.g. Dr. Rohan Vaidya"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                  placeholder="e.g. Arjun Kawade"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none"
                 />
               </div>
             )}
@@ -300,7 +296,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <select
                   value={signupStream}
                   onChange={(e) => setSignupStream(e.target.value as AcademicStream)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none cursor-pointer"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none cursor-pointer"
                 >
                   <option value="tech_ai">Engineering</option>
                   <option value="commerce_finance">Commerce & Finance</option>
@@ -320,7 +316,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@institution.ac.in"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-mono focus:ring-2 focus:ring-amber-500 focus:outline-none"
               />
             </div>
 
@@ -330,7 +326,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   Password / Security Token
                 </label>
                 {authMode === 'signin' && (
-                  <span className="text-[11px] text-indigo-600 dark:text-indigo-400 cursor-pointer hover:underline">
+                  <span className="text-[11px] text-amber-600 dark:text-amber-400 cursor-pointer hover:underline">
                     Forgot password?
                   </span>
                 )}
@@ -340,7 +336,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none pr-10"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-mono focus:ring-2 focus:ring-amber-500 focus:outline-none pr-10"
                 />
                 <button
                   type="button"
@@ -368,7 +364,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   value={digiLockerInput}
                   onChange={(e) => setDigiLockerInput(e.target.value)}
                   placeholder={selectedRole === 'student' ? 'DL-IN-2026-992140' : 'REG-IN-2026-X88'}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-mono focus:ring-2 focus:ring-amber-500 focus:outline-none"
                 />
               </div>
             )}
@@ -386,19 +382,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <span>{successMessage}</span>
               </div>
             )}
-
-            <div className="flex items-center gap-2 pt-1">
-              <input
-                type="checkbox"
-                id="dpdpConsent"
-                checked={agreeDpdp}
-                onChange={(e) => setAgreeDpdp(e.target.checked)}
-                className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
-              />
-              <label htmlFor="dpdpConsent" className="text-[11px] text-slate-500 dark:text-slate-400 cursor-pointer">
-                India DPDP Act 2023 Consent & Sovereign Zero-Knowledge Audit Active
-              </label>
-            </div>
           </div>
 
           {/* Action Buttons */}
@@ -406,7 +389,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <button
               disabled={loading}
               onClick={() => handleCompleteAuth()}
-              className={`w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all active:scale-[0.99] cursor-pointer ${
+              className={`w-full py-3 rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white font-bold text-xs shadow-lg shadow-amber-600/30 flex items-center justify-center gap-2 transition-all active:scale-[0.99] cursor-pointer ${
                 loading ? 'opacity-70 cursor-not-allowed' : ''
               }`}
             >

@@ -1,26 +1,10 @@
 import React, { useState } from 'react';
 import { 
-  INITIAL_ATS_RESULT, 
   EMERGING_SKILLS_PREDICTIONS, 
   MOCK_OPPORTUNITIES 
 } from '../../../mock/mockData';
 import { AtsDiagnosticResult, OpportunityListing } from '../../../types';
 import { useTheme } from '../../../context/ThemeContext';
-import { 
-  FileText, 
-  CheckCircle2, 
-  XCircle, 
-  ArrowUpRight, 
-  Download, 
-  TrendingUp, 
-  TrendingDown, 
-  Briefcase, 
-  Flame, 
-  Check, 
-  Cpu
-} from 'lucide-react';
-import confetti from 'canvas-confetti';
-
 import { useStudent } from '../../../context/StudentContext';
 import { 
   getGeminiApiKey, 
@@ -30,7 +14,6 @@ import {
   GeminiResumeAnalysis,
   GeminiSkillGapAnalysis
 } from '../../../services/geminiService';
-import { Key, AlertCircle } from 'lucide-react';
 
 interface Tab1Props {
   onSelectOpportunity?: (opp: OpportunityListing) => void;
@@ -98,7 +81,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
         weaknesses: result.weaknesses,
         actionableSuggestions: result.actionableRecommendations
       });
-      confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
     } catch (err: any) {
       setGeminiError(err.message || 'Failed to analyze resume with Gemini API.');
     } finally {
@@ -117,7 +99,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
       const result = await analyzeSkillGapWithGemini(customResumeText, targetJdText);
       setGeminiSkillGapResult(result);
       setDiffComplete(true);
-      confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
     } catch (err: any) {
       setGeminiError(err.message || 'Failed to run skill gap diff with Gemini API.');
     } finally {
@@ -135,11 +116,11 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
       <div className="space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-white/[0.08] pb-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
-              <FileText className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-orange-500 text-white flex items-center justify-center text-xs font-black shadow-sm">
+              01
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">1. Resume AI Studio & Competency Radar</h3>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">1. Resume AI Studio</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">Quantified metrics breakdown, interactive suggestions & 6-axis radar matrix</p>
             </div>
           </div>
@@ -150,14 +131,12 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               disabled={isAnalyzingResume}
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white text-xs font-bold shadow-md shadow-amber-600/20 transition-all duration-200 active:scale-95 disabled:opacity-50"
             >
-              <Cpu className={`w-3.5 h-3.5 text-amber-200 ${isAnalyzingResume ? 'animate-spin' : ''}`} />
               <span>{isAnalyzingResume ? 'Scanning Tokens...' : 'Analyse Current Resume'}</span>
             </button>
             <button
               onClick={() => setShowAiResumeModal(true)}
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 dark:bg-[#121a2e] dark:hover:bg-[#18233e] dark:text-slate-200 dark:border-white/[0.1] text-xs font-bold transition-all duration-200 active:scale-95 shadow-sm"
             >
-              <Download className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
               <span>Make New Resume using AI</span>
             </button>
           </div>
@@ -195,7 +174,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   <linearGradient id="atsGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#d97706" />
                     <stop offset="50%" stopColor="#f59e0b" />
-                    <stop offset="100%" stopColor="#10b981" />
+                    <stop offset="100%" stopColor="#fb923c" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -205,7 +184,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               </div>
             </div>
             <div className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-500/25">
-              <Check className="w-3 h-3" /> Industry Benchmark Ready
+              Industry Benchmark Ready
             </div>
           </div>
 
@@ -241,7 +220,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   }}
                   className="w-full text-left p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
                 >
-                  <span>+ Include % latency reduction (+5%)</span>
+                  <span>Include latency reduction impact</span>
                 </button>
                 <button
                   onClick={() => {
@@ -251,7 +230,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   }}
                   className="w-full text-left p-1.5 rounded-lg bg-amber-50/60 hover:bg-amber-100 dark:bg-amber-950/30 dark:hover:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-200/70 dark:border-amber-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
                 >
-                  <span>+ Quantify project scale (+4%)</span>
+                  <span>Quantify project scale</span>
                 </button>
               </div>
             </div>
@@ -285,7 +264,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   }}
                   className="w-full text-left p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
                 >
-                  <span>+ Inject vLLM & Docker tokens (+6%)</span>
+                  <span>Inject vLLM and Docker tokens</span>
                 </button>
                 <button
                   onClick={() => {
@@ -295,7 +274,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   }}
                   className="w-full text-left p-1.5 rounded-lg bg-amber-50/60 hover:bg-amber-100 dark:bg-amber-950/30 dark:hover:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-200/70 dark:border-amber-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
                 >
-                  <span>+ Align 2026 taxonomy (+5%)</span>
+                  <span>Align 2026 taxonomy</span>
                 </button>
               </div>
             </div>
@@ -329,7 +308,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   }}
                   className="w-full text-left p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
                 >
-                  <span>+ Use single-column format (+4%)</span>
+                  <span>Use single-column format</span>
                 </button>
                 <button
                   onClick={() => {
@@ -339,7 +318,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   }}
                   className="w-full text-left p-1.5 rounded-lg bg-emerald-50/60 hover:bg-emerald-100 dark:bg-emerald-950/30 dark:hover:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200/70 dark:border-emerald-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
                 >
-                  <span>+ Normalize date tokens (+4%)</span>
+                  <span>Normalize date tokens</span>
                 </button>
               </div>
             </div>
@@ -351,15 +330,14 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           
           {/* Card 1: Strengths Detected */}
-          <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-emerald-500 space-y-3 bg-gradient-to-b from-emerald-50/50 to-white dark:from-emerald-950/10 dark:to-transparent">
-            <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 font-bold text-xs uppercase tracking-wider">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+          <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500 space-y-3 bg-gradient-to-b from-amber-50/60 to-white dark:from-amber-950/20 dark:to-transparent">
+            <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-bold text-xs uppercase tracking-wider">
               <span>Strengths Detected</span>
             </div>
             <ul className="space-y-2.5">
               {atsResult.strengths.map((str, idx) => (
                 <li key={idx} className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2.5 leading-relaxed">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
+                  <span className="w-1 h-5 rounded-full bg-amber-500 shrink-0" />
                   <span>{str}</span>
                 </li>
               ))}
@@ -367,15 +345,14 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
           </div>
 
           {/* Card 2: Weaknesses Detected */}
-          <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-rose-500 space-y-3 bg-gradient-to-b from-rose-50/50 to-white dark:from-rose-950/10 dark:to-transparent">
-            <div className="flex items-center gap-2 text-rose-700 dark:text-rose-400 font-bold text-xs uppercase tracking-wider">
-              <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+          <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-orange-500 space-y-3 bg-gradient-to-b from-orange-50/60 to-white dark:from-orange-950/20 dark:to-transparent">
+            <div className="flex items-center gap-2 text-orange-700 dark:text-orange-400 font-bold text-xs uppercase tracking-wider">
               <span>Weaknesses Detected</span>
             </div>
             <ul className="space-y-2.5">
               {atsResult.weaknesses.map((wk, idx) => (
                 <li key={idx} className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2.5 leading-relaxed">
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0" />
+                  <span className="w-1 h-5 rounded-full bg-orange-500 shrink-0" />
                   <span>{wk}</span>
                 </li>
               ))}
@@ -385,13 +362,12 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
           {/* Card 3: Actionable Suggestions */}
           <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500 space-y-3 bg-gradient-to-b from-amber-50/50 to-white dark:from-amber-950/10 dark:to-transparent">
             <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-bold text-xs uppercase tracking-wider">
-              <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               <span>Actionable Suggestions</span>
             </div>
             <ul className="space-y-2.5">
               {atsResult.actionableSuggestions.map((sug, idx) => (
                 <li key={idx} className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2.5 leading-relaxed">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
+                  <span className="w-1 h-5 rounded-full bg-amber-500 shrink-0" />
                   <span>{sug}</span>
                 </li>
               ))}
@@ -405,15 +381,15 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
       <div className="space-y-5 pt-4 border-t border-slate-200 dark:border-white/[0.08]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
-              <Cpu className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-orange-500 text-white flex items-center justify-center text-xs font-black shadow-sm">
+              02
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">2. AI Skill Gap Analysis Studio</h3>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">2. Skill Gap Analysis Studio</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">Dual Input Modes & Minimum Skill-Bridge Recommendations</p>
             </div>
           </div>
-          <span className="text-xs font-mono font-bold text-cyan-700 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/40 px-2.5 py-1 rounded-lg border border-cyan-200 dark:border-cyan-800/40">
+          <span className="text-xs font-mono font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2.5 py-1 rounded-lg border border-amber-200 dark:border-amber-800/40">
             Vector Embedding Diff
           </span>
         </div>
@@ -426,7 +402,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 onClick={() => setGapMode('jobId')}
                 className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                   gapMode === 'jobId'
-                    ? 'bg-indigo-600 text-white shadow-md'
+                    ? 'bg-amber-600 text-white shadow-md'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
@@ -449,7 +425,6 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               disabled={isDiffing}
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white font-extrabold text-xs shadow-md shadow-amber-600/20 transition-all active:scale-95 disabled:opacity-50"
             >
-              <Cpu className={`w-4 h-4 ${isDiffing ? 'animate-spin' : ''}`} />
               <span>{isDiffing ? 'Calculating Vector Diff...' : 'Run Differential Analysis'}</span>
             </button>
           </div>
@@ -680,12 +655,12 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 
                 {/* Matched Competencies (Green) - Filtered to Active Student */}
-                <div className="p-5 rounded-2xl bg-emerald-50/80 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/40 space-y-3">
+                <div className="p-5 rounded-2xl bg-amber-50/80 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/40 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Matched Competencies in {activeStudent.streamName}
+                    <span className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                      Matched Competencies in {activeStudent.streamName}
                     </span>
-                    <span className="text-xs px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-bold">
+                    <span className="text-xs px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 font-bold">
                       {activeStudent.verifiedSkills.length} Verified
                     </span>
                   </div>
@@ -693,21 +668,21 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     {activeStudent.verifiedSkills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-3 py-1.5 rounded-xl bg-white dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 text-xs font-medium flex items-center gap-1.5 shadow-sm"
+                        className="px-3 py-1.5 rounded-xl bg-white dark:bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30 text-xs font-medium flex items-center gap-1.5 shadow-sm"
                       >
-                        <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> {skill}
+                        {skill}
                       </span>
                     ))}
                   </div>
                 </div>
 
                 {/* Missing Competencies (Red) - Filtered to Active Student */}
-                <div className="p-5 rounded-2xl bg-rose-50/80 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-800/40 space-y-3">
+                <div className="p-5 rounded-2xl bg-orange-50/80 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/40 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wider flex items-center gap-2">
-                      <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" /> Target Deficit Gaps ({selectedJobId})
+                    <span className="text-xs font-bold text-orange-700 dark:text-orange-400 uppercase tracking-wider flex items-center gap-2">
+                      Target Deficit Gaps ({selectedJobId})
                     </span>
-                    <span className="text-xs px-2.5 py-1 rounded-full bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300 font-bold">
+                    <span className="text-xs px-2.5 py-1 rounded-full bg-orange-100 dark:bg-orange-500/20 text-orange-800 dark:text-orange-300 font-bold">
                       {activeStudent.missingSkills.length} High-Yield Gaps
                     </span>
                   </div>
@@ -715,9 +690,9 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     {activeStudent.missingSkills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-3 py-1.5 rounded-xl bg-white dark:bg-rose-500/10 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-500/30 text-xs font-medium flex items-center gap-1.5 shadow-sm"
+                        className="px-3 py-1.5 rounded-xl bg-white dark:bg-orange-500/10 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-500/30 text-xs font-medium flex items-center gap-1.5 shadow-sm"
                       >
-                        <XCircle className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" /> {skill}
+                        {skill}
                       </span>
                     ))}
                   </div>
@@ -731,7 +706,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center font-bold">
-                        <Cpu className="w-5 h-5" />
+                        AI
                       </div>
                       <div>
                         <h4 className="text-sm font-bold uppercase tracking-wider text-amber-300">Google Gemini Skill Gap Analysis Result</h4>
@@ -746,7 +721,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
                     <div className="p-3.5 rounded-xl bg-[#070b14] border border-white/[0.08] space-y-2">
                       <div className="text-emerald-400 font-bold flex items-center gap-1.5">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Matched Requirements:
+                        Matched Requirements
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {geminiSkillGapResult.matchedSkills.map((s, i) => (
@@ -759,7 +734,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
                     <div className="p-3.5 rounded-xl bg-[#070b14] border border-white/[0.08] space-y-2">
                       <div className="text-rose-400 font-bold flex items-center gap-1.5">
-                        <XCircle className="w-4 h-4 text-rose-400" /> High-Yield Deficits:
+                        High-Yield Deficits
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {geminiSkillGapResult.missingSkills.map((s, i) => (
@@ -778,7 +753,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                         {geminiSkillGapResult.bridgePlan.map((bp) => (
                           <div key={bp.step} className="p-3 rounded-xl bg-[#050810] border border-white/[0.08] space-y-1">
                             <div className="flex items-center justify-between text-[10px] text-amber-400 font-bold">
-                              <span>Step #{bp.step}: {bp.title}</span>
+                              <span>Step {bp.step}: {bp.title}</span>
                               <span className="text-slate-400">{bp.duration}</span>
                             </div>
                             <p className="text-[11px] text-slate-300 font-sans">{bp.action}</p>
@@ -795,7 +770,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="flex items-center gap-2.5">
                     <div className="p-1.5 rounded-lg bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300">
-                      <Cpu className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                      AI
                     </div>
                     <div>
                       <h4 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">
@@ -807,7 +782,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     </div>
                   </div>
                   <span className="text-xs font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/80 px-3 py-1 rounded-full border border-amber-200 dark:border-amber-800/60">
-                    +14% ATS Score Impact
+                    14% ATS Score Impact
                   </span>
                 </div>
 
@@ -828,7 +803,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                         }}
                         className="text-xs text-amber-600 dark:text-amber-400 font-bold flex items-center gap-1 pt-2 hover:underline"
                       >
-                        {item.buttonText} <ArrowUpRight className="w-3.5 h-3.5" />
+                        {item.buttonText}
                       </button>
                     </div>
                   ))}
@@ -846,8 +821,8 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
       <div className="space-y-5 pt-4 border-t border-slate-200 dark:border-white/[0.08]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
-              <Briefcase className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-orange-500 text-white flex items-center justify-center text-xs font-black shadow-sm">
+              03
             </div>
             <div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">3. Curated Recommendations Feed</h3>
@@ -896,7 +871,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   <h4 className="font-bold text-slate-900 dark:text-white text-base group-hover:text-amber-600 dark:group-hover:text-amber-300 transition-colors">
                     {opp.title}
                   </h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{opp.organization} • {opp.location}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{opp.organization} - {opp.location}</p>
                 </div>
                 
                 <div className="text-sm font-extrabold text-emerald-600 dark:text-emerald-400">{opp.stipendOrSalary}</div>
@@ -919,7 +894,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     onClick={() => setSelectedOpportunityForModal(opp)}
                     className="text-xs text-amber-600 dark:text-amber-400 font-bold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
                   >
-                    AI Fit Analysis <ArrowUpRight className="w-3.5 h-3.5" />
+                    AI Fit Analysis
                   </button>
                 </div>
               </div>
@@ -930,10 +905,10 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
       {/* 4. Future Market Scope & Predictions */}
       <div className="space-y-5 pt-4 border-t border-slate-200 dark:border-white/[0.08]">
-        <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
-              <Flame className="w-5 h-5 text-amber-500 dark:text-amber-400 fill-amber-500 dark:fill-amber-400" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-orange-500 text-white flex items-center justify-center text-xs font-black shadow-sm">
+              04
             </div>
             <div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">4. Future Market Scope & Predictions (2026–2028)</h3>
@@ -953,19 +928,18 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 className={`p-5 rounded-2xl border transition-all duration-300 space-y-3 ${
                   isExploding 
                     ? 'bg-amber-50/50 border-amber-200 dark:bg-gradient-to-br dark:from-amber-950/30 dark:via-[#0d1424] dark:to-orange-950/20 dark:border-amber-500/30' 
-                    : 'bg-rose-50/50 border-rose-200 dark:bg-gradient-to-br dark:from-rose-950/20 dark:to-[#0a0f1d] dark:border-rose-900/30'
+                    : 'bg-orange-50/50 border-orange-200 dark:bg-gradient-to-br dark:from-orange-950/20 dark:to-[#0a0f1d] dark:border-orange-900/30'
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <span className={`text-[10px] uppercase font-black px-2.5 py-1 rounded-md tracking-wider ${
-                    isExploding ? 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300' : 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300'
+                    isExploding ? 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300' : 'bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300'
                   }`}>
                     {pred.category}
                   </span>
                   <div className={`flex items-center gap-1 text-sm font-black ${
-                    isExploding ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
+                    isExploding ? 'text-amber-700 dark:text-amber-300' : 'text-orange-700 dark:text-orange-300'
                   }`}>
-                    {isExploding ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
                     <span>{pred.growthRate}</span>
                   </div>
                 </div>
@@ -997,9 +971,9 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               </div>
               <button
                 onClick={() => setSelectedOpportunityForModal(null)}
-                className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center"
+                className="px-3 py-1.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center text-xs font-bold"
               >
-                ✕
+                Close
               </button>
             </div>
 
@@ -1016,7 +990,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 <div className="h-full bg-gradient-to-r from-emerald-500 to-amber-400 rounded-full" style={{ width: '89%' }} />
               </div>
               <p className="text-xs text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5 pt-1">
-                <Check className="w-4 h-4" /> Candidate exceeds threshold by +{89 - selectedOpportunityForModal.cutoffScore}% points
+                Candidate exceeds threshold by {89 - selectedOpportunityForModal.cutoffScore}% points
               </p>
             </div>
 
@@ -1028,7 +1002,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   'Highlight your verified sovereign credentials'
                 ]).map((tip, idx) => (
                   <li key={idx} className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2 bg-slate-50 dark:bg-[#090e1c]/60 p-2.5 rounded-xl border border-slate-200 dark:border-white/[0.06]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
+                    <span className="w-1 h-5 rounded-full bg-amber-500 shrink-0" />
                     <span>{tip}</span>
                   </li>
                 ))}
@@ -1063,16 +1037,15 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             <div className="flex items-start justify-between">
               <div>
                 <div className="flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-amber-600 dark:text-amber-400" />
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white">Generate Verified ATS Resume using AI</h3>
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Pulls verified platform achievements, test percentiles, and badges</p>
               </div>
               <button
                 onClick={() => setShowAiResumeModal(false)}
-                className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center"
+                className="px-3 py-1.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center text-xs font-bold"
               >
-                ✕
+                Close
               </button>
             </div>
 
@@ -1080,30 +1053,30 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               <div className="border-b border-slate-200 dark:border-white/[0.08] pb-3">
                 <div className="text-lg font-extrabold text-slate-900 dark:text-white font-sans">ARJUN KAWADE</div>
                 <div className="text-amber-600 dark:text-amber-400 font-bold">GenAI & Distributed Systems Engineer</div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">DigiLocker Sovereign Hash: 0x7e8f...872 • ATS Score: 91/100</div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400">DigiLocker Sovereign Hash: 0x7e8f...872 - ATS Score: 91/100</div>
               </div>
 
               <div>
                 <div className="text-amber-600 dark:text-amber-400 font-bold uppercase text-[11px]">Verified Credentials & Badges:</div>
                 <div className="text-slate-700 dark:text-slate-300 text-[11px] pl-2 space-y-0.5">
-                  • IIT Bombay Benchmark Sandbox: Top 98th Percentile (C++20 & Python 3.12)<br />
-                  • Tier 1 XMP PKI Signature: Verified (National Informatics Centre)<br />
-                  • Tier 2 OpenCV ELA Tamper Score: 1.84 (Pristine Original)
+                  <div>IIT Bombay Benchmark Sandbox: Top 98th Percentile (C++20 & Python 3.12)</div>
+                  <div>Tier 1 XMP PKI Signature: Verified (National Informatics Centre)</div>
+                  <div>Tier 2 OpenCV ELA Tamper Score: 1.84 (Pristine Original)</div>
                 </div>
               </div>
 
               <div>
                 <div className="text-amber-600 dark:text-amber-400 font-bold uppercase text-[11px]">High-Impact Quantified Projects:</div>
                 <div className="text-slate-700 dark:text-slate-300 text-[11px] pl-2 space-y-0.5">
-                  • Distributed Inference Accelerator: Cut token latency by 42% via custom PagedAttention vLLM kernel.<br />
-                  • DPDP Statutory Compliance Engine: Processed 100k+ records with 100% fiduciary audit conformance.
+                  <div>Distributed Inference Accelerator: Cut token latency by 42% via custom PagedAttention vLLM kernel.</div>
+                  <div>DPDP Statutory Compliance Engine: Processed more than 100k records with 100% fiduciary audit conformance.</div>
                 </div>
               </div>
             </div>
 
             <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-white/[0.08]">
               <div className="text-xs text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4" /> 100% ATS Compliant Single-Column Format
+                100% ATS Compliant Single-Column Format
               </div>
               <div className="flex items-center gap-2">
                 <button
@@ -1119,7 +1092,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   }}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-lg shadow-amber-600/30"
                 >
-                  <Download className="w-4 h-4" /> Export Signed PDF / DOCX
+                  Export Signed PDF / DOCX
                 </button>
               </div>
             </div>

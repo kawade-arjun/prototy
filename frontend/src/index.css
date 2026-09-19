@@ -115,7 +115,7 @@
 }
 
 .gradient-text-emerald {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-emerald-700 to-teal-600 dark:from-emerald-300 dark:via-teal-200 dark:to-cyan-400;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-emerald-700 to-teal-600 dark:from-emerald-300 dark:via-teal-200 dark:to-teal-300;
 }
 
 .gradient-text-amber {

@@ -15,7 +15,6 @@ import {
   Layers, 
   CheckCircle2, 
   AlertTriangle, 
-  Sparkles, 
   Upload, 
   RefreshCw, 
   Link, 
@@ -35,7 +34,6 @@ import {
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { useTheme } from '../../context/ThemeContext';
 import { 
   DEPARTMENT_COHORTS, 
@@ -93,7 +91,6 @@ export const CollegePortal: React.FC = () => {
     setTimeout(() => {
       setIsErpSyncing(false);
       setErpSyncSuccess(true);
-      confetti({ particleCount: 50, spread: 60 });
       setTimeout(() => setErpSyncSuccess(false), 3500);
     }, 1200);
   };
@@ -102,7 +99,6 @@ export const CollegePortal: React.FC = () => {
     setIsUploadingCsv(true);
     setTimeout(() => {
       setIsUploadingCsv(false);
-      confetti({ particleCount: 60, spread: 70 });
       setUploadSuccessMessage('Successfully ingested 420 student records from Batch_2026_Semester8.csv. DigiLocker PKI validation initialized.');
       setTimeout(() => setUploadSuccessMessage(null), 4000);
     }, 1100);
@@ -112,7 +108,6 @@ export const CollegePortal: React.FC = () => {
     setIsGeneratingBosMemo(true);
     setTimeout(() => {
       setIsGeneratingBosMemo(false);
-      confetti({ particleCount: 50 });
       alert('Board of Studies (BoS) Curriculum Reform Advisory Memo compiled with AICTE Syllabus Alignment Index.');
     }, 800);
   };
@@ -121,7 +116,7 @@ export const CollegePortal: React.FC = () => {
     <div className="space-y-6 animate-fadeIn font-sans pb-12">
       
       {/* 1. INSTITUTIONAL TPO COMMAND CENTER HERO BANNER */}
-      <div className="glass-panel rounded-3xl p-6 sm:p-7 shadow-xl space-y-4 border border-emerald-500/20 bg-gradient-to-r from-emerald-500/5 via-transparent to-indigo-500/5">
+      <div className="glass-panel rounded-3xl p-6 sm:p-7 shadow-xl space-y-4 border border-emerald-500/20 bg-gradient-to-r from-emerald-500/5 via-transparent to-teal-500/5">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           
           <div className="space-y-1.5">
@@ -130,7 +125,7 @@ export const CollegePortal: React.FC = () => {
                 <Building2 className="w-3.5 h-3.5 text-emerald-500" />
                 INSTITUTIONAL TPO COMMAND CENTER
               </span>
-              <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30 flex items-center gap-1">
+              <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-teal-500/10 text-teal-700 dark:text-teal-300 border border-teal-500/30 flex items-center gap-1">
                 <ShieldCheck className="w-3 h-3 text-emerald-500" /> ZERO GHOST RESUME GUARANTEE
               </span>
             </div>
@@ -155,7 +150,7 @@ export const CollegePortal: React.FC = () => {
 
             <button
               onClick={() => setShowDriveRosterModal(true)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black shadow-lg shadow-indigo-600/20 transition-all active:scale-95"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-black shadow-lg shadow-teal-600/20 transition-all active:scale-95"
             >
               <FileSpreadsheet className="w-4 h-4" />
               <span>Export Verified Drive Roster</span>
@@ -182,7 +177,7 @@ export const CollegePortal: React.FC = () => {
 
           <div className="p-3 rounded-xl bg-slate-50/80 dark:bg-[#080d1a]/80 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5">
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Accreditation Readiness</div>
-            <div className="text-xl sm:text-2xl font-black text-indigo-600 dark:text-cyan-400">NAAC A++ / NIRF</div>
+            <div className="text-xl sm:text-2xl font-black text-teal-600 dark:text-teal-400">NAAC A++ / NIRF</div>
             <div className="text-[10px] text-slate-500 dark:text-slate-400">Criterion 5.2.1 / GPH Outcome ready</div>
           </div>
 
@@ -408,7 +403,7 @@ export const CollegePortal: React.FC = () => {
 
                       <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 space-y-0.5">
                         <div className="text-[9px] font-bold text-slate-400 uppercase">Avg Competency</div>
-                        <div className="text-sm font-black text-indigo-600 dark:text-cyan-400 font-mono">
+                        <div className="text-sm font-black text-teal-600 dark:text-teal-400 font-mono">
                           {dept.avgScore}%
                         </div>
                         <div className="text-[9px] text-slate-500">Median: {dept.medianCtc}</div>
@@ -427,8 +422,8 @@ export const CollegePortal: React.FC = () => {
                     </div>
 
                     {/* Top Verified Skill */}
-                    <div className="p-2.5 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200/60 dark:border-indigo-900/40 space-y-0.5">
-                      <div className="text-[9px] font-bold text-indigo-700 dark:text-indigo-300 uppercase">Top Tested Skill</div>
+                    <div className="p-2.5 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-900/40 space-y-0.5">
+                      <div className="text-[9px] font-bold text-emerald-700 dark:text-emerald-300 uppercase">Top Tested Skill</div>
                       <div className="text-xs font-bold text-slate-900 dark:text-white truncate">{dept.topSkill}</div>
                     </div>
                   </div>
@@ -440,7 +435,7 @@ export const CollegePortal: React.FC = () => {
                     </span>
                     <button
                       onClick={() => setShowDriveRosterModal(true)}
-                      className="text-xs font-bold text-indigo-600 dark:text-cyan-400 hover:underline flex items-center gap-1"
+                      className="text-xs font-bold text-teal-600 dark:text-teal-400 hover:underline flex items-center gap-1"
                     >
                       <span>Drive Roster</span>
                       <ChevronRight className="w-3.5 h-3.5" />
@@ -473,7 +468,7 @@ export const CollegePortal: React.FC = () => {
 
             <button
               onClick={() => setShowDriveRosterModal(true)}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md shadow-indigo-600/20 active:scale-95 transition-all"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs shadow-md shadow-teal-600/20 active:scale-95 transition-all"
             >
               <FileSpreadsheet className="w-3.5 h-3.5" />
               <span>Export 100% Verified Drive Roster</span>
@@ -489,7 +484,7 @@ export const CollegePortal: React.FC = () => {
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-black text-xs flex items-center justify-center border border-indigo-200 dark:border-indigo-800">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-black text-xs flex items-center justify-center border border-emerald-200 dark:border-emerald-800">
                       {drive.companyLogo}
                     </div>
                     <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 border border-amber-500/20 uppercase">
@@ -501,7 +496,7 @@ export const CollegePortal: React.FC = () => {
                     <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">
                       {drive.companyName}
                     </h3>
-                    <div className="text-xs text-indigo-600 dark:text-cyan-400 font-bold mt-0.5">
+                    <div className="text-xs text-teal-600 dark:text-teal-400 font-bold mt-0.5">
                       {drive.roleTitle}
                     </div>
                     <div className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 mt-1">
@@ -568,7 +563,7 @@ export const CollegePortal: React.FC = () => {
                 disabled={isGeneratingBosMemo}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-md shadow-amber-500/20 transition-all active:scale-95"
               >
-                <Sparkles className="w-3.5 h-3.5" />
+                <FileCheck className="w-3.5 h-3.5" />
                 <span>{isGeneratingBosMemo ? 'Generating Memo...' : 'Export BoS Advisory Memo'}</span>
               </button>
             </div>
@@ -602,7 +597,7 @@ export const CollegePortal: React.FC = () => {
                   </div>
 
                   <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center text-[10px]">
-                    <span className="text-indigo-600 dark:text-cyan-400 font-bold">Recommended: 15-Hour Micro-Module Lab</span>
+                    <span className="text-teal-600 dark:text-teal-400 font-bold">Recommended: 15-Hour Micro-Module Lab</span>
                     <span className="text-slate-400">Target Term: Sem 7/8</span>
                   </div>
                 </div>
@@ -625,7 +620,7 @@ export const CollegePortal: React.FC = () => {
             <div className="glass-panel p-6 rounded-2xl space-y-4 shadow-sm">
               <div>
                 <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
-                  <Upload className="w-4 h-4 text-indigo-600 dark:text-cyan-400" />
+                  <Upload className="w-4 h-4 text-teal-600 dark:text-teal-400" />
                   <span>Bulk Student Spreadsheet Ingestion</span>
                 </h3>
                 <p className="text-xs text-slate-500">
@@ -635,7 +630,7 @@ export const CollegePortal: React.FC = () => {
 
               {/* Upload Dropzone */}
               <div className="p-6 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center space-y-3 text-center">
-                <Upload className="w-8 h-8 text-indigo-500" />
+                <Upload className="w-8 h-8 text-emerald-500" />
                 <div className="space-y-1">
                   <div className="text-xs font-bold text-slate-800 dark:text-slate-200">
                     Drag & Drop Institutional Roster CSV or Excel
@@ -648,7 +643,7 @@ export const CollegePortal: React.FC = () => {
                 <button
                   onClick={handleSimulateCsvUpload}
                   disabled={isUploadingCsv}
-                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md shadow-indigo-600/20 active:scale-95 transition-all"
+                  className="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs shadow-md shadow-teal-600/20 active:scale-95 transition-all"
                 >
                   {isUploadingCsv ? 'Validating Schema & Ingesting...' : 'Simulate Ingestion (420 Students)'}
                 </button>
@@ -737,7 +732,7 @@ export const CollegePortal: React.FC = () => {
           <div className="glass-panel p-6 rounded-2xl space-y-4 shadow-sm">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/30">
+                <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30">
                   NATIONAL EDUCATION POLICY (NEP 2020) • AICTE 360° FACULTY POINTS
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mt-1">
@@ -762,7 +757,7 @@ export const CollegePortal: React.FC = () => {
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-cyan-400">
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300">
                         {grant.corporateSponsor}
                       </span>
                       <span className="text-xs font-mono font-black text-emerald-600 dark:text-emerald-400">
@@ -788,7 +783,7 @@ export const CollegePortal: React.FC = () => {
                     <span className="text-slate-400">Horizon: {grant.durationMonths} Mos</span>
                     <button
                       onClick={() => alert(`Mutual NDA & IP Term Sheet for ${grant.corporateSponsor} downloaded. Stamped under Indian Patents Act 1970.`)}
-                      className="font-bold text-indigo-600 dark:text-cyan-400 hover:underline"
+                      className="font-bold text-teal-600 dark:text-teal-400 hover:underline"
                     >
                       1-Click NDA
                     </button>

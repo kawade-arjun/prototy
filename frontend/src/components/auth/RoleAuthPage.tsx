@@ -7,7 +7,6 @@ import {
   Building2, 
   Briefcase, 
   Landmark, 
-  Sparkles, 
   ShieldCheck, 
   Lock, 
   Eye, 
@@ -24,7 +23,6 @@ import {
   Palette,
   Check
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 interface RoleAuthPageProps {
   role: UserRole;
@@ -119,13 +117,13 @@ const PERSONA_CONFIGS: Record<UserRole, PersonaConfig> = {
     icon: Briefcase,
     defaultEmail: 'talent.partner@google.com',
     theme: {
-      gradient: 'from-indigo-600 via-indigo-500 to-cyan-500',
-      gradientBorder: 'border-indigo-500/40 hover:border-indigo-500',
-      badgeBg: 'bg-indigo-500/10 text-indigo-800 dark:text-indigo-300 border-indigo-500/30',
-      textAccent: 'text-indigo-600 dark:text-indigo-400',
-      glow: 'shadow-indigo-500/20',
-      buttonBg: 'bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500',
-      buttonHover: 'hover:from-indigo-500 hover:to-cyan-400'
+      gradient: 'from-orange-600 via-amber-600 to-amber-500',
+      gradientBorder: 'border-orange-500/40 hover:border-orange-500',
+      badgeBg: 'bg-orange-500/10 text-orange-800 dark:text-orange-300 border-orange-500/30',
+      textAccent: 'text-orange-600 dark:text-orange-400',
+      glow: 'shadow-orange-500/20',
+      buttonBg: 'bg-gradient-to-r from-orange-600 via-amber-600 to-amber-500',
+      buttonHover: 'hover:from-orange-500 hover:to-amber-400'
     },
     highlights: [
       'Judge0 proctored sandboxes with memory and latency execution metrics',
@@ -248,26 +246,24 @@ export const RoleAuthPage: React.FC<RoleAuthPageProps> = ({
 
         await register(email, password, role, displayName);
         setSuccessMessage('Account registered successfully! Redirecting...');
-        confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
 
         setTimeout(() => {
           onSuccess(role);
           if (role === 'student') {
             setIsOnboardingOpen(true);
           }
-        }, 800);
+        }, 600);
       } else {
         // Sign in
         const res = await login(email, password);
         setSuccessMessage('Signed in successfully! Launching workspace...');
-        confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
 
         setTimeout(() => {
           onSuccess(role);
           if (role === 'student' && (!res.profile || res.profile.completion_percentage < 80)) {
             setIsOnboardingOpen(true);
           }
-        }, 600);
+        }, 500);
       }
     } catch (err: any) {
       console.error('Authentication error:', err);

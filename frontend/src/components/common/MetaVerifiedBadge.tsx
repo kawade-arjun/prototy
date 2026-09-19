@@ -32,8 +32,8 @@ export const MetaVerifiedBadge: React.FC<MetaVerifiedBadgeProps> = ({
       />
       <defs>
         <linearGradient id="meta-verified-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#0064E0" />
-          <stop offset="100%" stopColor="#00A7FF" />
+          <stop offset="0%" stopColor="#EA580C" />
+          <stop offset="100%" stopColor="#F59E0B" />
         </linearGradient>
       </defs>
     </svg>

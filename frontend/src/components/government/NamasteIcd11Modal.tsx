@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { 
-  Sparkles, 
   X, 
   Search, 
   Globe2, 
@@ -13,7 +12,6 @@ import {
   Layers,
   Award
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { NAMASTE_TO_ICD11_ONTOLOGY, NamasteIcd11Mapping } from '../../mock/governmentData';
 
 interface NamasteIcd11ModalProps {
@@ -34,7 +32,6 @@ export const NamasteIcd11Modal: React.FC<NamasteIcd11ModalProps> = ({ onClose })
 
   const handleExportOntology = () => {
     setIsExporting(true);
-    confetti({ particleCount: 70, spread: 80 });
     setTimeout(() => {
       setIsExporting(false);
       alert('WHO ICD-11 Traditional Medicine Module 2 & Ministry of Ayush NAMASTE Crosswalk Specification exported with international cryptographic seal.');
@@ -79,7 +76,7 @@ export const NamasteIcd11Modal: React.FC<NamasteIcd11ModalProps> = ({ onClose })
           
           {/* SIH Mandate Purpose Banner */}
           <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-3.5">
-            <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+            <Globe2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
             <div className="space-y-1 text-xs text-emerald-900 dark:text-emerald-200 leading-relaxed">
               <div className="font-extrabold text-sm">
                 Global Employability for Indian Ayush Scholars (WHO ICD-11 Integration)
@@ -151,7 +148,7 @@ export const NamasteIcd11Modal: React.FC<NamasteIcd11ModalProps> = ({ onClose })
             <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-white/[0.08] space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono font-bold uppercase text-slate-400">Ontology Detail View</span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 font-bold">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 font-bold">
                   WHO Verified ✓
                 </span>
               </div>
@@ -161,7 +158,7 @@ export const NamasteIcd11Modal: React.FC<NamasteIcd11ModalProps> = ({ onClose })
                 <div className="text-base font-black text-slate-900 dark:text-white">
                   {selectedMapping.namasteTerm}
                 </div>
-                <div className="text-xs font-mono text-indigo-600 dark:text-cyan-400 font-bold">
+                <div className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">
                   {selectedMapping.namasteCode}
                 </div>
                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pt-1">

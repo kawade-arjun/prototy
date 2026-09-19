@@ -18,7 +18,6 @@ import {
   Building,
   Target
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 // Engineering branches configuration
 export const ENGINEERING_BRANCHES = [
@@ -189,7 +188,6 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
       const mockExtracted = ['Git & GitHub CI/CD', 'REST APIs', 'Postman Testing', 'Cloud Architecture (AWS)'];
       setExtractedSkills(mockExtracted);
       setIsExtractingResume(false);
-      confetti({ particleCount: 40, spread: 60 });
     }, 1100);
   };
 
@@ -216,7 +214,6 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
         completion_percentage: completionPercentage
       });
 
-      confetti({ particleCount: 120, spread: 90, origin: { y: 0.5 } });
       onClose();
     } catch (err: any) {
       console.error('Save onboarding error:', err);
@@ -234,7 +231,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
         <div className="p-5 sm:p-6 border-b border-slate-200 dark:border-white/[0.08] bg-slate-50/70 dark:bg-slate-900/60 flex-shrink-0">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 dark:bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+              <div className="w-10 h-10 rounded-2xl bg-amber-500/10 dark:bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
                 <GraduationCap className="w-5 h-5" />
               </div>
               <div>
@@ -290,7 +287,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                 onClick={() => setCurrentStep(step.num)}
                 className={`px-3 py-1 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
                   currentStep === step.num
-                    ? 'bg-indigo-600 text-white shadow-sm font-bold'
+                    ? 'bg-amber-600 text-white shadow-sm font-bold'
                     : currentStep > step.num
                     ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
                     : 'bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800'
@@ -309,8 +306,8 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
           {/* STEP 1: Discipline & Engineering Branch Selection */}
           {currentStep === 1 && (
             <div className="space-y-4 animate-fadeIn">
-              <div className="p-4 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-500/20">
-                <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-300 font-bold text-sm mb-1">
+              <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-500/20">
+                <div className="flex items-center gap-2 text-amber-700 dark:text-amber-300 font-bold text-sm mb-1">
                   <Cpu className="w-4 h-4" />
                   <span>Primary Discipline: Engineering</span>
                 </div>
@@ -333,7 +330,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                         onClick={() => setSelectedBranch(b.name)}
                         className={`p-3.5 rounded-2xl border text-left transition-all flex items-start justify-between gap-2 ${
                           isSelected
-                            ? 'border-indigo-600 bg-indigo-50/80 dark:bg-indigo-600/20 dark:border-indigo-500 text-indigo-900 dark:text-white font-bold shadow-sm'
+                            ? 'border-amber-600 bg-amber-50/80 dark:bg-amber-600/20 dark:border-amber-500 text-amber-900 dark:text-white font-bold shadow-sm'
                             : 'border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/40 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-white/[0.15]'
                         }`}
                       >
@@ -344,7 +341,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                           </p>
                         </div>
                         {isSelected && (
-                          <div className="w-5 h-5 rounded-full bg-indigo-600 text-white flex items-center justify-center flex-shrink-0">
+                          <div className="w-5 h-5 rounded-full bg-amber-600 text-white flex items-center justify-center flex-shrink-0">
                             <Check className="w-3 h-3" />
                           </div>
                         )}
@@ -379,7 +376,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                       onClick={() => toggleTechSkill(skill)}
                       className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
                         isSelected
-                          ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/20'
+                          ? 'bg-amber-600 text-white shadow-sm shadow-amber-600/20'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                       }`}
                     >
@@ -401,7 +398,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                     value={customSkillInput}
                     onChange={(e) => setCustomSkillInput(e.target.value)}
                     placeholder="e.g. LLM Fine-Tuning, Rust, WebAssembly, Solana..."
-                    className="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-slate-900 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    className="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-slate-900 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500 focus:outline-none"
                   />
                   <button
                     type="submit"
@@ -480,7 +477,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
             <div className="space-y-5 animate-fadeIn">
               <div>
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-indigo-500" />
+                  <FileText className="w-4 h-4 text-amber-500" />
                   <span>Upload Resume (Optional)</span>
                 </h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -489,7 +486,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
               </div>
 
               {/* Upload Dropzone */}
-              <div className="relative border-2 border-dashed border-slate-300 dark:border-white/[0.15] rounded-3xl p-6 text-center hover:border-indigo-500 transition-colors bg-slate-50/50 dark:bg-slate-900/40">
+              <div className="relative border-2 border-dashed border-slate-300 dark:border-white/[0.15] rounded-3xl p-6 text-center hover:border-amber-500 transition-colors bg-slate-50/50 dark:bg-slate-900/40">
                 <input
                   type="file"
                   accept=".pdf,.docx,.doc"
@@ -497,7 +494,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                   className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
                 />
                 <div className="flex flex-col items-center justify-center gap-2 pointer-events-none">
-                  <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center">
                     <Upload className="w-6 h-6" />
                   </div>
                   <div>
@@ -513,9 +510,9 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
 
               {/* Extraction State */}
               {isExtractingResume && (
-                <div className="p-4 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-500/20 flex items-center gap-3">
-                  <div className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
-                  <span className="text-xs font-semibold text-indigo-900 dark:text-indigo-300">
+                <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-500/20 flex items-center gap-3">
+                  <div className="w-5 h-5 border-2 border-amber-600 border-t-transparent rounded-full animate-spin" />
+                  <span className="text-xs font-semibold text-amber-900 dark:text-amber-300">
                     Extracting technical competencies and credentials from {uploadedResumeName}...
                   </span>
                 </div>
@@ -566,7 +563,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                     value={institutionName}
                     onChange={(e) => setInstitutionName(e.target.value)}
                     placeholder="e.g. Veermata Jijabai Technological Institute (VJTI), Mumbai"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none"
                   />
                 </div>
 
@@ -580,7 +577,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                       value={degree}
                       onChange={(e) => setDegree(e.target.value)}
                       placeholder="e.g. B.Tech Computer Engineering"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none"
                     />
                   </div>
 
@@ -591,7 +588,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                     <select
                       value={passingYear}
                       onChange={(e) => setPassingYear(parseInt(e.target.value, 10))}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none"
                     >
                       <option value={2024}>2024 (Graduated)</option>
                       <option value={2025}>2025 (Final Year)</option>
@@ -612,7 +609,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                       value={cgpaOrPercentage}
                       onChange={(e) => setCgpaOrPercentage(e.target.value)}
                       placeholder="e.g. 9.1 or 88%"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none font-mono"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none font-mono"
                     />
                   </div>
 
@@ -625,7 +622,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                       value={schoolName}
                       onChange={(e) => setSchoolName(e.target.value)}
                       placeholder="e.g. National Public School"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -636,9 +633,9 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
           {/* STEP 6: Future Aspirations / Dreams (For CareerOptic AI) */}
           {currentStep === 6 && (
             <div className="space-y-4 animate-fadeIn">
-              <div className="p-4 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-500/20">
-                <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-300 font-bold text-sm mb-1">
-                  <BrainCircuit className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+              <div className="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-500/20">
+                <div className="flex items-center gap-2 text-amber-700 dark:text-amber-300 font-bold text-sm mb-1">
+                  <BrainCircuit className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <span>CareerOptic AI Context Model</span>
                 </div>
                 <p className="text-xs text-slate-600 dark:text-slate-400">
@@ -656,7 +653,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                   value={aspirations}
                   onChange={(e) => setAspirations(e.target.value)}
                   placeholder="e.g. In the next 3 years, I want to become a core contributor to distributed ML systems, build foundational LLM infrastructure, or work on robotics automation. I prefer high-growth deep-tech teams with hands-on technical mentors..."
-                  className="w-full p-3.5 rounded-2xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none leading-relaxed"
+                  className="w-full p-3.5 rounded-2xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none leading-relaxed"
                 />
               </div>
 
@@ -690,7 +687,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
               <button
                 type="button"
                 onClick={() => setCurrentStep(prev => prev + 1)}
-                className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-md shadow-indigo-600/20 flex items-center gap-1.5 transition-all"
+                className="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-md shadow-amber-600/20 flex items-center gap-1.5 transition-all"
               >
                 <span>Continue to {currentStep === 1 ? 'Skills' : currentStep === 2 ? 'Soft Skills' : currentStep === 3 ? 'Resume' : currentStep === 4 ? 'Academics' : 'Aspirations'}</span>
                 <ArrowRight className="w-3.5 h-3.5" />

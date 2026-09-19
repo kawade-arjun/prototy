@@ -6,12 +6,10 @@ import {
   Building2, 
   Briefcase, 
   Landmark, 
-  Sparkles, 
   ShieldCheck, 
   ArrowRight, 
   CheckCircle2, 
   Lock, 
-  Zap, 
   BarChart3, 
   ChevronDown,
   Cpu,
@@ -23,12 +21,13 @@ import {
   Terminal,
   Play,
   Target,
-  PieChart,
   FileCheck,
   Search,
+  ExternalLink,
+  BookOpen,
   LogIn,
   UserPlus,
-  Check
+  PieChart
 } from 'lucide-react';
 
 interface HomeScreenProps {
@@ -68,10 +67,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
 
   // Rotating target disciplines for animated hero text
   const rotatingDisciplines = [
-    { title: 'Engineering Scholars', institute: 'IIT Bombay', color: 'from-indigo-500 to-cyan-500' },
+    { title: 'Engineering Scholars', institute: 'IIT Bombay', color: 'from-amber-500 to-orange-500' },
     { title: 'FinTech & Finance Scholars', institute: 'SRCC Delhi', color: 'from-emerald-500 to-teal-500' },
     { title: 'Ayush & Medical Practitioners', institute: 'AIIMS & AIIA New Delhi', color: 'from-amber-500 to-orange-500' },
-    { title: 'Corporate Law Specialists', institute: 'NLSIU Bengaluru', color: 'from-purple-500 to-indigo-500' },
+    { title: 'Corporate Law Specialists', institute: 'NLSIU Bengaluru', color: 'from-orange-500 to-amber-600' },
     { title: 'UI/UX & HCI Designers', institute: 'NID Ahmedabad', color: 'from-pink-500 to-rose-500' }
   ];
 
@@ -98,7 +97,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
       badge: 'Skill Diagnostic',
       desc: 'Synthesizes proctored sandbox execution, DigiLocker verified portfolio vectors, and peer-validated competency indices.',
       metric: 'Quantified Skill Matrix',
-      icon: <Terminal className="w-5 h-5 text-indigo-400" />
+      icon: <Terminal className="w-5 h-5 text-amber-500" />
     },
     {
       step: 2,
@@ -114,7 +113,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
       badge: 'Algorithmic Matching',
       desc: 'Game-theoretic multi-agent matching pairing verified candidates directly to recruiter threshold cutoffs without manual bias.',
       metric: 'Optimal Candidate Matching',
-      icon: <Zap className="w-5 h-5 text-cyan-400" />
+      icon: <Target className="w-5 h-5 text-amber-500" />
     }
   ];
 
@@ -127,9 +126,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
         
         {/* Optimized Ambient Glowing Floating Orbs */}
-        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[250px] sm:h-[350px] bg-gradient-to-tr from-indigo-500/10 via-purple-500/10 to-cyan-500/10 rounded-full blur-2xl sm:blur-3xl transform-gpu" />
-        <div className="absolute top-72 -left-20 w-60 sm:w-80 h-60 sm:h-80 bg-indigo-600/10 rounded-full blur-2xl sm:blur-3xl pointer-events-none transform-gpu hidden sm:block" />
-        <div className="absolute top-[600px] -right-20 w-60 sm:w-96 h-60 sm:h-96 bg-cyan-500/10 rounded-full blur-2xl sm:blur-3xl pointer-events-none transform-gpu hidden sm:block" />
+        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[250px] sm:h-[350px] bg-gradient-to-tr from-amber-500/10 via-orange-500/10 to-yellow-500/10 rounded-full blur-2xl sm:blur-3xl transform-gpu" />
+        <div className="absolute top-72 -left-20 w-60 sm:w-80 h-60 sm:h-80 bg-amber-600/10 rounded-full blur-2xl sm:blur-3xl pointer-events-none transform-gpu hidden sm:block" />
+        <div className="absolute top-[600px] -right-20 w-60 sm:w-96 h-60 sm:h-96 bg-orange-500/10 rounded-full blur-2xl sm:blur-3xl pointer-events-none transform-gpu hidden sm:block" />
       </div>
 
       {/* SECTION 1: HERO WELCOME BANNER */}
@@ -690,7 +689,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                   <line x1="200" y1="160" x2="110" y2="280" stroke="currentColor" className="text-slate-300 dark:text-slate-700" strokeWidth="1" />
                   <line x1="200" y1="160" x2="50" y2="130" stroke="currentColor" className="text-slate-300 dark:text-slate-700" strokeWidth="1" />
 
-                  <polygon points="200,80 300,140 250,240 150,240 100,140" fill="rgba(99, 102, 241, 0.12)" stroke="#6366F1" strokeWidth="2" strokeDasharray="4,4" />
+                  <polygon points="200,80 300,140 250,240 150,240 100,140" fill="rgba(217, 119, 6, 0.12)" stroke="#D97706" strokeWidth="2" strokeDasharray="4,4" />
                   <polygon points="200,42 335,133 278,268 122,260 62,135" fill="rgba(245, 158, 11, 0.25)" stroke="#F59E0B" strokeWidth="2.5" />
                   
                   <circle cx="200" cy="42" r="4" fill="#F59E0B" />
@@ -713,7 +712,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                   <span>Candidate Vector (89.8 Rating)</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-indigo-500/50 border border-indigo-500 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-amber-600/50 border border-amber-600 inline-block" />
                   <span>Industry Benchmark (75.0)</span>
                 </div>
               </div>
@@ -738,12 +737,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                   <path d="M 130 50 L 160 50" stroke="#F59E0B" strokeWidth="2" strokeDasharray="3,3" />
                   <polygon points="160,46 168,50 160,54" fill="#F59E0B" />
 
-                  <rect x="168" y="20" width="120" height="60" rx="12" fill="#1E293B" stroke="#6366F1" strokeWidth="1.5" />
+                  <rect x="168" y="20" width="120" height="60" rx="12" fill="#1E293B" stroke="#D97706" strokeWidth="1.5" />
                   <text x="228" y="45" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="bold">AI Gap Engine</text>
-                  <text x="228" y="60" textAnchor="middle" fill="#A5B4FC" fontSize="9">Vector Similarity</text>
+                  <text x="228" y="60" textAnchor="middle" fill="#FDE68A" fontSize="9">Vector Similarity</text>
 
-                  <path d="M 288 50 L 318 50" stroke="#6366F1" strokeWidth="2" strokeDasharray="3,3" />
-                  <polygon points="318,46 326,50 318,54" fill="#6366F1" />
+                  <path d="M 288 50 L 318 50" stroke="#D97706" strokeWidth="2" strokeDasharray="3,3" />
+                  <polygon points="318,46 326,50 318,54" fill="#D97706" />
 
                   <rect x="326" y="20" width="104" height="60" rx="12" fill="#1E293B" stroke="#10B981" strokeWidth="1.5" />
                   <text x="378" y="45" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="bold">DigiLocker</text>
@@ -996,7 +995,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                   <Scale className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <h4 className="font-serif-luxury font-bold text-slate-900 dark:text-white text-sm sm:text-base">Gale-Shapley Zero-Bias Stable Matching</h4>
                 </div>
-                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-800 dark:text-cyan-300 font-extrabold border border-cyan-500/30">Stable Pairing</span>
+                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-300 font-extrabold border border-amber-500/30">Stable Pairing</span>
               </div>
 
               <div className="w-full flex items-center justify-center py-2">
@@ -1004,7 +1003,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                   <rect x="20" y="20" width="130" height="40" rx="8" fill="#1E293B" stroke="#F59E0B" strokeWidth="1.5" />
                   <text x="85" y="44" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="bold">Sr. FinTech Engineer</text>
 
-                  <rect x="20" y="90" width="130" height="40" rx="8" fill="#1E293B" stroke="#6366F1" strokeWidth="1.5" />
+                  <rect x="20" y="90" width="130" height="40" rx="8" fill="#1E293B" stroke="#D97706" strokeWidth="1.5" />
                   <text x="85" y="114" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="bold">Ayush Clinical AI</text>
 
                   <rect x="20" y="160" width="130" height="40" rx="8" fill="#1E293B" stroke="#10B981" strokeWidth="1.5" />
@@ -1013,14 +1012,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                   <rect x="270" y="20" width="130" height="40" rx="8" fill="#1E293B" stroke="#F59E0B" strokeWidth="1.5" />
                   <text x="335" y="44" textAnchor="middle" fill="#FCD34D" fontSize="10" fontWeight="bold">Candidate #8492 (96 Index)</text>
 
-                  <rect x="270" y="90" width="130" height="40" rx="8" fill="#1E293B" stroke="#6366F1" strokeWidth="1.5" />
-                  <text x="335" y="114" textAnchor="middle" fill="#A5B4FC" fontSize="10" fontWeight="bold">Candidate #3011 (92 Index)</text>
+                  <rect x="270" y="90" width="130" height="40" rx="8" fill="#1E293B" stroke="#D97706" strokeWidth="1.5" />
+                  <text x="335" y="114" textAnchor="middle" fill="#FDE68A" fontSize="10" fontWeight="bold">Candidate #3011 (92 Index)</text>
 
                   <rect x="270" y="160" width="130" height="40" rx="8" fill="#1E293B" stroke="#10B981" strokeWidth="1.5" />
                   <text x="335" y="184" textAnchor="middle" fill="#6EE7B7" fontSize="10" fontWeight="bold">Candidate #5120 (94 Index)</text>
 
                   <path d="M 150 40 C 210 40, 210 40, 270 40" stroke="#F59E0B" strokeWidth="2.5" />
-                  <path d="M 150 110 C 210 110, 210 110, 270 110" stroke="#6366F1" strokeWidth="2.5" />
+                  <path d="M 150 110 C 210 110, 210 110, 270 110" stroke="#D97706" strokeWidth="2.5" />
                   <path d="M 150 180 C 210 180, 210 180, 270 180" stroke="#10B981" strokeWidth="2.5" />
                 </svg>
               </div>
@@ -1149,9 +1148,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                   <text x="32" y="42" fill="#FFFFFF" fontSize="11" fontWeight="bold">Maharashtra (FinTech/AI)</text>
                   <text x="32" y="58" fill="#FCD34D" fontSize="9">Supply: 82% | Demand: 96% (Deficit: 14%)</text>
 
-                  <rect x="210" y="20" width="190" height="50" rx="10" fill="#1E293B" stroke="#6366F1" strokeWidth="1.5" />
+                  <rect x="210" y="20" width="190" height="50" rx="10" fill="#1E293B" stroke="#D97706" strokeWidth="1.5" />
                   <text x="222" y="42" fill="#FFFFFF" fontSize="11" fontWeight="bold">Karnataka (DeepTech/Systems)</text>
-                  <text x="222" y="58" fill="#A5B4FC" fontSize="9">Supply: 88% | Demand: 98% (Deficit: 10%)</text>
+                  <text x="222" y="58" fill="#FDE68A" fontSize="9">Supply: 88% | Demand: 98% (Deficit: 10%)</text>
 
                   <rect x="20" y="85" width="170" height="50" rx="10" fill="#1E293B" stroke="#10B981" strokeWidth="1.5" />
                   <text x="32" y="107" fill="#FFFFFF" fontSize="11" fontWeight="bold">Delhi NCR (Ayush/Health)</text>
@@ -1161,9 +1160,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                   <text x="222" y="107" fill="#FFFFFF" fontSize="11" fontWeight="bold">Tamil Nadu (Auto/Hardware)</text>
                   <text x="222" y="123" fill="#FCD34D" fontSize="9">Supply: 85% | Demand: 92% (Deficit: 7%)</text>
 
-                  <rect x="20" y="150" width="170" height="50" rx="10" fill="#1E293B" stroke="#6366F1" strokeWidth="1.5" />
+                  <rect x="20" y="150" width="170" height="50" rx="10" fill="#1E293B" stroke="#B45309" strokeWidth="1.5" />
                   <text x="32" y="172" fill="#FFFFFF" fontSize="11" fontWeight="bold">Telangana (Pharma/Bio)</text>
-                  <text x="32" y="188" fill="#A5B4FC" fontSize="9">Supply: 80% | Demand: 94% (Deficit: 14%)</text>
+                  <text x="32" y="188" fill="#FDE68A" fontSize="9">Supply: 80% | Demand: 94% (Deficit: 14%)</text>
 
                   <rect x="210" y="150" width="190" height="50" rx="10" fill="#1E293B" stroke="#10B981" strokeWidth="1.5" />
                   <text x="222" y="172" fill="#FFFFFF" fontSize="11" fontWeight="bold">Uttar Pradesh (EdTech/Agri)</text>
@@ -1195,12 +1194,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                   <path d="M 125 50 L 155 50" stroke="#F59E0B" strokeWidth="2" strokeDasharray="3,3" />
                   <polygon points="155,46 163,50 155,54" fill="#F59E0B" />
 
-                  <rect x="163" y="25" width="110" height="50" rx="10" fill="#1E293B" stroke="#6366F1" strokeWidth="1.5" />
+                  <rect x="163" y="25" width="110" height="50" rx="10" fill="#1E293B" stroke="#D97706" strokeWidth="1.5" />
                   <text x="218" y="47" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="bold">NAMASTE Core</text>
-                  <text x="218" y="60" textAnchor="middle" fill="#A5B4FC" fontSize="8">ICD-11 Standardizer</text>
+                  <text x="218" y="60" textAnchor="middle" fill="#FDE68A" fontSize="8">ICD-11 Standardizer</text>
 
-                  <path d="M 273 50 L 303 50" stroke="#6366F1" strokeWidth="2" strokeDasharray="3,3" />
-                  <polygon points="303,46 311,50 303,54" fill="#6366F1" />
+                  <path d="M 273 50 L 303 50" stroke="#D97706" strokeWidth="2" strokeDasharray="3,3" />
+                  <polygon points="303,46 311,50 303,54" fill="#D97706" />
 
                   <rect x="311" y="25" width="95" height="50" rx="10" fill="#1E293B" stroke="#10B981" strokeWidth="1.5" />
                   <text x="358" y="47" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="bold">Deficit Map</text>
@@ -1234,12 +1233,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
       {/* PLATFORM OVERVIEW MODAL (ADJUSTED BOX SIZES & CLEAN SPACING) */}
       {showDemoModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80 backdrop-blur-md p-4 animate-fadeIn">
-          <div className="glass-panel max-w-3xl w-full p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1424] space-y-6 relative shadow-2xl border border-indigo-500/30">
+          <div className="glass-panel max-w-3xl w-full p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0d1424] space-y-6 relative shadow-2xl border border-amber-500/30">
             
             {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.08] pb-4">
               <div className="flex items-center gap-2.5">
-                <Sparkles className="w-5 h-5 text-indigo-600 dark:text-cyan-400" />
+                <ShieldCheck className="w-5 h-5 text-amber-600 dark:text-amber-400" />
                 <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">CareerOptic</h3>
               </div>
               <button
@@ -1260,9 +1259,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
               {/* 4 Workspace Cards Grid (Proportioned Spacious Boxes) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
                 {/* Student Workspace */}
-                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-indigo-400/50 transition-colors min-h-[110px] flex flex-col justify-center shadow-sm">
+                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-amber-400/50 transition-colors min-h-[110px] flex flex-col justify-center shadow-sm">
                   <div className="flex items-center gap-2.5 font-extrabold text-slate-900 dark:text-white text-base">
-                    <GraduationCap className="w-5 h-5 text-indigo-600 dark:text-cyan-400 shrink-0" />
+                    <GraduationCap className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0" />
                     <span>Student Workspace</span>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
@@ -1312,7 +1311,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                   setShowDemoModal(false);
                   handleScrollToPortals();
                 }}
-                className="px-6 py-2.5 rounded-full bg-indigo-600 text-white font-bold text-xs sm:text-sm hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-600/30 active:scale-95 cursor-pointer"
+                className="px-6 py-2.5 rounded-full bg-amber-600 text-white font-bold text-xs sm:text-sm hover:bg-amber-500 transition-all shadow-lg shadow-amber-600/30 active:scale-95 cursor-pointer"
               >
                 Get Started
               </button>

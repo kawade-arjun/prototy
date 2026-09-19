@@ -31,7 +31,7 @@ export const Tab8SettingsBookmarks: React.FC = () => {
       company: 'Microsoft',
       deadline: 'In 3 days',
       status: 'Application Under Review',
-      statusColor: 'text-indigo-700 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 border-indigo-200 dark:border-indigo-500/30'
+      statusColor: 'text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/30'
     },
     {
       id: 'JOB-RZP-402',
@@ -39,7 +39,7 @@ export const Tab8SettingsBookmarks: React.FC = () => {
       company: 'Razorpay',
       deadline: 'In 9 days',
       status: 'Bookmarked for Review',
-      statusColor: 'text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/30'
+      statusColor: 'text-orange-700 dark:text-orange-400 bg-orange-50 dark:bg-orange-500/10 border-orange-200 dark:border-orange-500/30'
     }
   ]);
 
@@ -50,9 +50,9 @@ export const Tab8SettingsBookmarks: React.FC = () => {
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* Header Banner */}
-      <div className="rounded-3xl glass-panel p-8 bg-gradient-to-r from-slate-100 via-white to-indigo-50 dark:from-slate-900 dark:via-indigo-950/30 dark:to-slate-900">
+      <div className="rounded-3xl glass-panel p-8 bg-gradient-to-r from-slate-100 via-white to-amber-50 dark:from-slate-900 dark:via-amber-950/20 dark:to-slate-900">
         <div className="max-w-3xl space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 dark:bg-indigo-500/10 dark:border-indigo-500/20 dark:text-indigo-400 text-xs font-bold">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-xs font-bold">
             <Bookmark className="w-3.5 h-3.5" />
             <span>TAB 8 • SETTINGS & BOOKMARKS HUB</span>
           </div>
@@ -71,7 +71,7 @@ export const Tab8SettingsBookmarks: React.FC = () => {
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Bookmark className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+              <Bookmark className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               Opportunity Tracker & Active Pipelines
             </h3>
             <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
@@ -83,11 +83,11 @@ export const Tab8SettingsBookmarks: React.FC = () => {
             {savedOpportunities.map((opp) => (
               <div
                 key={opp.id}
-                className="glass-panel p-5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-indigo-300 dark:hover:border-slate-700 transition-all shadow-sm"
+                className="glass-panel p-5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-amber-400 dark:hover:border-amber-500/40 transition-all shadow-sm"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-indigo-600 dark:text-cyan-400">{opp.id}</span>
+                    <span className="font-mono text-xs font-bold text-amber-600 dark:text-amber-400">{opp.id}</span>
                     <span className="text-xs text-slate-400">•</span>
                     <span className="text-xs text-slate-600 dark:text-slate-300 flex items-center gap-1 font-medium">
                       <Building className="w-3.5 h-3.5 text-slate-400" /> {opp.company}
@@ -132,7 +132,7 @@ export const Tab8SettingsBookmarks: React.FC = () => {
             <div className="flex items-center justify-between gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
               <div>
                 <div className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                  {anonymousMode ? <EyeOff className="w-3.5 h-3.5 text-amber-500" /> : <Eye className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />}
+                  {anonymousMode ? <EyeOff className="w-3.5 h-3.5 text-amber-500" /> : <Eye className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />}
                   Anonymous Profile Mode
                 </div>
                 <div className="text-[10px] text-slate-500 dark:text-slate-400">Hides name and institution until invitation is accepted.</div>
@@ -140,7 +140,7 @@ export const Tab8SettingsBookmarks: React.FC = () => {
               <button
                 onClick={() => setAnonymousMode(!anonymousMode)}
                 className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors ${
-                  anonymousMode ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-800'
+                  anonymousMode ? 'bg-gradient-to-r from-amber-600 to-orange-500' : 'bg-slate-300 dark:bg-slate-800'
                 }`}
               >
                 <div
@@ -155,7 +155,7 @@ export const Tab8SettingsBookmarks: React.FC = () => {
             <div className="flex items-center justify-between gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
               <div>
                 <div className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                  <Lock className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+                  <Lock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                   Mask Contact Coordinates
                 </div>
                 <div className="text-[10px] text-slate-500 dark:text-slate-400">Phone & email masked with proxy tokens until interview.</div>
@@ -163,7 +163,7 @@ export const Tab8SettingsBookmarks: React.FC = () => {
               <button
                 onClick={() => setMaskContactDetails(!maskContactDetails)}
                 className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors ${
-                  maskContactDetails ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-800'
+                  maskContactDetails ? 'bg-gradient-to-r from-amber-600 to-orange-500' : 'bg-slate-300 dark:bg-slate-800'
                 }`}
               >
                 <div
@@ -186,7 +186,7 @@ export const Tab8SettingsBookmarks: React.FC = () => {
               <button
                 onClick={() => setMacroAnalyticsConsent(!macroAnalyticsConsent)}
                 className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors ${
-                  macroAnalyticsConsent ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-800'
+                  macroAnalyticsConsent ? 'bg-gradient-to-r from-amber-600 to-orange-500' : 'bg-slate-300 dark:bg-slate-800'
                 }`}
               >
                 <div

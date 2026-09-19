@@ -90,8 +90,8 @@ export const FUNNEL_STAGES: FunnelStageMeta[] = [
     shortLabel: 'Screened', 
     count: 32, 
     conversionRate: '66.7%', 
-    color: 'border-indigo-400 text-indigo-700 dark:border-indigo-600 dark:text-indigo-400',
-    badgeBg: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300',
+    color: 'border-amber-400 text-amber-700 dark:border-amber-600 dark:text-amber-400',
+    badgeBg: 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
     description: 'Resumes semantically parsed and vector-matched to JD.' 
   },
   { 
@@ -100,8 +100,8 @@ export const FUNNEL_STAGES: FunnelStageMeta[] = [
     shortLabel: 'Assessed', 
     count: 18, 
     conversionRate: '56.2%', 
-    color: 'border-cyan-400 text-cyan-700 dark:border-cyan-600 dark:text-cyan-400',
-    badgeBg: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300',
+    color: 'border-orange-400 text-orange-700 dark:border-orange-600 dark:text-orange-400',
+    badgeBg: 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300',
     description: 'Cleared proctored sandboxes (Judge0 code runs, DCF modeling).' 
   },
   { 
@@ -110,8 +110,8 @@ export const FUNNEL_STAGES: FunnelStageMeta[] = [
     shortLabel: 'Shortlisted', 
     count: 9, 
     conversionRate: '50.0%', 
-    color: 'border-amber-400 text-amber-700 dark:border-amber-600 dark:text-amber-400',
-    badgeBg: 'bg-amber-50 text-amber-800 dark:bg-amber-950 dark:text-amber-300',
+    color: 'border-amber-500 text-amber-800 dark:border-amber-500 dark:text-amber-300',
+    badgeBg: 'bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-200',
     description: 'Surpassed recruiter dynamic composite cutoff threshold.' 
   },
   { 
@@ -120,8 +120,8 @@ export const FUNNEL_STAGES: FunnelStageMeta[] = [
     shortLabel: 'Tech R1', 
     count: 6, 
     conversionRate: '66.7%', 
-    color: 'border-blue-400 text-blue-700 dark:border-blue-600 dark:text-blue-400',
-    badgeBg: 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
+    color: 'border-orange-500 text-orange-800 dark:border-orange-500 dark:text-orange-300',
+    badgeBg: 'bg-orange-100 text-orange-800 dark:bg-orange-900/60 dark:text-orange-200',
     description: 'Live domain & algorithmic architectural interview.' 
   },
   { 

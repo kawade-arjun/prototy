@@ -11,10 +11,8 @@ import {
   Send, 
   CheckCircle2, 
   Ban,
-  Lock,
-  Sparkles
+  Lock
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { RecruiterCandidate } from '../../mock/recruiterData';
 
 interface ElaForensicViewerModalProps {
@@ -44,7 +42,6 @@ export const ElaForensicViewerModal: React.FC<ElaForensicViewerModalProps> = ({
 
   const handleAlertTpo = () => {
     setIsTpoAlerted(true);
-    confetti({ particleCount: 50, spread: 60 });
     onAlertTpo(candidate.id);
   };
 
@@ -135,7 +132,7 @@ export const ElaForensicViewerModal: React.FC<ElaForensicViewerModalProps> = ({
               <div className="rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-950 p-4 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                    <FileText className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                     <span className="text-xs font-extrabold text-slate-800 dark:text-slate-200">
                       Original Attached Marksheet / Degree
                     </span>
@@ -195,8 +192,8 @@ export const ElaForensicViewerModal: React.FC<ElaForensicViewerModalProps> = ({
               <div className="rounded-2xl border border-rose-300 dark:border-rose-900/40 bg-slate-950 p-4 space-y-3">
                 <div className="flex items-center justify-between text-white">
                   <div className="flex items-center gap-2">
-                    <Binary className="w-4 h-4 text-cyan-400" />
-                    <span className="text-xs font-extrabold text-cyan-300">
+                    <Binary className="w-4 h-4 text-amber-400" />
+                    <span className="text-xs font-extrabold text-amber-300">
                       OpenCV cv2.absdiff() Error Level Analysis (ELA)
                     </span>
                   </div>
@@ -206,7 +203,7 @@ export const ElaForensicViewerModal: React.FC<ElaForensicViewerModalProps> = ({
                 </div>
 
                 {/* Simulated ELA Discrepancy Heatmap */}
-                <div className="relative rounded-xl border border-slate-800 bg-[#060810] p-5 shadow-inner min-h-[300px] flex flex-col justify-between font-mono text-cyan-400 overflow-hidden">
+                <div className="relative rounded-xl border border-slate-800 bg-[#060810] p-5 shadow-inner min-h-[300px] flex flex-col justify-between font-mono text-amber-400 overflow-hidden">
                   
                   {/* Glowing noise grid representing baseline uniform compression */}
                   <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:12px_12px] opacity-30 pointer-events-none" />
@@ -311,7 +308,7 @@ export const ElaForensicViewerModal: React.FC<ElaForensicViewerModalProps> = ({
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm ${
                 isTpoAlerted
                   ? 'bg-slate-200 dark:bg-slate-800 text-slate-500 cursor-default'
-                  : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/20 active:scale-95'
+                  : 'bg-amber-600 hover:bg-amber-500 text-white shadow-amber-600/20 active:scale-95'
               }`}
             >
               <Send className="w-3.5 h-3.5" />

@@ -115,7 +115,7 @@ const AppContent: React.FC = () => {
               <ShieldCheck className="w-3.5 h-3.5" /> 3-Tier Sovereign Verification Engine Active
             </span>
             <span className="hidden md:inline">•</span>
-            <span className="hidden md:flex items-center gap-1 text-cyan-600 dark:text-cyan-400 font-medium">
+            <span className="hidden md:flex items-center gap-1 text-amber-600 dark:text-amber-400 font-medium">
               <Lock className="w-3.5 h-3.5" /> India DPDP Act 2023 Statutory Conformance
             </span>
           </div>

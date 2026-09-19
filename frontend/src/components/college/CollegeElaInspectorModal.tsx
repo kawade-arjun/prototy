@@ -12,7 +12,6 @@ import {
   Search,
   Upload
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { STUDENT_DOC_INSPECTIONS, StudentUploadInspection } from '../../mock/collegeData';
 
 interface CollegeElaInspectorModalProps {
@@ -31,14 +30,12 @@ export const CollegeElaInspectorModal: React.FC<CollegeElaInspectorModalProps> =
     setIsScanning(true);
     setTimeout(() => {
       setIsScanning(false);
-      confetti({ particleCount: 50 });
       alert('OpenCV Error Level Analysis Complete: Scan confirmed ELA Anomaly Index: 0.884 in candidate document.');
     }, 900);
   };
 
   const handleApproveDoc = (id: string) => {
     setInspections(prev => prev.map(d => d.id === id ? { ...d, auditStatus: 'passed', elaIndex: 0.05, details: 'Manually verified by Placement Officer after registrar cross-check.' } : d));
-    confetti({ particleCount: 40 });
   };
 
   const handleFlagDoc = (id: string) => {
@@ -139,7 +136,7 @@ export const CollegeElaInspectorModal: React.FC<CollegeElaInspectorModalProps> =
             <div className="rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-950 p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                  <FileText className="w-4 h-4 text-indigo-500" />
+                  <FileText className="w-4 h-4 text-amber-500" />
                   <span>Original Attached Document: {activeDoc.docTitle}</span>
                 </span>
                 <span className="text-[10px] font-mono text-slate-400">Roll: {activeDoc.rollNumber}</span>
@@ -180,8 +177,8 @@ export const CollegeElaInspectorModal: React.FC<CollegeElaInspectorModalProps> =
             </div>
 
             {/* Right: ELA Pixel Discrepancy Heatmap */}
-            <div className="rounded-2xl border border-rose-300 dark:border-rose-900/40 bg-slate-950 p-4 space-y-3 text-cyan-400">
-              <div className="flex items-center justify-between text-xs font-bold text-cyan-300">
+            <div className="rounded-2xl border border-rose-300 dark:border-rose-900/40 bg-slate-950 p-4 space-y-3 text-amber-400">
+              <div className="flex items-center justify-between text-xs font-bold text-amber-300">
                 <span className="flex items-center gap-1.5">
                   <Binary className="w-4 h-4" />
                   <span>OpenCV cv2.absdiff() ELA Heatmap</span>

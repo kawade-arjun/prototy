@@ -9,7 +9,6 @@ import {
   Globe2, 
   Search, 
   Filter, 
-  Sparkles, 
   CheckCircle2, 
   Building2, 
   Lock, 
@@ -26,7 +25,6 @@ import {
   Database,
   HeartPulse
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { useTheme } from '../../context/ThemeContext';
 import { 
   STATE_TELEMETRY_DATA, 
@@ -67,7 +65,6 @@ export const GovernmentPortal: React.FC = () => {
 
   const handleExportGazette = () => {
     setIsExportingGazette(true);
-    confetti({ particleCount: 75, spread: 80 });
     setTimeout(() => {
       setIsExportingGazette(false);
       alert('Official National Skill Deficit & NEP 2020 Vocational Directive Gazette published under Authority of AICTE & Ministry of Ayush.');
@@ -76,7 +73,6 @@ export const GovernmentPortal: React.FC = () => {
 
   const handleDispatchToNip = (candidateId: string) => {
     setDispatchedCandidates(prev => [...prev, candidateId]);
-    confetti({ particleCount: 40 });
     alert(`Candidate ${candidateId} successfully pushed to AICTE National Internship Portal (NIP) and Central PSU Priority Gateway!`);
   };
 
@@ -97,7 +93,7 @@ export const GovernmentPortal: React.FC = () => {
     <div className="space-y-6 animate-fadeIn font-sans pb-12">
       
       {/* 1. NATIONAL TALENT & POLICY OBSERVATORY HERO BANNER */}
-      <div className="glass-panel rounded-3xl p-6 sm:p-7 shadow-xl space-y-4 border border-rose-500/20 bg-gradient-to-r from-rose-500/5 via-transparent to-indigo-500/5">
+      <div className="glass-panel rounded-3xl p-6 sm:p-7 shadow-xl space-y-4 border border-rose-500/20 bg-gradient-to-r from-rose-500/5 via-transparent to-amber-500/5">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           
           <div className="space-y-1.5">
@@ -165,7 +161,7 @@ export const GovernmentPortal: React.FC = () => {
 
           <div className="p-3 rounded-xl bg-slate-50/80 dark:bg-[#080d1a]/80 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5">
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Industry Co-Funded R&D</div>
-            <div className="text-xl sm:text-2xl font-black text-indigo-600 dark:text-cyan-400">₹48.2 Cr Grants</div>
+            <div className="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400">₹48.2 Cr Grants</div>
             <div className="text-[10px] text-slate-500 dark:text-slate-400">Active across 42 collaborative projects</div>
           </div>
 
@@ -381,11 +377,11 @@ export const GovernmentPortal: React.FC = () => {
       {activeTab === 'national_registry' && (
         <div className="space-y-6 animate-fadeIn">
           
-          <div className="glass-panel p-6 rounded-2xl space-y-4 shadow-sm border border-indigo-500/20">
+          <div className="glass-panel p-6 rounded-2xl space-y-4 shadow-sm border border-amber-500/20">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/30">
+                  <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30">
                     SINGLE SOVEREIGN TALENT SUBSTRATE
                   </span>
                   <span className="text-[9px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
@@ -472,7 +468,7 @@ export const GovernmentPortal: React.FC = () => {
                           {scholar.institution}
                         </td>
 
-                        <td className="p-3 font-mono font-black text-indigo-600 dark:text-cyan-400 text-sm">
+                        <td className="p-3 font-mono font-black text-amber-600 dark:text-amber-400 text-sm">
                           {scholar.proctoredSandboxScore}%
                         </td>
 
@@ -560,7 +556,7 @@ export const GovernmentPortal: React.FC = () => {
 
               <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
                 <div className="text-[10px] text-slate-400 uppercase font-bold">ICD-11 Certified Graduates</div>
-                <div className="text-2xl font-black text-indigo-600 dark:text-cyan-400">16,230</div>
+                <div className="text-2xl font-black text-amber-600 dark:text-amber-400">16,230</div>
                 <div className="text-[10px] text-slate-500">Globally Employable Underwriters</div>
               </div>
 
@@ -613,10 +609,10 @@ export const GovernmentPortal: React.FC = () => {
       {activeTab === 'nep_curriculum' && (
         <div className="space-y-6 animate-fadeIn">
           
-          <div className="glass-panel p-6 rounded-2xl space-y-4 shadow-sm border border-indigo-500/20">
+          <div className="glass-panel p-6 rounded-2xl space-y-4 shadow-sm border border-amber-500/20">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/30">
+                <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30">
                   NATIONAL EDUCATION POLICY (NEP 2020) REFORM ENGINE
                 </span>
                 <h2 className="text-xl font-black text-slate-900 dark:text-white mt-1">
@@ -629,7 +625,7 @@ export const GovernmentPortal: React.FC = () => {
 
               <button
                 onClick={handleExportGazette}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-sm transition-all"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-sm transition-all"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Issue National AICTE Directive</span>
@@ -718,7 +714,7 @@ export const GovernmentPortal: React.FC = () => {
                   >
                     <div className="space-y-2.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-cyan-400">
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400">
                           {proj.industryPartner}
                         </span>
                         <span className="text-sm font-black font-mono text-emerald-600 dark:text-emerald-400">
@@ -750,10 +746,10 @@ export const GovernmentPortal: React.FC = () => {
                       <div className="space-y-1">
                         <div className="flex justify-between text-[10px] font-bold">
                           <span className="text-slate-500">Milestone Progress:</span>
-                          <span className="font-mono text-indigo-600 dark:text-cyan-400">{proj.milestonesCompleted} / {proj.totalMilestones} Completed</span>
+                          <span className="font-mono text-amber-600 dark:text-amber-400">{proj.milestonesCompleted} / {proj.totalMilestones} Completed</span>
                         </div>
                         <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-                          <div className="h-full bg-indigo-600 rounded-full" style={{ width: `${progressPct}%` }} />
+                          <div className="h-full bg-amber-600 rounded-full" style={{ width: `${progressPct}%` }} />
                         </div>
                       </div>
                     </div>
@@ -781,7 +777,7 @@ export const GovernmentPortal: React.FC = () => {
       {activeTab === 'sovereign_governance' && (
         <div className="space-y-6 animate-fadeIn">
           
-          <div className="glass-panel p-6 rounded-2xl space-y-4 shadow-sm border border-indigo-500/20">
+          <div className="glass-panel p-6 rounded-2xl space-y-4 shadow-sm border border-amber-500/20">
             <h2 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
               <Server className="w-4 h-4 text-emerald-500" />
               <span>Sovereign Cloud Residency & DPDP Act 2023 Statutory Compliance</span>

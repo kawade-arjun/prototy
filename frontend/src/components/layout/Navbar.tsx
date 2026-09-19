@@ -152,7 +152,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {/* Header */}
                 <div className="px-2.5 py-2 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                    <div className="w-6 h-6 rounded-lg bg-amber-100 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center">
                       <Settings className="w-3.5 h-3.5" />
                     </div>
                     <div>
@@ -180,11 +180,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                       className="w-full p-2.5 rounded-xl flex items-center justify-between hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors group cursor-pointer text-left"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-cyan-400 flex items-center justify-center shrink-0">
+                        <div className="w-7 h-7 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
                           <Bookmark className="w-3.5 h-3.5" />
                         </div>
                         <div>
-                          <div className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                          <div className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                             Saved Jobs & Trackers
                           </div>
                           <div className="text-[10px] text-slate-500 dark:text-slate-400">
@@ -237,7 +237,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <button
                       type="button"
                       onClick={toggleTheme}
-                      className="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-bold text-[10px] shadow-sm hover:bg-indigo-500 active:scale-95 transition-all cursor-pointer"
+                      className="px-2.5 py-1 rounded-lg bg-gradient-to-r from-amber-600 to-orange-500 text-white font-bold text-[10px] shadow-sm hover:from-amber-500 hover:to-orange-400 active:scale-95 transition-all cursor-pointer"
                     >
                       {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
                     </button>
@@ -246,7 +246,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {/* Option: Notification Alerts Toggle */}
                   <div className="w-full p-2.5 rounded-xl flex items-center justify-between hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors">
                     <div className="flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
+                      <div className="w-7 h-7 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
                         <Bell className="w-3.5 h-3.5" />
                       </div>
                       <div>
@@ -262,7 +262,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       type="checkbox"
                       checked={emailAlerts}
                       onChange={(e) => setEmailAlerts(e.target.checked)}
-                      className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
+                      className="h-4 w-4 rounded border-slate-300 text-amber-600 focus:ring-amber-500 cursor-pointer"
                     />
                   </div>
 
@@ -296,7 +296,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <div className="pt-2 border-t border-slate-100 dark:border-white/[0.08]">
                   <button
                     onClick={() => handleSelectSettingsOption()}
-                    className="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-indigo-50 dark:bg-slate-800/80 dark:hover:bg-indigo-950/60 text-slate-800 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-cyan-400 font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
+                    className="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-amber-50 dark:bg-slate-800/80 dark:hover:bg-amber-950/60 text-slate-800 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
                   >
                     <SlidersHorizontal className="w-3.5 h-3.5" />
                     <span>Open Full Settings Controls</span>
