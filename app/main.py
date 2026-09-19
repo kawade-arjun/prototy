@@ -5,6 +5,7 @@ import logging
 import re
 from typing import List, Optional
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
@@ -28,6 +29,14 @@ app = FastAPI(
     title="CareerOptic Vector Embedding & Matching Service",
     version="1.0.0",
     description="FastAPI service generating 384-dim skill-vector embeddings using sentence-transformers/all-MiniLM-L6-v2 via Hugging Face Inference API."
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

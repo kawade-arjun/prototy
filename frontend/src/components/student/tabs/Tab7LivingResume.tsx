@@ -88,9 +88,31 @@ export const Tab7LivingResume: React.FC = () => {
           console.warn(`Backend PDF parser endpoint ${endpoint} failed:`, err);
         }
       }
+
+      // Browser-side text extraction fallback from PDF bytes streams
+      try {
+        const buffer = await file.arrayBuffer();
+        const rawText = new TextDecoder('latin1').decode(buffer);
+        const matches = rawText.match(/\(([^)]+)\)/g);
+        if (matches && matches.length > 5) {
+          const extracted = matches
+            .map(m => m.slice(1, -1).trim())
+            .filter(t => t.length > 1 && !t.startsWith('/') && !t.includes('Font') && !t.includes('Catalog'))
+            .join(' ');
+          if (extracted.length > 30) {
+            setUploadedResume(extracted, fileName, fileSize);
+            setCustomText(extracted);
+            setUploadStatus(`Extracted ${extracted.length} characters from ${fileName}!`);
+            setTimeout(() => setUploadStatus(null), 3000);
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Browser raw stream text fallback failed:', e);
+      }
     }
 
-    // Honest fallback if PDF text extraction could not parse printable text
+    // Fallback if PDF text extraction could not parse printable text
     const defaultText = `CANDIDATE RESUME: ${fileName} (${fileSize})\n[Unable to automatically extract text from this PDF file. Please paste or edit your resume text manually using the editor below.]`;
     setUploadedResume(defaultText, fileName, fileSize);
     setCustomText(defaultText);
