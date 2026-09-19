@@ -145,15 +145,15 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
   return (
     <div className="space-y-8">
       {/* 1. Resume AI Studio & Competency Radar Section */}
-      <div className="space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-white/[0.08] pb-3">
+      <div className="space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4  pb-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center text-1xl font-black shadow-sm">
               01
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">1. Resume AI Studio</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Quantified metrics breakdown, interactive suggestions & 6-axis radar matrix</p>
+              <h3 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight"> Resume Analyse Studio</h3>
+              {/* <p className="text-xs text-slate-500 dark:text-slate-400">Quantified metrics breakdown, interactive suggestions & 6-axis radar matrix</p> */}
             </div>
           </div>
           
@@ -165,18 +165,18 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             >
               <span>{isAnalyzingResume ? 'Scanning Tokens...' : 'Analyse Current Resume'}</span>
             </button>
-            <button
+            {/* <button
               onClick={() => setShowAiResumeModal(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 dark:bg-[#121a2e] dark:hover:bg-[#18233e] dark:text-slate-200 dark:border-white/[0.1] text-xs font-bold transition-all duration-200 active:scale-95 shadow-sm"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-800 border-slate-300 dark:bg-[#121a2e] dark:hover:bg-[#18233e] dark:text-slate-200 dark:border-white/[0.1] text-xs font-bold transition-all duration-200 active:scale-95 shadow-sm"
             >
               <span>Make New Resume using AI</span>
-            </button>
+            </button> */}
           </div>
         </div>
 
         {/* Active Uploaded Resume Sync Banner */}
         {uploadedResume && (
-          <div className="p-4 rounded-2xl bg-amber-500/[0.08] border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div className="p-4 rounded-2xl bg-amber-500/[0.08] border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">
                 📄
@@ -199,11 +199,11 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
         {/* Title Header matching user screenshot */}
         <div className="pt-2 border-t border-slate-200 dark:border-white/[0.08] space-y-1">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Resume Analysis</h2>
+            {/* <h2 className="text-[1.375rem] font-bold text-slate-900 dark:text-white tracking-tight">Resume Analysis</h2> */}
           </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            AI-powered insights for your resume: <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">{uploadedResume?.fileName ? uploadedResume.fileName : 'c6b51465e970597ad1a65040e897925f'}</span>
-          </p>
+          {/* <p className="text-xs text-slate-500 dark:text-slate-400">
+            AI-powered insights for your resume <span className="font-mono text-amber-600 dark:text-amber-400 font-bold"></span>
+          </p> */}
         </div>
 
         {/* 4 KPI Cards */}
@@ -257,42 +257,157 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {/* ATS Score Performance - Semicircle Arc Gauge */}
-          <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] flex flex-col items-center justify-center space-y-3 relative overflow-hidden min-h-[220px]">
-            <div className="text-xs font-extrabold uppercase tracking-wider text-slate-600 dark:text-slate-300 self-start">
-              ATS Score Performance
+          {/* ATS Score Performance - Diagrammatic Semicircle Radial Gauge */}
+          <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] flex flex-col justify-between space-y-4 relative overflow-hidden min-h-[250px]">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/[0.06] pb-3">
+              <div className="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-amber-500" />
+                <span>ATS Score Performance Gauge</span>
+              </div>
+              <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border ${
+                atsResult.overallScore >= 80 
+                  ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30' 
+                  : atsResult.overallScore >= 60 
+                    ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
+                    : 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30'
+              }`}>
+                {atsResult.overallScore >= 80 ? '✓ ATS Optimized' : atsResult.overallScore >= 60 ? '⚡ Good Baseline' : '⚠ Action Required'}
+              </span>
             </div>
             
-            <div className="relative flex items-center justify-center pt-4 pb-2">
-              <svg className="w-56 h-28 overflow-visible">
-                <path
-                  d="M 12 100 A 88 88 0 0 1 212 100"
-                  fill="none"
-                  stroke={theme === 'dark' ? '#1e293b' : '#e2e8f0'}
-                  strokeWidth="18"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M 12 100 A 88 88 0 0 1 212 100"
-                  fill="none"
-                  stroke="url(#atsArcGradient)"
-                  strokeWidth="18"
-                  strokeLinecap="round"
-                  strokeDasharray={276.4}
-                  strokeDashoffset={276.4 - (276.4 * atsResult.overallScore) / 100}
-                  className="transition-all duration-1000 ease-out"
-                />
-                <defs>
-                  <linearGradient id="atsArcGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#f43f5e" />
-                    <stop offset="50%" stopColor="#f59e0b" />
-                    <stop offset="100%" stopColor="#10b981" />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <div className="absolute bottom-1 flex flex-col items-center text-center">
-                <span className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">{atsResult.overallScore}</span>
-                <span className="text-[11px] text-slate-500 dark:text-slate-400 font-bold">out of 100</span>
+            <div className="flex flex-col sm:flex-row items-center justify-around gap-4 py-2">
+              {/* Semicircle Gauge with Ticks & Needle */}
+              <div className="relative flex flex-col items-center justify-center shrink-0">
+                <svg className="w-60 h-32 overflow-visible">
+                  <defs>
+                    <linearGradient id="diagrammaticArcGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#f43f5e" />
+                      <stop offset="50%" stopColor="#f59e0b" />
+                      <stop offset="100%" stopColor="#10b981" />
+                    </linearGradient>
+                    <filter id="gaugeShadow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#f59e0b" floodOpacity="0.25" />
+                    </filter>
+                  </defs>
+
+                  {/* Outer Tick Marks */}
+                  {[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((tick) => {
+                    const angle = Math.PI + (tick / 100) * Math.PI;
+                    const x1 = 120 + Math.cos(angle) * 88;
+                    const y1 = 110 + Math.sin(angle) * 88;
+                    const x2 = 120 + Math.cos(angle) * (tick % 50 === 0 ? 76 : 82);
+                    const y2 = 110 + Math.sin(angle) * (tick % 50 === 0 ? 76 : 82);
+                    return (
+                      <line
+                        key={tick}
+                        x1={x1}
+                        y1={y1}
+                        x2={x2}
+                        y2={y2}
+                        stroke={theme === 'dark' ? '#334155' : '#cbd5e1'}
+                        strokeWidth={tick % 50 === 0 ? "2.5" : "1"}
+                      />
+                    );
+                  })}
+
+                  {/* Background Track Arc */}
+                  <path
+                    d="M 24 110 A 96 96 0 0 1 216 110"
+                    fill="none"
+                    stroke={theme === 'dark' ? '#1e293b' : '#f1f5f9'}
+                    strokeWidth="16"
+                    strokeLinecap="round"
+                  />
+
+                  {/* Active Value Gradient Arc */}
+                  <path
+                    d="M 24 110 A 96 96 0 0 1 216 110"
+                    fill="none"
+                    stroke="url(#diagrammaticArcGradient)"
+                    strokeWidth="16"
+                    strokeLinecap="round"
+                    strokeDasharray={301.5}
+                    strokeDashoffset={301.5 - (301.5 * atsResult.overallScore) / 100}
+                    filter="url(#gaugeShadow)"
+                    className="transition-all duration-1000 ease-out"
+                  />
+
+                  {/* Pivot Center Point */}
+                  <circle cx="120" cy="110" r="7" fill={theme === 'dark' ? '#f8fafc' : '#0f172a'} />
+                  <circle cx="120" cy="110" r="3" fill="#f59e0b" />
+
+                  {/* Animated Pivot Needle Indicator */}
+                  {(() => {
+                    const needleAngle = Math.PI + (atsResult.overallScore / 100) * Math.PI;
+                    const nx = 120 + Math.cos(needleAngle) * 70;
+                    const ny = 110 + Math.sin(needleAngle) * 70;
+                    return (
+                      <line
+                        x1="120"
+                        y1="110"
+                        x2={nx}
+                        y2={ny}
+                        stroke="#f59e0b"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        className="transition-all duration-1000 ease-out"
+                      />
+                    );
+                  })()}
+                </svg>
+
+                {/* Score Center Value Display */}
+                <div className="absolute bottom-0 flex flex-col items-center text-center">
+                  <span className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
+                    {atsResult.overallScore}
+                  </span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
+                    Score / 100
+                  </span>
+                </div>
+              </div>
+
+              {/* Sub-Metric Bar Breakdown Matrix */}
+              <div className="w-full sm:w-1/2 space-y-2.5 text-xs">
+                <div className="space-y-1">
+                  <div className="flex justify-between text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                    <span>Quantified Metrics</span>
+                    <span className="font-mono font-bold text-amber-600 dark:text-amber-400">{atsResult.quantifiedMetricsScore}%</span>
+                  </div>
+                  <div className="w-full h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                    <div className="h-full bg-amber-500 rounded-full transition-all duration-700" style={{ width: `${atsResult.quantifiedMetricsScore}%` }} />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex justify-between text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                    <span>Keyword Density</span>
+                    <span className="font-mono font-bold text-amber-600 dark:text-amber-400">{atsResult.keywordDensityScore}%</span>
+                  </div>
+                  <div className="w-full h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                    <div className="h-full bg-emerald-500 rounded-full transition-all duration-700" style={{ width: `${atsResult.keywordDensityScore}%` }} />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex justify-between text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                    <span>Formatting Parsability</span>
+                    <span className="font-mono font-bold text-amber-600 dark:text-amber-400">{atsResult.formattingParsabilityScore}%</span>
+                  </div>
+                  <div className="w-full h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                    <div className="h-full bg-sky-500 rounded-full transition-all duration-700" style={{ width: `${atsResult.formattingParsabilityScore}%` }} />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex justify-between text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                    <span>Impact Action Verbs</span>
+                    <span className="font-mono font-bold text-amber-600 dark:text-amber-400">{geminiResumeResult?.impactActionVerbsScore || 86}%</span>
+                  </div>
+                  <div className="w-full h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                    <div className="h-full bg-purple-500 rounded-full transition-all duration-700" style={{ width: `${geminiResumeResult?.impactActionVerbsScore || 86}%` }} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -331,7 +446,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
         {/* Strengths & Weaknesses Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {/* ✅ Strengths */}
+          {/*  Strengths */}
           <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] space-y-4">
             <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-extrabold text-sm border-b border-slate-100 dark:border-white/[0.06] pb-2">
               <span className="text-emerald-500 text-base">✓</span>
@@ -361,7 +476,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             </ul>
           </div>
 
-          {/* ❌ Weaknesses */}
+          {/*  Weaknesses */}
           <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] space-y-4">
             <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-extrabold text-sm border-b border-slate-100 dark:border-white/[0.06] pb-2">
               <span className="text-rose-500 text-base">✕</span>
@@ -392,7 +507,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
           </div>
         </div>
 
-        {/* 💡 Suggestions */}
+        {/*  Suggestions */}
         <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] space-y-4">
           <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-extrabold text-sm border-b border-slate-100 dark:border-white/[0.06] pb-2">
             <span className="text-base">💡</span>
@@ -421,12 +536,12 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
       <div className="space-y-5 pt-4 border-t border-slate-200 dark:border-white/[0.08]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center text-1xl font-black shadow-sm">
               02
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">2. Skill Gap Analysis Studio</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Dual Input Modes & Minimum Skill-Bridge Recommendations</p>
+              <h3 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight"> Skill Gap Analysis Studio</h3>
+              {/* <p className="text-xs text-slate-500 dark:text-slate-400">Dual Input Modes & Minimum Skill-Bridge Recommendations</p> */}
             </div>
           </div>
          
@@ -692,36 +807,14 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
               {/* Dynamic Skill Differential Analysis Results */}
               <div className="space-y-5">
-                
-                {/* AI Executive Match Summary Header */}
-                <div className="p-5 rounded-2xl bg-slate-900 border border-amber-500/40 space-y-3 text-white shadow-md">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center font-black text-sm shrink-0">
-                        AI
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-bold uppercase tracking-wider text-amber-300">Resume vs Job Description Differential Result</h4>
-                        <p className="text-xs text-slate-300">
-                          {geminiSkillGapResult?.summary || `Comparing candidate resume against ${gapMode === 'pasteJd' ? 'pasted Job Description' : selectedJobId} requirements.`}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="shrink-0 flex items-center gap-2">
-                      <span className="text-xs font-mono font-black px-3.5 py-1.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                        Match Score: {geminiSkillGapResult?.matchPercentage ?? 85}%
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
+               
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   
                   {/* Matched Competencies (Green) */}
                   <div className="p-5 rounded-2xl bg-emerald-50/80 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/40 space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-2">
-                        ✓ Matched Skills in Resume ({ (geminiSkillGapResult?.matchedSkills || activeStudent.verifiedSkills).length })
+                         Matched Skills in Resume ({ (geminiSkillGapResult?.matchedSkills || activeStudent.verifiedSkills).length })
                       </span>
                       <span className="text-xs px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-bold border border-emerald-300 dark:border-emerald-800">
                         Verified Match
@@ -743,7 +836,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   <div className="p-5 rounded-2xl bg-rose-50/80 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-800/40 space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wider flex items-center gap-2">
-                        ✕ Missing Skills / Deficits ({ (geminiSkillGapResult?.missingSkills || activeStudent.missingSkills).length })
+                         Missing Skills / Deficits ({ (geminiSkillGapResult?.missingSkills || activeStudent.missingSkills).length })
                       </span>
                       <span className="text-xs px-2.5 py-1 rounded-full bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300 font-bold border border-rose-300 dark:border-rose-800">
                         Required in JD
@@ -767,7 +860,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 <div className="p-6 rounded-2xl glass-panel border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] space-y-4">
                   <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/[0.06] pb-3">
                     <h5 className="text-xs font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200 flex items-center gap-2">
-                      💡 Recommended Skill-Bridge Action Plan
+                       Recommended Skill-Bridge Action Plan
                     </h5>
                     <span className="text-[11px] font-mono font-bold text-amber-600 dark:text-amber-400">
                       Targeted Milestones
