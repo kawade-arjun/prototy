@@ -78,11 +78,22 @@ export const Tab2ProctoredSandbox: React.FC = () => {
   const [editorLanguage, setEditorLanguage] = useState<'python' | 'cpp' | 'java' | 'typescript'>('python');
   const [currentCode, setCurrentCode] = useState('');
   const [isRunningSandbox, setIsRunningSandbox] = useState(false);
+  const [terminalTrayMode, setTerminalTrayMode] = useState<'suite' | 'custom_input'>('suite');
+  const [customInputText, setCustomInputText] = useState('arr = [10, 20, 35, 50, 75]\ntarget = 85');
+  const [customInputOutput, setCustomInputOutput] = useState<string | null>(null);
   const [sandboxOutput, setSandboxOutput] = useState<{
     status: 'passed' | 'failed' | 'idle';
     passedCount: number;
     totalCount: number;
     details: string;
+  } | null>(null);
+
+  // Sovereign Cryptographic Badge Minting Modal State
+  const [mintedBadge, setMintedBadge] = useState<{
+    testTitle: string;
+    badgeName: string;
+    hash: string;
+    timestamp: string;
   } | null>(null);
 
   // Anti-Cheat Telemetry State for Active Session
@@ -93,6 +104,19 @@ export const Tab2ProctoredSandbox: React.FC = () => {
 
   // Diagnostic Report Modal State
   const [diagnosticReportTest, setDiagnosticReportTest] = useState<AssessmentTest | null>(null);
+
+  const getBoilerplateCode = (lang: 'python' | 'cpp' | 'java' | 'typescript', title: string) => {
+    switch (lang) {
+      case 'python':
+        return `# ${title} - Python 3.12 Sandbox\ndef solution(*args):\n    # Write production-grade code below\n    return True\n`;
+      case 'cpp':
+        return `// ${title} - C++ 20 Sandbox\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    // Write production-grade code below\n    cout << "Passed" << endl;\n    return 0;\n}\n`;
+      case 'java':
+        return `// ${title} - Java 17 Sandbox\nimport java.util.*;\n\npublic class Solution {\n    public static void main(String[] args) {\n        // Write production-grade code below\n        System.out.println("Passed");\n    }\n}\n`;
+      case 'typescript':
+        return `// ${title} - TypeScript 5.4 Sandbox\nexport function solution(input: any): any {\n    // Write production-grade code below\n    return true;\n}\n`;
+    }
+  };
 
   // Sub-tabs definition with colors & icons (All Tests tab placed before Daily Quests)
   const subTabs = [
@@ -609,7 +633,12 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                         {(['python', 'cpp', 'java', 'typescript'] as const).map((l) => (
                           <button
                             key={l}
-                            onClick={() => setEditorLanguage(l)}
+                            onClick={() => {
+                              setEditorLanguage(l);
+                              if (activeTest) {
+                                setCurrentCode(getBoilerplateCode(l, activeTest.title));
+                              }
+                            }}
                             className={`px-2 py-0.5 rounded text-[11px] font-mono font-bold ${
                               editorLanguage === l ? 'bg-cyan-500 text-slate-950' : 'text-slate-400'
                             }`}
@@ -646,17 +675,77 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                     />
                   </div>
 
-                  {/* Terminal Execution Tray */}
-                  {sandboxOutput && (
-                    <div className="p-4 bg-[#080c16] border-t border-white/[0.1] text-xs font-mono space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-emerald-400 font-bold flex items-center gap-1.5">
-                          <CheckCircle2 className="w-4 h-4" /> {sandboxOutput.details}
-                        </span>
-                        <span className="text-[11px] text-slate-400">Sandbox exit code: 0</span>
+                  {/* Terminal Execution & Custom Input Tray */}
+                  <div className="bg-[#080c16] border-t border-white/[0.1] text-xs font-mono">
+                    <div className="flex items-center justify-between px-4 py-2 border-b border-white/[0.06] bg-[#050810]">
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => setTerminalTrayMode('suite')}
+                          className={`px-3 py-1 rounded-md text-[11px] font-bold ${
+                            terminalTrayMode === 'suite' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'
+                          }`}
+                        >
+                          Automated Test Suite (4/4)
+                        </button>
+                        <button
+                          onClick={() => setTerminalTrayMode('custom_input')}
+                          className={`px-3 py-1 rounded-md text-[11px] font-bold ${
+                            terminalTrayMode === 'custom_input' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'
+                          }`}
+                        >
+                          Custom Test Input Runner
+                        </button>
                       </div>
+                      <span className="text-[10px] text-slate-400 font-sans">Judge0 Isolated Sandbox • Container ID #c8f902</span>
                     </div>
-                  )}
+
+                    <div className="p-3">
+                      {terminalTrayMode === 'suite' ? (
+                        sandboxOutput ? (
+                          <div className="flex items-center justify-between text-emerald-400 font-bold">
+                            <span className="flex items-center gap-1.5">
+                              <CheckCircle2 className="w-4 h-4 text-emerald-400" /> {sandboxOutput.details}
+                            </span>
+                            <span className="text-[11px] text-slate-400 font-normal">Sandbox exit code: 0</span>
+                          </div>
+                        ) : (
+                          <div className="text-slate-400 text-[11px]">
+                            Click "Run Test Cases" to execute candidate code against 4 automated Judge0 test containers.
+                          </div>
+                        )
+                      ) : (
+                        <div className="space-y-2">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                              <label className="text-[10px] uppercase font-bold text-slate-400">Custom Input (stdin):</label>
+                              <textarea
+                                value={customInputText}
+                                onChange={(e) => setCustomInputText(e.target.value)}
+                                rows={2}
+                                className="w-full bg-[#03050a] border border-white/[0.1] rounded-lg p-2 text-xs text-cyan-300 font-mono focus:outline-none focus:border-cyan-500"
+                              />
+                            </div>
+                            <div>
+                              <label className="text-[10px] uppercase font-bold text-slate-400">Standard Output (stdout):</label>
+                              <div className="w-full bg-[#03050a] border border-white/[0.1] rounded-lg p-2 text-xs text-emerald-400 font-mono h-[54px] overflow-y-auto">
+                                {customInputOutput || "Run container with custom input to view stdout..."}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex justify-end">
+                            <button
+                              onClick={() => {
+                                setCustomInputOutput(`Input Parsed: [${customInputText.replace(/\n/g, ', ')}]\nOutput: 85 (Target Match Found in 3ms)\nExecution Status: SUCCESS (Exit Code 0)`);
+                              }}
+                              className="px-3 py-1 rounded bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-[11px]"
+                            >
+                              Run Custom Input
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -964,6 +1053,65 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               </button>
             </div>
 
+          </div>
+        </div>
+      )}
+
+      {/* Sovereign Cryptographic Verifiable Credential Minting Modal */}
+      {mintedBadge && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+          <div className="w-full max-w-md m3-surface-2 rounded-3xl p-6 border border-amber-500/40 shadow-2xl space-y-5 relative">
+            <button
+              onClick={() => setMintedBadge(null)}
+              className="absolute top-4 right-4 p-1.5 rounded-full bg-slate-800 text-slate-400 hover:text-white"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="text-center space-y-2">
+              <div className="w-14 h-14 mx-auto rounded-2xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center shadow-lg">
+                <Award className="w-8 h-8" />
+              </div>
+              <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                Verifiable Credential Minted!
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+                {mintedBadge.badgeName}
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-[#070b14] border border-white/[0.08] space-y-2.5 font-mono text-xs">
+              <div className="flex items-center justify-between text-slate-400 text-[11px]">
+                <span>Assessment Title:</span>
+                <span className="text-cyan-300 font-bold truncate max-w-[180px]">{mintedBadge.testTitle}</span>
+              </div>
+              <div className="flex items-center justify-between text-slate-400 text-[11px]">
+                <span>Cryptographic Proof:</span>
+                <span className="text-emerald-400 font-bold">{mintedBadge.hash}</span>
+              </div>
+              <div className="flex items-center justify-between text-slate-400 text-[11px]">
+                <span>Timestamp:</span>
+                <span className="text-slate-300">{mintedBadge.timestamp}</span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between gap-3 pt-2">
+              <button
+                onClick={() => {
+                  alert(`Badge ${mintedBadge.badgeName} attached to Sovereign Living Resume!`);
+                  setMintedBadge(null);
+                }}
+                className="flex-1 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md shadow-amber-500/20"
+              >
+                Attach to Living Resume
+              </button>
+              <button
+                onClick={() => setMintedBadge(null)}
+                className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
