@@ -220,22 +220,23 @@ def clean_extracted_text(text: str) -> str:
         return ""
 
     clean_lines = []
+    allowed_punctuation = ".,;:!?-()/[]{}@#$&*+=|\\/'\"•●–—_°%<>~`^"
     for line in text.split('\n'):
         line_str = line.strip()
         if not line_str:
             continue
 
-        # Count printable ASCII / standard Unicode letters/digits/punctuation vs gibberish
-        printable_chars = sum(1 for c in line_str if 32 <= ord(c) <= 126 or ord(c) in (9, 10, 13))
         total_chars = len(line_str)
+        # Count Unicode printable characters (including bullet points, dashes, international characters)
+        printable_chars = sum(1 for c in line_str if c.isprintable() or c in ('\n', '\r', '\t'))
 
-        # Discard lines with > 25% non-printable binary characters
-        if total_chars > 0 and (printable_chars / total_chars) < 0.75:
+        # Discard lines with > 35% unprintable binary control codes
+        if total_chars > 0 and (printable_chars / total_chars) < 0.65:
             continue
 
-        # Discard lines with low alphanumeric density (raw binary noise symbols like ä!ÃX£bIF?)
-        alpha_num_count = sum(1 for c in line_str if c.isalnum() or c.isspace())
-        if total_chars > 5 and (alpha_num_count / total_chars) < 0.50:
+        # Count alphanumeric, space, or standard resume punctuation/bullet symbols
+        valid_chars = sum(1 for c in line_str if c.isalnum() or c.isspace() or c in allowed_punctuation)
+        if total_chars > 5 and (valid_chars / total_chars) < 0.35:
             continue
 
         clean_lines.append(line_str)

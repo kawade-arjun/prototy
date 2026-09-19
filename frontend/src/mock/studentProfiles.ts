@@ -7,32 +7,32 @@ export const STUDENT_PROFILES: Record<AcademicStream, StudentProfile> = {
     streamName: 'Engineering',
     name: 'Arjun Kawade',
     avatarInitials: 'AK',
-    degree: 'B.Tech in Computer Science & Engineering (AI & Distributed Systems)',
-    institution: 'IIT Bombay (Tier 1 AICTE Center of Excellence)',
-    benchmarkBadge: 'IIT Bombay Benchmark • AICTE Gold Tier',
+    degree: 'B.Tech in Information Technology',
+    institution: 'Sanjivani College Of Engineering Kopargaon',
+    benchmarkBadge: 'Sanjivani College Benchmark • Tech Scholar',
     digiLockerId: 'DL-IN-2026-992140-BTech',
     compositeScore: 92,
     evaluationsRatio: '14 / 16 Tests Cleared (88%)',
     streakDays: 8,
     atsScore: 94,
     nationalPercentile: '99.2th',
-    summary: 'Distributed systems and GenAI engineer specializing in low-latency LLM serving, CUDA Triton kernels, and high-throughput vector architectures.',
+    summary: 'Enthusiastic Software Engineering student with hands-on experience building full-stack (MERN), Android, and AI-powered applications.',
     verifiedSkills: [
-      'Distributed Systems',
-      'PyTorch & Triton',
-      'Rust & Low-Latency C++',
-      'Kubernetes & Docker',
-      'pgvector & HNSW Indexes',
-      'vLLM PagedAttention'
+      'Java & Python',
+      'MERN Stack (MongoDB, Express, React, Node.js)',
+      'Android & Kotlin',
+      'Databases (MySQL, PostgreSQL, MongoDB)',
+      'REST API Development',
+      'Data Structures & Algorithms (DSA)'
     ],
     missingSkills: [
-      'Formal Statutory Auditing under India DPDP Act 2023',
-      'Multi-region Kafka Disaster Recovery'
+      'System Architecture & Microservices',
+      'CI/CD Pipeline Automation'
     ],
     targetRoles: [
-      'Distributed Systems Engineer',
-      'GenAI Infrastructure Engineer',
-      'AI Research Intern'
+      'Software Development Intern',
+      'Full-Stack Developer',
+      'Android Developer'
     ],
     atsBreakdown: {
       overallScore: 85,

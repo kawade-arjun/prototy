@@ -60,32 +60,38 @@ export const Tab7LivingResume: React.FC = () => {
     }
 
     if (isPdf) {
-      try {
-        // 1. Try Python pypdf backend endpoint first
-        const formData = new FormData();
-        formData.append('file', file);
-        const res = await fetch('http://127.0.0.1:8000/api/resume/parse-pdf', {
-          method: 'POST',
-          body: formData
-        });
+      const endpoints = [
+        '/api/resume/parse-pdf',
+        'http://localhost:8000/api/resume/parse-pdf',
+        'http://127.0.0.1:8000/api/resume/parse-pdf'
+      ];
+      for (const endpoint of endpoints) {
+        try {
+          const formData = new FormData();
+          formData.append('file', file);
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            body: formData
+          });
 
-        if (res.ok) {
-          const data = await res.json();
-          if (data.text && data.text.trim()) {
-            setUploadedResume(data.text, fileName, fileSize);
-            setCustomText(data.text);
-            setUploadStatus(`Extracted ${data.char_count} characters from ${fileName}!`);
-            setTimeout(() => setUploadStatus(null), 3000);
-            return;
+          if (res.ok) {
+            const data = await res.json();
+            if (data.text && data.text.trim()) {
+              setUploadedResume(data.text, fileName, fileSize);
+              setCustomText(data.text);
+              setUploadStatus(`Extracted ${data.char_count} characters from ${fileName}!`);
+              setTimeout(() => setUploadStatus(null), 3000);
+              return;
+            }
           }
+        } catch (err) {
+          console.warn(`Backend PDF parser endpoint ${endpoint} failed:`, err);
         }
-      } catch (err) {
-        console.warn('Backend PDF parser API call error:', err);
       }
     }
 
-    // Clean fallback if PDF text extraction could not parse printable text
-    const defaultText = `CANDIDATE RESUME: ${fileName} (${fileSize})\nName: ${activeStudent.name}\nDegree: ${activeStudent.degree} (${activeStudent.institution})\nSkills: ${activeStudent.verifiedSkills.join(', ')}\nSummary: ${activeStudent.summary}`;
+    // Honest fallback if PDF text extraction could not parse printable text
+    const defaultText = `CANDIDATE RESUME: ${fileName} (${fileSize})\n[Unable to automatically extract text from this PDF file. Please paste or edit your resume text manually using the editor below.]`;
     setUploadedResume(defaultText, fileName, fileSize);
     setCustomText(defaultText);
     setUploadStatus(`Loaded ${fileName}`);
