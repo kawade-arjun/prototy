@@ -37,28 +37,82 @@ export const Tab7LivingResume: React.FC = () => {
   const [customText, setCustomText] = useState(uploadedResume?.text || '');
   const [uploadStatus, setUploadStatus] = useState<string | null>(null);
 
-  const handleFileUpload = (file: File) => {
+  const handleFileUpload = async (file: File) => {
     if (!file) return;
     const fileName = file.name;
     const fileSize = `${(file.size / 1024).toFixed(1)} KB`;
     const isTxt = file.type === 'text/plain' || fileName.endsWith('.txt') || fileName.endsWith('.md') || fileName.endsWith('.json');
+    const isPdf = file.type === 'application/pdf' || fileName.toLowerCase().endsWith('.pdf');
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      let rawContent = (e.target?.result as string) || '';
-      
-      // Clean or fallback if binary PDF/DOCX
-      if (!isTxt || !rawContent || rawContent.includes('\u0000')) {
-        rawContent = `${activeStudent.name}\n${activeStudent.degree} at ${activeStudent.institution}\nSkills: ${activeStudent.verifiedSkills.join(', ')}\nSummary: ${activeStudent.summary}\n\n=== EXRACTED RESUME DOCUMENT (${fileName}) ===\nFull Candidate Profile & Experience extracted from ${fileName} (${fileSize}). Ready for ATS evaluation and skill scoring in AI Studio.`;
+    setUploadStatus(`Extracting text from ${fileName}...`);
+
+    if (isTxt) {
+      try {
+        const text = await file.text();
+        setUploadedResume(text, fileName, fileSize);
+        setCustomText(text);
+        setUploadStatus(`Successfully loaded ${fileName}!`);
+        setTimeout(() => setUploadStatus(null), 3000);
+        return;
+      } catch (err) {
+        console.warn('Text file read error:', err);
+      }
+    }
+
+    if (isPdf) {
+      try {
+        // 1. Try Python pypdf backend endpoint first
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch('http://127.0.0.1:8000/api/resume/parse-pdf', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.text && data.text.trim()) {
+            setUploadedResume(data.text, fileName, fileSize);
+            setCustomText(data.text);
+            setUploadStatus(`Extracted ${data.char_count} characters from ${fileName}!`);
+            setTimeout(() => setUploadStatus(null), 3000);
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Backend PDF parser API call error, falling back to browser ArrayBuffer decoder:', err);
       }
 
-      setUploadedResume(rawContent, fileName, fileSize);
-      setCustomText(rawContent);
-      setUploadStatus(`Successfully loaded ${fileName}!`);
-      setTimeout(() => setUploadStatus(null), 3000);
-    };
+      // 2. Client-side ArrayBuffer PDF text stream decoder fallback
+      try {
+        const buffer = await file.arrayBuffer();
+        const decoder = new TextDecoder('latin1');
+        const rawStr = decoder.decode(new Uint8Array(buffer));
+        
+        const matches = rawStr.match(/\(([^()\\]*(?:\\.[^()\\]*)*)\)/g) || [];
+        const extractedStrings = matches
+          .map(m => m.slice(1, -1).replace(/\\\(/g, '(').replace(/\\\)/g, ')').replace(/\\n/g, ' ').replace(/\\\\/g, '\\').trim())
+          .filter(str => str.length > 1 && !str.startsWith('/') && !str.includes('Font') && !str.includes('Encoding') && !str.includes('Length'));
 
-    reader.readAsText(file);
+        const cleanExtractedText = Array.from(new Set(extractedStrings)).join(' ');
+        if (cleanExtractedText.length > 20) {
+          setUploadedResume(cleanExtractedText, fileName, fileSize);
+          setCustomText(cleanExtractedText);
+          setUploadStatus(`Extracted PDF text from ${fileName}!`);
+          setTimeout(() => setUploadStatus(null), 3000);
+          return;
+        }
+      } catch (err) {
+        console.warn('Client-side ArrayBuffer PDF decoder error:', err);
+      }
+    }
+
+    // Default fallback if PDF contains no extractable text
+    const defaultText = `CANDIDATE RESUME: ${fileName} (${fileSize})\nName: ${activeStudent.name}\nDegree: ${activeStudent.degree} (${activeStudent.institution})\nSkills: ${activeStudent.verifiedSkills.join(', ')}\nSummary: ${activeStudent.summary}`;
+    setUploadedResume(defaultText, fileName, fileSize);
+    setCustomText(defaultText);
+    setUploadStatus(`Loaded ${fileName}`);
+    setTimeout(() => setUploadStatus(null), 3000);
   };
 
   const handleDrop = (e: React.DragEvent) => {

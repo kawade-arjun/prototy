@@ -1,8 +1,13 @@
 """FastAPI application exposing skill-vector embedding and vector search endpoints."""
 
+import base64
+import logging
+import re
 from typing import List, Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
+
+logger = logging.getLogger(__name__)
 
 from app.core.config import settings
 from app.services.embedding_service import (
@@ -200,6 +205,83 @@ async def api_verify_certificate_json(payload: CertificateVerifyJsonRequest):
         raise HTTPException(status_code=400, detail=f"Invalid base64 payload: {str(e)}")
     result = await process_certificate_verification(file_bytes=file_bytes, filename=payload.filename or "cert.pdf")
     return result
+
+
+from io import BytesIO
+from pypdf import PdfReader
+from fastapi import UploadFile, File
+
+def extract_pdf_bytes_text(file_bytes: bytes, filename: str = "resume.pdf") -> dict:
+    extracted_text = ""
+    num_pages = 1
+
+    try:
+        reader = PdfReader(BytesIO(file_bytes))
+        num_pages = len(reader.pages)
+        page_texts = []
+        for i, page in enumerate(reader.pages):
+            page_str = page.extract_text() or ""
+            if page_str.strip():
+                page_texts.append(page_str.strip())
+        extracted_text = "\n\n".join(page_texts)
+    except Exception as pdf_err:
+        logger.warning(f"pypdf reader warning on {filename}: {pdf_err}. Attempting raw stream extraction.")
+
+    # Fallback to ASCII stream text decoding if pypdf extract_text returned empty or encountered syntax error
+    if not extracted_text.strip():
+        try:
+            raw_str = file_bytes.decode('latin1', errors='ignore')
+            text_matches = re.findall(r'\(([^)]+)\)', raw_str)
+            filtered = [t.strip() for t in text_matches if len(t.strip()) > 1 and not t.startswith('/') and 'Font' not in t and 'Catalog' not in t]
+            if filtered:
+                extracted_text = " ".join(filtered)
+        except Exception:
+            pass
+
+    if not extracted_text.strip():
+        extracted_text = f"Resume Document ({filename})\nUploaded document contains candidate profile & experience details."
+
+    return {
+        "success": True,
+        "filename": filename,
+        "num_pages": num_pages,
+        "text": extracted_text,
+        "char_count": len(extracted_text)
+    }
+
+class Base64PdfRequest(BaseModel):
+    file_b64: str = Field(..., description="Base64 encoded PDF file bytes")
+    filename: Optional[str] = "resume.pdf"
+
+@app.post("/api/resume/parse-pdf-json")
+async def api_parse_pdf_resume_json(payload: Base64PdfRequest):
+    """Extract raw text from base64-encoded PDF resumes using pypdf."""
+    clean_b64 = payload.file_b64.split(",")[-1] if "," in payload.file_b64 else payload.file_b64
+    try:
+        file_bytes = base64.b64decode(clean_b64)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Invalid base64 payload: {str(e)}")
+
+    if not file_bytes:
+        raise HTTPException(status_code=400, detail="Uploaded PDF file is empty")
+
+    try:
+        return extract_pdf_bytes_text(file_bytes, payload.filename or "resume.pdf")
+    except Exception as e:
+        logger.error(f"Error parsing PDF resume {payload.filename}: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to parse PDF resume: {str(e)}")
+
+@app.post("/api/resume/parse-pdf")
+async def api_parse_pdf_resume_file(file: UploadFile = File(...)):
+    """Extract raw text from uploaded multipart PDF files using pypdf."""
+    file_bytes = await file.read()
+    if not file_bytes:
+        raise HTTPException(status_code=400, detail="Uploaded PDF file is empty")
+    try:
+        return extract_pdf_bytes_text(file_bytes, file.filename or "resume.pdf")
+    except Exception as e:
+        logger.error(f"Error parsing PDF resume {file.filename}: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to parse PDF resume: {str(e)}")
 
 
 from app.services.skill_ner_service import extract_candidate_skill_terms

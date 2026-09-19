@@ -100,6 +100,25 @@ async def test_api_skill_ner_prefilter_and_resume_extraction():
 
 
 @pytest.mark.asyncio
+async def test_api_parse_pdf_resume_endpoint():
+    import base64
+    sample_pdf = b"%PDF-1.4\n1 0 obj\n<< /Length 44 >>\nstream\nBT /F1 12 Tf 72 712 Td (Python Docker AWS Engineer) Tj ET\nendstream\nendobj\nxref\n0 1\n0000000000 65535 f \ntrailer\n<< /Size 1 >>\nstartxref\n100\n%%EOF\n"
+    b64_pdf = base64.b64encode(sample_pdf).decode("utf-8")
+
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        resp = await client.post("/api/resume/parse-pdf-json", json={
+            "file_b64": b64_pdf,
+            "filename": "test_resume.pdf"
+        })
+        assert resp.status_code == 200
+        data = resp.json()
+        assert data["success"] is True
+        assert data["filename"] == "test_resume.pdf"
+        assert "Python Docker AWS Engineer" in data["text"]
+
+
+@pytest.mark.asyncio
 async def test_api_certificate_verify_json_endpoint():
     import base64
     sample_pdf = b"%PDF-1.4\n1 0 obj << /Type /Catalog >> endobj\nxref\n0 1\n0000000000 65535 f \ntrailer << /Size 1 >>\nstartxref\n50\n%%EOF\n"
