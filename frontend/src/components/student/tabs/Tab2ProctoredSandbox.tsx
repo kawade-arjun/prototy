@@ -353,26 +353,17 @@ class Solution {
     }
   };
 
-  // Launch Split-Screen Test Sandbox in another browser tab
+  // Launch Split-Screen Test Sandbox Modal
   const handleLaunchTest = (test: AssessmentTest) => {
     localStorage.setItem('active_assessment_id', test.id);
     setActiveTestId(test.id);
 
-    // If active test is opened in the current window (e.g. from direct navigation), set active test
-    const testUrl = `${window.location.origin}${window.location.pathname}?testId=${test.id}&activeTab=sandbox`;
-    
-    // Check if we are already in the test window for this testId
-    const currentParams = new URLSearchParams(window.location.search);
-    if (currentParams.get('testId') === test.id) {
-      setActiveTest(test);
-      setTimeRemaining(test.durationMinutes * 60);
-      setSessionLocked(false);
-      setSandboxOutput(null);
-      setCurrentCode(test.initialCode || getBoilerplateCode('python', test.title));
-    } else {
-      // Open in another tab of browser
-      window.open(testUrl, '_blank');
-    }
+    // Launch test modal directly in full window
+    setActiveTest(test);
+    setTimeRemaining(test.durationMinutes * 60);
+    setSessionLocked(false);
+    setSandboxOutput(null);
+    setCurrentCode(test.initialCode || getBoilerplateCode('python', test.title));
   };
 
   // Execute Sandbox Runner - Real Code & Verification Evaluator

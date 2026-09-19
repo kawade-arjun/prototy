@@ -17,7 +17,15 @@ import { ShieldCheck, Lock } from 'lucide-react';
 import { AIChatbotWidget } from './components/common/AIChatbotWidget';
 
 const AppContent: React.FC = () => {
-  const [currentRole, setCurrentRole] = useState<UserRole | null>(null);
+  const [currentRole, setCurrentRole] = useState<UserRole | null>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('testId') || params.get('activeTab')) {
+        return 'student';
+      }
+    }
+    return null;
+  });
   const [authModal, setAuthModal] = useState<{ role: UserRole; mode: 'signin' | 'signup' } | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [settingsTab, setSettingsTab] = useState<'bookmarks' | 'privacy' | 'preferences'>('preferences');

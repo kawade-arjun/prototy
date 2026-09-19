@@ -46,7 +46,15 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [currentUser, setCurrentUser] = useState<User | null>(() => getSavedUser());
   const [customProfile, setCustomProfile] = useState<StudentProfileData | null>(null);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<StudentTab>('recommendations');
+  const [activeTab, setActiveTab] = useState<StudentTab>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('activeTab');
+      if (tabParam) return tabParam as StudentTab;
+      if (params.get('testId')) return 'sandbox';
+    }
+    return 'recommendations';
+  });
 
   // Load saved resume from localStorage on init
   const [uploadedResume, setUploadedResumeState] = useState<UploadedResumeData | null>(() => {
