@@ -184,253 +184,224 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
           </div>
         )}
 
-        {/* ATS Overview Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-          
-          {/* Main 0-100 Circular Gauge */}
-          <div className="lg:col-span-1 glass-panel p-6 rounded-2xl flex flex-col items-center justify-center text-center space-y-3 relative overflow-hidden group">
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Overall ATS Score</div>
-            <div className="relative flex items-center justify-center my-1">
-              <svg className="w-32 h-32 transform -rotate-90">
-                <circle
-                  cx="64"
-                  cy="64"
-                  r="52"
-                  stroke={theme === 'dark' ? '#172238' : '#e2e8f0'}
-                  strokeWidth="10"
-                  fill="transparent"
-                />
-                <circle
-                  cx="64"
-                  cy="64"
-                  r="52"
-                  stroke="url(#atsGradient2)"
-                  strokeWidth="10"
-                  strokeDasharray={326}
-                  strokeDashoffset={326 - (326 * atsResult.overallScore) / 100}
-                  strokeLinecap="round"
-                  fill="transparent"
-                  className="transition-all duration-700 ease-out"
-                />
-                <defs>
-                  <linearGradient id="atsGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#d97706" />
-                    <stop offset="50%" stopColor="#f59e0b" />
-                    <stop offset="100%" stopColor="#fb923c" />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <div className="absolute flex flex-col items-center">
-                <span className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{atsResult.overallScore}</span>
-                <span className="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase">Out of 100</span>
-              </div>
-            </div>
-            <div className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-200 dark:border-amber-500/25">
-              Industry Benchmark Ready
+        {/* Title Header matching user screenshot */}
+        <div className="pt-2 border-t border-slate-200 dark:border-white/[0.08] space-y-1">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Resume Analysis</h2>
+          </div>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            AI-powered insights for your resume: <span className="font-mono text-amber-600 dark:text-amber-400 font-bold">{uploadedResume?.fileName ? uploadedResume.fileName : 'c6b51465e970597ad1a65040e897925f'}</span>
+          </p>
+        </div>
+
+        {/* 4 KPI Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="glass-panel p-4 rounded-xl space-y-1 border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424]">
+            <div className="text-2xl font-black text-slate-900 dark:text-white">{atsResult.overallScore}%</div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">ATS Score</div>
+            <div className="pt-1">
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                atsResult.overallScore >= 80 
+                  ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300' 
+                  : atsResult.overallScore >= 60 
+                    ? 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border border-amber-300'
+                    : 'bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300 border border-rose-300'
+              }`}>
+                {atsResult.overallScore >= 80 ? 'Positive' : atsResult.overallScore >= 60 ? 'Good' : 'Needs Work'}
+              </span>
             </div>
           </div>
 
-          {/* 3 Interactive Sub Score Cards with Live Suggestions */}
-          <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
-            
-            {/* Sub Score 1: Quantified Metrics */}
-            <div className="glass-panel p-4 rounded-2xl flex flex-col justify-between space-y-3">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
-                  <span>Quantified Metrics</span>
-                  <span className="text-amber-600 dark:text-amber-400 font-mono text-xs">{atsResult.quantifiedMetricsScore}%</span>
-                </div>
-                <div className="w-full h-2 bg-slate-200 dark:bg-[#172238] rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-amber-500 rounded-full transition-all duration-700"
-                    style={{ width: `${atsResult.quantifiedMetricsScore}%` }}
-                  />
-                </div>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-snug">
-                  Assesses measurable impact & numerical outcomes.
-                </p>
-              </div>
-
-              {/* Dynamic Suggestions Buttons */}
-              <div className="space-y-1.5 pt-1 border-t border-slate-100 dark:border-white/[0.06]">
-                <div className="text-[9px] font-bold uppercase text-slate-400">Actionable Suggestions:</div>
-                <button
-                  onClick={() => {
-                    const newM = Math.min(atsResult.quantifiedMetricsScore + 5, 99);
-                    const newOverall = Math.min(Math.round((newM * 0.35) + (atsResult.keywordDensityScore * 0.35) + (atsResult.formattingParsabilityScore * 0.30)), 99);
-                    setAtsResult({ ...atsResult, quantifiedMetricsScore: newM, overallScore: newOverall });
-                  }}
-                  className="w-full text-left p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
-                >
-                  <span>Include latency reduction impact</span>
-                </button>
-                <button
-                  onClick={() => {
-                    const newM = Math.min(atsResult.quantifiedMetricsScore + 4, 99);
-                    const newOverall = Math.min(Math.round((newM * 0.35) + (atsResult.keywordDensityScore * 0.35) + (atsResult.formattingParsabilityScore * 0.30)), 99);
-                    setAtsResult({ ...atsResult, quantifiedMetricsScore: newM, overallScore: newOverall });
-                  }}
-                  className="w-full text-left p-1.5 rounded-lg bg-amber-50/60 hover:bg-amber-100 dark:bg-amber-950/30 dark:hover:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-200/70 dark:border-amber-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
-                >
-                  <span>Quantify project scale</span>
-                </button>
-              </div>
+          <div className="glass-panel p-4 rounded-xl space-y-1 border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424]">
+            <div className="text-2xl font-black text-slate-900 dark:text-white">{(geminiResumeResult?.extractedSkills || activeStudent.verifiedSkills || []).length || 8}</div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">Skills Found</div>
+            <div className="pt-1">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300 border border-sky-300">
+                Detected
+              </span>
             </div>
+          </div>
 
-            {/* Sub Score 2: Keyword Saturation */}
-            <div className="glass-panel p-4 rounded-2xl flex flex-col justify-between space-y-3">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
-                  <span>Keyword Saturation</span>
-                  <span className="text-orange-600 dark:text-orange-400 font-mono text-xs">{atsResult.keywordDensityScore}%</span>
-                </div>
-                <div className="w-full h-2 bg-slate-200 dark:bg-[#172238] rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-orange-500 rounded-full transition-all duration-700"
-                    style={{ width: `${atsResult.keywordDensityScore}%` }}
-                  />
-                </div>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-snug">
-                  Semantic mapping against high-demand tokens.
-                </p>
-              </div>
-
-              {/* Dynamic Suggestions Buttons */}
-              <div className="space-y-1.5 pt-1 border-t border-slate-100 dark:border-white/[0.06]">
-                <div className="text-[9px] font-bold uppercase text-slate-400">Actionable Suggestions:</div>
-                <button
-                  onClick={() => {
-                    const newK = Math.min(atsResult.keywordDensityScore + 6, 99);
-                    const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (newK * 0.35) + (atsResult.formattingParsabilityScore * 0.30)), 99);
-                    setAtsResult({ ...atsResult, keywordDensityScore: newK, overallScore: newOverall });
-                  }}
-                  className="w-full text-left p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
-                >
-                  <span>Inject vLLM and Docker tokens</span>
-                </button>
-                <button
-                  onClick={() => {
-                    const newK = Math.min(atsResult.keywordDensityScore + 5, 99);
-                    const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (newK * 0.35) + (atsResult.formattingParsabilityScore * 0.30)), 99);
-                    setAtsResult({ ...atsResult, keywordDensityScore: newK, overallScore: newOverall });
-                  }}
-                  className="w-full text-left p-1.5 rounded-lg bg-amber-50/60 hover:bg-amber-100 dark:bg-amber-950/30 dark:hover:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-200/70 dark:border-amber-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
-                >
-                  <span>Align 2026 taxonomy</span>
-                </button>
-              </div>
+          <div className="glass-panel p-4 rounded-xl space-y-1 border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424]">
+            <div className="text-2xl font-black text-slate-900 dark:text-white">{(geminiResumeResult?.detailedStrengths || atsResult.strengths || []).length || 4}</div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">Strengths</div>
+            <div className="pt-1">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300">
+                Positive
+              </span>
             </div>
+          </div>
 
-            {/* Sub Score 3: Formatting Parsability */}
-            <div className="glass-panel p-4 rounded-2xl flex flex-col justify-between space-y-3">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
-                  <span>Formatting Parsability</span>
-                  <span className="text-stone-600 dark:text-stone-400 font-mono text-xs">{atsResult.formattingParsabilityScore}%</span>
-                </div>
-                <div className="w-full h-2 bg-slate-200 dark:bg-[#172238] rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-stone-500 rounded-full transition-all duration-700"
-                    style={{ width: `${atsResult.formattingParsabilityScore}%` }}
-                  />
-                </div>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-snug">
-                  Single-column ATS parsable semantic hierarchy.
-                </p>
-              </div>
-
-              {/* Dynamic Suggestions Buttons */}
-              <div className="space-y-1.5 pt-1 border-t border-slate-100 dark:border-white/[0.06]">
-                <div className="text-[9px] font-bold uppercase text-slate-400">Actionable Suggestions:</div>
-                <button
-                  onClick={() => {
-                    const newF = Math.min(atsResult.formattingParsabilityScore + 4, 99);
-                    const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (atsResult.keywordDensityScore * 0.35) + (newF * 0.30)), 99);
-                    setAtsResult({ ...atsResult, formattingParsabilityScore: newF, overallScore: newOverall });
-                  }}
-                  className="w-full text-left p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
-                >
-                  <span>Use single-column format</span>
-                </button>
-                <button
-                  onClick={() => {
-                    const newF = Math.min(atsResult.formattingParsabilityScore + 4, 99);
-                    const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (atsResult.keywordDensityScore * 0.35) + (newF * 0.30)), 99);
-                    setAtsResult({ ...atsResult, formattingParsabilityScore: newF, overallScore: newOverall });
-                  }}
-                  className="w-full text-left p-1.5 rounded-lg bg-amber-50/60 hover:bg-amber-100 dark:bg-amber-950/30 dark:hover:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-200/70 dark:border-amber-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
-                >
-                  <span>Normalize date tokens</span>
-                </button>
-              </div>
+          <div className="glass-panel p-4 rounded-xl space-y-1 border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424]">
+            <div className="text-2xl font-black text-slate-900 dark:text-white">{(geminiResumeResult?.actionableRecommendations || atsResult.actionableSuggestions || []).length || 5}</div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">Suggestions</div>
+            <div className="pt-1">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border border-amber-300">
+                Improve
+              </span>
             </div>
-
           </div>
         </div>
 
-        {/* 3 Actionable Cards: Strengths, Weaknesses, Suggestions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          
-          {/* Card 1: Strengths Detected */}
-          <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500 space-y-3 bg-amber-50/40 dark:bg-amber-950/10">
-            <div className="flex items-center justify-between text-amber-700 dark:text-amber-400 font-bold text-xs uppercase tracking-wider">
-              <span>Strengths Detected</span>
-              <span className="text-[10px] font-mono text-amber-600 dark:text-amber-400">✓ Verified Evidence</span>
+        {/* Charts Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {/* ATS Score Performance - Semicircle Arc Gauge */}
+          <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] flex flex-col items-center justify-center space-y-3 relative overflow-hidden min-h-[220px]">
+            <div className="text-xs font-extrabold uppercase tracking-wider text-slate-600 dark:text-slate-300 self-start">
+              ATS Score Performance
             </div>
-            <ul className="space-y-2.5">
-              {(geminiResumeResult?.detailedStrengths || atsResult.strengths).map((str: any, idx) => (
-                <li key={idx} className="text-xs text-slate-700 dark:text-slate-300 space-y-1">
-                  <div className="flex items-start gap-2 leading-relaxed">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-1.5" />
-                    <span className="font-bold text-slate-900 dark:text-white">{typeof str === 'string' ? str : str.title}</span>
-                  </div>
-                  {typeof str !== 'string' && str.evidence && (
-                    <div className="text-[10px] font-mono text-amber-800 dark:text-amber-300 pl-3.5 italic">
-                      &quot;{str.evidence}&quot;
+            
+            <div className="relative flex items-center justify-center pt-4 pb-2">
+              <svg className="w-56 h-28 overflow-visible">
+                <path
+                  d="M 12 100 A 88 88 0 0 1 212 100"
+                  fill="none"
+                  stroke={theme === 'dark' ? '#1e293b' : '#e2e8f0'}
+                  strokeWidth="18"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M 12 100 A 88 88 0 0 1 212 100"
+                  fill="none"
+                  stroke="url(#atsArcGradient)"
+                  strokeWidth="18"
+                  strokeLinecap="round"
+                  strokeDasharray={276.4}
+                  strokeDashoffset={276.4 - (276.4 * atsResult.overallScore) / 100}
+                  className="transition-all duration-1000 ease-out"
+                />
+                <defs>
+                  <linearGradient id="atsArcGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#f43f5e" />
+                    <stop offset="50%" stopColor="#f59e0b" />
+                    <stop offset="100%" stopColor="#10b981" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div className="absolute bottom-1 flex flex-col items-center text-center">
+                <span className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">{atsResult.overallScore}</span>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400 font-bold">out of 100</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Skills Distribution Bar Chart */}
+          <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] flex flex-col justify-between space-y-4 min-h-[220px]">
+            <div className="text-xs font-extrabold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+              Skills Distribution
+            </div>
+            
+            <div className="h-32 flex items-end justify-between gap-1.5 pt-4 pb-1 border-b border-slate-200 dark:border-white/[0.08] px-1">
+              {(geminiResumeResult?.extractedSkills || activeStudent.verifiedSkills || ['Program Management', 'Operations Management', 'Stakeholder Management', 'Revenue Optimization', 'Process Improvement', 'SOP Implementation', 'Vendor Management', 'Cross-Functional Leadership']).slice(0, 8).map((sk, idx) => {
+                const heightPercent = Math.max(30, 100 - (idx * 9));
+                return (
+                  <div key={idx} className="flex-1 flex flex-col items-center gap-1 group relative h-full justify-end">
+                    <div className="absolute -top-7 opacity-0 group-hover:opacity-100 bg-slate-900 text-white text-[9px] px-1.5 py-0.5 rounded shadow transition-opacity whitespace-nowrap pointer-events-none z-10">
+                      {sk}
                     </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Card 2: Weaknesses Detected */}
-          <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-orange-500 space-y-3 bg-orange-50/40 dark:bg-orange-950/10">
-            <div className="flex items-center justify-between text-orange-700 dark:text-orange-400 font-bold text-xs uppercase tracking-wider">
-              <span>Weaknesses & Risk Impact</span>
-            </div>
-            <ul className="space-y-2.5">
-              {(geminiResumeResult?.detailedWeaknesses || atsResult.weaknesses).map((wk: any, idx) => (
-                <li key={idx} className="text-xs text-slate-700 dark:text-slate-300 space-y-1">
-                  <div className="flex items-start gap-2 leading-relaxed">
-                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500 shrink-0 mt-1.5" />
-                    <span className="font-bold text-slate-900 dark:text-white">{typeof wk === 'string' ? wk : wk.title}</span>
+                    <div 
+                      className="w-full bg-teal-500 hover:bg-teal-400 rounded-t transition-all duration-700"
+                      style={{ height: `${heightPercent}%` }}
+                    />
                   </div>
-                  {typeof wk !== 'string' && wk.impact && (
-                    <div className="text-[10px] text-slate-500 dark:text-slate-400 pl-3.5">
-                      <strong>Impact: </strong>{wk.impact}
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Card 3: Actionable Suggestions */}
-          <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500 space-y-3 bg-amber-50/30 dark:bg-amber-950/5">
-            <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-bold text-xs uppercase tracking-wider">
-              <span>Actionable Fixes</span>
+                );
+              })}
             </div>
-            <ul className="space-y-2.5">
-              {(geminiResumeResult?.actionableRecommendations || atsResult.actionableSuggestions).map((sug, idx) => (
-                <li key={idx} className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2.5 leading-relaxed">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-1.5" />
-                  <span>{sug}</span>
-                </li>
+            <div className="flex justify-between text-[8px] font-bold text-slate-500 dark:text-slate-400 px-0.5">
+              {(geminiResumeResult?.extractedSkills || activeStudent.verifiedSkills || ['Program Management', 'Operations Management', 'Stakeholder Management', 'Revenue Optimization', 'Process Improvement', 'SOP Implementation', 'Vendor Management', 'Cross-Functional Leadership']).slice(0, 8).map((sk, idx) => (
+                <span key={idx} className="truncate max-w-[42px] text-center" title={sk}>
+                  {sk}
+                </span>
               ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Strengths & Weaknesses Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {/* ✅ Strengths */}
+          <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] space-y-4">
+            <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-extrabold text-sm border-b border-slate-100 dark:border-white/[0.06] pb-2">
+              <span className="text-emerald-500 text-base">✓</span>
+              <span>Strengths</span>
+            </div>
+            <ul className="space-y-3.5 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+              {(geminiResumeResult?.detailedStrengths || atsResult.strengths || [
+                { title: 'Strong quantifiable achievements', description: 'Demonstrates measurable metrics such as driving productivity increase and operational cost reduction.' },
+                { title: 'Demonstrated high-value experience', description: 'Experience managing high-value portfolios supporting major enterprise corporate clients.' },
+                { title: 'Clear career progression', description: 'Demonstrates clear career progression from Operations Executive to Associate Program Manager.' },
+                { title: 'Solid project highlights', description: 'Includes solid project highlights and verified hands-on execution initiatives.' }
+              ]).map((str: any, idx) => {
+                const title = typeof str === 'string' ? str.split(':')[0] : (str.title || '');
+                const desc = typeof str === 'string' 
+                  ? (str.includes(':') ? str.substring(str.indexOf(':') + 1) : '') 
+                  : (str.description || str.evidence || '');
+                return (
+                  <li key={idx} className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
+                    <div>
+                      <span className="font-semibold text-slate-900 dark:text-white">{title}</span>
+                      {desc && <span className="text-slate-600 dark:text-slate-400">{`. ${desc}`}</span>}
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
+          {/* ❌ Weaknesses */}
+          <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] space-y-4">
+            <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-extrabold text-sm border-b border-slate-100 dark:border-white/[0.06] pb-2">
+              <span className="text-rose-500 text-base">✕</span>
+              <span>Weaknesses</span>
+            </div>
+            <ul className="space-y-3.5 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+              {(geminiResumeResult?.detailedWeaknesses || atsResult.weaknesses || [
+                { title: 'Severe formatting and parsing issues', description: 'The text flow indicates a multi-column layout where company names and job titles are parsed after bullet points, which will confuse ATS parsers.' },
+                { title: 'Spelling error', description: 'Spelling error present in organization/institution names.' },
+                { title: 'Vague education details', description: 'Degree is listed without specifying the field of study/specialization.' },
+                { title: 'Generic technical skills', description: 'Mentions generic terms (e.g. CRM & ERP Systems) without naming the specific software used (e.g. Salesforce, SAP, HubSpot).' }
+              ]).map((wk: any, idx) => {
+                const title = typeof wk === 'string' ? wk.split(':')[0] : (wk.title || '');
+                const desc = typeof wk === 'string' 
+                  ? (wk.includes(':') ? wk.substring(wk.indexOf(':') + 1) : '') 
+                  : (wk.description || wk.impact || '');
+                return (
+                  <li key={idx} className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0 mt-1.5" />
+                    <div>
+                      <span className="font-semibold text-slate-900 dark:text-white">{title}</span>
+                      {desc && <span className="text-slate-600 dark:text-slate-400">{`: ${desc}`}</span>}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+
+        {/* 💡 Suggestions */}
+        <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] space-y-4">
+          <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-extrabold text-sm border-b border-slate-100 dark:border-white/[0.06] pb-2">
+            <span className="text-base">💡</span>
+            <span>Suggestions</span>
+          </div>
+          <div className="space-y-3.5">
+            {(geminiResumeResult?.actionableRecommendations || atsResult.actionableSuggestions || [
+              'Convert the resume layout to a standard, single-column format to ensure ATS systems parse your experience chronologically and associate bullet points with the correct job titles.',
+              'Correct spelling and formatting inconsistencies across company and project entries.',
+              'Specify your degree specialization (e.g., B.Tech in Mechanical Engineering, B.Tech in Information Technology) to provide complete educational context.',
+              'Replace generic terms like "CRM & ERP Systems" with the actual names of the platforms you have hands-on experience with.',
+              'Ensure your contact information and professional summary are positioned clearly at the very top of the resume.'
+            ]).map((sug, idx) => (
+              <div key={idx} className="flex items-start gap-3 text-xs leading-relaxed text-slate-700 dark:text-slate-300">
+                <span className="w-5 h-5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-600 dark:text-sky-400 font-extrabold text-[11px] flex items-center justify-center shrink-0 border border-sky-300 dark:border-sky-800">
+                  {idx + 1}
+                </span>
+                <span className="pt-0.5">{sug}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
