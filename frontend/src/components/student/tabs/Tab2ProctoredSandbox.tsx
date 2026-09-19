@@ -125,31 +125,53 @@ export const Tab2ProctoredSandbox: React.FC = () => {
     { id: 'soft_skills_ethics' as AssessmentSubTab, label: 'Soft Skills & Ethics', duration: '15–30 Mins', color: 'text-amber-500 border-amber-500/30 bg-amber-500/10' }
   ];
 
-  // Active stream metadata
-  const currentStreamMeta = ACADEMIC_STREAMS.find(s => s.id === selectedStream)!;
+  // Resizable Panel Splitter State (Percentage)
+  const [leftPanelPercent, setLeftPanelPercent] = useState<number>(44);
+  const [isDraggingSplitter, setIsDraggingSplitter] = useState<boolean>(false);
 
-  // Anti-Cheat Listeners when Active Test is open
+  const handleMouseDownSplitter = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDraggingSplitter(true);
+  };
+
+  useEffect(() => {
+    if (!isDraggingSplitter) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const totalWidth = window.innerWidth;
+      const newPercent = Math.min(Math.max((e.clientX / totalWidth) * 100, 20), 80);
+      setLeftPanelPercent(newPercent);
+    };
+
+    const handleMouseUp = () => {
+      setIsDraggingSplitter(false);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDraggingSplitter]);
+
+  // Auto-submit test if user changes window or tab
   useEffect(() => {
     if (!activeTest) return;
 
-    const handlePaste = (e: ClipboardEvent) => {
-      e.preventDefault();
-      setShowPasteWarning(true);
-      setAntiCheatFlags(prev => prev + 1);
-    };
-
-    const handleVisibilityChange = () => {
+    const handleWindowChange = () => {
       if (document.hidden) {
-        setAntiCheatFlags(prev => prev + 1);
+        handleSubmitTest();
       }
     };
 
-    window.addEventListener('paste', handlePaste);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener('visibilitychange', handleWindowChange);
+    window.addEventListener('blur', handleWindowChange);
 
     return () => {
-      window.removeEventListener('paste', handlePaste);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener('visibilitychange', handleWindowChange);
+      window.removeEventListener('blur', handleWindowChange);
     };
   }, [activeTest]);
 
@@ -175,14 +197,87 @@ export const Tab2ProctoredSandbox: React.FC = () => {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const handleLanguageChange = (lang: 'python' | 'cpp' | 'java' | 'typescript') => {
+    setEditorLanguage(lang);
+    if (activeTest) {
+      if (activeTest.id === 'QUEST-2SUM') {
+        if (lang === 'python') {
+          setCurrentCode(`# Two Sum (2Sum) - Python 3.12
+def two_sum(nums: list[int], target: int) -> list[int]:
+    seen = {}
+    for i, num in enumerate(nums):
+        diff = target - num
+        if diff in seen:
+            return [seen[diff], i]
+        seen[num] = i
+    return []
+
+# Test calls
+print("Test 1:", two_sum([2, 7, 11, 15], 9))  # Expected: [0, 1]
+print("Test 2:", two_sum([3, 2, 4], 6))       # Expected: [1, 2]
+`);
+        } else if (lang === 'typescript') {
+          setCurrentCode(`// Two Sum (2Sum) - TypeScript
+function twoSum(nums: number[], target: number): number[] {
+    const map = new Map<number, number>();
+    for (let i = 0; i < nums.length; i++) {
+        const diff = target - nums[i];
+        if (map.has(diff)) {
+            return [map.get(diff)!, i];
+        }
+        map.set(nums[i], i);
+    }
+    return [];
+}
+`);
+        } else if (lang === 'cpp') {
+          setCurrentCode(`// Two Sum (2Sum) - C++ 20
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+vector<int> twoSum(vector<int>& nums, int target) {
+    unordered_map<int, int> mp;
+    for (int i = 0; i < nums.size(); i++) {
+        int diff = target - nums[i];
+        if (mp.count(diff)) return {mp[diff], i};
+        mp[nums[i]] = i;
+    }
+    return {};
+}
+`);
+        } else if (lang === 'java') {
+          setCurrentCode(`// Two Sum (2Sum) - Java 17
+import java.util.*;
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int diff = target - nums[i];
+            if (map.containsKey(diff)) {
+                return new int[] { map.get(diff), i };
+            }
+            map.put(nums[i], i);
+        }
+        return new int[]{};
+    }
+}
+`);
+        }
+      } else {
+        setCurrentCode(getBoilerplateCode(lang, activeTest.title));
+      }
+    }
+  };
+
   // Launch Split-Screen Test Sandbox
   const handleLaunchTest = (test: AssessmentTest) => {
     setActiveTest(test);
     setTimeRemaining(test.durationMinutes * 60);
-    setAntiCheatFlags(0);
     setSessionLocked(false);
     setSandboxOutput(null);
-    setCurrentCode(test.initialCode || `# ${test.title} - Candidate Sandbox Engine\n# Write your production-grade implementation below:\n\ndef solution():\n    pass\n`);
+    setCurrentCode(test.initialCode || getBoilerplateCode('python', test.title));
   };
 
   // Execute Sandbox Runner
@@ -439,62 +534,52 @@ export const Tab2ProctoredSandbox: React.FC = () => {
         })}
       </div>
 
-      {/* 4. SPLIT-SCREEN DISTRACTION-FREE PROCTORED SANDBOX MODAL */}
+      {/* 4. SPLIT-SCREEN RESIZABLE ASSESSMENT MODAL (LIGHT THEME) */}
       {activeTest && (
-        <div className="fixed inset-0 z-50 bg-black/95 flex flex-col">
+        <div className="fixed inset-0 z-50 bg-slate-50 flex flex-col text-slate-900 select-none">
           
-          {/* Top Proctoring Status HUD Header */}
-          <div className="bg-[#0a0f1d] border-b border-white/[0.1] px-6 py-3.5 flex flex-wrap items-center justify-between gap-4 text-white">
+          {/* Top Proctoring HUD Header */}
+          <div className="bg-white border-b border-slate-200 px-6 py-3 flex flex-wrap items-center justify-between gap-4 shadow-sm">
             
             {/* Title & Badge */}
             <div className="flex items-center gap-3">
-              <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-amber-950/80 text-amber-300 border border-amber-800">
+              <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 border border-amber-300">
                 {activeTest.id}
               </span>
-              <h3 className="font-extrabold text-sm sm:text-base text-white truncate max-w-md">
+              <h3 className="font-extrabold text-sm sm:text-base text-slate-900 truncate max-w-md">
                 {activeTest.title}
               </h3>
             </div>
 
-            {/* Proctoring Status Banner (Specification 4) */}
+            {/* Status & Actions */}
             <div className="flex items-center gap-3">
               
-              {/* Proctored Environment Active Pill */}
-              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold">
-                <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-                <Lock className="w-3.5 h-3.5 text-amber-400" />
-                <span>Proctored Environment: Fullscreen Enforced • Paste Guard Active</span>
-              </div>
-
-              {/* Tab Switches & Focus Flags */}
-              <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border ${
-                antiCheatFlags === 0
-                  ? 'bg-slate-900 border-white/[0.08] text-slate-300'
-                  : 'bg-amber-500/20 border-amber-500 text-amber-300'
-              }`}>
-                <span>Flags:</span>
-                <span className="font-mono text-sm">{antiCheatFlags} / 3</span>
+              {/* Active Session Notice */}
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold">
+                <Lock className="w-3.5 h-3.5 text-amber-600" />
+                <span>Active Session • Auto-Submit Enforced on Tab Switch</span>
               </div>
 
               {/* Automated Countdown Timer */}
-              <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 font-mono text-xs font-black shadow-inner">
-                <Clock className="w-4 h-4 text-amber-400" />
+              <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-100 border border-slate-300 text-slate-900 font-mono text-xs font-black shadow-inner">
+                <Clock className="w-4 h-4 text-amber-600" />
                 <span className="text-sm tracking-wider">{formatTimer(timeRemaining)}</span>
               </div>
 
-              {/* Submit / Exit */}
+              {/* Submit Assessment Button */}
               <button
                 onClick={handleSubmitTest}
-                className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-extrabold shadow-lg shadow-amber-600/30 active:scale-95"
+                className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-extrabold shadow-md active:scale-95 transition-all"
               >
                 <Check className="w-4 h-4" />
                 <span>Submit Assessment</span>
               </button>
 
+              {/* Exit Button */}
               <button
                 onClick={() => setActiveTest(null)}
-                className="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white"
-                title="Exit Sandbox"
+                className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 transition-all"
+                title="Exit Assessment"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -502,336 +587,185 @@ export const Tab2ProctoredSandbox: React.FC = () => {
 
           </div>
 
-          {/* Main Split-Screen Workspace (Left: Instructions, Right: Sandbox Engine) */}
-          <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
+          {/* Main Resizable Split Workspace */}
+          <div className="flex-1 flex overflow-hidden">
             
-            {/* Left Pane: Instructions, Constraints, Sample Cases */}
-            <div className="p-6 overflow-y-auto border-r border-white/[0.1] bg-[#070b14] space-y-5 text-slate-300 font-sans">
-              
+            {/* Left Pane: Instructions, Rules, Sample Cases */}
+            <div 
+              style={{ width: `${leftPanelPercent}%` }}
+              className="p-6 overflow-y-auto border-r border-slate-200 bg-slate-50 space-y-5 text-slate-800 font-sans shrink-0"
+            >
               <div className="space-y-2">
-                <div className="text-[11px] font-bold uppercase tracking-wider text-amber-400">
-                  Benchmarked by {activeTest.benchmarkEntity.name}
+                <div className="text-[11px] font-bold uppercase tracking-wider text-amber-700">
+                  {activeTest.benchmarkEntity.name}
                 </div>
-                <h2 className="text-xl font-black text-white">{activeTest.title}</h2>
-                <p className="text-xs text-slate-300 leading-relaxed">{activeTest.description}</p>
+                <h2 className="text-xl font-black text-slate-900">{activeTest.title}</h2>
+                <p className="text-xs text-slate-600 leading-relaxed">{activeTest.description}</p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#0c1222] border border-white/[0.08] space-y-2.5">
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-                  <FileText className="w-3.5 h-3.5 text-amber-400" />
+              {/* Instructions */}
+              <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-2.5 shadow-sm">
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                  <FileText className="w-3.5 h-3.5 text-amber-600" />
                   Assessment Instructions & Rules:
                 </h4>
                 <ul className="space-y-1.5">
                   {activeTest.instructions.map((inst, i) => (
-                    <li key={i} className="text-xs text-slate-300 flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0" />
+                    <li key={i} className="text-xs text-slate-700 flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
                       <span>{inst}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Sample Test Cases */}
+              {/* Sample Cases */}
               <div className="space-y-3">
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">Sample Test Cases:</h4>
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Sample Test Cases:</h4>
                 {activeTest.sampleCases.map((sc, idx) => (
-                  <div key={idx} className="p-3.5 rounded-2xl bg-[#090e1c] border border-white/[0.06] font-mono text-xs space-y-1.5">
-                    <div className="text-slate-400 text-[11px] font-bold">Case #{idx + 1}:</div>
-                    <div className="text-slate-200"><strong className="text-slate-400">Input:</strong> {sc.input}</div>
-                    <div className="text-amber-400"><strong className="text-slate-400">Expected:</strong> {sc.expected}</div>
+                  <div key={idx} className="p-3.5 rounded-2xl bg-white border border-slate-200 font-mono text-xs space-y-1.5 shadow-sm">
+                    <div className="text-slate-500 text-[11px] font-bold">Case #{idx + 1}:</div>
+                    <div className="text-slate-800"><strong className="text-slate-500">Input:</strong> {sc.input}</div>
+                    <div className="text-amber-700"><strong className="text-slate-500">Expected:</strong> {sc.expected}</div>
                     <div className="text-[11px] text-slate-500 font-sans mt-1">{sc.explanation}</div>
                   </div>
                 ))}
               </div>
-
             </div>
 
-            {/* Right Pane: Native Hands-On Practical Sandbox */}
-            <div className="flex flex-col bg-[#121624] overflow-hidden">
-              
-              {/* Specialized Engine 1: Monaco IDE (Tech & AI) */}
-              {activeTest.stream === 'tech_ai' && (
-                <div className="flex-1 flex flex-col h-full">
-                  <div className="bg-[#0b101e] px-4 py-2.5 border-b border-white/[0.08] flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-white">Judge0 Multi-Language Sandbox</span>
-                      <div className="flex items-center bg-[#070b14] p-0.5 rounded-lg border border-white/[0.08]">
-                        {(['python', 'cpp', 'java', 'typescript'] as const).map((l) => (
-                          <button
-                            key={l}
-                            onClick={() => {
-                              setEditorLanguage(l);
-                              if (activeTest) {
-                                setCurrentCode(getBoilerplateCode(l, activeTest.title));
-                              }
-                            }}
-                            className={`px-2 py-0.5 rounded text-[11px] font-mono font-bold ${
-                              editorLanguage === l ? 'bg-amber-500 text-slate-950 font-black' : 'text-slate-400'
-                            }`}
-                          >
-                            {l === 'cpp' ? 'C++ 20' : l === 'python' ? 'Python 3.12' : l === 'java' ? 'Java 17' : 'TS 5.4'}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+            {/* Draggable Vertical Splitter Bar */}
+            <div
+              onMouseDown={handleMouseDownSplitter}
+              className="w-2 hover:w-2.5 bg-slate-200 hover:bg-amber-500 cursor-col-resize transition-all shrink-0 flex flex-col justify-center items-center z-20 group"
+              title="Drag horizontally to resize windows"
+            >
+              <div className="w-1 h-10 rounded-full bg-slate-400 group-hover:bg-white" />
+            </div>
 
+            {/* Right Pane: Code Editor & Terminal (Light Theme) */}
+            <div 
+              style={{ width: `${100 - leftPanelPercent}%` }}
+              className="flex flex-col bg-white overflow-hidden shrink-0"
+            >
+              <div className="bg-slate-100 px-4 py-2.5 border-b border-slate-200 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold text-slate-800">Code Sandbox</span>
+                  <div className="flex items-center bg-white p-0.5 rounded-lg border border-slate-200">
+                    {(['python', 'cpp', 'java', 'typescript'] as const).map((l) => (
+                      <button
+                        key={l}
+                        onClick={() => handleLanguageChange(l)}
+                        className={`px-2.5 py-1 rounded text-[11px] font-mono font-bold transition-all ${
+                          editorLanguage === l ? 'bg-amber-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        {l === 'cpp' ? 'C++ 20' : l === 'python' ? 'Python 3.12' : l === 'java' ? 'Java 17' : 'TS 5.4'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleExecuteSandbox}
+                  disabled={isRunningSandbox}
+                  className="flex items-center gap-2 px-4 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-sm active:scale-95 transition-all"
+                >
+                  <Play className={`w-3.5 h-3.5 ${isRunningSandbox ? 'animate-spin' : 'fill-white'}`} />
+                  <span>{isRunningSandbox ? 'Running Tests...' : 'Run Test Cases'}</span>
+                </button>
+              </div>
+
+              {/* Monaco Editor in Light Theme ("vs") */}
+              <div className="flex-1 bg-white">
+                <Editor
+                  height="100%"
+                  language={editorLanguage}
+                  theme="vs"
+                  value={currentCode}
+                  onChange={(val) => setCurrentCode(val || '')}
+                  options={{
+                    fontSize: 13,
+                    fontFamily: 'JetBrains Mono, monospace',
+                    minimap: { enabled: false },
+                    tabSize: 4,
+                    scrollBeyondLastLine: false
+                  }}
+                />
+              </div>
+
+              {/* Terminal Tray in Light Theme */}
+              <div className="bg-slate-100 border-t border-slate-200 text-xs font-mono">
+                <div className="flex items-center justify-between px-4 py-2 border-b border-slate-200 bg-slate-200/60">
+                  <div className="flex items-center gap-2">
                     <button
-                      onClick={handleExecuteSandbox}
-                      disabled={isRunningSandbox}
-                      className="flex items-center gap-2 px-4 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-sm active:scale-95"
+                      onClick={() => setTerminalTrayMode('suite')}
+                      className={`px-3 py-1 rounded-md text-[11px] font-bold ${
+                        terminalTrayMode === 'suite' ? 'bg-amber-600 text-white' : 'text-slate-600 hover:text-slate-900'
+                      }`}
                     >
-                      <Play className={`w-3.5 h-3.5 ${isRunningSandbox ? 'animate-spin' : 'fill-white'}`} />
-                      <span>{isRunningSandbox ? 'Running Container...' : 'Run Test Cases'}</span>
+                      Automated Test Suite
+                    </button>
+                    <button
+                      onClick={() => setTerminalTrayMode('custom_input')}
+                      className={`px-3 py-1 rounded-md text-[11px] font-bold ${
+                        terminalTrayMode === 'custom_input' ? 'bg-amber-600 text-white' : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      Custom Test Input
                     </button>
                   </div>
+                </div>
 
-                  <div className="flex-1 bg-[#1e1e1e]">
-                    <Editor
-                      height="100%"
-                      language={editorLanguage}
-                      theme="vs-dark"
-                      value={currentCode}
-                      onChange={(val) => setCurrentCode(val || '')}
-                      options={{
-                        fontSize: 13,
-                        fontFamily: 'JetBrains Mono, monospace',
-                        minimap: { enabled: false },
-                        tabSize: 4
-                      }}
-                    />
-                  </div>
-
-                  {/* Terminal Execution & Custom Input Tray */}
-                  <div className="bg-[#080c16] border-t border-white/[0.1] text-xs font-mono">
-                    <div className="flex items-center justify-between px-4 py-2 border-b border-white/[0.06] bg-[#050810]">
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => setTerminalTrayMode('suite')}
-                          className={`px-3 py-1 rounded-md text-[11px] font-bold ${
-                            terminalTrayMode === 'suite' ? 'bg-amber-600 text-white' : 'text-slate-400 hover:text-white'
-                          }`}
-                        >
-                          Automated Test Suite (4/4)
-                        </button>
-                        <button
-                          onClick={() => setTerminalTrayMode('custom_input')}
-                          className={`px-3 py-1 rounded-md text-[11px] font-bold ${
-                            terminalTrayMode === 'custom_input' ? 'bg-amber-600 text-white' : 'text-slate-400 hover:text-white'
-                          }`}
-                        >
-                          Custom Test Input Runner
-                        </button>
+                <div className="p-3 bg-white">
+                  {terminalTrayMode === 'suite' ? (
+                    sandboxOutput ? (
+                      <div className="flex items-center justify-between text-amber-700 font-bold">
+                        <span className="flex items-center gap-1.5">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600" /> {sandboxOutput.details}
+                        </span>
+                        <span className="text-[11px] text-slate-500 font-normal">Exit code: 0</span>
                       </div>
-                      <span className="text-[10px] text-slate-400 font-sans">Judge0 Isolated Sandbox • Container ID #c8f902</span>
-                    </div>
-
-                    <div className="p-3">
-                      {terminalTrayMode === 'suite' ? (
-                        sandboxOutput ? (
-                          <div className="flex items-center justify-between text-amber-400 font-bold">
-                            <span className="flex items-center gap-1.5">
-                              <CheckCircle2 className="w-4 h-4 text-amber-400" /> {sandboxOutput.details}
-                            </span>
-                            <span className="text-[11px] text-slate-400 font-normal">Sandbox exit code: 0</span>
-                          </div>
-                        ) : (
-                          <div className="text-slate-400 text-[11px]">
-                            Click "Run Test Cases" to execute candidate code against 4 automated Judge0 test containers.
-                          </div>
-                        )
-                      ) : (
-                        <div className="space-y-2">
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                              <label className="text-[10px] uppercase font-bold text-slate-400">Custom Input (stdin):</label>
-                              <textarea
-                                value={customInputText}
-                                onChange={(e) => setCustomInputText(e.target.value)}
-                                rows={2}
-                                className="w-full bg-[#03050a] border border-white/[0.1] rounded-lg p-2 text-xs text-amber-300 font-mono focus:outline-none focus:border-amber-500"
-                              />
-                            </div>
-                            <div>
-                              <label className="text-[10px] uppercase font-bold text-slate-400">Standard Output (stdout):</label>
-                              <div className="w-full bg-[#03050a] border border-white/[0.1] rounded-lg p-2 text-xs text-amber-400 font-mono h-[54px] overflow-y-auto">
-                                {customInputOutput || "Run container with custom input to view stdout..."}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="flex justify-end">
-                            <button
-                              onClick={() => {
-                                setCustomInputOutput(`Input Parsed: [${customInputText.replace(/\n/g, ', ')}]\nOutput: 85 (Target Match Found in 3ms)\nExecution Status: SUCCESS (Exit Code 0)`);
-                              }}
-                              className="px-3 py-1 rounded bg-amber-600 hover:bg-amber-500 text-white font-bold text-[11px]"
-                            >
-                              Run Custom Input
-                            </button>
+                    ) : (
+                      <div className="text-slate-500 text-[11px]">
+                        Click "Run Test Cases" to execute candidate code against automated test cases.
+                      </div>
+                    )
+                  ) : (
+                    <div className="space-y-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-[10px] uppercase font-bold text-slate-500">Custom Input (stdin):</label>
+                          <textarea
+                            value={customInputText}
+                            onChange={(e) => setCustomInputText(e.target.value)}
+                            rows={2}
+                            className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-900 font-mono focus:outline-none focus:border-amber-500"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] uppercase font-bold text-slate-500">Standard Output (stdout):</label>
+                          <div className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-amber-700 font-mono h-[54px] overflow-y-auto">
+                            {customInputOutput || "Run with custom input to view output..."}
                           </div>
                         </div>
-                      )}
+                      </div>
+                      <div className="flex justify-end">
+                        <button
+                          onClick={() => {
+                            setCustomInputOutput(`Input: [${customInputText.replace(/\n/g, ', ')}]\nOutput: Match Found in 3ms\nStatus: SUCCESS (Exit Code 0)`);
+                          }}
+                          className="px-3 py-1 rounded bg-amber-600 hover:bg-amber-700 text-white font-bold text-[11px]"
+                        >
+                          Run Custom Input
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
-              )}
-
-              {/* Specialized Engine 2: Commerce & Finance (Interactive LBO & DCF Simulator) */}
-              {activeTest.stream === 'commerce_finance' && (
-                <div className="p-6 overflow-y-auto space-y-5 text-white">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-base font-bold flex items-center gap-2">
-                      Interactive LBO Debt Waterfall & IRR Modeler
-                    </h3>
-                    <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-amber-500/20 text-amber-300">
-                      Automated Mathematical Audit Engine
-                    </span>
-                  </div>
-
-                  <div className="p-5 rounded-2xl bg-[#080c16] border border-white/[0.08] space-y-3 font-mono text-xs">
-                    <div className="grid grid-cols-3 gap-2 font-bold text-slate-400 border-b border-white/[0.08] pb-2">
-                      <div>Debt Tranche</div>
-                      <div>Entry Leverage</div>
-                      <div>Exit Amortization</div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2 py-1">
-                      <div>Senior Term Loan A</div>
-                      <div className="text-amber-300">3.50x EBITDA (₹525 Cr)</div>
-                      <div className="text-amber-400">100% Repaid via Cash Sweep</div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2 py-1">
-                      <div>Mezzanine Notes</div>
-                      <div className="text-amber-300">2.00x EBITDA (₹300 Cr)</div>
-                      <div className="text-amber-400">12% PIK Compounded</div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2 py-2 border-t border-white/[0.08] text-sm">
-                      <div className="font-bold text-white">Sponsor 5-Yr IRR:</div>
-                      <div className="col-span-2 font-black text-amber-400">24.8% (2.85x MoIC)</div>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={handleExecuteSandbox}
-                    className="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20"
-                  >
-                    Run Mathematical Model Audit
-                  </button>
-                </div>
-              )}
-
-              {/* Specialized Engine 3: UI/UX Design (Accessibility Canvas Auditor) */}
-              {activeTest.stream === 'ui_ux' && (
-                <div className="p-6 overflow-y-auto space-y-5 text-white">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-base font-bold">Live WCAG 2.2 / 3.0 AAA Spatial & Contrast Auditor</h3>
-                    <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-purple-500/20 text-purple-300">
-                      DOM Accessibility Tree Parser
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-3 font-mono text-xs">
-                    <div className="p-4 rounded-2xl bg-[#080c16] border border-white/[0.08]">
-                      <div className="text-slate-400 text-[10px]">Contrast Ratio</div>
-                      <div className="text-xl font-bold text-amber-400">8.2:1 (AAA)</div>
-                    </div>
-                    <div className="p-4 rounded-2xl bg-[#080c16] border border-white/[0.08]">
-                      <div className="text-slate-400 text-[10px]">Touch Target</div>
-                      <div className="text-xl font-bold text-amber-400">48px × 48px</div>
-                    </div>
-                    <div className="p-4 rounded-2xl bg-[#080c16] border border-white/[0.08]">
-                      <div className="text-slate-400 text-[10px]">Aria-Expanded</div>
-                      <div className="text-xl font-bold text-amber-400">Valid State</div>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={handleExecuteSandbox}
-                    className="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-lg shadow-purple-600/30"
-                  >
-                    Execute Automated Accessibility Audit
-                  </button>
-                </div>
-              )}
-
-              {/* Specialized Engine 4: Law & Governance (Statutory Clause Risk Parser) */}
-              {activeTest.stream === 'law_governance' && (
-                <div className="p-6 overflow-y-auto space-y-5 text-white">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-base font-bold">Statutory Contract & NDA Clause Risk Parser</h3>
-                    <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-rose-500/20 text-rose-300">
-                      DPDP Act 2023 Statutory Rules
-                    </span>
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-rose-950/30 border border-rose-800/40 space-y-2 text-xs">
-                    <div className="font-bold text-rose-400 uppercase text-[10px]">Section 8 Violation Flagged:</div>
-                    <p className="text-slate-300 leading-relaxed font-mono">
-                      "Vendor indemnification limited to ₹10,000 for statutory data fiduciary breaches involving Indian citizen biometrics."
-                    </p>
-                  </div>
-
-                  <button
-                    onClick={handleExecuteSandbox}
-                    className="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg shadow-rose-600/30"
-                  >
-                    Execute Statutory Clause Risk Evaluation
-                  </button>
-                </div>
-              )}
-
-              {/* Specialized Engine 5: Healthcare & Bio (Biostatistical Clinical Validator) */}
-              {activeTest.stream === 'healthcare_bio' && (
-                <div className="p-6 overflow-y-auto space-y-5 text-white">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-base font-bold">Biostatistical Clinical Trial Validator</h3>
-                    <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-teal-500/20 text-teal-300">
-                      Kaplan-Meier Survival Curves
-                    </span>
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-[#080c16] border border-white/[0.08] font-mono text-xs space-y-2">
-                    <div className="text-slate-400">Clinical Cohort: Progression-Free Survival (N=420)</div>
-                    <div className="text-amber-400 font-bold">Hazard Ratio (HR): 0.68 (95% CI: 0.52 - 0.89)</div>
-                    <div className="text-amber-300 font-bold">Log-Rank Test p-value: 0.004 (Statistically Significant)</div>
-                  </div>
-
-                  <button
-                    onClick={handleExecuteSandbox}
-                    className="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs shadow-lg shadow-teal-600/30"
-                  >
-                    Execute Statistical Validation
-                  </button>
-                </div>
-              )}
-
+              </div>
             </div>
 
           </div>
-
-          {/* Anti-Paste Modal Warning (Specification 4) */}
-          {showPasteWarning && (
-            <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-              <div className="glass-panel-glow max-w-md w-full rounded-3xl p-6 border border-amber-500/50 space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto">
-                  <ShieldAlert className="w-6 h-6" />
-                </div>
-                <div className="text-center space-y-1.5">
-                  <h4 className="text-base font-black text-white">Anti-Cheat Notice</h4>
-                  <p className="text-xs text-amber-200 leading-relaxed">
-                    External clipboard paste blocked by Proctoring Guard. Raw implementation is required.
-                  </p>
-                  <p className="text-[11px] text-slate-400">
-                    This attempt has been logged in your recruiter audit report (Flag #{antiCheatFlags}).
-                  </p>
-                </div>
-                <button
-                  onClick={() => setShowPasteWarning(false)}
-                  className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs"
-                >
-                  I Understand & Acknowledge
-                </button>
-              </div>
-            </div>
-          )}
 
         </div>
       )}
