@@ -1157,25 +1157,24 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
             <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#080d1a] border border-slate-200 dark:border-white/[0.08] space-y-4 font-mono text-xs text-slate-800 dark:text-slate-300">
               <div className="border-b border-slate-200 dark:border-white/[0.08] pb-3">
-                <div className="text-lg font-extrabold text-slate-900 dark:text-white font-sans">ARJUN KAWADE</div>
-                <div className="text-amber-600 dark:text-amber-400 font-bold">GenAI & Distributed Systems Engineer</div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">DigiLocker Sovereign Hash: 0x7e8f...872 - ATS Score: 91/100</div>
+                <div className="text-lg font-extrabold text-slate-900 dark:text-white font-sans">{activeStudent.name.toUpperCase()}</div>
+                <div className="text-amber-600 dark:text-amber-400 font-bold">{activeStudent.degree}</div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400">{activeStudent.institution} - ATS Score: {activeStudent.atsScore}/100</div>
               </div>
 
               <div>
-                <div className="text-amber-600 dark:text-amber-400 font-bold uppercase text-[11px]">Verified Credentials & Badges:</div>
+                <div className="text-amber-600 dark:text-amber-400 font-bold uppercase text-[11px]">Verified Skills & Credentials:</div>
                 <div className="text-slate-700 dark:text-slate-300 text-[11px] pl-2 space-y-0.5">
-                  <div>IIT Bombay Benchmark Sandbox: Top 98th Percentile (C++20 & Python 3.12)</div>
-                  <div>Tier 1 XMP PKI Signature: Verified (National Informatics Centre)</div>
+                  <div>{activeStudent.benchmarkBadge}: {activeStudent.verifiedSkills.slice(0, 4).join(', ')}</div>
+                  <div>Tier 1 XMP PKI Signature: Verified ({activeStudent.digiLockerId})</div>
                   <div>Tier 2 OpenCV ELA Tamper Score: 1.84 (Pristine Original)</div>
                 </div>
               </div>
 
               <div>
-                <div className="text-amber-600 dark:text-amber-400 font-bold uppercase text-[11px]">High-Impact Quantified Projects:</div>
+                <div className="text-amber-600 dark:text-amber-400 font-bold uppercase text-[11px]">High-Impact Summary & Projects:</div>
                 <div className="text-slate-700 dark:text-slate-300 text-[11px] pl-2 space-y-0.5">
-                  <div>Distributed Inference Accelerator: Cut token latency by 42% via custom PagedAttention vLLM kernel.</div>
-                  <div>DPDP Statutory Compliance Engine: Processed more than 100k records with 100% fiduciary audit conformance.</div>
+                  <div>{activeStudent.summary}</div>
                 </div>
               </div>
             </div>

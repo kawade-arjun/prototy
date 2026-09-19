@@ -60,7 +60,21 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [uploadedResume, setUploadedResumeState] = useState<UploadedResumeData | null>(() => {
     try {
       const saved = localStorage.getItem('user_uploaded_resume');
-      return saved ? JSON.parse(saved) : null;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed?.text && (
+          parsed.text.includes('IIT Bombay') || 
+          parsed.text.includes('PyTorch & Triton') || 
+          parsed.text.includes('vLLM PagedAttention') ||
+          parsed.text.includes('Distributed systems and GenAI engineer') ||
+          parsed.text.includes('STU-TECH-001')
+        )) {
+          localStorage.removeItem('user_uploaded_resume');
+          return null;
+        }
+        return parsed;
+      }
+      return null;
     } catch {
       return null;
     }
