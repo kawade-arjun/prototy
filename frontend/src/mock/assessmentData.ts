@@ -45,6 +45,53 @@ export interface AssessmentTest {
 export const ASSESSMENT_TESTS: AssessmentTest[] = [
   // 1. DAILY QUESTS (5-10 Mins)
   {
+    id: 'QUEST-2SUM',
+    title: 'Two Sum (2Sum) - Array & Hash Map DSA',
+    subTab: 'daily_quests',
+    stream: 'tech_ai',
+    durationMinutes: 10,
+    questionCount: 1,
+    difficulty: 'Beginner',
+    benchmarkEntity: {
+      name: 'Daily DSA Challenge',
+      logo: 'DSA',
+      badgeTitle: 'Daily DSA Pioneer'
+    },
+    skillTags: ['Python 3.12', 'Data Structures', 'Hash Map', 'Algorithms'],
+    status: 'not_attempted',
+    description: 'Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice.',
+    instructions: [
+      'Traverse the array and maintain a hash map storing value-to-index mappings.',
+      'For each element, calculate complement = target - current_number.',
+      'Check if complement exists in the map; if so, return [map[complement], current_index].',
+      'Achieve O(N) time complexity and O(N) space complexity.'
+    ],
+    sampleCases: [
+      { input: 'nums = [2,7,11,15], target = 9', expected: '[0, 1]', explanation: 'Because nums[0] + nums[1] == 9, we return [0, 1].' },
+      { input: 'nums = [3,2,4], target = 6', expected: '[1, 2]', explanation: 'Because nums[1] + nums[2] == 6, we return [1, 2].' },
+      { input: 'nums = [3,3], target = 6', expected: '[0, 1]', explanation: 'Because nums[0] + nums[1] == 6, we return [0, 1].' }
+    ],
+    initialCode: `# Two Sum (2Sum) - Python 3.12
+def two_sum(nums: list[int], target: int) -> list[int]:
+    """
+    Given an array of integers nums and an integer target,
+    return indices of the two numbers such that they add up to target.
+    """
+    seen = {}
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in seen:
+            return [seen[complement], i]
+        seen[num] = i
+    return []
+
+# Test calls
+print("Test 1:", two_sum([2, 7, 11, 15], 9))  # Expected: [0, 1]
+print("Test 2:", two_sum([3, 2, 4], 6))       # Expected: [1, 2]
+print("Test 3:", two_sum([3, 3], 6))          # Expected: [0, 1]
+`
+  },
+  {
     id: 'QUEST-101',
     title: 'Agent Tool Calling Parameter Sanitizer',
     subTab: 'daily_quests',

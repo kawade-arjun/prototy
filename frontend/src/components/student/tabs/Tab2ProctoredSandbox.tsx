@@ -192,13 +192,22 @@ export const Tab2ProctoredSandbox: React.FC = () => {
 
     setTimeout(() => {
       setIsRunningSandbox(false);
-      setSandboxOutput({
-        status: 'passed',
-        passedCount: 4,
-        totalCount: 4,
-        details: 'All 4/4 Judge0 Test Suites Cleared in 14ms. P99 Memory Overhead < 4MB. Ready for Submission.'
-      });
-    }, 1200);
+      if (activeTest?.id === 'QUEST-2SUM') {
+        setSandboxOutput({
+          status: 'passed',
+          passedCount: 3,
+          totalCount: 3,
+          details: 'All 3/3 Two Sum Test Cases Passed in 4ms! [Test 1: [2,7,11,15] target 9 -> [0,1] ✓ | Test 2: [3,2,4] target 6 -> [1,2] ✓ | Test 3: [3,3] target 6 -> [0,1] ✓]'
+        });
+      } else {
+        setSandboxOutput({
+          status: 'passed',
+          passedCount: 4,
+          totalCount: 4,
+          details: 'All 4/4 Test Suites Cleared in 14ms. Memory Overhead < 4MB. Ready for Submission.'
+        });
+      }
+    }, 900);
   };
 
   // Final Submit Test in Modal
@@ -225,75 +234,21 @@ export const Tab2ProctoredSandbox: React.FC = () => {
   return (
     <div className="space-y-5 font-sans">
 
-      {/* 1. TOP PERFORMANCE & CREDENTIAL KPI BAR */}
+      {/* 1. TOP PERFORMANCE KPI BAR */}
       <div className="glass-panel rounded-2xl p-4 sm:p-5 shadow-lg space-y-3.5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          
           <div className="space-y-0.5">
-            <div className="flex items-center gap-2">
-              <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30">
-                ENGINE OF PROOF
-              </span>
-              <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white tracking-tight">
-                Skill Verification & Assessment Studio
-              </h2>
-            </div>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              Proving verified capability through proctored sandboxes, isolated test runners, and anti-cheat telemetry.
-            </p>
+            <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white tracking-tight">
+              Skill Verification & Assessment Studio
+            </h2>
           </div>
-
-          {/* Discipline Quick-Switch Dropdown */}
-          <div className="relative shrink-0">
-            <button
-              onClick={() => setShowStreamDropdown(!showStreamDropdown)}
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-[#0d1424] border border-slate-200 dark:border-white/[0.08] hover:border-amber-500 transition-all text-xs font-bold text-slate-900 dark:text-white shadow-sm"
-            >
-              <div className="p-1.5 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
-                {getStreamIcon(currentStreamMeta.id, "w-4 h-4")}
-              </div>
-              <div className="text-left">
-                <div className="text-[9px] text-slate-400 uppercase font-semibold">Discipline</div>
-                <div className="text-xs font-extrabold text-amber-600 dark:text-amber-400">{currentStreamMeta.name}</div>
-              </div>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400 ml-0.5" />
-            </button>
-
-            {showStreamDropdown && (
-              <div className="absolute right-0 mt-2 w-64 glass-panel-glow rounded-2xl p-2 border border-slate-200 dark:border-white/[0.1] shadow-2xl z-40 space-y-1">
-                {ACADEMIC_STREAMS.map((s) => (
-                  <button
-                    key={s.id}
-                    onClick={() => {
-                      setStudentStream(s.id);
-                      setShowStreamDropdown(false);
-                    }}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-left transition-all ${
-                      selectedStream === s.id
-                        ? 'bg-amber-600 text-white shadow-sm'
-                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.05]'
-                    }`}
-                  >
-                    <div className={`p-1.5 rounded-lg ${selectedStream === s.id ? 'bg-white/20 text-white' : 'bg-slate-200/60 dark:bg-white/10 text-slate-700 dark:text-slate-300'} flex items-center justify-center shrink-0`}>
-                      {getStreamIcon(s.id, "w-3.5 h-3.5")}
-                    </div>
-                    <div className="truncate">
-                      <div>{s.name}</div>
-                      <div className="text-[10px] font-normal opacity-80">{s.badge}</div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
         </div>
 
-        {/* The 4 KPI Gauges (Dynamic per Active Student Disciplinary Field) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 pt-2.5 border-t border-slate-100 dark:border-white/[0.08]">
+        {/* 3 KPI Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2.5 border-t border-slate-100 dark:border-white/[0.08]">
           
           {/* KPI 1: Composite Competency Score */}
-          <div className="p-3 rounded-xl bg-slate-50/90 dark:bg-[#080d1a]/90 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5">
+          <div className="p-3.5 rounded-xl bg-slate-50/90 dark:bg-[#080d1a]/90 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5">
             <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider truncate">
               Composite Competency Score
             </div>
@@ -301,13 +256,10 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               <span className="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 tracking-tight">{activeStudent.compositeScore}</span>
               <span className="text-[11px] text-slate-400 font-bold">/ 100</span>
             </div>
-            <div className="text-[10px] text-amber-600 dark:text-amber-400 font-bold flex items-center gap-1 truncate">
-              <Trophy className="w-3 h-3 shrink-0" /> {activeStudent.nationalPercentile} Percentile
-            </div>
           </div>
 
           {/* KPI 2: Evaluations Ratio */}
-          <div className="p-3 rounded-xl bg-slate-50/90 dark:bg-[#080d1a]/90 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5">
+          <div className="p-3.5 rounded-xl bg-slate-50/90 dark:bg-[#080d1a]/90 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5">
             <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider truncate">
               Evaluations Ratio
             </div>
@@ -317,40 +269,18 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               </span>
               <span className="text-[11px] text-slate-400 font-bold">Cleared</span>
             </div>
-            <div className="text-[10px] text-slate-500 dark:text-slate-400 font-medium truncate">
-              {activeStudent.evaluationsRatio.includes('(') ? activeStudent.evaluationsRatio.split('(')[1].replace(')', '') : '88% Completion'}
-            </div>
           </div>
 
-          {/* KPI 3: Gamified Streak Counter */}
-          <div className="p-3 rounded-xl bg-slate-50/90 dark:bg-[#080d1a]/90 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5">
+          {/* KPI 3: Streak */}
+          <div className="p-3.5 rounded-xl bg-slate-50/90 dark:bg-[#080d1a]/90 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5">
             <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider truncate">
-              Gamified Streak & Level
+              Streak & Activity
             </div>
             <div className="flex items-baseline gap-1.5">
               <span className="text-xl sm:text-2xl font-black text-amber-500 tracking-tight flex items-center gap-1">
                 <Flame className="w-4 h-4 fill-amber-500 shrink-0" /> {activeStudent.streakDays}-Day
               </span>
               <span className="text-[11px] text-slate-400 font-bold">Streak</span>
-            </div>
-            <div className="text-[10px] text-amber-700 dark:text-amber-300 font-semibold truncate">
-              Level {Math.floor(activeStudent.streakDays / 3) + 2} Scholar • +50 XP/Test
-            </div>
-          </div>
-
-          {/* KPI 4: National AICTE Benchmark Badge */}
-          <div className="p-3 rounded-xl bg-slate-50/90 dark:bg-[#080d1a]/90 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5 flex flex-col justify-between">
-            <div>
-              <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider truncate">
-                National Benchmark Badge
-              </div>
-              <div className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5 mt-0.5 truncate">
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-                <span className="truncate">{activeStudent.benchmarkBadge.split('•')[0]}</span>
-              </div>
-            </div>
-            <div className="text-[10px] text-amber-600 dark:text-amber-400 font-bold truncate">
-              0% Fraud • {activeStudent.digiLockerId}
             </div>
           </div>
 
@@ -913,9 +843,6 @@ export const Tab2ProctoredSandbox: React.FC = () => {
             
             <div className="flex items-start justify-between">
               <div>
-                <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800">
-                  DIAGNOSTIC OUTCOME LOOP
-                </span>
                 <h3 className="text-xl font-black text-slate-900 dark:text-white mt-1">
                   {diagnosticReportTest.title}
                 </h3>
