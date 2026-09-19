@@ -57,27 +57,34 @@ export const analyzeResumeWithGemini = async (
   discipline: string = 'Engineering & Technology',
   apiKey?: string
 ): Promise<GeminiResumeAnalysis> => {
-  // 1. Try FastAPI Backend Endpoint first (uses server-side GEMINI_API_KEY from .env)
-  try {
-    const backendRes = await fetch('http://localhost:8000/api/resume/analyze-gemini', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ resume_text: resumeText, discipline })
-    });
-    if (backendRes.ok) {
-      const result = await backendRes.json();
-      if (result) {
-        if (!result.strengths && result.detailedStrengths) {
-          result.strengths = result.detailedStrengths.map((s: any) => s.title);
+  // 1. Try FastAPI Backend Endpoints first (uses server-side GEMINI_API_KEY from .env)
+  const backendEndpoints = [
+    '/api/resume/analyze-gemini',
+    'http://localhost:8000/api/resume/analyze-gemini',
+    'http://127.0.0.1:8000/api/resume/analyze-gemini'
+  ];
+  for (const endpoint of backendEndpoints) {
+    try {
+      const backendRes = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resume_text: resumeText, discipline })
+      });
+      if (backendRes.ok) {
+        const result = await backendRes.json();
+        if (result) {
+          if (!result.strengths && result.detailedStrengths) {
+            result.strengths = result.detailedStrengths.map((s: any) => s.title);
+          }
+          if (!result.weaknesses && result.detailedWeaknesses) {
+            result.weaknesses = result.detailedWeaknesses.map((w: any) => w.title);
+          }
+          return result;
         }
-        if (!result.weaknesses && result.detailedWeaknesses) {
-          result.weaknesses = result.detailedWeaknesses.map((w: any) => w.title);
-        }
-        return result;
       }
+    } catch (backendErr) {
+      console.warn(`Backend Gemini proxy endpoint ${endpoint} failed:`, backendErr);
     }
-  } catch (backendErr) {
-    console.warn('Backend Gemini proxy unreachable, attempting direct browser API:', backendErr);
   }
 
   // 2. Try direct browser Gemini API with active working models
