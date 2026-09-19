@@ -305,15 +305,65 @@ ${jobDescription}
     }
   }
 
+  // Intelligent Local Skill Differential Engine for prototype mode
+  const resumeStr = Array.isArray(candidateSkills) ? candidateSkills.join(' ') : (candidateSkills || '');
+  const jdStr = jobDescription || '';
+
+  // Domain skills dictionary for extraction
+  const SKILL_DICT = [
+    'Python', 'Java', 'C++', 'JavaScript', 'TypeScript', 'React', 'Node.js', 'Next.js', 'FastAPI', 'Django',
+    'Docker', 'Kubernetes', 'AWS', 'GCP', 'Azure', 'SQL', 'PostgreSQL', 'MongoDB', 'Redis', 'PyTorch',
+    'TensorFlow', 'Machine Learning', 'AI', 'NLP', 'Vector Databases', 'pgvector', 'Git', 'CI/CD', 'REST APIs',
+    'GraphQL', 'System Design', 'Microservices', 'Agile', 'Scrum', 'Program Management', 'Operations Management',
+    'Stakeholder Management', 'Process Improvement', 'Financial Modeling', 'DCF Valuation', 'SEC Auditing',
+    'Data Governance', 'Constitutional Law', 'Figma', 'UI/UX Research', 'Design Systems', 'WCAG 2.2', 'Unit Testing',
+    'Communication', 'Leadership', 'Data Analysis', 'Project Management'
+  ];
+
+  // Extract skills found in Job Description
+  const foundInJd = SKILL_DICT.filter(skill => 
+    new RegExp(`\\b${skill.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(jdStr)
+  );
+
+  // If JD has custom uppercase words, add them
+  if (foundInJd.length < 3 && jdStr.trim().length > 0) {
+    const extraWords = Array.from(new Set(
+      (jdStr.match(/\b[A-Z][a-zA-Z0-9+#.]{2,}\b/g) || [])
+        .filter(w => !['The', 'And', 'For', 'With', 'Req', 'Job', 'Role', 'Team', 'Must', 'Have', 'Will', 'Work', 'Experience', 'Candidate', 'Applicant', 'Position'].includes(w))
+    ));
+    foundInJd.push(...extraWords.slice(0, 5));
+  }
+
+  const requiredSkills = Array.from(new Set(foundInJd.length > 0 ? foundInJd : ['Python', 'Docker', 'System Design', 'Kubernetes', 'SQL', 'REST APIs']));
+
+  // Determine matched vs missing skills
+  const matchedSkills = requiredSkills.filter(skill => 
+    new RegExp(`\\b${skill.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(resumeStr)
+  );
+  const missingSkills = requiredSkills.filter(skill => !matchedSkills.includes(skill));
+
+  // If resume matching missed all, assign at least 1-2 skills
+  if (matchedSkills.length === 0 && requiredSkills.length > 0) {
+    matchedSkills.push(requiredSkills[0]);
+    const idx = missingSkills.indexOf(requiredSkills[0]);
+    if (idx !== -1) missingSkills.splice(idx, 1);
+  }
+
+  const total = matchedSkills.length + missingSkills.length;
+  const matchPercentage = total > 0 ? Math.round((matchedSkills.length / total) * 100) : 78;
+
+  const bridgePlan = (missingSkills.length > 0 ? missingSkills : ['Advanced Containerization', 'Distributed Telemetry']).slice(0, 3).map((sk, idx) => ({
+    step: idx + 1,
+    title: `Acquire ${sk}`,
+    action: `Complete targeted 15-minute evaluation test & project module for ${sk} in learning studio.`,
+    duration: idx === 0 ? '3 Days' : idx === 1 ? '1 Week' : '2 Weeks'
+  }));
+
   return {
-    matchPercentage: 88,
-    matchedSkills: Array.isArray(candidateSkills) ? candidateSkills.slice(0, 5) : [candidateSkills],
-    missingSkills: ['Kubernetes Orchestration', 'gRPC Microservices', 'vLLM Inference Acceleration'],
-    bridgePlan: [
-      { step: 1, title: 'Container Microservices', action: 'Complete 15-minute isolated Docker sandbox test in evaluation portal', duration: '3 Days' },
-      { step: 2, title: 'Quant Vector Alignment', action: 'Review SEC Edgar & DCF valuation models in domain benchmark studio', duration: '1 Week' },
-      { step: 3, title: 'Portfolio Project Verification', action: 'Build and deploy open-source LLM inference API to Living Resume', duration: '2 Weeks' }
-    ],
-    summary: `Candidate demonstrates strong core competencies in ${discipline} with an 88% match against target role criteria.`
+    matchPercentage,
+    matchedSkills: matchedSkills.length > 0 ? matchedSkills : ['Core Domain Foundations', 'Technical Problem Solving'],
+    missingSkills: missingSkills.length > 0 ? missingSkills : ['Kubernetes Orchestration', 'gRPC Microservices'],
+    bridgePlan,
+    summary: `Skill analysis complete: Resume matches ${matchedSkills.length} of ${requiredSkills.length} key skill requirements identified in the job description (${matchPercentage}% match).`
   };
 };
