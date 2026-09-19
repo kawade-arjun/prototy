@@ -8,7 +8,6 @@ export type StudentTab =
   | 'jobs' 
   | 'organisations' 
   | 'profile' 
-  | 'ai_studio'
   | 'settings';
 
 export type AcademicStream = 
