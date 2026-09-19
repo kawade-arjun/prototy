@@ -22,7 +22,15 @@ interface Tab1Props {
 export const Tab1Recommendations: React.FC<Tab1Props> = () => {
   const { theme } = useTheme();
   const { activeStudent, selectedStream, uploadedResume } = useStudent();
-  const [atsResult, setAtsResult] = useState<AtsDiagnosticResult>(activeStudent.atsBreakdown);
+  const [atsResult, setAtsResult] = useState<AtsDiagnosticResult>({
+    overallScore: 88,
+    quantifiedMetricsScore: 85,
+    keywordDensityScore: 88,
+    formattingParsabilityScore: 92,
+    strengths: [],
+    weaknesses: [],
+    actionableSuggestions: []
+  });
   const [isAnalyzingResume, setIsAnalyzingResume] = useState(false);
   const [showAiResumeModal, setShowAiResumeModal] = useState(false);
 
@@ -36,12 +44,17 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
     uploadedResume?.text || `${activeStudent.name}\n${activeStudent.degree} at ${activeStudent.institution}\nSkills: ${activeStudent.verifiedSkills.join(', ')}\nSummary: ${activeStudent.summary}`
   );
 
-  // Sync uploaded resume from profile tab into AI Studio
+  // Sync uploaded resume from profile tab into AI Studio & trigger live analysis
   React.useEffect(() => {
     if (uploadedResume?.text) {
       setCustomResumeText(uploadedResume.text);
     }
   }, [uploadedResume]);
+
+  // Auto-analyze resume whenever customResumeText or uploadedResume changes
+  React.useEffect(() => {
+    handleAnalyzeResume();
+  }, [customResumeText]);
 
   // Skill Gap State
   const [gapMode, setGapMode] = useState<'jobId' | 'pasteJd'>('jobId');
@@ -64,14 +77,13 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
     setGeminiError(null);
   };
 
-  // Sync with active student profile change
+  // Sync selected job with stream change
   React.useEffect(() => {
-    setAtsResult(activeStudent.atsBreakdown);
     const streamOpps = MOCK_OPPORTUNITIES.filter(o => o.stream === selectedStream);
     if (streamOpps.length > 0) {
       setSelectedJobId(streamOpps[0].id);
     }
-  }, [activeStudent, selectedStream]);
+  }, [selectedStream]);
 
   const handleAnalyzeResume = async () => {
     setIsAnalyzingResume(true);
