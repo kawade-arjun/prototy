@@ -116,17 +116,17 @@ export const CollegePortal: React.FC = () => {
     <div className="space-y-6 animate-fadeIn font-sans pb-12">
       
       {/* 1. INSTITUTIONAL TPO COMMAND CENTER HERO BANNER */}
-      <div className="glass-panel rounded-3xl p-6 sm:p-7 shadow-xl space-y-4 border border-emerald-500/20 bg-gradient-to-r from-emerald-500/5 via-transparent to-teal-500/5">
+      <div className="glass-panel rounded-3xl p-6 sm:p-7 shadow-xl space-y-4 border border-amber-500/20 bg-gradient-to-r from-amber-500/5 via-transparent to-teal-500/5">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono font-black uppercase px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5">
-                <Building2 className="w-3.5 h-3.5 text-emerald-500" />
+              <span className="text-[10px] font-mono font-black uppercase px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/30 flex items-center gap-1.5">
+                <Building2 className="w-3.5 h-3.5 text-amber-500" />
                 INSTITUTIONAL TPO COMMAND CENTER
               </span>
               <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-teal-500/10 text-teal-700 dark:text-teal-300 border border-teal-500/30 flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3 text-emerald-500" /> ZERO GHOST RESUME GUARANTEE
+                <ShieldCheck className="w-3 h-3 text-amber-500" /> ZERO GHOST RESUME GUARANTEE
               </span>
             </div>
 
@@ -142,7 +142,7 @@ export const CollegePortal: React.FC = () => {
           <div className="flex flex-wrap items-center gap-2.5 shrink-0">
             <button
               onClick={() => setShowNirfModal(true)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-black shadow-lg shadow-amber-600/20 transition-all active:scale-95"
             >
               <Download className="w-4 h-4" />
               <span>1-Click NIRF / NAAC Report</span>
@@ -171,7 +171,7 @@ export const CollegePortal: React.FC = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 pt-3 border-t border-slate-100 dark:border-white/[0.08]">
           <div className="p-3 rounded-xl bg-slate-50/80 dark:bg-[#080d1a]/80 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5">
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Credential Audit Reduction</div>
-            <div className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400">85% Slashed</div>
+            <div className="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400">85% Slashed</div>
             <div className="text-[10px] text-slate-500 dark:text-slate-400">Weeks of manual file audits to seconds</div>
           </div>
 
@@ -183,7 +183,7 @@ export const CollegePortal: React.FC = () => {
 
           <div className="p-3 rounded-xl bg-slate-50/80 dark:bg-[#080d1a]/80 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5">
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Corporate Ghost Resumes</div>
-            <div className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400">0.0% Fakes</div>
+            <div className="text-xl sm:text-2xl font-black text-stone-600 dark:text-stone-400">0.0% Fakes</div>
             <div className="text-[10px] text-slate-500 dark:text-slate-400">Zero corporate blacklisting guarantee</div>
           </div>
 
@@ -206,31 +206,31 @@ export const CollegePortal: React.FC = () => {
             className="w-full m3-surface-2 rounded-2xl p-3.5 border border-slate-200/80 dark:border-white/[0.08] shadow-md flex items-center justify-between gap-3 text-slate-900 dark:text-white font-bold text-xs"
           >
             <div className="flex items-center gap-3 truncate">
-              <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+              <div className="w-8 h-8 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-sm">
                 <Menu className="w-4 h-4" />
               </div>
               <div className="flex flex-col text-left truncate">
                 <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono uppercase tracking-wider">
                   TPO Console Tab
                 </span>
-                <span className="text-xs font-extrabold truncate text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                <span className="text-xs font-extrabold truncate text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
                   {activeTab === 'cohort_readiness' && <BarChart2 className="w-3.5 h-3.5" />}
                   {activeTab === 'campus_drives' && <Briefcase className="w-3.5 h-3.5" />}
                   {activeTab === 'curriculum_radar' && <BookOpen className="w-3.5 h-3.5" />}
                   {activeTab === 'erp_onboarding' && <Layers className="w-3.5 h-3.5" />}
                   {activeTab === 'faculty_rnd' && <Award className="w-3.5 h-3.5" />}
-                  {activeTab === 'cohort_readiness' && 'Cohort Skill Readiness & Heatmaps'}
-                  {activeTab === 'campus_drives' && 'Visiting Campus Drives & Rosters'}
-                  {activeTab === 'curriculum_radar' && 'Curriculum Deficit & BoS Radar'}
-                  {activeTab === 'erp_onboarding' && 'Batch Onboarding & ERP Hub'}
-                  {activeTab === 'faculty_rnd' && 'Faculty R&D & Sabbatical Hub'}
+                  {activeTab === 'cohort_readiness' && 'Cohort Readiness'}
+                  {activeTab === 'campus_drives' && 'Campus Drives'}
+                  {activeTab === 'curriculum_radar' && 'Curriculum Gaps'}
+                  {activeTab === 'erp_onboarding' && 'Batch Onboarding'}
+                  {activeTab === 'faculty_rnd' && 'Faculty R&D'}
                 </span>
               </div>
             </div>
             
             <div className="flex items-center gap-1 text-slate-400 shrink-0">
               {isMobileMenuOpen ? (
-                <ChevronUp className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <ChevronUp className="w-5 h-5 text-amber-600 dark:text-amber-400" />
               ) : (
                 <ChevronDown className="w-5 h-5 text-slate-400" />
               )}
@@ -241,11 +241,11 @@ export const CollegePortal: React.FC = () => {
           {isMobileMenuOpen && (
             <div className="m3-surface-2 rounded-2xl p-2 border border-slate-200 dark:border-white/[0.1] shadow-2xl space-y-1.5 animate-fadeIn">
               {[
-                { id: 'cohort_readiness', label: 'Cohort Skill Readiness & Heatmaps', icon: <BarChart2 className="w-4 h-4" /> },
-                { id: 'campus_drives', label: 'Visiting Campus Drives & Rosters', icon: <Briefcase className="w-4 h-4" /> },
-                { id: 'curriculum_radar', label: 'Curriculum Deficit & BoS Radar', icon: <BookOpen className="w-4 h-4" /> },
-                { id: 'erp_onboarding', label: 'Batch Onboarding & ERP Hub', icon: <Layers className="w-4 h-4" /> },
-                { id: 'faculty_rnd', label: 'Faculty R&D & Sabbatical Hub (NEP 2020)', icon: <Award className="w-4 h-4" /> }
+                { id: 'cohort_readiness', label: 'Cohort Readiness', icon: <BarChart2 className="w-4 h-4" /> },
+                { id: 'campus_drives', label: 'Campus Drives', icon: <Briefcase className="w-4 h-4" /> },
+                { id: 'curriculum_radar', label: 'Curriculum Gaps', icon: <BookOpen className="w-4 h-4" /> },
+                { id: 'erp_onboarding', label: 'Batch Onboarding', icon: <Layers className="w-4 h-4" /> },
+                { id: 'faculty_rnd', label: 'Faculty R&D', icon: <Award className="w-4 h-4" /> }
               ].map((tab) => {
                 const isActive = activeTab === tab.id;
                 return (
@@ -257,7 +257,7 @@ export const CollegePortal: React.FC = () => {
                     }}
                     className={`w-full flex items-center justify-between p-3 rounded-xl text-xs font-bold transition-all ${
                       isActive
-                        ? 'bg-emerald-600 text-white shadow-md'
+                        ? 'bg-amber-600 text-white shadow-md'
                         : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80'
                     }`}
                   >
@@ -280,61 +280,61 @@ export const CollegePortal: React.FC = () => {
             onClick={() => setActiveTab('cohort_readiness')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
               activeTab === 'cohort_readiness'
-                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20 border-amber-600'
                 : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <BarChart2 className="w-4 h-4" />
-            <span>Cohort Skill Readiness & Heatmaps</span>
+            <span>Cohort Readiness</span>
           </button>
 
           <button
             onClick={() => setActiveTab('campus_drives')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
               activeTab === 'campus_drives'
-                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20 border-amber-600'
                 : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Briefcase className="w-4 h-4" />
-            <span>Visiting Campus Drives & Rosters</span>
-            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-emerald-500 text-slate-950 font-black">3</span>
+            <span>Campus Drives</span>
+            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-amber-500 text-slate-950 font-black">{VISITING_CAMPUS_DRIVES.length}</span>
           </button>
 
           <button
             onClick={() => setActiveTab('curriculum_radar')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
               activeTab === 'curriculum_radar'
-                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20 border-amber-600'
                 : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <BookOpen className="w-4 h-4" />
-            <span>Curriculum Deficit & BoS Radar</span>
+            <span>Curriculum Gaps</span>
           </button>
 
           <button
             onClick={() => setActiveTab('erp_onboarding')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
               activeTab === 'erp_onboarding'
-                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20 border-amber-600'
                 : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Layers className="w-4 h-4" />
-            <span>Batch Onboarding & ERP Hub</span>
+            <span>Batch Onboarding</span>
           </button>
 
           <button
             onClick={() => setActiveTab('faculty_rnd')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 border ${
               activeTab === 'faculty_rnd'
-                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 border-emerald-600'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20 border-amber-600'
                 : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-white/[0.06] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Award className="w-4 h-4" />
-            <span>Faculty R&D & Sabbatical Hub (NEP 2020)</span>
+            <span>Faculty R&D</span>
           </button>
         </div>
       </div>
@@ -348,7 +348,7 @@ export const CollegePortal: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h2 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
-                <BarChart2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <BarChart2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                 <span>Departmental Cohort Breakdown & Real-Time Heatmaps</span>
               </h2>
               <p className="text-xs text-slate-500">
@@ -356,7 +356,7 @@ export const CollegePortal: React.FC = () => {
               </p>
             </div>
 
-            <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/20">
+            <span className="text-xs font-mono text-amber-600 dark:text-amber-400 font-bold bg-amber-500/10 px-3 py-1 rounded-lg border border-amber-500/20">
               Active Evaluation Cycle: 2025-2026 Academic Term
             </span>
           </div>
@@ -369,7 +369,7 @@ export const CollegePortal: React.FC = () => {
               return (
                 <div
                   key={dept.id}
-                  className="glass-panel p-5 rounded-2xl flex flex-col justify-between space-y-4 hover:border-emerald-500/40 transition-all shadow-sm hover:shadow-md"
+                  className="glass-panel p-5 rounded-2xl flex flex-col justify-between space-y-4 hover:border-amber-500/40 transition-all shadow-sm hover:shadow-md"
                 >
                   <div className="space-y-3">
                     {/* Header */}
@@ -395,7 +395,7 @@ export const CollegePortal: React.FC = () => {
                     <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-100 dark:border-white/[0.08]">
                       <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 space-y-0.5">
                         <div className="text-[9px] font-bold text-slate-400 uppercase">Placement Ready</div>
-                        <div className="text-sm font-black text-emerald-600 dark:text-emerald-400 font-mono">
+                        <div className="text-sm font-black text-amber-600 dark:text-amber-400 font-mono">
                           {dept.readyStudents} / {dept.totalStudents}
                         </div>
                         <div className="text-[9px] text-slate-500">{readinessPercent}% of batch</div>
@@ -414,23 +414,23 @@ export const CollegePortal: React.FC = () => {
                     <div className="space-y-1">
                       <div className="flex justify-between text-[10px] font-bold">
                         <span className="text-slate-500">Corporate Threshold Readiness:</span>
-                        <span className="text-emerald-600 font-mono">{readinessPercent}% Cleared</span>
+                        <span className="text-amber-600 font-mono">{readinessPercent}% Cleared</span>
                       </div>
                       <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${readinessPercent}%` }} />
+                        <div className="h-full bg-amber-500 rounded-full" style={{ width: `${readinessPercent}%` }} />
                       </div>
                     </div>
 
                     {/* Top Verified Skill */}
-                    <div className="p-2.5 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-900/40 space-y-0.5">
-                      <div className="text-[9px] font-bold text-emerald-700 dark:text-emerald-300 uppercase">Top Tested Skill</div>
+                    <div className="p-2.5 rounded-xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 space-y-0.5">
+                      <div className="text-[9px] font-bold text-amber-700 dark:text-amber-300 uppercase">Top Tested Skill</div>
                       <div className="text-xs font-bold text-slate-900 dark:text-white truncate">{dept.topSkill}</div>
                     </div>
                   </div>
 
                   {/* Action */}
                   <div className="pt-2 border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-emerald-600 font-bold">
+                    <span className="text-[10px] font-mono text-amber-600 font-bold">
                       {dept.placementPercent}% Placed
                     </span>
                     <button
@@ -458,7 +458,7 @@ export const CollegePortal: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h2 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
-                <Briefcase className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <Briefcase className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                 <span>Campus Drive Management Calendar & Verified Rosters</span>
               </h2>
               <p className="text-xs text-slate-500">
@@ -484,7 +484,7 @@ export const CollegePortal: React.FC = () => {
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-black text-xs flex items-center justify-center border border-emerald-200 dark:border-emerald-800">
+                    <div className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 font-black text-xs flex items-center justify-center border border-amber-200 dark:border-amber-800">
                       {drive.companyLogo}
                     </div>
                     <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 border border-amber-500/20 uppercase">
@@ -517,7 +517,7 @@ export const CollegePortal: React.FC = () => {
                     </div>
                     <div className="flex justify-between items-center font-bold">
                       <span className="text-slate-700 dark:text-slate-300">Eligible Verified Students:</span>
-                      <span className="text-emerald-600 dark:text-emerald-400 font-mono text-sm">{drive.eligibleCount}</span>
+                      <span className="text-amber-600 dark:text-amber-400 font-mono text-sm">{drive.eligibleCount}</span>
                     </div>
                   </div>
                 </div>
@@ -526,7 +526,7 @@ export const CollegePortal: React.FC = () => {
                   <span className="text-[10px] text-slate-400">{drive.totalApplied} Applied</span>
                   <button
                     onClick={() => setShowDriveRosterModal(true)}
-                    className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-sm transition-all"
+                    className="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-sm transition-all"
                   >
                     Export Roster
                   </button>
@@ -630,7 +630,7 @@ export const CollegePortal: React.FC = () => {
 
               {/* Upload Dropzone */}
               <div className="p-6 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center space-y-3 text-center">
-                <Upload className="w-8 h-8 text-emerald-500" />
+                <Upload className="w-8 h-8 text-amber-500" />
                 <div className="space-y-1">
                   <div className="text-xs font-bold text-slate-800 dark:text-slate-200">
                     Drag & Drop Institutional Roster CSV or Excel
@@ -650,7 +650,7 @@ export const CollegePortal: React.FC = () => {
               </div>
 
               {uploadSuccessMessage && (
-                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs font-bold animate-fadeIn">
+                <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs font-bold animate-fadeIn">
                   ✓ {uploadSuccessMessage}
                 </div>
               )}
@@ -661,10 +661,10 @@ export const CollegePortal: React.FC = () => {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
-                    <RefreshCw className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                    <RefreshCw className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                     <span>Campus ERP Webhook Connectors</span>
                   </h3>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 border border-amber-500/20">
                     Auto-Sync Active
                   </span>
                 </div>
@@ -679,7 +679,7 @@ export const CollegePortal: React.FC = () => {
                       <div className="font-bold text-slate-900 dark:text-white">SAP Student Lifecycle Management (SLcM)</div>
                       <div className="text-[10px] text-slate-400">Last Synced: 14 mins ago • Latency: 28ms</div>
                     </div>
-                    <span className="font-mono text-emerald-600 font-bold text-[11px]">Connected ✓</span>
+                    <span className="font-mono text-amber-600 font-bold text-[11px]">Connected ✓</span>
                   </div>
 
                   <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
@@ -687,7 +687,7 @@ export const CollegePortal: React.FC = () => {
                       <div className="font-bold text-slate-900 dark:text-white">Oracle PeopleSoft Campus Solutions</div>
                       <div className="text-[10px] text-slate-400">Marksheet Registry Webhook • SSL TLS 1.3</div>
                     </div>
-                    <span className="font-mono text-emerald-600 font-bold text-[11px]">Connected ✓</span>
+                    <span className="font-mono text-amber-600 font-bold text-[11px]">Connected ✓</span>
                   </div>
 
                   <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
@@ -695,7 +695,7 @@ export const CollegePortal: React.FC = () => {
                       <div className="font-bold text-slate-900 dark:text-white">University Sovereign DigiLocker Gateway</div>
                       <div className="text-[10px] text-slate-400">Institutional SHA-256 Authority Ledger</div>
                     </div>
-                    <span className="font-mono text-emerald-600 font-bold text-[11px]">Active ✓</span>
+                    <span className="font-mono text-amber-600 font-bold text-[11px]">Active ✓</span>
                   </div>
                 </div>
               </div>
@@ -704,14 +704,14 @@ export const CollegePortal: React.FC = () => {
                 <button
                   onClick={handleTriggerErpSync}
                   disabled={isErpSyncing}
-                  className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md shadow-emerald-600/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+                  className="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md shadow-amber-600/20 active:scale-95 transition-all flex items-center justify-center gap-2"
                 >
                   <RefreshCw className={`w-3.5 h-3.5 ${isErpSyncing ? 'animate-spin' : ''}`} />
                   <span>{isErpSyncing ? 'Syncing with Campus ERP...' : 'Trigger Bi-Directional ERP Sync'}</span>
                 </button>
 
                 {erpSyncSuccess && (
-                  <div className="text-center text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-2">
+                  <div className="text-center text-xs font-bold text-amber-600 dark:text-amber-400 mt-2">
                     ✓ All 1,850 student attendance and semester grades synchronized!
                   </div>
                 )}
@@ -732,7 +732,7 @@ export const CollegePortal: React.FC = () => {
           <div className="glass-panel p-6 rounded-2xl space-y-4 shadow-sm">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30">
+                <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30">
                   NATIONAL EDUCATION POLICY (NEP 2020) • AICTE 360° FACULTY POINTS
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mt-1">
@@ -743,7 +743,7 @@ export const CollegePortal: React.FC = () => {
                 </p>
               </div>
 
-              <span className="text-xs font-mono font-bold text-emerald-600 bg-emerald-500/10 px-3 py-1 rounded-lg">
+              <span className="text-xs font-mono font-bold text-amber-600 bg-amber-500/10 px-3 py-1 rounded-lg">
                 Total Industry Grants: ₹88,50,000 Active
               </span>
             </div>
@@ -757,10 +757,10 @@ export const CollegePortal: React.FC = () => {
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300">
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-700 dark:text-amber-300">
                         {grant.corporateSponsor}
                       </span>
-                      <span className="text-xs font-mono font-black text-emerald-600 dark:text-emerald-400">
+                      <span className="text-xs font-mono font-black text-amber-600 dark:text-amber-400">
                         {grant.grantAmount}
                       </span>
                     </div>
@@ -773,7 +773,7 @@ export const CollegePortal: React.FC = () => {
                       Investigator: <strong className="text-slate-800 dark:text-slate-200">{grant.facultyName}</strong>
                     </div>
 
-                    <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-[10px] text-emerald-800 dark:text-emerald-300 font-bold flex items-center justify-between">
+                    <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-[10px] text-amber-800 dark:text-amber-300 font-bold flex items-center justify-between">
                       <span>{grant.ipTermSheetStatus}</span>
                       <span>+{grant.aictePointsAwarded} AICTE Pts</span>
                     </div>

@@ -69,11 +69,11 @@ const PERSONA_CONFIGS: Record<UserRole, PersonaConfig> = {
     icon: Building2,
     defaultEmail: 'tpo.head@iitb.ac.in',
     theme: {
-      gradient: 'from-emerald-600 via-emerald-500 to-teal-500',
-      border: 'border-emerald-500/40',
-      badgeBg: 'bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border-emerald-500/30',
-      textAccent: 'text-emerald-600 dark:text-emerald-400',
-      buttonBg: 'bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 shadow-emerald-600/20'
+      gradient: 'from-amber-600 via-amber-500 to-teal-500',
+      border: 'border-amber-500/40',
+      badgeBg: 'bg-amber-500/10 text-amber-800 dark:text-amber-300 border-amber-500/30',
+      textAccent: 'text-amber-600 dark:text-amber-400',
+      buttonBg: 'bg-gradient-to-r from-amber-600 to-teal-500 hover:from-amber-500 hover:to-teal-400 shadow-amber-600/20'
     },
     idLabel: 'AISHE Institutional Code',
     idPlaceholder: 'AISHE-C-12345',
@@ -282,8 +282,8 @@ export const AuthPopupModal: React.FC<AuthPopupModalProps> = ({
 
           {/* Success Alert */}
           {successMessage && (
-            <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs font-semibold flex items-center gap-2.5 animate-fadeIn">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            <div className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs font-semibold flex items-center gap-2.5 animate-fadeIn">
+              <CheckCircle2 className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0" />
               <span>{successMessage}</span>
             </div>
           )}

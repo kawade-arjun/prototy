@@ -297,7 +297,7 @@ export const ElaForensicViewerModal: React.FC<ElaForensicViewerModalProps> = ({
         <div className="px-6 py-4 border-t border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900/80 flex flex-col sm:flex-row items-center justify-between gap-3">
           
           <div className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-            <Lock className="w-3.5 h-3.5 text-emerald-500" />
+            <Lock className="w-3.5 h-3.5 text-amber-500" />
             <span>Guaranteed 0% Credential Fraud under CareerOptic Sovereign Audit Protocol</span>
           </div>
 

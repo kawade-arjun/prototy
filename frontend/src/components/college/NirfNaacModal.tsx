@@ -52,20 +52,20 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
-      <div className="glass-panel-glow w-full max-w-4xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-emerald-500/30 bg-white dark:bg-[#090e1a]">
+      <div className="glass-panel-glow w-full max-w-4xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-amber-500/30 bg-white dark:bg-[#090e1a]">
         
         {/* Header */}
-        <div className="px-6 py-4 border-b border-emerald-200 dark:border-emerald-900/40 bg-emerald-50/80 dark:bg-emerald-950/40 flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-amber-200 dark:border-amber-900/40 bg-amber-50/80 dark:bg-amber-950/40 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-emerald-600 text-white shadow-md shadow-emerald-600/20">
+            <div className="p-2 rounded-xl bg-amber-600 text-white shadow-md shadow-amber-600/20">
               <FileCheck className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono font-black uppercase px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">
+                <span className="text-[10px] font-mono font-black uppercase px-2 py-0.5 rounded bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300 border border-amber-300 dark:border-amber-700">
                   STATUTORY AUDIT ENGINE • NAAC / NIRF COMPLIANT
                 </span>
-                <span className="text-[10px] font-mono text-emerald-600 font-bold">85% Audit Reduction</span>
+                <span className="text-[10px] font-mono text-amber-600 font-bold">85% Audit Reduction</span>
               </div>
               <h2 className="text-base font-black text-slate-900 dark:text-white">
                 1-Click NIRF & NAAC Accreditation Report Generator
@@ -90,7 +90,7 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
               onClick={() => setReportType('NIRF')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 reportType === 'NIRF'
-                  ? 'bg-emerald-600 text-white shadow-md'
+                  ? 'bg-amber-600 text-white shadow-md'
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
               }`}
             >
@@ -100,7 +100,7 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
               onClick={() => setReportType('NAAC_521')}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 reportType === 'NAAC_521'
-                  ? 'bg-emerald-600 text-white shadow-md'
+                  ? 'bg-amber-600 text-white shadow-md'
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
               }`}
             >
@@ -109,14 +109,14 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
           </div>
 
           {/* Cryptographic Verifiable Banner */}
-          <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between text-xs">
-            <div className="flex items-center gap-2.5 text-emerald-800 dark:text-emerald-300">
-              <ShieldCheck className="w-5 h-5 text-emerald-500 shrink-0" />
+          <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-between text-xs">
+            <div className="flex items-center gap-2.5 text-amber-800 dark:text-amber-300">
+              <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0" />
               <span>
                 <strong>Cryptographically Verifiable Audit Trails:</strong> Every placed student record links to a DigiLocker verified degree hash and digital offer letter, ensuring zero audit queries from inspection committees.
               </span>
             </div>
-            <span className="font-mono text-[10px] px-2 py-1 rounded bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-bold shrink-0 ml-2">
+            <span className="font-mono text-[10px] px-2 py-1 rounded bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold shrink-0 ml-2">
               0% Audit Deficit
             </span>
           </div>
@@ -125,7 +125,7 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-white/[0.08] space-y-0.5">
               <div className="text-[10px] text-slate-400 uppercase font-bold">Overall Placement Rate</div>
-              <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400">89.2%</div>
+              <div className="text-2xl font-black text-stone-600 dark:text-stone-400">89.2%</div>
               <div className="text-[10px] text-slate-500">652 / 730 Placement-Ready</div>
             </div>
 
@@ -176,11 +176,11 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
                         <span>{c.name}</span>
                       </td>
                       <td className="p-2.5 font-mono">{c.totalStudents}</td>
-                      <td className="p-2.5 font-mono text-emerald-600 dark:text-emerald-400 font-bold">{c.readyStudents}</td>
+                      <td className="p-2.5 font-mono text-amber-600 dark:text-amber-400 font-bold">{c.readyStudents}</td>
                       <td className="p-2.5 font-bold">{c.placementPercent}%</td>
                       <td className="p-2.5 font-mono font-bold">{c.medianCtc}</td>
                       <td className="p-2.5">
-                        <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 font-bold">
+                        <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 font-bold">
                           DigiLocker ✓
                         </span>
                       </td>
@@ -204,7 +204,7 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
               </div>
 
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <div className="font-bold text-emerald-600 dark:text-emerald-400">Tier-1 Product & FinTech</div>
+                <div className="font-bold text-amber-600 dark:text-amber-400">Tier-1 Product & FinTech</div>
                 <div className="text-lg font-black text-slate-900 dark:text-white mt-1">42 Companies</div>
                 <div className="text-[10px] text-slate-500">Razorpay, Cred, Zerodha</div>
               </div>
@@ -228,7 +228,7 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
         {/* Footer with 1-Click Export */}
         <div className="px-6 py-4 border-t border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900/60 flex items-center justify-between">
           <div className="text-xs text-slate-500 flex items-center gap-1.5">
-            <Lock className="w-3.5 h-3.5 text-emerald-500" />
+            <Lock className="w-3.5 h-3.5 text-amber-500" />
             <span>Digital PKI Signature: SHA-256 [0x789b...3fa]</span>
           </div>
 
@@ -242,7 +242,7 @@ export const NirfNaacModal: React.FC<NirfNaacModalProps> = ({ onClose }) => {
             <button
               onClick={handleDownload}
               disabled={isExporting}
-              className="flex items-center gap-1.5 px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md shadow-emerald-600/20 active:scale-95 transition-all"
+              className="flex items-center gap-1.5 px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md shadow-amber-600/20 active:scale-95 transition-all"
             >
               <Download className="w-3.5 h-3.5" />
               <span>{isExporting ? 'Compiling Certified Ledger...' : `Export Certified ${reportType} PDF & CSV`}</span>

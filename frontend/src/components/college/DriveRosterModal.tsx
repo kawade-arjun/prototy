@@ -36,7 +36,7 @@ export const DriveRosterModal: React.FC<DriveRosterModalProps> = ({ onClose }) =
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
-      <div className="glass-panel-glow w-full max-w-3xl rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-emerald-500/30 bg-white dark:bg-[#090e1a]">
+      <div className="glass-panel-glow w-full max-w-3xl rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-amber-500/30 bg-white dark:bg-[#090e1a]">
         
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-200 dark:border-white/[0.08] bg-slate-50/80 dark:bg-slate-900/60 flex items-center justify-between">
@@ -68,9 +68,9 @@ export const DriveRosterModal: React.FC<DriveRosterModalProps> = ({ onClose }) =
         <div className="p-6 space-y-5 overflow-y-auto max-h-[78vh]">
           
           {/* Zero Ghost Guarantee Alert */}
-          <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-            <div className="space-y-0.5 text-xs text-emerald-800 dark:text-emerald-300 leading-relaxed">
+          <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+            <div className="space-y-0.5 text-xs text-amber-800 dark:text-amber-300 leading-relaxed">
               <strong>Zero Ghost Resume Guarantee:</strong> Pre-audits students to ensure no exaggerated GPA, fake certificates, or inflated claims reach recruiters. Protects institutional NIRF reputation and eliminates risk of corporate blacklisting.
             </div>
           </div>
@@ -172,7 +172,7 @@ export const DriveRosterModal: React.FC<DriveRosterModalProps> = ({ onClose }) =
                   <tr>
                     <td className="p-2.5 text-slate-400">1VT22CS042</td>
                     <td className="p-2.5 font-bold font-sans text-slate-900 dark:text-white">Arjun Kawade</td>
-                    <td className="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">8.92</td>
+                    <td className="p-2.5 text-amber-600 dark:text-amber-400 font-bold">8.92</td>
                     <td className="p-2.5 text-teal-600 dark:text-teal-400 font-bold">98%</td>
                     <td className="p-2.5">0</td>
                     <td className="p-2.5 text-slate-400 truncate max-w-[120px]">0x9a12c8...</td>
@@ -180,7 +180,7 @@ export const DriveRosterModal: React.FC<DriveRosterModalProps> = ({ onClose }) =
                   <tr>
                     <td className="p-2.5 text-slate-400">1VT22CF018</td>
                     <td className="p-2.5 font-bold font-sans text-slate-900 dark:text-white">Priya Sharma</td>
-                    <td className="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">9.15</td>
+                    <td className="p-2.5 text-amber-600 dark:text-amber-400 font-bold">9.15</td>
                     <td className="p-2.5 text-teal-600 dark:text-teal-400 font-bold">94%</td>
                     <td className="p-2.5">0</td>
                     <td className="p-2.5 text-slate-400 truncate max-w-[120px]">0x7e33d2...</td>
@@ -188,7 +188,7 @@ export const DriveRosterModal: React.FC<DriveRosterModalProps> = ({ onClose }) =
                   <tr>
                     <td className="p-2.5 text-slate-400">1VT22CS091</td>
                     <td className="p-2.5 font-bold font-sans text-slate-900 dark:text-white">Devansh Gupta</td>
-                    <td className="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">8.45</td>
+                    <td className="p-2.5 text-amber-600 dark:text-amber-400 font-bold">8.45</td>
                     <td className="p-2.5 text-teal-600 dark:text-teal-400 font-bold">86%</td>
                     <td className="p-2.5">0</td>
                     <td className="p-2.5 text-slate-400 truncate max-w-[120px]">0x4b719a...</td>
@@ -203,7 +203,7 @@ export const DriveRosterModal: React.FC<DriveRosterModalProps> = ({ onClose }) =
         {/* Footer */}
         <div className="px-6 py-4 border-t border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900/60 flex items-center justify-between">
           <div className="text-xs text-slate-500 flex items-center gap-1.5">
-            <Lock className="w-3.5 h-3.5 text-emerald-500" />
+            <Lock className="w-3.5 h-3.5 text-amber-500" />
             <span>Format: CSV + Cryptographic PKI Manifest (.json)</span>
           </div>
 

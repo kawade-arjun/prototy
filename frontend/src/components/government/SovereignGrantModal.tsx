@@ -152,7 +152,7 @@ export const SovereignGrantModal: React.FC<SovereignGrantModalProps> = ({
         {/* Footer */}
         <div className="px-6 py-4 border-t border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-slate-900/60 flex items-center justify-between">
           <div className="text-xs text-slate-500 flex items-center gap-1.5">
-            <Lock className="w-3.5 h-3.5 text-emerald-500" />
+            <Lock className="w-3.5 h-3.5 text-amber-500" />
             <span>Ministry Public Financial Management System (PFMS) Sync</span>
           </div>
 

@@ -53,12 +53,12 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn">
+    <div className="space-y-6">
       {/* Header Banner */}
       <div className={`rounded-3xl glass-panel p-8 ${
-        isInternship 
-          ? 'bg-gradient-to-r from-amber-50/70 via-white to-orange-50/70 dark:from-amber-950/30 dark:via-slate-900 dark:to-orange-950/30' 
-          : 'bg-gradient-to-r from-orange-50/70 via-white to-amber-50/70 dark:from-orange-950/30 dark:via-slate-900 dark:to-amber-950/30'
+        isInternship
+          ? 'bg-amber-50/40 dark:bg-slate-900'
+          : 'bg-orange-50/40 dark:bg-slate-900'
       }`}>
         <div className="max-w-3xl space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-xs font-bold">
@@ -138,7 +138,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
                   </div>
                 </div>
 
-                <div className="text-sm font-extrabold text-emerald-600 dark:text-emerald-400">{opp.stipendOrSalary}</div>
+                <div className="text-sm font-extrabold text-amber-600 dark:text-amber-400">{opp.stipendOrSalary}</div>
 
                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{opp.description}</p>
 
@@ -158,7 +158,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
                     Required Cutoff: <span className="font-bold text-slate-900 dark:text-white">{opp.cutoffScore}%</span>
                   </span>
                   <span className={`font-semibold flex items-center gap-1 ${
-                    isEligible ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'
+                    isEligible ? 'text-amber-600 dark:text-amber-400' : 'text-amber-600 dark:text-amber-400'
                   }`}>
                     {isEligible ? <CheckCircle2 className="w-3.5 h-3.5" /> : <AlertCircle className="w-3.5 h-3.5" />}
                     {isEligible ? `Score (${candidateScore}%) Qualified` : `Below Cutoff`}
@@ -194,7 +194,7 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
 
       {/* AI Skill & Test Analysis Modal */}
       {selectedOpp && (
-        <div className="fixed inset-0 z-50 bg-black/60 dark:bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
           <div className="glass-panel-glow max-w-xl w-full rounded-3xl p-7 border space-y-5">
             <div className="flex items-start justify-between">
               <div>
@@ -215,16 +215,16 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500 dark:text-slate-400">Your Proctored Sandbox Score:</span>
-                <span className="text-emerald-600 dark:text-emerald-400 font-bold">{candidateScore}% (Top 2%)</span>
+                <span className="text-amber-600 dark:text-amber-400 font-bold">{candidateScore}% (Top 2%)</span>
               </div>
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500 dark:text-slate-400">Employer Cutoff Threshold:</span>
                 <span className="text-slate-900 dark:text-white font-bold">{selectedOpp.cutoffScore}%</span>
               </div>
               <div className="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-                <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${candidateScore}%` }} />
+                <div className="h-full bg-amber-500 rounded-full" style={{ width: `${candidateScore}%` }} />
               </div>
-              <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold pt-1">
+              <div className="text-[11px] text-amber-600 dark:text-amber-400 font-semibold pt-1">
                 ✓ Eligibility Confirmed: You qualify for direct Round-1 bypass via Gale-Shapley matching!
               </div>
             </div>

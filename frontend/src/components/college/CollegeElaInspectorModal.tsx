@@ -105,7 +105,7 @@ export const CollegeElaInspectorModal: React.FC<CollegeElaInspectorModalProps> =
               >
                 <span>{doc.studentName}</span>
                 <span className={`text-[9px] px-1.5 py-0.2 rounded font-mono ${
-                  doc.auditStatus === 'tampered' ? 'bg-rose-500 text-white font-bold' : 'bg-emerald-500 text-white font-bold'
+                  doc.auditStatus === 'tampered' ? 'bg-rose-500 text-white font-bold' : 'bg-amber-500 text-white font-bold'
                 }`}>
                   {doc.auditStatus === 'tampered' ? 'ELA High' : 'Verified'}
                 </span>
@@ -117,7 +117,7 @@ export const CollegeElaInspectorModal: React.FC<CollegeElaInspectorModalProps> =
           <div className={`p-4 rounded-2xl border flex items-start gap-3.5 ${
             activeDoc.auditStatus === 'tampered'
               ? 'bg-rose-500/10 border-rose-500/30 text-rose-800 dark:text-rose-300'
-              : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-800 dark:text-emerald-300'
+              : 'bg-amber-500/10 border-amber-500/30 text-amber-800 dark:text-amber-300'
           }`}>
             <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
             <div className="space-y-1 text-xs">
@@ -162,9 +162,9 @@ export const CollegeElaInspectorModal: React.FC<CollegeElaInspectorModalProps> =
                       <div className="absolute -inset-1 border-2 border-dashed border-rose-500 rounded-lg pointer-events-none animate-pulse" />
                     </div>
                   ) : (
-                    <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex justify-between font-bold">
+                    <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/30 flex justify-between font-bold">
                       <span className="text-slate-500">Verified Grade Metric:</span>
-                      <span className="font-mono text-emerald-600 dark:text-emerald-400 text-sm">8.92 (Pristine)</span>
+                      <span className="font-mono text-amber-600 dark:text-amber-400 text-sm">8.92 (Pristine)</span>
                     </div>
                   )}
                 </div>
@@ -204,7 +204,7 @@ export const CollegeElaInspectorModal: React.FC<CollegeElaInspectorModalProps> =
                     </div>
                   </div>
                 ) : (
-                  <div className="my-auto p-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 space-y-1 text-center">
+                  <div className="my-auto p-3 rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-300 space-y-1 text-center">
                     <div className="font-bold text-xs">UNIFORM BASELINE COMPRESSION</div>
                     <div className="text-[10px] opacity-80">Zero localized error bursts. Document is genuine.</div>
                   </div>
@@ -236,7 +236,7 @@ export const CollegeElaInspectorModal: React.FC<CollegeElaInspectorModalProps> =
             </button>
             <button
               onClick={() => handleApproveDoc(activeDoc.id)}
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm active:scale-95 transition-all"
+              className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-sm active:scale-95 transition-all"
             >
               Approve for Campus Drives
             </button>

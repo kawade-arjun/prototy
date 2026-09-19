@@ -119,7 +119,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
   const subTabs = [
     { id: 'all_tests' as AssessmentSubTab, label: 'All Tests', duration: 'All', color: 'text-amber-600 border-amber-500/30 bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30 dark:bg-amber-500/10' },
     { id: 'daily_quests' as AssessmentSubTab, label: 'Daily Quests', duration: '5–10 Mins', color: 'text-amber-500 border-amber-500/30 bg-amber-500/10' },
-    { id: 'domain_benchmarks' as AssessmentSubTab, label: 'Domain-Specific Benchmarks', duration: '30–60 Mins', color: 'text-emerald-500 border-emerald-500/30 bg-emerald-500/10' },
+    { id: 'domain_benchmarks' as AssessmentSubTab, label: 'Domain-Specific Benchmarks', duration: '30–60 Mins', color: 'text-amber-500 border-amber-500/30 bg-amber-500/10' },
     { id: 'recruiter_drives' as AssessmentSubTab, label: 'Recruiter Drives', duration: '45–90 Mins', color: 'text-purple-500 border-purple-500/30 bg-purple-500/10' },
     { id: 'aptitude_logic' as AssessmentSubTab, label: 'Aptitude & Logic', duration: '30–45 Mins', color: 'text-orange-500 border-orange-500/30 bg-orange-500/10' },
     { id: 'soft_skills_ethics' as AssessmentSubTab, label: 'Soft Skills & Ethics', duration: '15–30 Mins', color: 'text-amber-500 border-amber-500/30 bg-amber-500/10' }
@@ -223,7 +223,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
   });
 
   return (
-    <div className="space-y-5 animate-fadeIn font-sans">
+    <div className="space-y-5 font-sans">
 
       {/* 1. TOP PERFORMANCE & CREDENTIAL KPI BAR */}
       <div className="glass-panel rounded-2xl p-4 sm:p-5 shadow-lg space-y-3.5">
@@ -270,7 +270,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                     }}
                     className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-left transition-all ${
                       selectedStream === s.id
-                        ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-md'
+                        ? 'bg-amber-600 text-white shadow-sm'
                         : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.05]'
                     }`}
                   >
@@ -301,7 +301,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               <span className="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 tracking-tight">{activeStudent.compositeScore}</span>
               <span className="text-[11px] text-slate-400 font-bold">/ 100</span>
             </div>
-            <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1 truncate">
+            <div className="text-[10px] text-amber-600 dark:text-amber-400 font-bold flex items-center gap-1 truncate">
               <Trophy className="w-3 h-3 shrink-0" /> {activeStudent.nationalPercentile} Percentile
             </div>
           </div>
@@ -312,7 +312,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               Evaluations Ratio
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400 tracking-tight">
+              <span className="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 tracking-tight">
                 {activeStudent.evaluationsRatio.split(' ')[0]} / {activeStudent.evaluationsRatio.split(' ')[2]}
               </span>
               <span className="text-[11px] text-slate-400 font-bold">Cleared</span>
@@ -345,11 +345,11 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                 National Benchmark Badge
               </div>
               <div className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5 mt-0.5 truncate">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-500 shrink-0" />
                 <span className="truncate">{activeStudent.benchmarkBadge.split('•')[0]}</span>
               </div>
             </div>
-            <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold truncate">
+            <div className="text-[10px] text-amber-600 dark:text-amber-400 font-bold truncate">
               0% Fraud • {activeStudent.digiLockerId}
             </div>
           </div>
@@ -458,7 +458,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               <div className="pt-3 border-t border-slate-100 dark:border-white/[0.06]">
                 {isCompleted ? (
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+                    <div className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 text-xs font-bold">
                       <CheckCircle2 className="w-4 h-4" />
                       <span>Score: {test.score}% • Cleared</span>
                     </div>
@@ -495,7 +495,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                     </span>
                     <button
                       onClick={() => handleLaunchTest(test)}
-                      className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white font-bold text-xs shadow-sm shadow-amber-600/20 transition-all active:scale-95"
+                      className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-sm transition-all active:scale-95"
                     >
                       <span>Start Assessment</span>
                       <ChevronRight className="w-3.5 h-3.5" />
@@ -511,7 +511,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
 
       {/* 4. SPLIT-SCREEN DISTRACTION-FREE PROCTORED SANDBOX MODAL */}
       {activeTest && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex flex-col animate-fadeIn">
+        <div className="fixed inset-0 z-50 bg-black/95 flex flex-col">
           
           {/* Top Proctoring Status HUD Header */}
           <div className="bg-[#0a0f1d] border-b border-white/[0.1] px-6 py-3.5 flex flex-wrap items-center justify-between gap-4 text-white">
@@ -530,9 +530,9 @@ export const Tab2ProctoredSandbox: React.FC = () => {
             <div className="flex items-center gap-3">
               
               {/* Proctored Environment Active Pill */}
-              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                <Lock className="w-3.5 h-3.5 text-emerald-400" />
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+                <Lock className="w-3.5 h-3.5 text-amber-400" />
                 <span>Proctored Environment: Fullscreen Enforced • Paste Guard Active</span>
               </div>
 
@@ -555,7 +555,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               {/* Submit / Exit */}
               <button
                 onClick={handleSubmitTest}
-                className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-lg shadow-emerald-600/30 active:scale-95"
+                className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-extrabold shadow-lg shadow-amber-600/30 active:scale-95"
               >
                 <Check className="w-4 h-4" />
                 <span>Submit Assessment</span>
@@ -608,7 +608,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                   <div key={idx} className="p-3.5 rounded-2xl bg-[#090e1c] border border-white/[0.06] font-mono text-xs space-y-1.5">
                     <div className="text-slate-400 text-[11px] font-bold">Case #{idx + 1}:</div>
                     <div className="text-slate-200"><strong className="text-slate-400">Input:</strong> {sc.input}</div>
-                    <div className="text-emerald-400"><strong className="text-slate-400">Expected:</strong> {sc.expected}</div>
+                    <div className="text-amber-400"><strong className="text-slate-400">Expected:</strong> {sc.expected}</div>
                     <div className="text-[11px] text-slate-500 font-sans mt-1">{sc.explanation}</div>
                   </div>
                 ))}
@@ -636,7 +636,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                               }
                             }}
                             className={`px-2 py-0.5 rounded text-[11px] font-mono font-bold ${
-                              editorLanguage === l ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black' : 'text-slate-400'
+                              editorLanguage === l ? 'bg-amber-500 text-slate-950 font-black' : 'text-slate-400'
                             }`}
                           >
                             {l === 'cpp' ? 'C++ 20' : l === 'python' ? 'Python 3.12' : l === 'java' ? 'Java 17' : 'TS 5.4'}
@@ -648,7 +648,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                     <button
                       onClick={handleExecuteSandbox}
                       disabled={isRunningSandbox}
-                      className="flex items-center gap-2 px-4 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white text-xs font-bold shadow-md active:scale-95"
+                      className="flex items-center gap-2 px-4 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-sm active:scale-95"
                     >
                       <Play className={`w-3.5 h-3.5 ${isRunningSandbox ? 'animate-spin' : 'fill-white'}`} />
                       <span>{isRunningSandbox ? 'Running Container...' : 'Run Test Cases'}</span>
@@ -698,9 +698,9 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                     <div className="p-3">
                       {terminalTrayMode === 'suite' ? (
                         sandboxOutput ? (
-                          <div className="flex items-center justify-between text-emerald-400 font-bold">
+                          <div className="flex items-center justify-between text-amber-400 font-bold">
                             <span className="flex items-center gap-1.5">
-                              <CheckCircle2 className="w-4 h-4 text-emerald-400" /> {sandboxOutput.details}
+                              <CheckCircle2 className="w-4 h-4 text-amber-400" /> {sandboxOutput.details}
                             </span>
                             <span className="text-[11px] text-slate-400 font-normal">Sandbox exit code: 0</span>
                           </div>
@@ -723,7 +723,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                             </div>
                             <div>
                               <label className="text-[10px] uppercase font-bold text-slate-400">Standard Output (stdout):</label>
-                              <div className="w-full bg-[#03050a] border border-white/[0.1] rounded-lg p-2 text-xs text-emerald-400 font-mono h-[54px] overflow-y-auto">
+                              <div className="w-full bg-[#03050a] border border-white/[0.1] rounded-lg p-2 text-xs text-amber-400 font-mono h-[54px] overflow-y-auto">
                                 {customInputOutput || "Run container with custom input to view stdout..."}
                               </div>
                             </div>
@@ -766,7 +766,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                     <div className="grid grid-cols-3 gap-2 py-1">
                       <div>Senior Term Loan A</div>
                       <div className="text-amber-300">3.50x EBITDA (₹525 Cr)</div>
-                      <div className="text-emerald-400">100% Repaid via Cash Sweep</div>
+                      <div className="text-amber-400">100% Repaid via Cash Sweep</div>
                     </div>
                     <div className="grid grid-cols-3 gap-2 py-1">
                       <div>Mezzanine Notes</div>
@@ -775,7 +775,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                     </div>
                     <div className="grid grid-cols-3 gap-2 py-2 border-t border-white/[0.08] text-sm">
                       <div className="font-bold text-white">Sponsor 5-Yr IRR:</div>
-                      <div className="col-span-2 font-black text-emerald-400">24.8% (2.85x MoIC)</div>
+                      <div className="col-span-2 font-black text-amber-400">24.8% (2.85x MoIC)</div>
                     </div>
                   </div>
 
@@ -801,11 +801,11 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                   <div className="grid grid-cols-3 gap-3 font-mono text-xs">
                     <div className="p-4 rounded-2xl bg-[#080c16] border border-white/[0.08]">
                       <div className="text-slate-400 text-[10px]">Contrast Ratio</div>
-                      <div className="text-xl font-bold text-emerald-400">8.2:1 (AAA)</div>
+                      <div className="text-xl font-bold text-amber-400">8.2:1 (AAA)</div>
                     </div>
                     <div className="p-4 rounded-2xl bg-[#080c16] border border-white/[0.08]">
                       <div className="text-slate-400 text-[10px]">Touch Target</div>
-                      <div className="text-xl font-bold text-emerald-400">48px × 48px</div>
+                      <div className="text-xl font-bold text-amber-400">48px × 48px</div>
                     </div>
                     <div className="p-4 rounded-2xl bg-[#080c16] border border-white/[0.08]">
                       <div className="text-slate-400 text-[10px]">Aria-Expanded</div>
@@ -860,7 +860,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
 
                   <div className="p-4 rounded-2xl bg-[#080c16] border border-white/[0.08] font-mono text-xs space-y-2">
                     <div className="text-slate-400">Clinical Cohort: Progression-Free Survival (N=420)</div>
-                    <div className="text-emerald-400 font-bold">Hazard Ratio (HR): 0.68 (95% CI: 0.52 - 0.89)</div>
+                    <div className="text-amber-400 font-bold">Hazard Ratio (HR): 0.68 (95% CI: 0.52 - 0.89)</div>
                     <div className="text-amber-300 font-bold">Log-Rank Test p-value: 0.004 (Statistically Significant)</div>
                   </div>
 
@@ -879,8 +879,8 @@ export const Tab2ProctoredSandbox: React.FC = () => {
 
           {/* Anti-Paste Modal Warning (Specification 4) */}
           {showPasteWarning && (
-            <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-              <div className="glass-panel-glow max-w-md w-full rounded-3xl p-6 border border-amber-500/50 space-y-4 animate-bounce">
+            <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+              <div className="glass-panel-glow max-w-md w-full rounded-3xl p-6 border border-amber-500/50 space-y-4">
                 <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto">
                   <ShieldAlert className="w-6 h-6" />
                 </div>
@@ -908,7 +908,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
 
       {/* 5. POST-ASSESSMENT DIAGNOSTIC FEEDBACK & OUTCOME LEARNING LOOP MODAL (Specification 6) */}
       {diagnosticReportTest && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
           <div className="glass-panel-glow max-w-2xl w-full rounded-3xl p-7 border border-white/[0.15] space-y-6 max-h-[90vh] overflow-y-auto">
             
             <div className="flex items-start justify-between">
@@ -935,7 +935,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
             <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#080d1a] border border-slate-200 dark:border-white/[0.08] flex items-center justify-between">
               <div>
                 <div className="text-[11px] font-bold text-slate-500 uppercase">Verified Evaluation Score</div>
-                <div className="text-3xl font-black text-emerald-600 dark:text-emerald-400">
+                <div className="text-3xl font-black text-amber-600 dark:text-amber-400">
                   {diagnosticReportTest.score}% • Cleared
                 </div>
               </div>
@@ -951,9 +951,9 @@ export const Tab2ProctoredSandbox: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               
               {/* Strengths Demonstrated */}
-              <div className="p-4 rounded-2xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/40 space-y-2">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/40 space-y-2">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider">
+                  <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <span>Strengths Demonstrated</span>
                 </div>
                 <ul className="space-y-1.5">
@@ -962,7 +962,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
                     'Zero memory leaks under stress containers'
                   ]).map((st, i) => (
                     <li key={i} className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
                       <span>{st}</span>
                     </li>
                   ))}
@@ -1002,7 +1002,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
 
             {/* Issue Verified Digital Badge */}
             {diagnosticReportTest.awardedBadge && (
-              <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-slate-50 dark:via-[#090e1c] to-amber-500/10 border border-amber-500/30 flex items-center gap-3">
+              <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center font-bold text-lg shrink-0">
                   <Award className="w-5 h-5 text-amber-500" />
                 </div>
@@ -1043,7 +1043,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
             <div className="flex items-center justify-end pt-2 border-t border-slate-200 dark:border-white/[0.08]">
               <button
                 onClick={() => setDiagnosticReportTest(null)}
-                className="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white text-xs font-bold shadow-md"
+                className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-sm"
               >
                 Done
               </button>
@@ -1055,7 +1055,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
 
       {/* Sovereign Cryptographic Verifiable Credential Minting Modal */}
       {mintedBadge && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
           <div className="w-full max-w-md m3-surface-2 rounded-3xl p-6 border border-amber-500/40 shadow-2xl space-y-5 relative">
             <button
               onClick={() => setMintedBadge(null)}
@@ -1083,7 +1083,7 @@ export const Tab2ProctoredSandbox: React.FC = () => {
               </div>
               <div className="flex items-center justify-between text-slate-400 text-[11px]">
                 <span>Cryptographic Proof:</span>
-                <span className="text-emerald-400 font-bold">{mintedBadge.hash}</span>
+                <span className="text-amber-400 font-bold">{mintedBadge.hash}</span>
               </div>
               <div className="flex items-center justify-between text-slate-400 text-[11px]">
                 <span>Timestamp:</span>

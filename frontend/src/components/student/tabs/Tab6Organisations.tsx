@@ -358,9 +358,9 @@ export const Tab6Organisations: React.FC = () => {
     : streamOrgs.filter(o => o.category === filterType);
 
   return (
-    <div className="space-y-6 animate-fadeIn">
+    <div className="space-y-6">
       {/* Header Banner */}
-      <div className="rounded-3xl glass-panel p-8 bg-gradient-to-r from-slate-100 via-white to-amber-50 dark:from-slate-900 dark:via-amber-950/20 dark:to-slate-900">
+      <div className="rounded-3xl glass-panel p-8 bg-slate-50 dark:bg-slate-900">
         <div className="max-w-3xl space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-xs font-bold">
             <Building2 className="w-3.5 h-3.5" />
@@ -381,7 +381,7 @@ export const Tab6Organisations: React.FC = () => {
           <button
             onClick={() => setFilterType('all')}
             className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              filterType === 'all' ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              filterType === 'all' ? 'bg-amber-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             All Organisations
@@ -389,7 +389,7 @@ export const Tab6Organisations: React.FC = () => {
           <button
             onClick={() => setFilterType('corporate')}
             className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              filterType === 'corporate' ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              filterType === 'corporate' ? 'bg-amber-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             Corporate Partners
@@ -397,7 +397,7 @@ export const Tab6Organisations: React.FC = () => {
           <button
             onClick={() => setFilterType('academic')}
             className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              filterType === 'academic' ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              filterType === 'academic' ? 'bg-amber-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             Benchmark Institutes
@@ -438,7 +438,7 @@ export const Tab6Organisations: React.FC = () => {
                   <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 ${
                     isAcademic 
                       ? 'bg-purple-50 text-purple-700 border border-purple-200 dark:bg-purple-500/10 dark:text-purple-300 dark:border-purple-500/30' 
-                      : 'bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/30'
+                      : 'bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/10 dark:text-amber-300 dark:border-amber-500/30'
                   }`}>
                     {isAcademic ? <GraduationCap className="w-3 h-3" /> : <ShieldCheck className="w-3 h-3" />}
                     <span>{isAcademic ? 'Benchmark Institute' : 'Verified Employer'}</span>
@@ -468,7 +468,7 @@ export const Tab6Organisations: React.FC = () => {
                   </div>
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-500 dark:text-slate-400">Active Openings:</span>
-                    <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                    <span className="font-bold text-amber-600 dark:text-amber-400">
                       {org.activeVacanciesCount} Vacancies
                     </span>
                   </div>
@@ -478,7 +478,7 @@ export const Tab6Organisations: React.FC = () => {
               <div className="pt-3 border-t border-slate-100 dark:border-white/[0.06]">
                 <button
                   onClick={() => setSelectedOrg(org)}
-                  className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 hover:bg-gradient-to-r hover:from-amber-600 hover:to-orange-500 hover:text-white dark:hover:from-amber-600 dark:hover:to-orange-500 dark:hover:text-white text-slate-700 dark:text-slate-200 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+                  className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-600 dark:hover:text-white text-slate-700 dark:text-slate-200 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
                 >
                   <span>View Hiring Protocol</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -491,7 +491,7 @@ export const Tab6Organisations: React.FC = () => {
 
       {/* Hiring Protocol Modal */}
       {selectedOrg && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70">
           <div className="glass-panel w-full max-w-lg rounded-3xl p-6 space-y-5 border border-slate-200 dark:border-white/[0.1] shadow-2xl">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -518,7 +518,7 @@ export const Tab6Organisations: React.FC = () => {
               <ul className="space-y-2 text-slate-600 dark:text-slate-300">
                 {selectedOrg.hiringCriteria.map((c, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <span className="text-emerald-500 font-bold">✓</span>
+                    <span className="text-amber-500 font-bold">✓</span>
                     <span>{c}</span>
                   </li>
                 ))}
@@ -542,7 +542,7 @@ export const Tab6Organisations: React.FC = () => {
                   alert(`Direct verified talent application dispatch sent to ${selectedOrg.name}!`);
                   setSelectedOrg(null);
                 }}
-                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white font-bold text-xs shadow-md transition-all"
+                className="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-sm transition-all"
               >
                 Dispatch Pre-Verified Living Resume to {selectedOrg.name}
               </button>

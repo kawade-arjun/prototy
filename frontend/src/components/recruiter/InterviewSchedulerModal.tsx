@@ -83,9 +83,9 @@ export const InterviewSchedulerModal: React.FC<InterviewSchedulerModalProps> = (
         <div className="p-6 space-y-5 overflow-y-auto">
           
           {/* Candidate Fast-Track Banner */}
-          <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-3 text-xs">
-            <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <div className="text-emerald-800 dark:text-emerald-300">
+          <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center gap-3 text-xs">
+            <ShieldCheck className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0" />
+            <div className="text-amber-800 dark:text-amber-300">
               <strong>Resume Screening Waived:</strong> Candidate verified with <strong>{candidate.scores.sandbox}% Sandbox Score</strong> and <strong>{candidate.scores.composite} Composite Score</strong>. Jumping directly to technical interview panels.
             </div>
           </div>

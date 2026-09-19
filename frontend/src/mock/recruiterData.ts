@@ -140,8 +140,8 @@ export const FUNNEL_STAGES: FunnelStageMeta[] = [
     shortLabel: 'Offered', 
     count: 2, 
     conversionRate: '66.7%', 
-    color: 'border-emerald-400 text-emerald-700 dark:border-emerald-600 dark:text-emerald-400',
-    badgeBg: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300',
+    color: 'border-amber-400 text-amber-700 dark:border-amber-600 dark:text-amber-400',
+    badgeBg: 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
     description: 'Cryptographically signed digital offer letter released.' 
   },
   { 

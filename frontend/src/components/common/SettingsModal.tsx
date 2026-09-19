@@ -54,7 +54,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       company: 'Microsoft Research',
       deadline: 'In 6 days',
       status: 'Interview Scheduled',
-      statusColor: 'text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30'
+      statusColor: 'text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/30'
     },
     {
       id: 'INT-MSFT-101',
@@ -83,7 +83,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   const currentTab = !isLoggedIn ? 'preferences' : activeSubTab;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60">
       <div 
         className="glass-panel w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-white/[0.1] bg-white dark:bg-[#0c1220] flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
@@ -91,7 +91,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         {/* Header */}
         <div className="p-6 border-b border-[#E5DFD3] dark:border-amber-500/20 flex items-center justify-between bg-amber-50/50 dark:bg-[#0a0e18]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 to-yellow-500 text-white flex items-center justify-center shadow-md shadow-amber-600/20">
+            <div className="w-10 h-10 rounded-2xl bg-amber-600 text-white flex items-center justify-center shadow-sm">
               <Settings className="w-5 h-5" />
             </div>
             <div>
@@ -300,7 +300,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         {/* Footer */}
         <div className="p-4 border-t border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/40 flex items-center justify-between">
           <span className="text-[11px] text-slate-500 flex items-center gap-1.5 font-medium">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> All changes auto-saved to local memory
+            <CheckCircle2 className="w-3.5 h-3.5 text-amber-600" /> All changes auto-saved to local memory
           </span>
           <button
             onClick={onClose}

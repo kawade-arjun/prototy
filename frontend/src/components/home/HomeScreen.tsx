@@ -68,7 +68,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
   // Rotating target disciplines for animated hero text
   const rotatingDisciplines = [
     { title: 'Engineering Scholars', institute: 'IIT Bombay', color: 'from-amber-500 to-orange-500' },
-    { title: 'FinTech & Finance Scholars', institute: 'SRCC Delhi', color: 'from-emerald-500 to-teal-500' },
+    { title: 'FinTech & Finance Scholars', institute: 'SRCC Delhi', color: 'from-amber-500 to-teal-500' },
     { title: 'Ayush & Medical Practitioners', institute: 'AIIMS & AIIA New Delhi', color: 'from-amber-500 to-orange-500' },
     { title: 'Corporate Law Specialists', institute: 'NLSIU Bengaluru', color: 'from-orange-500 to-amber-600' },
     { title: 'UI/UX & HCI Designers', institute: 'NID Ahmedabad', color: 'from-pink-500 to-rose-500' }
@@ -105,7 +105,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
       badge: 'Forensic Audit',
       desc: 'Automated multi-pass pixel compression inspection detecting digital mark-sheet alterations, spliced CGPA certificates, and degree fraud.',
       metric: 'Tamper-Proof Verification',
-      icon: <ShieldCheck className="w-5 h-5 text-emerald-400" />
+      icon: <ShieldCheck className="w-5 h-5 text-amber-400" />
     },
     {
       step: 3,
@@ -176,7 +176,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">Skill Intelligence Engine</span>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white/90 dark:bg-[#0e1424]/90 border border-[#E5DFD3] dark:border-amber-500/20 shadow-sm hover:border-emerald-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
+          <div className="p-4 rounded-2xl bg-white/90 dark:bg-[#0e1424]/90 border border-[#E5DFD3] dark:border-amber-500/20 shadow-sm hover:border-amber-400/50 transition-all flex flex-col items-center justify-center space-y-1 text-center group hover:shadow-md hover:-translate-y-0.5">
             <span className="font-extrabold text-slate-900 dark:text-white">Tamper-Proof Verification</span>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">OpenCV ELA Forensic Scan</span>
           </div>
@@ -725,7 +725,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                   <Activity className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <h4 className="font-serif-luxury font-bold text-slate-900 dark:text-white text-sm sm:text-base">AI Diagnostic & Skill Remediation Pipeline</h4>
                 </div>
-                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-extrabold border border-emerald-500/30">Vector Analysis</span>
+                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-300 font-extrabold border border-amber-500/30">Vector Analysis</span>
               </div>
 
               <div className="w-full flex items-center justify-center py-4">
@@ -869,7 +869,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
 
               <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-200 dark:border-amber-500/20 font-semibold text-slate-700 dark:text-slate-300">
                 <span>Average Cohort Placement: 89.04%</span>
-                <span className="text-emerald-600 dark:text-emerald-400 font-bold">+14.2% YoY Improvement</span>
+                <span className="text-amber-600 dark:text-amber-400 font-bold">+14.2% YoY Improvement</span>
               </div>
             </div>
 
@@ -877,10 +877,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
             <div className="p-6 rounded-3xl bg-gradient-to-br from-amber-50/60 via-white to-amber-100/30 dark:from-[#090e1a] dark:via-[#0e1628] dark:to-[#090e1a] border border-amber-500/30 space-y-4 shadow-md flex flex-col justify-between">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  <ShieldCheck className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <h4 className="font-serif-luxury font-bold text-slate-900 dark:text-white text-sm sm:text-base">OpenCV ELA Forensic Scan Architecture</h4>
                 </div>
-                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-extrabold border border-emerald-500/30">Fraud Detection</span>
+                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-300 font-extrabold border border-amber-500/30">Fraud Detection</span>
               </div>
 
               <div className="w-full flex items-center justify-center py-4">
@@ -912,7 +912,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                 </svg>
               </div>
 
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs font-medium text-emerald-900 dark:text-emerald-200 text-center">
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs font-medium text-amber-900 dark:text-amber-200 text-center">
                 99.98% Accuracy in detecting digital splicing, CGPA font alterations, and fake seals.
               </div>
             </div>
@@ -1182,7 +1182,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                 <div className="flex items-center gap-2">
                   <h4 className="font-serif-luxury font-bold text-slate-900 dark:text-white text-sm sm:text-base">NEP 2020 Policy Directive Engine Pipeline</h4>
                 </div>
-                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-extrabold border border-emerald-500/30">Automated Directives</span>
+                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-300 font-extrabold border border-amber-500/30">Automated Directives</span>
               </div>
 
               <div className="w-full flex items-center justify-center py-4">
@@ -1226,7 +1226,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
 
       {/* FOOTER GUARANTEE BADGE */}
       <div className="p-4 sm:p-5 rounded-2xl bg-white/60 dark:bg-[#0c1222]/60 border border-slate-200 dark:border-white/[0.06] flex items-center justify-center text-center gap-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-        <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
+        <ShieldCheck className="w-4 h-4 text-amber-500 shrink-0" />
         <span>Backed by Sovereign Identity & India DPDP Act 2023 Statutory Guardrails</span>
       </div>
 
@@ -1270,9 +1270,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectRole, onOpenAuth
                 </div>
 
                 {/* TPO Placement Console */}
-                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-emerald-400/50 transition-colors min-h-[110px] flex flex-col justify-center shadow-sm">
+                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#12192c] border border-slate-200/80 dark:border-white/[0.08] space-y-2 hover:border-amber-400/50 transition-colors min-h-[110px] flex flex-col justify-center shadow-sm">
                   <div className="flex items-center gap-2.5 font-extrabold text-slate-900 dark:text-white text-base">
-                    <Building2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                    <Building2 className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0" />
                     <span>TPO Placement Console</span>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-normal">

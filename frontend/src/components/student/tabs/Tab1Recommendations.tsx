@@ -111,12 +111,12 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
     .filter(o => feedType === 'all' || o.type === feedType);
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-8">
       {/* 1. Resume AI Studio & Competency Radar Section */}
       <div className="space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-white/[0.08] pb-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-orange-500 text-white flex items-center justify-center text-xs font-black shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
               01
             </div>
             <div>
@@ -129,7 +129,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             <button
               onClick={handleAnalyzeResume}
               disabled={isAnalyzingResume}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white text-xs font-bold shadow-md shadow-amber-600/20 transition-all duration-200 active:scale-95 disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-sm transition-all duration-200 active:scale-95 disabled:opacity-50"
             >
               <span>{isAnalyzingResume ? 'Scanning Tokens...' : 'Analyse Current Resume'}</span>
             </button>
@@ -183,7 +183,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 <span className="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase">Out of 100</span>
               </div>
             </div>
-            <div className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-500/25">
+            <div className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-200 dark:border-amber-500/25">
               Industry Benchmark Ready
             </div>
           </div>
@@ -200,7 +200,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 </div>
                 <div className="w-full h-2 bg-slate-200 dark:bg-[#172238] rounded-full overflow-hidden">
                   <div 
-                    className="h-full bg-gradient-to-r from-amber-500 to-orange-400 rounded-full transition-all duration-700 shadow-sm" 
+                    className="h-full bg-amber-500 rounded-full transition-all duration-700"
                     style={{ width: `${atsResult.quantifiedMetricsScore}%` }}
                   />
                 </div>
@@ -244,7 +244,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 </div>
                 <div className="w-full h-2 bg-slate-200 dark:bg-[#172238] rounded-full overflow-hidden">
                   <div 
-                    className="h-full bg-gradient-to-r from-orange-500 to-emerald-400 rounded-full transition-all duration-700 shadow-sm" 
+                    className="h-full bg-orange-500 rounded-full transition-all duration-700"
                     style={{ width: `${atsResult.keywordDensityScore}%` }}
                   />
                 </div>
@@ -284,11 +284,11 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
                   <span>Formatting Parsability</span>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-mono text-xs">{atsResult.formattingParsabilityScore}%</span>
+                  <span className="text-stone-600 dark:text-stone-400 font-mono text-xs">{atsResult.formattingParsabilityScore}%</span>
                 </div>
                 <div className="w-full h-2 bg-slate-200 dark:bg-[#172238] rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-700 shadow-sm" 
+                  <div
+                    className="h-full bg-stone-500 rounded-full transition-all duration-700"
                     style={{ width: `${atsResult.formattingParsabilityScore}%` }}
                   />
                 </div>
@@ -306,7 +306,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (atsResult.keywordDensityScore * 0.35) + (newF * 0.30)), 99);
                     setAtsResult({ ...atsResult, formattingParsabilityScore: newF, overallScore: newOverall });
                   }}
-                  className="w-full text-left p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
+                  className="w-full text-left p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/25 text-[10px] font-bold transition-all flex items-center justify-between gap-1"
                 >
                   <span>Use single-column format</span>
                 </button>
@@ -316,7 +316,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     const newOverall = Math.min(Math.round((atsResult.quantifiedMetricsScore * 0.35) + (atsResult.keywordDensityScore * 0.35) + (newF * 0.30)), 99);
                     setAtsResult({ ...atsResult, formattingParsabilityScore: newF, overallScore: newOverall });
                   }}
-                  className="w-full text-left p-1.5 rounded-lg bg-emerald-50/60 hover:bg-emerald-100 dark:bg-emerald-950/30 dark:hover:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200/70 dark:border-emerald-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
+                  className="w-full text-left p-1.5 rounded-lg bg-amber-50/60 hover:bg-amber-100 dark:bg-amber-950/30 dark:hover:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-200/70 dark:border-amber-500/20 text-[10px] font-medium transition-all flex items-center justify-between gap-1"
                 >
                   <span>Normalize date tokens</span>
                 </button>
@@ -330,7 +330,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           
           {/* Card 1: Strengths Detected */}
-          <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500 space-y-3 bg-gradient-to-b from-amber-50/60 to-white dark:from-amber-950/20 dark:to-transparent">
+          <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500 space-y-3 bg-amber-50/40 dark:bg-amber-950/10">
             <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-bold text-xs uppercase tracking-wider">
               <span>Strengths Detected</span>
             </div>
@@ -345,7 +345,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
           </div>
 
           {/* Card 2: Weaknesses Detected */}
-          <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-orange-500 space-y-3 bg-gradient-to-b from-orange-50/60 to-white dark:from-orange-950/20 dark:to-transparent">
+          <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-orange-500 space-y-3 bg-orange-50/40 dark:bg-orange-950/10">
             <div className="flex items-center gap-2 text-orange-700 dark:text-orange-400 font-bold text-xs uppercase tracking-wider">
               <span>Weaknesses Detected</span>
             </div>
@@ -360,7 +360,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
           </div>
 
           {/* Card 3: Actionable Suggestions */}
-          <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500 space-y-3 bg-gradient-to-b from-amber-50/50 to-white dark:from-amber-950/10 dark:to-transparent">
+          <div className="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500 space-y-3 bg-amber-50/30 dark:bg-amber-950/5">
             <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-bold text-xs uppercase tracking-wider">
               <span>Actionable Suggestions</span>
             </div>
@@ -381,7 +381,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
       <div className="space-y-5 pt-4 border-t border-slate-200 dark:border-white/[0.08]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-orange-500 text-white flex items-center justify-center text-xs font-black shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
               02
             </div>
             <div>
@@ -423,7 +423,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             <button
               onClick={handleRunDiff}
               disabled={isDiffing}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white font-extrabold text-xs shadow-md shadow-amber-600/20 transition-all active:scale-95 disabled:opacity-50"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs shadow-sm transition-all active:scale-95 disabled:opacity-50"
             >
               <span>{isDiffing ? 'Calculating Vector Diff...' : 'Run Differential Analysis'}</span>
             </button>
@@ -702,7 +702,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
               {/* Gemini AI Generated Skill Gap Result Banner */}
               {geminiSkillGapResult && (
-                <div className="p-6 rounded-2xl bg-gradient-to-r from-amber-950/40 via-orange-950/40 to-slate-900 border border-amber-500/40 space-y-4 animate-fadeIn text-white">
+                <div className="p-6 rounded-2xl bg-slate-900 border border-amber-500/40 space-y-4 text-white">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center font-bold">
@@ -720,12 +720,12 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
                     <div className="p-3.5 rounded-xl bg-[#070b14] border border-white/[0.08] space-y-2">
-                      <div className="text-emerald-400 font-bold flex items-center gap-1.5">
+                      <div className="text-amber-400 font-bold flex items-center gap-1.5">
                         Matched Requirements
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {geminiSkillGapResult.matchedSkills.map((s, i) => (
-                          <span key={i} className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px]">
+                          <span key={i} className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px]">
                             {s}
                           </span>
                         ))}
@@ -821,7 +821,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
       <div className="space-y-5 pt-4 border-t border-slate-200 dark:border-white/[0.08]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-orange-500 text-white flex items-center justify-center text-xs font-black shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
               03
             </div>
             <div>
@@ -874,7 +874,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{opp.organization} - {opp.location}</p>
                 </div>
                 
-                <div className="text-sm font-extrabold text-emerald-600 dark:text-emerald-400">{opp.stipendOrSalary}</div>
+                <div className="text-sm font-extrabold text-amber-600 dark:text-amber-400">{opp.stipendOrSalary}</div>
               </div>
 
               <div className="space-y-3 pt-3 border-t border-slate-100 dark:border-white/[0.08]">
@@ -907,7 +907,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
       <div className="space-y-5 pt-4 border-t border-slate-200 dark:border-white/[0.08]">
           <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-orange-500 text-white flex items-center justify-center text-xs font-black shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
               04
             </div>
             <div>
@@ -926,9 +926,9 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               <div
                 key={i}
                 className={`p-5 rounded-2xl border transition-all duration-300 space-y-3 ${
-                  isExploding 
-                    ? 'bg-amber-50/50 border-amber-200 dark:bg-gradient-to-br dark:from-amber-950/30 dark:via-[#0d1424] dark:to-orange-950/20 dark:border-amber-500/30' 
-                    : 'bg-orange-50/50 border-orange-200 dark:bg-gradient-to-br dark:from-orange-950/20 dark:to-[#0a0f1d] dark:border-orange-900/30'
+                  isExploding
+                    ? 'bg-amber-50/50 border-amber-200 dark:bg-[#0d1424] dark:border-amber-500/30'
+                    : 'bg-orange-50/50 border-orange-200 dark:bg-[#0a0f1d] dark:border-orange-900/30'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -959,7 +959,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
       {/* AI Fit Analysis Modal */}
       {selectedOpportunityForModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 dark:bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
           <div className="glass-panel-glow max-w-xl w-full rounded-3xl p-7 border space-y-5">
             <div className="flex items-start justify-between">
               <div>
@@ -980,16 +980,16 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#090e1c] border border-slate-200 dark:border-white/[0.08] space-y-3">
               <div className="flex items-center justify-between text-xs font-bold">
                 <span className="text-slate-500 dark:text-slate-400">Candidate Verified Sandbox Score</span>
-                <span className="text-emerald-600 dark:text-emerald-400 text-sm font-black">89%</span>
+                <span className="text-amber-600 dark:text-amber-400 text-sm font-black">89%</span>
               </div>
               <div className="flex items-center justify-between text-xs font-bold">
                 <span className="text-slate-500 dark:text-slate-400">Opportunity Cutoff Threshold</span>
                 <span className="text-slate-900 dark:text-white text-sm font-black">{selectedOpportunityForModal.cutoffScore}%</span>
               </div>
               <div className="w-full h-3 bg-slate-200 dark:bg-[#172238] rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-emerald-500 to-amber-400 rounded-full" style={{ width: '89%' }} />
+                <div className="h-full bg-amber-500 rounded-full" style={{ width: '89%' }} />
               </div>
-              <p className="text-xs text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5 pt-1">
+              <p className="text-xs text-amber-600 dark:text-amber-400 font-bold flex items-center gap-1.5 pt-1">
                 Candidate exceeds threshold by {89 - selectedOpportunityForModal.cutoffScore}% points
               </p>
             </div>
@@ -1032,7 +1032,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
       {/* AI Resume Generator Modal */}
       {showAiResumeModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 dark:bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
           <div className="glass-panel-glow max-w-2xl w-full rounded-3xl p-7 border space-y-5 max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between">
               <div>
@@ -1075,7 +1075,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             </div>
 
             <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-white/[0.08]">
-              <div className="text-xs text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5">
+              <div className="text-xs text-amber-600 dark:text-amber-400 font-bold flex items-center gap-1.5">
                 100% ATS Compliant Single-Column Format
               </div>
               <div className="flex items-center gap-2">

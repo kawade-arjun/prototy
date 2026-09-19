@@ -224,7 +224,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/75 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/75">
       <div className="relative w-full max-w-3xl max-h-[92vh] flex flex-col rounded-3xl bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-white/[0.09] shadow-2xl overflow-hidden transition-all">
         
         {/* Top Header: Title & Dynamic Status Bar */}
@@ -239,7 +239,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                   Student Profile Builder
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Engineering Discipline ➔ Tailored Skill Matrix & AI Expectations
+                  Engineering discipline, tailored skill matrix, and AI expectations
                 </p>
               </div>
             </div>
@@ -265,8 +265,8 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
             
             {/* Progress Track */}
             <div className="w-full h-2.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-400 transition-all duration-500 rounded-full"
+              <div
+                className="h-full bg-amber-600 transition-all duration-500 rounded-full"
                 style={{ width: `${completionPercentage}%` }}
               />
             </div>
@@ -289,11 +289,11 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                   currentStep === step.num
                     ? 'bg-amber-600 text-white shadow-sm font-bold'
                     : currentStep > step.num
-                    ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
+                    ? 'bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-500/20'
                     : 'bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800'
                 }`}
               >
-                {currentStep > step.num ? <Check className="w-3 h-3 text-emerald-500" /> : <span>{step.num}.</span>}
+                {currentStep > step.num ? <Check className="w-3 h-3 text-amber-500" /> : <span>{step.num}.</span>}
                 <span>{step.label}</span>
               </button>
             ))}
@@ -305,7 +305,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
 
           {/* STEP 1: Discipline & Engineering Branch Selection */}
           {currentStep === 1 && (
-            <div className="space-y-4 animate-fadeIn">
+            <div className="space-y-4">
               <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-500/20">
                 <div className="flex items-center gap-2 text-amber-700 dark:text-amber-300 font-bold text-sm mb-1">
                   <Cpu className="w-4 h-4" />
@@ -355,7 +355,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
 
           {/* STEP 2: Technical Skills & Custom "Other" Skills */}
           {currentStep === 2 && (
-            <div className="space-y-5 animate-fadeIn">
+            <div className="space-y-5">
               <div>
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   <span>Technical Skills for {selectedBranch}</span>
@@ -434,10 +434,10 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
 
           {/* STEP 3: Soft Skills */}
           {currentStep === 3 && (
-            <div className="space-y-4 animate-fadeIn">
+            <div className="space-y-4">
               <div>
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <Award className="w-4 h-4 text-emerald-500" />
+                  <Award className="w-4 h-4 text-amber-500" />
                   <span>Professional & Soft Skills</span>
                 </h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -455,13 +455,13 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                       onClick={() => toggleSoftSkill(skill)}
                       className={`p-3 rounded-2xl border text-left transition-all flex items-center justify-between gap-2 ${
                         isSelected
-                          ? 'border-emerald-600 bg-emerald-50/80 dark:bg-emerald-600/20 dark:border-emerald-500 text-emerald-900 dark:text-white font-bold shadow-sm'
+                          ? 'border-amber-600 bg-amber-50/80 dark:bg-amber-600/20 dark:border-amber-500 text-amber-900 dark:text-white font-bold shadow-sm'
                           : 'border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/40 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-white/[0.15]'
                       }`}
                     >
                       <span className="text-xs">{skill}</span>
                       <div className={`w-4 h-4 rounded-full flex items-center justify-center ${
-                        isSelected ? 'bg-emerald-600 text-white' : 'border border-slate-300 dark:border-slate-600'
+                        isSelected ? 'bg-amber-600 text-white' : 'border border-slate-300 dark:border-slate-600'
                       }`}>
                         {isSelected && <Check className="w-2.5 h-2.5" />}
                       </div>
@@ -474,7 +474,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
 
           {/* STEP 4: Optional Resume Upload & Extraction */}
           {currentStep === 4 && (
-            <div className="space-y-5 animate-fadeIn">
+            <div className="space-y-5">
               <div>
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   <FileText className="w-4 h-4 text-amber-500" />
@@ -520,16 +520,16 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
 
               {/* Extracted Skills Preview */}
               {extractedSkills.length > 0 && !isExtractingResume && (
-                <div className="p-4 rounded-2xl bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-500/20 space-y-2">
-                  <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-300 text-xs font-bold">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-500/20 space-y-2">
+                  <div className="flex items-center gap-2 text-amber-800 dark:text-amber-300 text-xs font-bold">
+                    <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                     <span>Automatically Extracted Skills:</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {extractedSkills.map(skill => (
                       <span
                         key={skill}
-                        className="px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 text-[11px] font-semibold"
+                        className="px-2.5 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-[11px] font-semibold"
                       >
                         {skill}
                       </span>
@@ -542,7 +542,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
 
           {/* STEP 5: Academic Details */}
           {currentStep === 5 && (
-            <div className="space-y-4 animate-fadeIn">
+            <div className="space-y-4">
               <div>
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   <Building className="w-4 h-4 text-amber-500" />
@@ -632,7 +632,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
 
           {/* STEP 6: Future Aspirations / Dreams (For CareerOptic AI) */}
           {currentStep === 6 && (
-            <div className="space-y-4 animate-fadeIn">
+            <div className="space-y-4">
               <div className="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-500/20">
                 <div className="flex items-center gap-2 text-amber-700 dark:text-amber-300 font-bold text-sm mb-1">
                   <BrainCircuit className="w-4 h-4 text-amber-600 dark:text-amber-400" />
@@ -697,7 +697,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                 type="button"
                 disabled={submitting}
                 onClick={handleSaveAndComplete}
-                className={`px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md shadow-emerald-600/20 flex items-center gap-2 transition-all ${
+                className={`px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-md shadow-amber-600/20 flex items-center gap-2 transition-all ${
                   submitting ? 'opacity-70 cursor-not-allowed' : ''
                 }`}
               >

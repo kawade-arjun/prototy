@@ -8,9 +8,8 @@ import {
   Fingerprint, 
   QrCode, 
   Copy, 
-  Check, 
-  CheckCircle2,
-  Award
+  Check,
+  CheckCircle2
 } from 'lucide-react';
 
 import { useStudent } from '../../../context/StudentContext';
@@ -73,12 +72,12 @@ export const Tab7LivingResume: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6 animate-fadeIn">
+    <div className="space-y-6">
       {/* Header Banner */}
-      <div className="rounded-3xl glass-panel p-8 bg-gradient-to-r from-emerald-50/50 via-white to-amber-50/50 dark:from-[#0d1424] dark:via-amber-950/20 dark:to-slate-900">
+      <div className="rounded-3xl glass-panel p-8 bg-amber-50/30 dark:bg-slate-900">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/30 dark:text-emerald-400 text-xs font-bold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/30 dark:text-amber-400 text-xs font-bold">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>TAB 7 • THE LIVING RESUME ({activeStudent.streamName.toUpperCase()} VERIFIABLE DOSSIER)</span>
             </div>
@@ -96,8 +95,8 @@ export const Tab7LivingResume: React.FC = () => {
               <span className="px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30 font-bold text-[10px]">
                 {activeStudent.benchmarkBadge}
               </span>
-              <span className="px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 font-bold text-[10px] flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+              <span className="px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30 font-bold text-[10px] flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-amber-600 dark:text-amber-400" />
                 DigiLocker Verified
               </span>
             </div>
@@ -114,38 +113,15 @@ export const Tab7LivingResume: React.FC = () => {
             </button>
             <button
               onClick={() => {
-                alert(`Sovereign Verifiable Credential QR Card for ${activeStudent.name} (${activeStudent.streamName}) exported!`);
+                alert(`Verifiable Credential QR Card for ${activeStudent.name} (${activeStudent.streamName}) exported!`);
               }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white text-xs font-bold shadow-lg shadow-amber-600/30 transition-all"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-sm transition-all"
             >
               <QrCode className="w-4 h-4" />
-              <span>Export Sovereign QR</span>
+              <span>Export QR Card</span>
             </button>
           </div>
         </div>
-      </div>
-
-      {/* Standardized Global Rankings Grid (Dynamic per Student Discipline) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {activeStudent.livingResumeRankings.map((rank, i) => (
-          <div key={i} className={`glass-panel p-5 rounded-2xl border ${rank.border} space-y-3 hover:-translate-y-1 transition-transform`}>
-            <div className="flex items-center justify-between">
-              <div className={`w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800/80 flex items-center justify-center ${rank.color}`}>
-                <Award className="w-4 h-4" />
-              </div>
-              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800/80 dark:text-slate-300">
-                {rank.badge}
-              </span>
-            </div>
-            <div>
-              <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">{rank.domain}</div>
-              <div className={`text-3xl font-black tracking-tight ${rank.color}`}>{rank.percentile}</div>
-            </div>
-            <div className="text-[10px] text-slate-500 pt-1 border-t border-slate-100 dark:border-white/[0.06]">
-              Standardized across 140k+ national candidates
-            </div>
-          </div>
-        ))}
       </div>
 
       {/* 52-Week GitHub / LeetCode-style Activity Heatmap */}
@@ -153,7 +129,7 @@ export const Tab7LivingResume: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <Calendar className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               52-Week Verified Problem Solving & Sandbox Commit Heatmap
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400">1,248 verified sandbox submissions in the last 12 months</p>
@@ -185,7 +161,7 @@ export const Tab7LivingResume: React.FC = () => {
           <div className="flex items-center gap-4">
             <span>Continuous Streak: <strong className="text-amber-600 dark:text-amber-300 font-bold">8 Days Active</strong></span>
             <span>Longest Streak: <strong className="text-slate-900 dark:text-white font-bold">42 Days</strong></span>
-            <span>Integrity: <strong className="text-emerald-600 dark:text-emerald-400 font-bold">100% Zero Flags</strong></span>
+            <span>Integrity: <strong className="text-amber-600 dark:text-amber-400 font-bold">100% Zero Flags</strong></span>
           </div>
 
           {hoveredDay && (
@@ -215,7 +191,7 @@ export const Tab7LivingResume: React.FC = () => {
             <button
               onClick={() => setActiveVerifierTier(1)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                activeVerifierTier === 1 ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                activeVerifierTier === 1 ? 'bg-amber-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Tier 1: pyHanko XMP
@@ -223,7 +199,7 @@ export const Tab7LivingResume: React.FC = () => {
             <button
               onClick={() => setActiveVerifierTier(2)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                activeVerifierTier === 2 ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                activeVerifierTier === 2 ? 'bg-amber-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Tier 2: OpenCV ELA Forensics
@@ -231,10 +207,10 @@ export const Tab7LivingResume: React.FC = () => {
             <button
               onClick={() => setActiveVerifierTier(3)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                activeVerifierTier === 3 ? 'bg-gradient-to-r from-amber-600 to-orange-500 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                activeVerifierTier === 3 ? 'bg-amber-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              Tier 3: DigiLocker PKI Ledger
+              Tier 3: DigiLocker Verification
             </button>
           </div>
         </div>
@@ -242,13 +218,13 @@ export const Tab7LivingResume: React.FC = () => {
         {/* Tier Details Content Box */}
         <div className="p-6 rounded-2xl bg-slate-50 dark:bg-[#080d1a] border border-slate-200 dark:border-white/[0.08] space-y-5">
           {activeVerifierTier === 1 && (
-            <div className="space-y-4 animate-fadeIn">
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   Tier 1: PDF XMP Digital Timestamp & PKI Signature Audit
                 </span>
-                <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-300 dark:border-emerald-800">
+                <span className="text-xs font-black text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-950/80 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800">
                   {auditData.tier1_xmpTimestamp.status}
                 </span>
               </div>
@@ -258,20 +234,19 @@ export const Tab7LivingResume: React.FC = () => {
               <div className="p-4 rounded-xl bg-white dark:bg-[#0e1424] border border-slate-200 dark:border-white/[0.06] font-mono text-xs text-slate-700 dark:text-slate-300 space-y-1.5 shadow-sm">
                 <div>Engine: <span className="text-amber-600 dark:text-amber-400">{auditData.tier1_xmpTimestamp.engine}</span></div>
                 <div>Timestamp: <span className="text-slate-900 dark:text-white">{auditData.tier1_xmpTimestamp.timestamp}</span></div>
-                <div>Certificate Authority: <span className="text-emerald-600 dark:text-emerald-400">{auditData.tier1_xmpTimestamp.certAuthority}</span></div>
-                <div>ByteRange Hash: <span className="text-slate-500 dark:text-slate-400">SHA-256 [0x92f1a84c...e81c710]</span></div>
+                <div>Certificate Authority: <span className="text-amber-600 dark:text-amber-400">{auditData.tier1_xmpTimestamp.certAuthority}</span></div>
               </div>
             </div>
           )}
 
           {activeVerifierTier === 2 && (
-            <div className="space-y-5 animate-fadeIn">
+            <div className="space-y-5">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   Tier 2: OpenCV Error Level Analysis (ELA) Pixel-Level Forensics
                 </span>
-                <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-300 dark:border-emerald-800">
+                <span className="text-xs font-black text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-950/80 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800">
                   {auditData.tier2_opencvELA.status}
                 </span>
               </div>
@@ -282,7 +257,7 @@ export const Tab7LivingResume: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-xl bg-white dark:bg-[#0e1424] border border-slate-200 dark:border-white/[0.06] space-y-2 shadow-sm">
                   <div className="text-xs text-slate-500 dark:text-slate-400">Forensic Error Level Score:</div>
-                  <div className="text-4xl font-black text-emerald-600 dark:text-emerald-400">{auditData.tier2_opencvELA.errorLevelScore}</div>
+                  <div className="text-4xl font-black text-amber-600 dark:text-amber-400">{auditData.tier2_opencvELA.errorLevelScore}</div>
                   <div className="text-[11px] text-slate-500 dark:text-slate-400">
                     Threshold: &lt; 4.5 is pristine original. Score &gt; 12.0 flags photoshopped pixels.
                   </div>
@@ -291,7 +266,7 @@ export const Tab7LivingResume: React.FC = () => {
                 <div className="p-4 rounded-xl bg-white dark:bg-[#0e1424] border border-slate-200 dark:border-white/[0.06] space-y-2 shadow-sm">
                   <div className="text-xs text-slate-500 dark:text-slate-400">Altered Pixels Detected:</div>
                   <div className="text-4xl font-black text-slate-900 dark:text-white">0 Pixels</div>
-                  <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">
+                  <div className="text-[11px] text-amber-600 dark:text-amber-400 font-semibold">
                     ✓ Clean certificate image integrity confirmed
                   </div>
                 </div>
@@ -300,29 +275,29 @@ export const Tab7LivingResume: React.FC = () => {
           )}
 
           {activeVerifierTier === 3 && (
-            <div className="space-y-4 animate-fadeIn">
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                  Tier 3: Sovereign Verification via DigiLocker / Credly PKI Ledger
+                  <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                  Tier 3: Verification via DigiLocker / Credly
                 </span>
-                <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-300 dark:border-emerald-800">
+                <span className="text-xs font-black text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-950/80 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800">
                   {auditData.tier3_sovereignPKI.status}
                 </span>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                Direct statutory API synchronization with Ministry of Electronics and IT (MeitY) DigiLocker sovereign repository.
+                Direct statutory API synchronization with Ministry of Electronics and IT (MeitY) DigiLocker repository.
               </p>
               <div className="p-4 rounded-xl bg-white dark:bg-[#0e1424] border border-slate-200 dark:border-white/[0.06] font-mono text-xs text-slate-700 dark:text-slate-300 space-y-2 shadow-sm">
                 <div>DigiLocker Record ID: <span className="text-amber-600 dark:text-amber-400">{auditData.tier3_sovereignPKI.digiLockerId}</span></div>
                 <div className="flex items-center justify-between gap-2">
-                  <div className="truncate">Public PKI Hash: <span className="text-emerald-600 dark:text-emerald-400">{auditData.tier3_sovereignPKI.ledgerHash}</span></div>
+                  <div className="truncate">Public PKI Hash: <span className="text-amber-600 dark:text-amber-400">{auditData.tier3_sovereignPKI.ledgerHash}</span></div>
                   <button
                     onClick={handleCopyHash}
                     className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 shrink-0"
                     title="Copy Ledger Hash"
                   >
-                    {copiedHash ? <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copiedHash ? <Check className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> : <Copy className="w-3.5 h-3.5" />}
                   </button>
                 </div>
                 <div>Revocation Status: <span className="text-slate-900 dark:text-white font-bold">Active (Non-Revoked)</span></div>
@@ -334,10 +309,10 @@ export const Tab7LivingResume: React.FC = () => {
 
         {/* Verified Sovereign Badges Display */}
         <div className="space-y-3 pt-2">
-          <div className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Verified Sovereign Seals:</div>
+          <div className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Verified Credentials:</div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="p-4 rounded-2xl bg-white dark:bg-[#090e1c] border border-slate-200 dark:border-white/[0.06] flex items-center gap-3 shadow-sm">
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
+              <div className="w-9 h-9 rounded-xl bg-stone-100 dark:bg-stone-800/60 text-stone-700 dark:text-stone-300 flex items-center justify-center font-bold">
                 ✓
               </div>
               <div>
@@ -351,7 +326,7 @@ export const Tab7LivingResume: React.FC = () => {
                 ✓
               </div>
               <div>
-                <div className="text-xs font-bold text-slate-900 dark:text-white">DigiLocker Sovereign Seal</div>
+                <div className="text-xs font-bold text-slate-900 dark:text-white">DigiLocker Verified Record</div>
                 <div className="text-[10px] text-slate-500 dark:text-slate-400">B.Tech Honors Academic Record</div>
               </div>
             </div>

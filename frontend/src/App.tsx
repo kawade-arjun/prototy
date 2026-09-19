@@ -111,7 +111,7 @@ const AppContent: React.FC = () => {
               Career<span className="gradient-text-gold font-sans font-black ml-0.5">Optic</span>
             </span>
             <span>•</span>
-            <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-semibold">
+            <span className="flex items-center gap-1 text-amber-600 dark:text-amber-400 font-semibold">
               <ShieldCheck className="w-3.5 h-3.5" /> 3-Tier Sovereign Verification Engine Active
             </span>
             <span className="hidden md:inline">•</span>

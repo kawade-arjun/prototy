@@ -102,8 +102,8 @@ export const GovernmentPortal: React.FC = () => {
                 <Landmark className="w-3.5 h-3.5 text-rose-500" />
                 NATIONAL TALENT & POLICY OBSERVATORY
               </span>
-              <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3 text-emerald-500" /> MINISTRY OF AYUSH • AICTE • NEP 2020
+              <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-amber-500" /> MINISTRY OF AYUSH • AICTE • NEP 2020
               </span>
             </div>
 
@@ -119,7 +119,7 @@ export const GovernmentPortal: React.FC = () => {
           <div className="flex flex-wrap items-center gap-2.5 shrink-0">
             <button
               onClick={() => setShowNamasteModal(true)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-black shadow-lg shadow-amber-600/20 transition-all active:scale-95"
             >
               <Globe2 className="w-4 h-4" />
               <span>WHO ICD-11 Crosswalk (SIH 26044)</span>
@@ -149,13 +149,13 @@ export const GovernmentPortal: React.FC = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 pt-3 border-t border-slate-100 dark:border-white/[0.08]">
           <div className="p-3 rounded-xl bg-slate-50/80 dark:bg-[#080d1a]/80 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5">
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Ayush Scholars Monitored</div>
-            <div className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400">38,400+ Verified</div>
+            <div className="text-xl sm:text-2xl font-black text-stone-600 dark:text-stone-400">38,400+ Verified</div>
             <div className="text-[10px] text-slate-500 dark:text-slate-400">Across 480+ BAMS, MD colleges</div>
           </div>
 
           <div className="p-3 rounded-xl bg-slate-50/80 dark:bg-[#080d1a]/80 border border-slate-200/80 dark:border-white/[0.06] space-y-0.5">
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Ghost Placement Deficit</div>
-            <div className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400">0.0% Fake Claims</div>
+            <div className="text-xl sm:text-2xl font-black text-stone-600 dark:text-stone-400">0.0% Fake Claims</div>
             <div className="text-[10px] text-slate-500 dark:text-slate-400">100% DigiLocker PKI degree sealed</div>
           </div>
 
@@ -185,7 +185,7 @@ export const GovernmentPortal: React.FC = () => {
           }`}
         >
           <Map className="w-4 h-4" />
-          <span>State Skill Deficit Heatmap & Grants</span>
+          <span>Skill Deficit Map</span>
         </button>
 
         <button
@@ -197,7 +197,7 @@ export const GovernmentPortal: React.FC = () => {
           }`}
         >
           <Database className="w-4 h-4" />
-          <span>Unified National Talent Registry (NIP & PSUs)</span>
+          <span>Talent Registry</span>
         </button>
 
         <button
@@ -209,8 +209,7 @@ export const GovernmentPortal: React.FC = () => {
           }`}
         >
           <HeartPulse className="w-4 h-4" />
-          <span>Ayush Talent Observatory (SIH 26044)</span>
-          <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-emerald-500 text-white font-black">WHO</span>
+          <span>Ayush Observatory</span>
         </button>
 
         <button
@@ -222,7 +221,7 @@ export const GovernmentPortal: React.FC = () => {
           }`}
         >
           <BookOpen className="w-4 h-4" />
-          <span>Empirical NEP 2020 Curriculum Radar</span>
+          <span>Curriculum Analysis</span>
         </button>
 
         <button
@@ -234,7 +233,7 @@ export const GovernmentPortal: React.FC = () => {
           }`}
         >
           <Award className="w-4 h-4" />
-          <span>Co-Funded R&D Tracker (₹48.2 Cr)</span>
+          <span>R&D Grants</span>
         </button>
 
         <button
@@ -246,7 +245,7 @@ export const GovernmentPortal: React.FC = () => {
           }`}
         >
           <Lock className="w-4 h-4" />
-          <span>Sovereign Cloud & DPDP Compliance</span>
+          <span>Cloud & Compliance</span>
         </button>
       </div>
 
@@ -309,7 +308,7 @@ export const GovernmentPortal: React.FC = () => {
                           ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/30'
                           : st.gapPercent < 0
                             ? 'bg-amber-500/10 text-amber-600 border border-amber-500/30'
-                            : 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/30'
+                            : 'bg-amber-500/10 text-amber-600 border border-amber-500/30'
                       }`}>
                         {st.gapPercent > 0 ? `+${st.gapPercent}% Surplus` : `${st.gapPercent}% Deficit`}
                       </span>
@@ -384,7 +383,7 @@ export const GovernmentPortal: React.FC = () => {
                   <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30">
                     SINGLE SOVEREIGN TALENT SUBSTRATE
                   </span>
-                  <span className="text-[9px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                  <span className="text-[9px] font-mono font-bold text-amber-600 dark:text-amber-400">
                     AICTE National Internship Portal (NIP) Synced ✓
                   </span>
                 </div>
@@ -458,7 +457,7 @@ export const GovernmentPortal: React.FC = () => {
                           <div className="font-bold text-slate-900 dark:text-white">{scholar.name}</div>
                           <div className="text-[11px] text-slate-500">{scholar.discipline} • {scholar.state}</div>
                           {scholar.namasteIcd11Certified && (
-                            <span className="text-[9px] font-mono font-bold text-emerald-600 bg-emerald-500/10 px-1.5 py-0.2 rounded mt-0.5 inline-block">
+                            <span className="text-[9px] font-mono font-bold text-amber-600 bg-amber-500/10 px-1.5 py-0.2 rounded mt-0.5 inline-block">
                               WHO ICD-11 Certified ✓
                             </span>
                           )}
@@ -473,7 +472,7 @@ export const GovernmentPortal: React.FC = () => {
                         </td>
 
                         <td className="p-3">
-                          <div className="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                          <div className="font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
                             <ShieldCheck className="w-3.5 h-3.5" />
                             <span>{scholar.placementStatus}</span>
                           </div>
@@ -488,7 +487,7 @@ export const GovernmentPortal: React.FC = () => {
 
                         <td className="p-3">
                           {isDispatched ? (
-                            <span className="text-[10px] font-bold text-emerald-600 flex items-center gap-1">
+                            <span className="text-[10px] font-bold text-amber-600 flex items-center gap-1">
                               <CheckCircle2 className="w-3 h-3" /> Pushed to NIP ✓
                             </span>
                           ) : (
@@ -517,10 +516,10 @@ export const GovernmentPortal: React.FC = () => {
       {activeTab === 'ayush_observatory' && (
         <div className="space-y-6 animate-fadeIn">
           
-          <div className="glass-panel p-6 rounded-2xl space-y-4 shadow-sm border border-emerald-500/20 bg-emerald-500/5">
+          <div className="glass-panel p-6 rounded-2xl space-y-4 shadow-sm border border-amber-500/20 bg-amber-500/5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
                   SMART INDIA HACKATHON PROBLEM STATEMENT 26044
                 </span>
                 <h2 className="text-xl font-black text-slate-900 dark:text-white mt-1">
@@ -533,7 +532,7 @@ export const GovernmentPortal: React.FC = () => {
 
               <button
                 onClick={() => setShowNamasteModal(true)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md shadow-emerald-600/20 active:scale-95 transition-all shrink-0"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-md shadow-amber-600/20 active:scale-95 transition-all shrink-0"
               >
                 <Globe2 className="w-4 h-4" />
                 <span>Launch Dual-Ontology Crosswalk</span>
@@ -550,7 +549,7 @@ export const GovernmentPortal: React.FC = () => {
 
               <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
                 <div className="text-[10px] text-slate-400 uppercase font-bold">Verified Ayush Scholars</div>
-                <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400">38,400+</div>
+                <div className="text-2xl font-black text-stone-600 dark:text-stone-400">38,400+</div>
                 <div className="text-[10px] text-slate-500">100% Sovereign Registry Verified</div>
               </div>
 
@@ -576,7 +575,7 @@ export const GovernmentPortal: React.FC = () => {
               </h3>
               <button
                 onClick={() => setShowNamasteModal(true)}
-                className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+                className="text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline"
               >
                 View Full 4-Category Crosswalk
               </button>
@@ -587,12 +586,12 @@ export const GovernmentPortal: React.FC = () => {
                 <div key={item.namasteCode} className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
                   <div className="flex justify-between items-center text-xs">
                     <span className="font-black text-slate-900 dark:text-white">{item.namasteTerm}</span>
-                    <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 font-bold">
+                    <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 font-bold">
                       {item.icd11Tm2Code}
                     </span>
                   </div>
                   <p className="text-xs text-slate-500 leading-relaxed">{item.ayurvedaConcept}</p>
-                  <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold pt-1">
+                  <div className="text-[10px] text-amber-600 dark:text-amber-400 font-bold pt-1">
                     {item.certifiedScholarsCount.toLocaleString()} Indian Scholars Certified for Global Practice
                   </div>
                 </div>
@@ -664,8 +663,8 @@ export const GovernmentPortal: React.FC = () => {
                       <div className="text-[10px] text-rose-500 font-bold">{d.academicSyllabusCoverage}</div>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200/60 dark:border-emerald-900/40 space-y-1">
-                      <div className="text-[10px] font-bold uppercase text-emerald-700 dark:text-emerald-400">AICTE Action Directive</div>
+                    <div className="p-3 rounded-xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-900/40 space-y-1">
+                      <div className="text-[10px] font-bold uppercase text-amber-700 dark:text-amber-400">AICTE Action Directive</div>
                       <p className="text-slate-700 dark:text-slate-200 leading-relaxed">{d.aiCTEActionDirective}</p>
                     </div>
                   </div>
@@ -717,7 +716,7 @@ export const GovernmentPortal: React.FC = () => {
                         <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400">
                           {proj.industryPartner}
                         </span>
-                        <span className="text-sm font-black font-mono text-emerald-600 dark:text-emerald-400">
+                        <span className="text-sm font-black font-mono text-amber-600 dark:text-amber-400">
                           {proj.totalGrant}
                         </span>
                       </div>
@@ -755,9 +754,9 @@ export const GovernmentPortal: React.FC = () => {
                     </div>
 
                     <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center text-[10px]">
-                      <span className="text-emerald-600 font-bold">+{proj.aicte360Points} AICTE 360° Points</span>
+                      <span className="text-amber-600 font-bold">+{proj.aicte360Points} AICTE 360° Points</span>
                       {proj.patentFiled ? (
-                        <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 font-bold">Patent Filed ✓</span>
+                        <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 font-bold">Patent Filed ✓</span>
                       ) : (
                         <span className="text-slate-400">Patent in Progress</span>
                       )}
@@ -779,7 +778,7 @@ export const GovernmentPortal: React.FC = () => {
           
           <div className="glass-panel p-6 rounded-2xl space-y-4 shadow-sm border border-amber-500/20">
             <h2 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
-              <Server className="w-4 h-4 text-emerald-500" />
+              <Server className="w-4 h-4 text-amber-500" />
               <span>Sovereign Cloud Residency & DPDP Act 2023 Statutory Compliance</span>
             </h2>
 
@@ -789,7 +788,7 @@ export const GovernmentPortal: React.FC = () => {
                 <p className="text-[11px] text-slate-500 leading-relaxed">
                   All candidate marksheets, competency vectors, and corporate hiring telemetry are stored exclusively within MeitY-empaneled Indian cloud availability zones (NIC MeghRaj / AWS ap-south-1 Mumbai / CtrlS).
                 </p>
-                <div className="text-[10px] font-mono font-bold text-emerald-600">Sovereign Boundary Enforced ✓</div>
+                <div className="text-[10px] font-mono font-bold text-amber-600">Sovereign Boundary Enforced ✓</div>
               </div>
 
               <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
@@ -797,7 +796,7 @@ export const GovernmentPortal: React.FC = () => {
                 <p className="text-[11px] text-slate-500 leading-relaxed">
                   Proctoring strictly complies with Indian privacy laws by monitoring non-invasive behavioral telemetry (paste interception, focus tab blur) rather than capturing intrusive persistent facial or biometric recordings.
                 </p>
-                <div className="text-[10px] font-mono font-bold text-emerald-600">Privacy-First Architecture ✓</div>
+                <div className="text-[10px] font-mono font-bold text-amber-600">Privacy-First Architecture ✓</div>
               </div>
 
               <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
@@ -805,7 +804,7 @@ export const GovernmentPortal: React.FC = () => {
                 <p className="text-[11px] text-slate-500 leading-relaxed">
                   Access is strictly gated via MeriPehchaan / Parichay National SSO with mandatory hardware multi-factor authentication (MFA) for authorized ministry directors and statutory inspectors.
                 </p>
-                <div className="text-[10px] font-mono font-bold text-emerald-600">MeriPehchaan SSO Active ✓</div>
+                <div className="text-[10px] font-mono font-bold text-amber-600">MeriPehchaan SSO Active ✓</div>
               </div>
             </div>
           </div>

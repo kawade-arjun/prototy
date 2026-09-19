@@ -123,12 +123,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="relative group cursor-pointer focus:outline-none"
             title="Current Session Profile"
           >
-            <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-500 via-yellow-400 to-amber-600 p-0.5 shadow-sm group-hover:scale-105 transition-transform">
+            <div className="w-9 h-9 rounded-full bg-amber-600 p-0.5 shadow-sm group-hover:scale-105 transition-transform">
               <div className="w-full h-full bg-white dark:bg-[#0E131F] rounded-full flex items-center justify-center text-xs font-bold text-amber-700 dark:text-amber-300">
                 {currentRole === 'student' ? activeStudent.avatarInitials : currentRole === 'college' ? 'TPO' : currentRole === 'recruiter' ? 'HR' : currentRole === 'government' ? 'GOV' : <User className="w-4 h-4 text-amber-600 dark:text-amber-400" />}
               </div>
             </div>
-            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 dark:bg-emerald-400 border-2 border-white dark:border-[#0B0E14]" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-amber-500 dark:bg-amber-400 border-2 border-white dark:border-[#0B0E14]" />
           </button>
 
           {/* 2. Top-Right Settings Gear Button */}
@@ -137,7 +137,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => setIsSettingsMenuOpen(!isSettingsMenuOpen)}
               className={`w-9 h-9 rounded-full flex items-center justify-center transition-all active:scale-95 cursor-pointer ${
                 isSettingsMenuOpen
-                  ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-white shadow-md shadow-amber-600/30 ring-2 ring-amber-400 dark:ring-amber-500'
+                  ? 'bg-amber-600 text-white shadow-sm ring-2 ring-amber-400 dark:ring-amber-500'
                   : 'bg-[#EAE4D8] dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-slate-700'
               }`}
               title="Settings & System Preferences"
@@ -147,7 +147,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Native Phone Style Settings Dropdown List */}
             {isSettingsMenuOpen && (
-              <div className="absolute right-0 mt-2.5 w-72 sm:w-80 glass-panel rounded-2xl shadow-2xl border border-slate-200 dark:border-white/[0.12] bg-white/95 dark:bg-[#0c1220]/95 backdrop-blur-xl p-3 z-50 animate-fadeIn space-y-2">
+              <div className="absolute right-0 mt-2.5 w-72 sm:w-80 glass-panel rounded-2xl shadow-2xl border border-slate-200 dark:border-white/[0.12] bg-white dark:bg-[#0c1220] p-3 z-50 space-y-2">
                 
                 {/* Header */}
                 <div className="px-2.5 py-2 border-b border-slate-100 dark:border-white/[0.08] flex items-center justify-between">
@@ -188,7 +188,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                             Saved Jobs & Trackers
                           </div>
                           <div className="text-[10px] text-slate-500 dark:text-slate-400">
-                            3 Active Applications Bookmarked
+                            View jobs and applications you've bookmarked
                           </div>
                         </div>
                       </div>
@@ -203,15 +203,15 @@ export const Navbar: React.FC<NavbarProps> = ({
                       className="w-full p-2.5 rounded-xl flex items-center justify-between hover:bg-slate-100 dark:hover:bg-white/[0.06] transition-colors group cursor-pointer text-left"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                        <div className="w-7 h-7 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
                           <ShieldCheck className="w-3.5 h-3.5" />
                         </div>
                         <div>
-                          <div className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                            DPDP Act 2023 Privacy
+                          <div className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                            Privacy Settings
                           </div>
                           <div className="text-[10px] text-slate-500 dark:text-slate-400">
-                            Statutory Zero-Knowledge Masking
+                            Manage what data is visible and to whom
                           </div>
                         </div>
                       </div>
@@ -237,7 +237,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <button
                       type="button"
                       onClick={toggleTheme}
-                      className="px-2.5 py-1 rounded-lg bg-gradient-to-r from-amber-600 to-orange-500 text-white font-bold text-[10px] shadow-sm hover:from-amber-500 hover:to-orange-400 active:scale-95 transition-all cursor-pointer"
+                      className="px-2.5 py-1 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] shadow-sm active:scale-95 transition-all cursor-pointer"
                     >
                       {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
                     </button>
