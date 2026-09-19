@@ -80,34 +80,11 @@ export const Tab7LivingResume: React.FC = () => {
           }
         }
       } catch (err) {
-        console.warn('Backend PDF parser API call error, falling back to browser ArrayBuffer decoder:', err);
-      }
-
-      // 2. Client-side ArrayBuffer PDF text stream decoder fallback
-      try {
-        const buffer = await file.arrayBuffer();
-        const decoder = new TextDecoder('latin1');
-        const rawStr = decoder.decode(new Uint8Array(buffer));
-        
-        const matches = rawStr.match(/\(([^()\\]*(?:\\.[^()\\]*)*)\)/g) || [];
-        const extractedStrings = matches
-          .map(m => m.slice(1, -1).replace(/\\\(/g, '(').replace(/\\\)/g, ')').replace(/\\n/g, ' ').replace(/\\\\/g, '\\').trim())
-          .filter(str => str.length > 1 && !str.startsWith('/') && !str.includes('Font') && !str.includes('Encoding') && !str.includes('Length'));
-
-        const cleanExtractedText = Array.from(new Set(extractedStrings)).join(' ');
-        if (cleanExtractedText.length > 20) {
-          setUploadedResume(cleanExtractedText, fileName, fileSize);
-          setCustomText(cleanExtractedText);
-          setUploadStatus(`Extracted PDF text from ${fileName}!`);
-          setTimeout(() => setUploadStatus(null), 3000);
-          return;
-        }
-      } catch (err) {
-        console.warn('Client-side ArrayBuffer PDF decoder error:', err);
+        console.warn('Backend PDF parser API call error:', err);
       }
     }
 
-    // Default fallback if PDF contains no extractable text
+    // Clean fallback if PDF text extraction could not parse printable text
     const defaultText = `CANDIDATE RESUME: ${fileName} (${fileSize})\nName: ${activeStudent.name}\nDegree: ${activeStudent.degree} (${activeStudent.institution})\nSkills: ${activeStudent.verifiedSkills.join(', ')}\nSummary: ${activeStudent.summary}`;
     setUploadedResume(defaultText, fileName, fileSize);
     setCustomText(defaultText);

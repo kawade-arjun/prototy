@@ -214,6 +214,35 @@ import pdfplumber
 from pypdf import PdfReader
 from fastapi import UploadFile, File
 
+def clean_extracted_text(text: str) -> str:
+    """Sanitize extracted text, stripping out binary gibberish, non-printable characters, and random symbol noise."""
+    if not text:
+        return ""
+
+    clean_lines = []
+    for line in text.split('\n'):
+        line_str = line.strip()
+        if not line_str:
+            continue
+
+        # Count printable ASCII / standard Unicode letters/digits/punctuation vs gibberish
+        printable_chars = sum(1 for c in line_str if 32 <= ord(c) <= 126 or ord(c) in (9, 10, 13))
+        total_chars = len(line_str)
+
+        # Discard lines with > 25% non-printable binary characters
+        if total_chars > 0 and (printable_chars / total_chars) < 0.75:
+            continue
+
+        # Discard lines with low alphanumeric density (raw binary noise symbols like ä!ÃX£bIF?)
+        alpha_num_count = sum(1 for c in line_str if c.isalnum() or c.isspace())
+        if total_chars > 5 and (alpha_num_count / total_chars) < 0.50:
+            continue
+
+        clean_lines.append(line_str)
+
+    return "\n".join(clean_lines)
+
+
 def extract_pdf_bytes_text(file_bytes: bytes, filename: str = "resume.pdf") -> dict:
     extracted_text = ""
     num_pages = 1
@@ -247,26 +276,36 @@ def extract_pdf_bytes_text(file_bytes: bytes, filename: str = "resume.pdf") -> d
         except Exception as pdf_err:
             logger.warning(f"pypdf reader warning on {filename}: {pdf_err}.")
 
-    # 3. Tertiary Stream Filter Fallback
+    # 3. Tertiary Stream Filter Fallback for raw text streams
     if not extracted_text.strip():
         try:
             raw_str = file_bytes.decode('latin1', errors='ignore')
             text_matches = re.findall(r'\(([^)]+)\)', raw_str)
-            filtered = [t.strip() for t in text_matches if len(t.strip()) > 1 and not t.startswith('/') and 'Font' not in t and 'Catalog' not in t]
+            filtered = [
+                t.strip() for t in text_matches 
+                if len(t.strip()) > 1 
+                and not t.startswith('/') 
+                and 'Font' not in t 
+                and 'Catalog' not in t
+                and (sum(1 for c in t if 32 <= ord(c) <= 126) / max(len(t), 1)) > 0.85
+            ]
             if filtered:
                 extracted_text = " ".join(filtered)
         except Exception:
             pass
 
-    if not extracted_text.strip():
-        extracted_text = f"Resume Document ({filename})\nUploaded document contains candidate profile & experience details."
+    # Clean non-printable & binary gibberish symbols
+    sanitized_text = clean_extracted_text(extracted_text)
+
+    if not sanitized_text.strip():
+        sanitized_text = f"Resume Document ({filename})\nUploaded document contains candidate profile & experience details."
 
     return {
         "success": True,
         "filename": filename,
         "num_pages": num_pages,
-        "text": extracted_text,
-        "char_count": len(extracted_text)
+        "text": sanitized_text,
+        "char_count": len(sanitized_text)
     }
 
 class Base64PdfRequest(BaseModel):

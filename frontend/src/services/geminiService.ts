@@ -203,9 +203,17 @@ ${resumeText}
 
   const extractedSkills = Array.from(extractedSkillsSet);
 
-  // 2. Genuine Metric Lines (exclude emails, URLs, dates like 2024/2026, and section numbers)
+  // 2. Genuine Metric Lines (exclude emails, URLs, dates like 2024/2026, section numbers, and binary symbol noise)
   const metricLines = cleanLines.filter(line => {
     if (/mailto:|http|@|section\.\d+|dl-in-2026/i.test(line)) return false;
+
+    // Reject lines with non-printable ASCII or binary symbol noise (e.g. ä!ÃX£bIF?)
+    const printableChars = line.replace(/[^\x20-\x7E\t]/g, '').length;
+    if (line.length > 0 && (printableChars / line.length) < 0.80) return false;
+
+    const alphaNum = line.replace(/[^a-zA-Z0-9\s]/g, '').length;
+    if (line.length > 5 && (alphaNum / line.length) < 0.50) return false;
+
     return /\b\d+%\b|\$\d+|\b\d+\+\b|\b\d{2,}\s*(ms|seconds|min|hours|users|clients|requests|projects|repos|stars|tests|passed|items|lines|commits|percent|pts|xp)\b/i.test(line);
   });
 
