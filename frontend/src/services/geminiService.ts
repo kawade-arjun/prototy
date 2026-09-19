@@ -57,11 +57,34 @@ export const analyzeResumeWithGemini = async (
   discipline: string = 'Engineering & Technology',
   apiKey?: string
 ): Promise<GeminiResumeAnalysis> => {
+  // 1. Try FastAPI Backend Endpoint first (uses server-side GEMINI_API_KEY from .env)
+  try {
+    const backendRes = await fetch('http://localhost:8000/api/resume/analyze-gemini', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ resume_text: resumeText, discipline })
+    });
+    if (backendRes.ok) {
+      const result = await backendRes.json();
+      if (result) {
+        if (!result.strengths && result.detailedStrengths) {
+          result.strengths = result.detailedStrengths.map((s: any) => s.title);
+        }
+        if (!result.weaknesses && result.detailedWeaknesses) {
+          result.weaknesses = result.detailedWeaknesses.map((w: any) => w.title);
+        }
+        return result;
+      }
+    }
+  } catch (backendErr) {
+    console.warn('Backend Gemini proxy unreachable, attempting direct browser API:', backendErr);
+  }
+
+  // 2. Try direct browser Gemini API with active working models
   const key = apiKey || getGeminiApiKey();
 
   if (key) {
-    try {
-      const prompt = `You are a world-class AI ATS Diagnostic Engine and Executive Resume Strategist for high-performance careers in ${discipline}.
+    const prompt = `You are a world-class AI ATS Diagnostic Engine and Executive Resume Strategist for high-performance careers in ${discipline}.
 Examine the following resume text meticulously. Output ONLY a valid JSON object matching this exact schema (no markdown blocks, no extra narrative):
 
 {
@@ -76,43 +99,26 @@ Examine the following resume text meticulously. Output ONLY a valid JSON object 
       "title": "Clear Technical Architecture Impact",
       "description": "Demonstrates strong technical scale and system ownership.",
       "evidence": "Engineered 384-dimensional skill vector embedding pipeline achieving sub-45ms latency"
-    },
-    {
-      "title": "Statutory & Verification Focus",
-      "description": "Highlights DigiLocker PKI and Donut OCR multi-tier integration.",
-      "evidence": "Built multi-tier certificate verification system integrating DigiLocker PKI"
     }
   ],
   "detailedWeaknesses": [
     {
       "title": "Sparse Leadership & Team Growth Metrics",
       "description": "Lacks explicit team size numbers or cross-functional leadership outcomes.",
-      "impact": "May cause recruiters to evaluate candidate strictly as individual contributor rather than tech lead."
-    },
-    {
-      "title": "Missing Emerging Cloud Container Keywords",
-      "description": "Does not explicitly mention Kubernetes orchestration or micro-frontend architectures.",
-      "impact": "Causes minor score drop on automated enterprise ATS keyword matching."
+      "impact": "May cause recruiters to evaluate candidate strictly as individual contributor."
     }
   ],
-  "missingKeywords": ["Kubernetes", "vLLM Inference", "gRPC Protocol", "Prometheus Telemetry"],
+  "missingKeywords": ["Kubernetes", "vLLM Inference", "gRPC Protocol"],
   "actionableRecommendations": [
-    "Quantify leadership metrics in experience section (e.g. mentored 4 engineers, conducted 20+ code reviews).",
+    "Quantify leadership metrics in experience section.",
     "Add explicit cloud containerization terms like Kubernetes, Helm, and Distributed Caching."
   ],
-  "extractedSkills": ["Python 3.12", "FastAPI", "pgvector", "PyTorch", "Docker", "DigiLocker PKI", "React", "TypeScript"],
-  "bulletPointRewrites": [
-    {
-      "original": "Built multi-tier certificate verification system integrating DigiLocker PKI",
-      "improved": "Architected end-to-end 3-tier certificate verification pipeline with DigiLocker PKI and Donut OCR, processing 10,000+ verification requests at 99.9% uptime",
-      "explanation": "Added scale metrics (10,000+ requests) and SLA impact (99.9% uptime) to highlight enterprise engineering rigor."
-    }
-  ],
+  "extractedSkills": ["Python 3.12", "FastAPI", "pgvector", "PyTorch", "Docker", "React", "TypeScript"],
+  "bulletPointRewrites": [],
   "sectionScores": [
     { "section": "Executive Summary", "score": 90, "feedback": "Concise summary clearly framing engineering focus." },
     { "section": "Technical Skills & Competencies", "score": 94, "feedback": "Well-categorized framework list with strong tool relevance." },
-    { "section": "Experience & Scale Impact", "score": 88, "feedback": "Solid metric density; add team mentorship scale metrics." },
-    { "section": "Education & Academic Credentials", "score": 92, "feedback": "Distinguished academic record with clear CGPA standing." }
+    { "section": "Experience & Scale Impact", "score": 88, "feedback": "Solid metric density." }
   ]
 }
 
@@ -121,32 +127,36 @@ Candidate Resume Text:
 ${resumeText}
 """`;
 
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
+    // Try active working models sequentially
+    const activeModels = ['gemini-flash-lite-latest', 'gemini-3.6-flash', 'gemini-flash-latest'];
+    for (const modelName of activeModels) {
+      try {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${key}`;
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { responseMimeType: "application/json" }
+          })
+        });
 
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { responseMimeType: "application/json" }
-        })
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        const cleanJson = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
-        const parsed = JSON.parse(cleanJson);
-        if (!parsed.strengths && parsed.detailedStrengths) {
-          parsed.strengths = parsed.detailedStrengths.map((s: any) => s.title);
+        if (res.ok) {
+          const data = await res.json();
+          const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+          const cleanJson = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
+          const parsed = JSON.parse(cleanJson);
+          if (!parsed.strengths && parsed.detailedStrengths) {
+            parsed.strengths = parsed.detailedStrengths.map((s: any) => s.title);
+          }
+          if (!parsed.weaknesses && parsed.detailedWeaknesses) {
+            parsed.weaknesses = parsed.detailedWeaknesses.map((w: any) => w.title);
+          }
+          return parsed;
         }
-        if (!parsed.weaknesses && parsed.detailedWeaknesses) {
-          parsed.weaknesses = parsed.detailedWeaknesses.map((w: any) => w.title);
-        }
-        return parsed;
+      } catch (err) {
+        console.warn(`Gemini API call error with ${modelName}:`, err);
       }
-    } catch (err) {
-      console.warn('Gemini Live API call error, using enriched fallback report:', err);
     }
   }
 

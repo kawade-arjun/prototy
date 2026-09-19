@@ -208,6 +208,9 @@ async def api_verify_certificate_json(payload: CertificateVerifyJsonRequest):
 
 
 from io import BytesIO
+import json
+import httpx
+import pdfplumber
 from pypdf import PdfReader
 from fastapi import UploadFile, File
 
@@ -215,19 +218,36 @@ def extract_pdf_bytes_text(file_bytes: bytes, filename: str = "resume.pdf") -> d
     extracted_text = ""
     num_pages = 1
 
+    # 1. Primary Layout-Aware Extraction using pdfplumber
     try:
-        reader = PdfReader(BytesIO(file_bytes))
-        num_pages = len(reader.pages)
-        page_texts = []
-        for i, page in enumerate(reader.pages):
-            page_str = page.extract_text() or ""
-            if page_str.strip():
-                page_texts.append(page_str.strip())
-        extracted_text = "\n\n".join(page_texts)
-    except Exception as pdf_err:
-        logger.warning(f"pypdf reader warning on {filename}: {pdf_err}. Attempting raw stream extraction.")
+        with pdfplumber.open(BytesIO(file_bytes)) as pdf:
+            num_pages = len(pdf.pages)
+            page_lines = []
+            for page in pdf.pages:
+                page_str = page.extract_text(layout=True) or page.extract_text() or ""
+                if page_str.strip():
+                    page_lines.append(page_str.strip())
+            if page_lines:
+                extracted_text = "\n\n".join(page_lines)
+    except Exception as plumber_err:
+        logger.warning(f"pdfplumber warning on {filename}: {plumber_err}. Falling back to pypdf.")
 
-    # Fallback to ASCII stream text decoding if pypdf extract_text returned empty or encountered syntax error
+    # 2. Secondary Fallback using pypdf
+    if not extracted_text.strip():
+        try:
+            reader = PdfReader(BytesIO(file_bytes))
+            num_pages = len(reader.pages)
+            page_texts = []
+            for i, page in enumerate(reader.pages):
+                page_str = page.extract_text() or ""
+                if page_str.strip():
+                    page_texts.append(page_str.strip())
+            if page_texts:
+                extracted_text = "\n\n".join(page_texts)
+        except Exception as pdf_err:
+            logger.warning(f"pypdf reader warning on {filename}: {pdf_err}.")
+
+    # 3. Tertiary Stream Filter Fallback
     if not extracted_text.strip():
         try:
             raw_str = file_bytes.decode('latin1', errors='ignore')
@@ -255,7 +275,7 @@ class Base64PdfRequest(BaseModel):
 
 @app.post("/api/resume/parse-pdf-json")
 async def api_parse_pdf_resume_json(payload: Base64PdfRequest):
-    """Extract raw text from base64-encoded PDF resumes using pypdf."""
+    """Extract raw text from base64-encoded PDF resumes using pdfplumber/pypdf."""
     clean_b64 = payload.file_b64.split(",")[-1] if "," in payload.file_b64 else payload.file_b64
     try:
         file_bytes = base64.b64decode(clean_b64)
@@ -273,7 +293,7 @@ async def api_parse_pdf_resume_json(payload: Base64PdfRequest):
 
 @app.post("/api/resume/parse-pdf")
 async def api_parse_pdf_resume_file(file: UploadFile = File(...)):
-    """Extract raw text from uploaded multipart PDF files using pypdf."""
+    """Extract raw text from uploaded multipart PDF files using pdfplumber/pypdf."""
     file_bytes = await file.read()
     if not file_bytes:
         raise HTTPException(status_code=400, detail="Uploaded PDF file is empty")
@@ -282,6 +302,98 @@ async def api_parse_pdf_resume_file(file: UploadFile = File(...)):
     except Exception as e:
         logger.error(f"Error parsing PDF resume {file.filename}: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to parse PDF resume: {str(e)}")
+
+
+class GeminiResumeAnalyzeRequest(BaseModel):
+    resume_text: str = Field(..., min_length=1, description="Candidate resume text to analyze")
+    discipline: Optional[str] = Field(default="Engineering & Technology", description="Academic/career discipline")
+
+
+@app.post("/api/resume/analyze-gemini")
+async def api_analyze_resume_gemini(request: GeminiResumeAnalyzeRequest):
+    """Analyze candidate resume using Google Gemini AI Flash API with resilient model fallback."""
+    api_key = settings.gemini_api_key or os.getenv("GEMINI_API_KEY", "")
+    if not api_key:
+        raise HTTPException(status_code=400, detail="GEMINI_API_KEY is not configured on server")
+
+    prompt = f"""You are a world-class AI ATS Diagnostic Engine and Executive Resume Strategist for high-performance careers in {request.discipline}.
+Examine the candidate's actual resume text below meticulously.
+Output ONLY a valid JSON object matching this exact schema (no markdown blocks, no code fencing, no extra narrative):
+
+{{
+  "overallScore": 88,
+  "executiveSummary": "2-3 sentence strategic summary analyzing candidate's actual resume caliber, readiness, and alignment.",
+  "quantifiedMetricsScore": 85,
+  "keywordDensityScore": 90,
+  "formattingBypassScore": 92,
+  "impactActionVerbsScore": 86,
+  "detailedStrengths": [
+    {{
+      "title": "Specific Strength Title from Candidate's Resume",
+      "description": "Specific explanation referencing candidate's actual projects or skills.",
+      "evidence": "Direct quote or skill evidence from resume text"
+    }}
+  ],
+  "detailedWeaknesses": [
+    {{
+      "title": "Specific Improvement Area",
+      "description": "Specific explanation of what is missing or weak in candidate's resume.",
+      "impact": "Concrete impact on automated ATS screening."
+    }}
+  ],
+  "missingKeywords": ["Skill1", "Skill2", "Skill3"],
+  "actionableRecommendations": [
+    "Specific actionable recommendation 1 based directly on candidate's resume.",
+    "Specific actionable recommendation 2 based directly on candidate's resume."
+  ],
+  "extractedSkills": ["Skill1", "Skill2", "Skill3", "Skill4"],
+  "bulletPointRewrites": [],
+  "sectionScores": [
+    {{ "section": "Executive Positioning", "score": 88, "feedback": "Feedback for candidate" }},
+    {{ "section": "Technical Competencies", "score": 90, "feedback": "Feedback for candidate" }},
+    {{ "section": "Experience & Scale Metrics", "score": 85, "feedback": "Feedback for candidate" }}
+  ]
+}}
+
+Candidate Resume Text:
+\"\"\"
+{request.resume_text}
+\"\"\""""
+
+    # Resilient model fallback order
+    candidate_models = ["gemini-flash-lite-latest", "gemini-3.6-flash", "gemini-flash-latest"]
+    last_error_detail = ""
+
+    async with httpx.AsyncClient(timeout=25.0) as client:
+        for model_name in candidate_models:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
+            try:
+                res = await client.post(
+                    url,
+                    json={
+                        "contents": [{"parts": [{"text": prompt}]}],
+                        "generationConfig": {"responseMimeType": "application/json"}
+                    }
+                )
+                if res.status_code == 200:
+                    data = res.json()
+                    raw_text = data.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                    clean_json = raw_text.replace("```json", "").replace("```", "").strip()
+                    parsed = json.loads(clean_json)
+                    if "detailedStrengths" in parsed and "strengths" not in parsed:
+                        parsed["strengths"] = [s.get("title", "") for s in parsed["detailedStrengths"]]
+                    if "detailedWeaknesses" in parsed and "weaknesses" not in parsed:
+                        parsed["weaknesses"] = [w.get("title", "") for w in parsed["detailedWeaknesses"]]
+                    return parsed
+                else:
+                    last_error_detail = f"Model {model_name} returned status {res.status_code}: {res.text}"
+                    logger.warning(last_error_detail)
+            except Exception as e:
+                last_error_detail = f"Model {model_name} call error: {str(e)}"
+                logger.warning(last_error_detail)
+
+    raise HTTPException(status_code=502, detail=f"Gemini API analysis failed: {last_error_detail}")
+
 
 
 from app.services.skill_ner_service import extract_candidate_skill_terms
