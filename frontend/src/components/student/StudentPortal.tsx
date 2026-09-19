@@ -7,6 +7,7 @@ import { Tab4and5Opportunities } from './tabs/Tab4and5Opportunities';
 import { Tab6Organisations } from './tabs/Tab6Organisations';
 import { Tab7LivingResume } from './tabs/Tab7LivingResume';
 import { Tab8SettingsBookmarks } from './tabs/Tab8SettingsBookmarks';
+import { Tab9AIStudio } from './tabs/Tab9AIStudio';
 import { 
   Target, 
   Terminal, 
@@ -19,7 +20,8 @@ import {
   Menu,
   ChevronDown,
   ChevronUp,
-  Check
+  Check,
+  Sparkles
 } from 'lucide-react';
 
 import { useStudent } from '../../context/StudentContext';
@@ -37,6 +39,7 @@ export const StudentPortal: React.FC = () => {
     { id: 'freelance', label: 'Freelance', icon: <Briefcase className="w-4 h-4" /> },
     { id: 'organisations', label: 'Organisations', icon: <Building2 className="w-4 h-4" /> },
     { id: 'profile', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
+    { id: 'ai_studio', label: 'AI Studio & ATS', icon: <Sparkles className="w-4 h-4 text-amber-500" /> },
     { id: 'settings', label: 'Bookmarks & Settings', icon: <Bookmark className="w-4 h-4" /> }
   ];
 
@@ -169,6 +172,7 @@ export const StudentPortal: React.FC = () => {
           {activeTab === 'jobs' && <Tab4and5Opportunities mode="jobs" />}
           {activeTab === 'organisations' && <Tab6Organisations />}
           {activeTab === 'profile' && <Tab7LivingResume />}
+          {activeTab === 'ai_studio' && <Tab9AIStudio />}
           {activeTab === 'settings' && <Tab8SettingsBookmarks />}
         </div>
       </div>

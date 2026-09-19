@@ -31,6 +31,7 @@ try:
             default=True,
             alias="ENABLE_SKILL_NER_PREFILTER"
         )
+        gemini_api_key: str = Field(default="", alias="GEMINI_API_KEY")
         hf_api_url: Optional[str] = Field(default=None, alias="HF_API_URL")
         hf_donut_url: Optional[str] = Field(default=None, alias="HF_DONUT_URL")
         hf_ner_url: Optional[str] = Field(default=None, alias="HF_NER_URL")
@@ -88,6 +89,7 @@ except ImportError:
             )
             raw_prefilter = os.getenv("ENABLE_SKILL_NER_PREFILTER", env_vars.get("ENABLE_SKILL_NER_PREFILTER", "true"))
             self.enable_skill_ner_prefilter = str(raw_prefilter).lower() in ("true", "1", "yes")
+            self.gemini_api_key = os.getenv("GEMINI_API_KEY", env_vars.get("GEMINI_API_KEY", ""))
 
             self.hf_api_url = os.getenv("HF_API_URL", env_vars.get("HF_API_URL", None))
             self.hf_donut_url = os.getenv("HF_DONUT_URL", env_vars.get("HF_DONUT_URL", None))
