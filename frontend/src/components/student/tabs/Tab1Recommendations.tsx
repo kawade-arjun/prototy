@@ -262,7 +262,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
           <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] flex flex-col justify-between space-y-4 relative overflow-hidden min-h-[250px]">
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/[0.06] pb-3">
               <div className="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-amber-500" />
+                {/* <Sparkles className="w-4 h-4 text-amber-500" /> */}
                 <span>ATS Score Performance Gauge</span>
               </div>
               <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border ${
@@ -272,7 +272,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                     ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
                     : 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30'
               }`}>
-                {atsResult.overallScore >= 80 ? '✓ ATS Optimized' : atsResult.overallScore >= 60 ? '⚡ Good Baseline' : '⚠ Action Required'}
+                {atsResult.overallScore >= 80 ? ' ATS Optimized' : atsResult.overallScore >= 60 ? ' Good Baseline' : ' Action Required'}
               </span>
             </div>
             
@@ -334,11 +334,11 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   />
 
                   {/* Pivot Center Point */}
-                  <circle cx="120" cy="110" r="7" fill={theme === 'dark' ? '#f8fafc' : '#0f172a'} />
-                  <circle cx="120" cy="110" r="3" fill="#f59e0b" />
+                  {/* <circle cx="120" cy="110" r="7" fill={theme === 'dark' ? '#f8fafc' : '#0f172a'} />
+                  <circle cx="120" cy="110" r="3" fill="#f59e0b" /> */}
 
                   {/* Animated Pivot Needle Indicator */}
-                  {(() => {
+                  {/* {(() => {
                     const needleAngle = Math.PI + (atsResult.overallScore / 100) * Math.PI;
                     const nx = 120 + Math.cos(needleAngle) * 70;
                     const ny = 110 + Math.sin(needleAngle) * 70;
@@ -354,7 +354,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                         className="transition-all duration-1000 ease-out"
                       />
                     );
-                  })()}
+                  })()} */}
                 </svg>
 
                 {/* Score Center Value Display */}
@@ -362,8 +362,8 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                   <span className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
                     {atsResult.overallScore}
                   </span>
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
-                    Score / 100
+                  <span className="text-[15px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
+                    / 100
                   </span>
                 </div>
               </div>
@@ -420,7 +420,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             </div>
             
             <div className="h-32 flex items-end justify-between gap-1.5 pt-4 pb-1 border-b border-slate-200 dark:border-white/[0.08] px-1">
-              {(geminiResumeResult?.extractedSkills || activeStudent.verifiedSkills || ['Program Management', 'Operations Management', 'Stakeholder Management', 'Revenue Optimization', 'Process Improvement', 'SOP Implementation', 'Vendor Management', 'Cross-Functional Leadership']).slice(0, 8).map((sk, idx) => {
+              {(geminiResumeResult?.extractedSkills || activeStudent.verifiedSkills || []).slice(0, 8).map((sk, idx) => {
                 const heightPercent = Math.max(30, 100 - (idx * 9));
                 return (
                   <div key={idx} className="flex-1 flex flex-col items-center gap-1 group relative h-full justify-end">
@@ -436,7 +436,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               })}
             </div>
             <div className="flex justify-between text-[8px] font-bold text-slate-500 dark:text-slate-400 px-0.5">
-              {(geminiResumeResult?.extractedSkills || activeStudent.verifiedSkills || ['Program Management', 'Operations Management', 'Stakeholder Management', 'Revenue Optimization', 'Process Improvement', 'SOP Implementation', 'Vendor Management', 'Cross-Functional Leadership']).slice(0, 8).map((sk, idx) => (
+              {(geminiResumeResult?.extractedSkills || activeStudent.verifiedSkills || []).slice(0, 8).map((sk, idx) => (
                 <span key={idx} className="truncate max-w-[42px] text-center" title={sk}>
                   {sk}
                 </span>
@@ -447,19 +447,14 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
         {/* Strengths & Weaknesses Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {/*  Strengths */}
+          {/* Strengths */}
           <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] space-y-4">
             <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-extrabold text-sm border-b border-slate-100 dark:border-white/[0.06] pb-2">
               <span className="text-emerald-500 text-base">✓</span>
               <span>Strengths</span>
             </div>
             <ul className="space-y-3.5 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-              {(geminiResumeResult?.detailedStrengths || atsResult.strengths || [
-                { title: 'Strong quantifiable achievements', description: 'Demonstrates measurable metrics such as driving productivity increase and operational cost reduction.' },
-                { title: 'Demonstrated high-value experience', description: 'Experience managing high-value portfolios supporting major enterprise corporate clients.' },
-                { title: 'Clear career progression', description: 'Demonstrates clear career progression from Operations Executive to Associate Program Manager.' },
-                { title: 'Solid project highlights', description: 'Includes solid project highlights and verified hands-on execution initiatives.' }
-              ]).map((str: any, idx) => {
+              {(geminiResumeResult?.detailedStrengths || (atsResult.strengths && atsResult.strengths.length > 0 ? atsResult.strengths : [])).map((str: any, idx) => {
                 const title = typeof str === 'string' ? str.split(':')[0] : (str.title || '');
                 const desc = typeof str === 'string' 
                   ? (str.includes(':') ? str.substring(str.indexOf(':') + 1) : '') 
@@ -477,19 +472,14 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             </ul>
           </div>
 
-          {/*  Weaknesses */}
+          {/* Weaknesses */}
           <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] space-y-4">
             <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-extrabold text-sm border-b border-slate-100 dark:border-white/[0.06] pb-2">
               <span className="text-rose-500 text-base">✕</span>
               <span>Weaknesses</span>
             </div>
             <ul className="space-y-3.5 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-              {(geminiResumeResult?.detailedWeaknesses || atsResult.weaknesses || [
-                { title: 'Severe formatting and parsing issues', description: 'The text flow indicates a multi-column layout where company names and job titles are parsed after bullet points, which will confuse ATS parsers.' },
-                { title: 'Spelling error', description: 'Spelling error present in organization/institution names.' },
-                { title: 'Vague education details', description: 'Degree is listed without specifying the field of study/specialization.' },
-                { title: 'Generic technical skills', description: 'Mentions generic terms (e.g. CRM & ERP Systems) without naming the specific software used (e.g. Salesforce, SAP, HubSpot).' }
-              ]).map((wk: any, idx) => {
+              {(geminiResumeResult?.detailedWeaknesses || (atsResult.weaknesses && atsResult.weaknesses.length > 0 ? atsResult.weaknesses : [])).map((wk: any, idx) => {
                 const title = typeof wk === 'string' ? wk.split(':')[0] : (wk.title || '');
                 const desc = typeof wk === 'string' 
                   ? (wk.includes(':') ? wk.substring(wk.indexOf(':') + 1) : '') 
@@ -508,20 +498,14 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
           </div>
         </div>
 
-        {/*  Suggestions */}
+        {/* Suggestions */}
         <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0d1424] space-y-4">
           <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-extrabold text-sm border-b border-slate-100 dark:border-white/[0.06] pb-2">
             <span className="text-base">💡</span>
             <span>Suggestions</span>
           </div>
           <div className="space-y-3.5">
-            {(geminiResumeResult?.actionableRecommendations || atsResult.actionableSuggestions || [
-              'Convert the resume layout to a standard, single-column format to ensure ATS systems parse your experience chronologically and associate bullet points with the correct job titles.',
-              'Correct spelling and formatting inconsistencies across company and project entries.',
-              'Specify your degree specialization (e.g., B.Tech in Mechanical Engineering, B.Tech in Information Technology) to provide complete educational context.',
-              'Replace generic terms like "CRM & ERP Systems" with the actual names of the platforms you have hands-on experience with.',
-              'Ensure your contact information and professional summary are positioned clearly at the very top of the resume.'
-            ]).map((sug, idx) => (
+            {(geminiResumeResult?.actionableRecommendations || (atsResult.actionableSuggestions && atsResult.actionableSuggestions.length > 0 ? atsResult.actionableSuggestions : [])).map((sug, idx) => (
               <div key={idx} className="flex items-start gap-3 text-xs leading-relaxed text-slate-700 dark:text-slate-300">
                 <span className="w-5 h-5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-600 dark:text-sky-400 font-extrabold text-[11px] flex items-center justify-center shrink-0 border border-sky-300 dark:border-sky-800">
                   {idx + 1}

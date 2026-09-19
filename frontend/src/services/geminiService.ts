@@ -150,83 +150,195 @@ ${resumeText}
     }
   }
 
-  // Dynamic Resume Text Analyzer for local/prototype mode
-  const cleanLines = resumeText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-  
-  // Extract key phrases / metric lines from candidate text
-  const metricLines = cleanLines.filter(l => /\d+%|\d+\+|\b\d+\b/i.test(l));
-  const techSkillMatches = Array.from(new Set(
-    (resumeText.match(/\b(Python|JavaScript|TypeScript|React|Node|FastAPI|Docker|Kubernetes|AWS|SQL|PostgreSQL|PyTorch|TensorFlow|Java|C\+\+|Go|Git|REST|GraphQL|MongoDB|CI\/CD|Redis)\b/gi) || [])
-      .map(s => s.trim())
-  ));
+  // Dynamic Resume Text Analyzer for local/prototype mode (strictly analyzing candidate's actual resume text)
+  const cleanLines = resumeText
+    .split('\n')
+    .map(l => l.trim())
+    .filter(l => l.length > 0);
 
-  // Calculate dynamic scores based on actual text characteristics
+  // 1. Extract Genuine Skills from candidate's actual resume text
+  const KNOWN_SKILL_KEYWORDS = [
+    'Python', 'JavaScript', 'TypeScript', 'React', 'Node.js', 'Next.js', 'FastAPI', 'Django', 'Flask',
+    'Docker', 'Kubernetes', 'AWS', 'GCP', 'Azure', 'SQL', 'PostgreSQL', 'MongoDB', 'Redis', 'SQLite',
+    'PyTorch', 'TensorFlow', 'Scikit-Learn', 'Machine Learning', 'Artificial Intelligence', 'Deep Learning',
+    'NLP', 'Vector Databases', 'pgvector', 'Git', 'GitHub', 'CI/CD', 'REST', 'RESTful APIs', 'GraphQL',
+    'System Design', 'Microservices', 'C++', 'C#', 'Java', 'Go', 'Golang', 'Rust', 'HTML', 'CSS', 'Tailwind',
+    'Bootstrap', 'Figma', 'UI/UX', 'Data Structures', 'Algorithms', 'OOP', 'Object Oriented Programming',
+    'Unit Testing', 'Jest', 'Pytest', 'Linux', 'Bash', 'Shell', 'Agile', 'Scrum', 'Jira',
+    'DigiLocker', 'PKI', 'Donut OCR', 'OpenCV', 'OCR', 'PDF Parsing', 'JSON', 'JWT', 'OAuth',
+    'Financial Modeling', 'Accounting', 'Data Analysis', 'Project Management', 'Communication', 'Leadership'
+  ];
+
+  const extractedSkillsSet = new Set<string>();
+  KNOWN_SKILL_KEYWORDS.forEach(skill => {
+    const escaped = skill.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`\\b${escaped}\\b`, 'i');
+    if (regex.test(resumeText)) {
+      extractedSkillsSet.add(skill);
+    }
+  });
+
+  // Extract capitalized technical acronyms & framework terms directly from candidate's text
+  const customAcronyms = resumeText.match(/\b[A-Z][a-zA-Z0-9+#.]{1,15}\b/g) || [];
+  customAcronyms.forEach(term => {
+    if (
+      !['The', 'And', 'For', 'With', 'From', 'This', 'That', 'Your', 'Have', 'Will', 'Using', 'Built', 'Created', 'Engineered', 'Developed', 'Managed', 'Worked', 'Section', 'Page', 'Resume', 'Curriculum', 'Vitae', 'Email', 'Phone', 'Address', 'https', 'http', 'com', 'org', 'edu', 'gmail', 'mailto'].includes(term) &&
+      term.length > 1
+    ) {
+      if (extractedSkillsSet.size < 12) {
+        extractedSkillsSet.add(term);
+      }
+    }
+  });
+
+  const extractedSkills = Array.from(extractedSkillsSet);
+
+  // 2. Genuine Metric Lines (exclude emails, URLs, dates like 2024/2026, and section numbers)
+  const metricLines = cleanLines.filter(line => {
+    if (/mailto:|http|@|section\.\d+|dl-in-2026/i.test(line)) return false;
+    return /\b\d+%\b|\$\d+|\b\d+\+\b|\b\d{2,}\s*(ms|seconds|min|hours|users|clients|requests|projects|repos|stars|tests|passed|items|lines|commits|percent|pts|xp)\b/i.test(line);
+  });
+
   const metricCount = metricLines.length;
-  const quantifiedMetricsScore = Math.min(65 + (metricCount * 8), 98);
-  const keywordDensityScore = Math.min(60 + (techSkillMatches.length * 6), 96);
-  const formattingBypassScore = Math.min(85 + Math.min(cleanLines.length, 10), 98);
+  const quantifiedMetricsScore = metricCount >= 3 ? 92 : metricCount === 2 ? 82 : metricCount === 1 ? 72 : 58;
+  const keywordDensityScore = Math.min(55 + (extractedSkills.length * 5), 95);
+
+  // Check section headers
+  const hasEducation = /education|university|degree|b\.?tech|college|gpa|cgpa|academic/i.test(resumeText);
+  const hasExperience = /experience|work|employment|internship|project|built|developed|engineered/i.test(resumeText);
+  const hasSkills = /skill|technology|stack|framework|tool|competenc/i.test(resumeText);
+  const hasContact = /email|phone|contact|@|github|linkedin|mailto/i.test(resumeText);
+
+  let formattingScoreCount = 60;
+  if (hasEducation) formattingScoreCount += 10;
+  if (hasExperience) formattingScoreCount += 10;
+  if (hasSkills) formattingScoreCount += 10;
+  if (hasContact) formattingScoreCount += 10;
+  const formattingBypassScore = Math.min(formattingScoreCount, 95);
+
   const overallScore = Math.round((quantifiedMetricsScore * 0.35) + (keywordDensityScore * 0.35) + (formattingBypassScore * 0.30));
 
-  // Generate dynamic strengths based on candidate's actual text
-  const detailedStrengths: DetailedStrength[] = [
-    {
-      title: 'Strong quantifiable achievements',
-      description: metricLines.length > 0 
-        ? `Demonstrates measurable metrics and operational impact (e.g., ${metricLines[0].substring(0, 90)}).`
-        : 'Demonstrates strong measurable productivity increases and operational cost reduction potential.',
-      evidence: metricLines[0] || 'Quantified performance metrics'
-    },
-    {
-      title: 'Demonstrated high-value experience',
-      description: `Verified hands-on experience in managing key technical/operational portfolios${techSkillMatches.length > 0 ? ` with ${techSkillMatches.slice(0, 4).join(', ')}` : ''}.`,
-      evidence: techSkillMatches.join(', ') || 'High-value portfolio management'
-    },
-    {
-      title: 'Clear career progression',
-      description: 'Demonstrates steady career progression from baseline role to advanced ownership.',
-      evidence: cleanLines[0] || 'Progressive experience trajectory'
-    },
-    {
-      title: 'Solid project highlights',
-      description: 'Includes active project highlights and verified hands-on execution initiatives.',
-      evidence: cleanLines[1] || 'Hands-on project execution'
-    }
-  ];
+  // 3. Genuine Strengths based ONLY on candidate's actual content
+  const detailedStrengths: DetailedStrength[] = [];
 
-  // Generate dynamic weaknesses based on actual text
-  const detailedWeaknesses: DetailedWeakness[] = [
-    {
-      title: 'Severe formatting and parsing issues',
-      description: 'The text flow indicates a multi-column layout where company names and job titles are parsed after bullet points, confusing ATS parsers.',
-      impact: 'Reduces parsing accuracy and section matching on automated applicant tracking systems.'
-    },
-    {
-      title: 'Spelling & typo inconsistencies',
-      description: 'Contains minor spelling or capitalization inconsistencies across organization names or technical tools.',
-      impact: 'Reduces exact keyword matching confidence.'
-    },
-    {
-      title: 'Vague education details',
-      description: 'Degree or academic qualification is listed without specifying the full field of study/specialization.',
-      impact: 'May fail automated education screening requirements.'
-    },
-    {
-      title: 'Generic technical skills',
-      description: 'Mentions generic categories (e.g., "CRM & ERP Systems" or "Database Systems") without naming specific software used (e.g., Salesforce, SAP, PostgreSQL).',
-      impact: 'Misses high-demand platform-specific ATS search filters.'
-    }
-  ];
+  if (extractedSkills.length > 0) {
+    detailedStrengths.push({
+      title: `Detected ${extractedSkills.length} Verified Competencies`,
+      description: `Your resume explicitly details verified proficiency in ${extractedSkills.slice(0, 5).join(', ')}${extractedSkills.length > 5 ? `, and ${extractedSkills.length - 5} additional tools` : ''}.`,
+      evidence: extractedSkills.slice(0, 6).join(', ')
+    });
+  }
 
-  // Dynamic suggestions matching the user's template
-  const actionableRecommendations = [
-    'Convert the resume layout to a standard, single-column format to ensure ATS systems parse your experience chronologically and associate bullet points with correct job titles.',
-    'Correct the spelling and formatting across company names and technical frameworks.',
-    'Specify your degree specialization (e.g., B.Tech in Mechanical Engineering, B.Tech in Information Technology) to provide complete educational context.',
-    'Replace generic terms like "CRM & ERP Systems" with the actual names of the platforms you have hands-on experience with.',
-    'Ensure your contact information and professional summary are positioned clearly at the very top of the resume.'
-  ];
+  if (metricLines.length > 0) {
+    const sample = metricLines[0].length > 90 ? metricLines[0].substring(0, 87) + '...' : metricLines[0];
+    detailedStrengths.push({
+      title: 'Quantified Performance & Scale Statements',
+      description: `Contains measurable performance indicators (e.g., "${sample}").`,
+      evidence: sample
+    });
+  }
 
-  const defaultSkills = ['Program Management', 'Operations Management', 'Stakeholder Management', 'Revenue & Cost Optimization', 'Process Improvement', 'SOP Implementation', 'Vendor Management', 'Cross-Functional Team Leadership'];
+  if (hasEducation) {
+    const eduLine = cleanLines.find(l => /education|degree|b\.?tech|university|college|iit|aiims|nlsiu|srcc/i.test(l)) || 'Academic Qualifications';
+    detailedStrengths.push({
+      title: 'Clear Academic & Educational Background',
+      description: `Includes explicit educational history and degree background (${eduLine.substring(0, 70)}).`,
+      evidence: eduLine.substring(0, 70)
+    });
+  }
+
+  if (hasExperience || cleanLines.length >= 8) {
+    detailedStrengths.push({
+      title: 'Structured Experience & Portfolio Breakdown',
+      description: `Organized into clear entries detailing implementation and project ownership across ${cleanLines.length} line items.`,
+      evidence: cleanLines[0] || 'Structured resume text'
+    });
+  }
+
+  if (detailedStrengths.length < 2) {
+    detailedStrengths.push({
+      title: 'Extractable Resume Formatting',
+      description: 'The text uses clear line breaks and extractable text formatting for automated ATS intake.',
+      evidence: cleanLines[0] || 'Extractable text structure'
+    });
+  }
+
+  // 4. Genuine Weaknesses based ONLY on actual candidate resume missing elements
+  const detailedWeaknesses: DetailedWeakness[] = [];
+  const actionableRecommendations: string[] = [];
+
+  if (metricCount === 0) {
+    detailedWeaknesses.push({
+      title: 'Missing Numerical Impact Metrics & Scale Data',
+      description: 'Your project bullet points describe responsibilities qualitatively without specifying measurable numbers (e.g. % efficiency gained, latency reduced, scale of users/requests).',
+      impact: 'ATS rankers rate resumes with numerical metrics significantly higher for technical and analytical roles.'
+    });
+    actionableRecommendations.push(
+      'Add quantitative metrics to experience bullet points (e.g., "Improved response latency by 35%" or "Processed 10,000+ daily API requests").'
+    );
+  }
+
+  if (extractedSkills.length < 4) {
+    detailedWeaknesses.push({
+      title: 'Sparse Technical & Framework Keywords',
+      description: `Only ${extractedSkills.length} explicit technical tools or domain frameworks were recognized in the resume text.`,
+      impact: 'Reduces search matching score when automated ATS filters filter candidates by software stack.'
+    });
+    actionableRecommendations.push(
+      'Add a dedicated "Technical Skills" section listing specific programming languages, frameworks, vector DBs, and tools you have experience with.'
+    );
+  }
+
+  if (!hasContact) {
+    detailedWeaknesses.push({
+      title: 'Missing Direct Contact Information',
+      description: 'No explicit email address or phone number was detected in the parsed text.',
+      impact: 'Recruiters cannot automatically contact you via automated ATS candidate outreach.'
+    });
+    actionableRecommendations.push(
+      'Include your official email address, phone number, and LinkedIn/GitHub profiles at the top of the resume.'
+    );
+  }
+
+  if (!hasEducation) {
+    detailedWeaknesses.push({
+      title: 'Missing Explicit Education Header',
+      description: 'No dedicated "Education" section or degree qualification header was clearly identified.',
+      impact: 'May fail automated minimum educational requirement checks in institutional ATS systems.'
+    });
+    actionableRecommendations.push(
+      'Add a clear "Education" section header with your degree name, institution, and year of completion.'
+    );
+  }
+
+  if (cleanLines.length < 10) {
+    detailedWeaknesses.push({
+      title: 'Brief Resume Depth',
+      description: `The uploaded text contains only ${cleanLines.length} lines, which may leave key project architectures and role details unrepresented.`,
+      impact: 'Limits overall keyword density and ATS relevance scoring.'
+    });
+    actionableRecommendations.push(
+      'Elaborate on your key projects, responsibilities, and system architectures to provide a more comprehensive candidate summary.'
+    );
+  }
+
+  if (detailedWeaknesses.length === 0) {
+    detailedWeaknesses.push({
+      title: 'Scope for Expanded System Architecture Details',
+      description: 'While your resume is well-structured, expanding on specific system design decisions and trade-offs will further elevate your profile.',
+      impact: 'Helps distinguish your profile for senior-level technical evaluations.'
+    });
+    actionableRecommendations.push(
+      'Include direct links to live GitHub repositories, published papers, or deployed demo URLs for your top projects.'
+    );
+  }
+
+  if (actionableRecommendations.length < 3) {
+    actionableRecommendations.push(
+      'Ensure standard, consistent formatting across section headers (e.g. Skills, Experience, Education) for maximum ATS parser accuracy.',
+      'Highlight specific tools and frameworks used in each project bullet point rather than listing them only in a summary section.'
+    );
+  }
 
   return {
     overallScore: Math.max(58, overallScore),
@@ -234,14 +346,14 @@ ${resumeText}
     quantifiedMetricsScore,
     keywordDensityScore,
     formattingBypassScore,
-    impactActionVerbsScore: Math.min(75 + metricCount * 5, 95),
+    impactActionVerbsScore: Math.min(70 + metricCount * 5, 95),
     strengths: detailedStrengths.map(s => `${s.title}: ${s.description}`),
     weaknesses: detailedWeaknesses.map(w => `${w.title}: ${w.description}`),
     detailedStrengths,
     detailedWeaknesses,
-    missingKeywords: ['Kubernetes', 'CI/CD Pipelines', 'System Architecture', 'Cloud Deployment'],
+    missingKeywords: ['System Architecture', 'CI/CD Pipelines', 'Cloud Containerization', 'Automated Testing'],
     actionableRecommendations,
-    extractedSkills: techSkillMatches.length >= 4 ? techSkillMatches : defaultSkills,
+    extractedSkills: extractedSkills.length > 0 ? extractedSkills : ['General Professional Experience'],
     bulletPointRewrites: [],
     sectionScores: [
       { section: 'Executive Positioning', score: overallScore, feedback: 'Clear trajectory.' },
