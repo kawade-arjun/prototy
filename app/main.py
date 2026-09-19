@@ -257,21 +257,48 @@ def extract_pdf_bytes_text(file_bytes: bytes, filename: str = "resume.pdf") -> d
     extracted_text = ""
     num_pages = 1
 
-    # 1. Primary Layout-Aware Extraction using pdfplumber
+    # 1. Tier 1 Extraction using pypdfium2 (Google Chrome PDFium C++ Engine)
     try:
-        with pdfplumber.open(BytesIO(file_bytes)) as pdf:
-            num_pages = len(pdf.pages)
-            page_lines = []
-            for page in pdf.pages:
-                page_str = page.extract_text(layout=True) or page.extract_text() or ""
-                if page_str.strip():
-                    page_lines.append(page_str.strip())
-            if page_lines:
-                extracted_text = "\n\n".join(page_lines)
-    except Exception as plumber_err:
-        logger.warning(f"pdfplumber warning on {filename}: {plumber_err}. Falling back to pypdf.")
+        import pypdfium2 as pdfium
+        pdf = pdfium.PdfDocument(file_bytes)
+        num_pages = len(pdf)
+        pdfium_pages = []
+        for page in pdf:
+            textpage = page.get_textpage()
+            text = textpage.get_text_range() or ""
+            if text.strip():
+                pdfium_pages.append(text.strip())
+        if pdfium_pages:
+            extracted_text = "\n\n".join(pdfium_pages)
+    except Exception as pdfium_err:
+        logger.warning(f"pypdfium2 warning on {filename}: {pdfium_err}")
 
-    # 2. Secondary Fallback using pypdf
+    # 2. Tier 2 Layout-Aware Extraction using pdfplumber
+    if not extracted_text.strip():
+        try:
+            with pdfplumber.open(BytesIO(file_bytes)) as pdf:
+                num_pages = len(pdf.pages)
+                page_lines = []
+                for page in pdf.pages:
+                    page_str = page.extract_text(layout=True) or page.extract_text() or ""
+                    if page_str.strip():
+                        page_lines.append(page_str.strip())
+                if page_lines:
+                    extracted_text = "\n\n".join(page_lines)
+        except Exception as plumber_err:
+            logger.warning(f"pdfplumber warning on {filename}: {plumber_err}")
+
+    # 3. Tier 3 Extraction using pdfminer.six
+    if not extracted_text.strip():
+        try:
+            from pdfminer.high_level import extract_text as pdfminer_extract_text
+            miner_text = pdfminer_extract_text(BytesIO(file_bytes)) or ""
+            if miner_text.strip():
+                extracted_text = miner_text.strip()
+        except Exception as miner_err:
+            logger.warning(f"pdfminer warning on {filename}: {miner_err}")
+
+    # 4. Tier 4 Fallback using pypdf
     if not extracted_text.strip():
         try:
             reader = PdfReader(BytesIO(file_bytes))
@@ -284,9 +311,9 @@ def extract_pdf_bytes_text(file_bytes: bytes, filename: str = "resume.pdf") -> d
             if page_texts:
                 extracted_text = "\n\n".join(page_texts)
         except Exception as pdf_err:
-            logger.warning(f"pypdf reader warning on {filename}: {pdf_err}.")
+            logger.warning(f"pypdf reader warning on {filename}: {pdf_err}")
 
-    # 3. Tertiary Stream Filter Fallback for raw text streams
+    # 5. Tier 5 Raw Stream Regex Filter Fallback
     if not extracted_text.strip():
         try:
             raw_str = file_bytes.decode('latin1', errors='ignore')
@@ -297,7 +324,7 @@ def extract_pdf_bytes_text(file_bytes: bytes, filename: str = "resume.pdf") -> d
                 and not t.startswith('/') 
                 and 'Font' not in t 
                 and 'Catalog' not in t
-                and (sum(1 for c in t if 32 <= ord(c) <= 126) / max(len(t), 1)) > 0.85
+                and (sum(1 for c in t if c.isalnum() or c.isspace() or c in ".,;:!?-()/[]{}@#$&*+=|\\/'\"•●–—") / max(len(t), 1)) > 0.40
             ]
             if filtered:
                 extracted_text = " ".join(filtered)
