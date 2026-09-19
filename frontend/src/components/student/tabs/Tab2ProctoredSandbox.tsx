@@ -163,13 +163,22 @@ export const Tab2ProctoredSandbox: React.FC = () => {
     { id: 'soft_skills_ethics' as AssessmentSubTab, label: 'Soft Skills & Ethics', duration: '15–30 Mins', color: 'text-amber-500 border-amber-500/30 bg-amber-500/10' }
   ];
 
-  // Resizable Panel Splitter State (Percentage)
+  // Resizable Panel Splitter State (Percentage for left/right width)
   const [leftPanelPercent, setLeftPanelPercent] = useState<number>(44);
   const [isDraggingSplitter, setIsDraggingSplitter] = useState<boolean>(false);
+
+  // Resizable Terminal Height State (Pixels for output tray height)
+  const [terminalHeightPx, setTerminalHeightPx] = useState<number>(200);
+  const [isDraggingTerminalSplitter, setIsDraggingTerminalSplitter] = useState<boolean>(false);
 
   const handleMouseDownSplitter = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsDraggingSplitter(true);
+  };
+
+  const handleMouseDownTerminalSplitter = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDraggingTerminalSplitter(true);
   };
 
   useEffect(() => {
@@ -193,6 +202,41 @@ export const Tab2ProctoredSandbox: React.FC = () => {
       window.removeEventListener('mouseup', handleMouseUp);
     };
   }, [isDraggingSplitter]);
+
+  // Handle Terminal Vertical Resizing
+  useEffect(() => {
+    if (!isDraggingTerminalSplitter) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const windowHeight = window.innerHeight;
+      const newHeight = Math.min(Math.max(windowHeight - e.clientY, 80), windowHeight - 160);
+      setTerminalHeightPx(newHeight);
+    };
+
+    const handleMouseUp = () => {
+      setIsDraggingTerminalSplitter(false);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDraggingTerminalSplitter]);
+
+  // Lock body scroll completely when active test is open
+  useEffect(() => {
+    if (activeTest) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [activeTest]);
 
   // Auto-submit test if user changes window or tab
   useEffect(() => {
@@ -619,10 +663,10 @@ class Solution {
 
       {/* 4. SPLIT-SCREEN RESIZABLE ASSESSMENT MODAL (LIGHT THEME) */}
       {activeTest && (
-        <div className="fixed inset-0 z-50 bg-slate-50 flex flex-col text-slate-900 select-none">
+        <div className="fixed inset-0 top-0 left-0 w-screen h-screen z-[99999] bg-slate-50 flex flex-col text-slate-900 select-none overflow-hidden m-0 p-0">
           
           {/* Top Proctoring HUD Header */}
-          <div className="bg-white border-b border-slate-200 px-6 py-3 flex flex-wrap items-center justify-between gap-4 shadow-sm">
+          <div className="bg-white border-b border-slate-200 px-6 py-3 flex flex-wrap items-center justify-between gap-4 shadow-sm shrink-0">
             
             {/* Title & Badge */}
             <div className="flex items-center gap-3">
@@ -670,30 +714,39 @@ class Solution {
 
           </div>
 
-          {/* Main Resizable Split Workspace */}
-          <div className="flex-1 flex overflow-hidden">
+          {/* Main Resizable Workspace */}
+          <div className="flex-1 flex overflow-hidden min-h-0 bg-white">
             
-            {/* Left Pane: Instructions, Rules, Sample Cases */}
-            <div 
+            {/* Left Problem Statement Pane */}
+            <div
               style={{ width: `${leftPanelPercent}%` }}
-              className="p-6 overflow-y-auto border-r border-slate-200 bg-slate-50 space-y-5 text-slate-800 font-sans shrink-0"
+              className="p-6 overflow-y-auto space-y-6 border-r border-slate-200 bg-slate-50/50 shrink-0"
             >
-              <div className="space-y-2">
-                <div className="text-[11px] font-bold uppercase tracking-wider text-amber-700">
-                  {activeTest.benchmarkEntity.name}
-                </div>
-                <h2 className="text-xl font-black text-slate-900">{activeTest.title}</h2>
-                <p className="text-xs text-slate-600 leading-relaxed">{activeTest.description}</p>
+              {/* Stream Badge */}
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-600 bg-amber-100 px-2.5 py-1 rounded-md border border-amber-200">
+                  {activeTest.stream.toUpperCase()} STREAM BENCHMARK
+                </span>
+                <span className="text-xs text-slate-500 font-mono">Difficulty: {activeTest.difficulty}</span>
               </div>
 
-              {/* Instructions */}
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-2.5 shadow-sm">
-                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-                  <FileText className="w-3.5 h-3.5 text-amber-600" />
+              {/* Problem Title & Description */}
+              <div className="space-y-2">
+                <h2 className="text-lg font-extrabold text-slate-900 leading-snug">
+                  {activeTest.title}
+                </h2>
+                <p className="text-xs text-slate-700 leading-relaxed font-sans">
+                  {activeTest.description}
+                </p>
+              </div>
+
+              {/* Instructions List */}
+              <div className="space-y-2">
+                <h4 className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">
                   Assessment Instructions & Rules:
                 </h4>
                 <ul className="space-y-1.5">
-                  {activeTest.instructions.map((inst, i) => (
+                  {(activeTest.instructions || []).map((inst, i) => (
                     <li key={i} className="text-xs text-slate-700 flex items-start gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
                       <span>{inst}</span>
@@ -702,38 +755,44 @@ class Solution {
                 </ul>
               </div>
 
-              {/* Sample Cases */}
-              <div className="space-y-3">
-                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Sample Test Cases:</h4>
-                {activeTest.sampleCases.map((sc, idx) => (
-                  <div key={idx} className="p-3.5 rounded-2xl bg-white border border-slate-200 font-mono text-xs space-y-1.5 shadow-sm">
-                    <div className="text-slate-500 text-[11px] font-bold">Case #{idx + 1}:</div>
-                    <div className="text-slate-800"><strong className="text-slate-500">Input:</strong> {sc.input}</div>
-                    <div className="text-amber-700"><strong className="text-slate-500">Expected:</strong> {sc.expected}</div>
-                    <div className="text-[11px] text-slate-500 font-sans mt-1">{sc.explanation}</div>
-                  </div>
-                ))}
+              {/* Sample Test Cases Table */}
+              <div className="space-y-2">
+                <h4 className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">
+                  Sample Assertions & Expected Outputs:
+                </h4>
+                <div className="space-y-2">
+                  {(activeTest.sampleCases || []).map((sc, i) => (
+                    <div key={i} className="p-3 rounded-xl bg-white border border-slate-200 text-xs font-mono space-y-1 shadow-2xs">
+                      <div className="text-slate-500 text-[10px] font-bold">TEST CASE #{i + 1}</div>
+                      <div className="text-slate-800"><span className="text-amber-600 font-bold">INPUT:</span> {sc.input}</div>
+                      <div className="text-slate-800"><span className="text-emerald-600 font-bold">EXPECTED:</span> {sc.expected}</div>
+                      <div className="text-slate-500 text-[11px] font-sans italic pt-0.5">{sc.explanation}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
+
             </div>
 
             {/* Draggable Vertical Splitter Bar */}
             <div
               onMouseDown={handleMouseDownSplitter}
-              className="w-2 hover:w-2.5 bg-slate-200 hover:bg-amber-500 cursor-col-resize transition-all shrink-0 flex flex-col justify-center items-center z-20 group"
-              title="Drag horizontally to resize windows"
+              className="w-2 bg-slate-200 hover:bg-amber-500 cursor-col-resize flex items-center justify-center group transition-colors select-none shrink-0"
+              title="Drag left/right to resize problem statement width"
             >
-              <div className="w-1 h-10 rounded-full bg-slate-400 group-hover:bg-white" />
+              <div className="w-1 h-8 rounded-full bg-slate-400 group-hover:bg-white transition-colors" />
             </div>
 
-            {/* Right Pane: Code Editor & Terminal (Light Theme) */}
-            <div 
-              style={{ width: `${100 - leftPanelPercent}%` }}
-              className="flex flex-col bg-white overflow-hidden shrink-0"
-            >
-              <div className="bg-slate-100 px-4 py-2.5 border-b border-slate-200 flex items-center justify-between">
+            {/* Right Code Editor & Execution Terminal Pane */}
+            <div className="flex-1 flex flex-col min-w-0 bg-white">
+              
+              {/* Monaco Action Header */}
+              <div className="px-4 py-2 bg-slate-100 border-b border-slate-200 flex items-center justify-between shrink-0">
+                
+                {/* Language Switcher */}
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-slate-800">Code Sandbox</span>
-                  <div className="flex items-center bg-white p-0.5 rounded-lg border border-slate-200">
+                  <span className="text-xs font-bold text-slate-600">Language:</span>
+                  <div className="flex items-center gap-1 bg-slate-200 p-0.5 rounded-lg">
                     {(['python', 'cpp', 'java', 'typescript'] as const).map((l) => (
                       <button
                         key={l}
@@ -759,7 +818,7 @@ class Solution {
               </div>
 
               {/* Monaco Editor in Light Theme ("vs") */}
-              <div className="flex-1 bg-white">
+              <div className="flex-1 bg-white min-h-0">
                 <Editor
                   height="100%"
                   language={editorLanguage}
@@ -776,9 +835,21 @@ class Solution {
                 />
               </div>
 
-              {/* Terminal Tray in Light Theme */}
-              <div className="bg-slate-100 border-t border-slate-200 text-xs font-mono">
-                <div className="flex items-center justify-between px-4 py-2 border-b border-slate-200 bg-slate-200/60">
+              {/* Horizontal Splitter Bar for Resizing Terminal Tray Height */}
+              <div
+                onMouseDown={handleMouseDownTerminalSplitter}
+                className="h-2 bg-slate-200 hover:bg-amber-500 cursor-row-resize flex items-center justify-center group transition-colors select-none shrink-0"
+                title="Drag up or down to resize test output terminal window"
+              >
+                <div className="w-10 h-1 rounded-full bg-slate-400 group-hover:bg-white transition-colors" />
+              </div>
+
+              {/* Terminal Tray in Light Theme with Resizable Height */}
+              <div
+                style={{ height: `${terminalHeightPx}px` }}
+                className="bg-slate-100 border-t border-slate-200 text-xs font-mono flex flex-col shrink-0 overflow-hidden"
+              >
+                <div className="flex items-center justify-between px-4 py-2 border-b border-slate-200 bg-slate-200/60 shrink-0">
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setTerminalTrayMode('suite')}
@@ -797,16 +868,17 @@ class Solution {
                       Custom Test Input
                     </button>
                   </div>
+                  <span className="text-[10px] text-slate-400 select-none">Drag top border up/down to resize</span>
                 </div>
 
-                <div className="p-3 bg-white">
+                <div className="p-3 bg-white flex-1 overflow-y-auto">
                   {terminalTrayMode === 'suite' ? (
                     sandboxOutput ? (
                       <div className="flex items-center justify-between text-amber-700 font-bold">
-                        <span className="flex items-center gap-1.5">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-600" /> {sandboxOutput.details}
+                        <span className="flex items-center gap-1.5 whitespace-pre-wrap">
+                          <CheckCircle2 className={`w-4 h-4 shrink-0 ${sandboxOutput.status === 'passed' ? 'text-emerald-600' : 'text-rose-600'}`} /> {sandboxOutput.details}
                         </span>
-                        <span className="text-[11px] text-slate-500 font-normal">Exit code: 0</span>
+                        <span className="text-[11px] text-slate-500 font-normal shrink-0 ml-2">Exit code: {sandboxOutput.status === 'passed' ? 0 : 1}</span>
                       </div>
                     ) : (
                       <div className="text-slate-500 text-[11px]">

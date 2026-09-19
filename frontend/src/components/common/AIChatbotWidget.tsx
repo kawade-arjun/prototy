@@ -39,11 +39,29 @@ export const AIChatbotWidget: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>(DEFAULT_MESSAGES);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isAssessmentActive, setIsAssessmentActive] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkActive = () => {
+      if (typeof window !== 'undefined') {
+        const activeId = localStorage.getItem('active_assessment_id');
+        const params = new URLSearchParams(window.location.search);
+        const urlTestId = params.get('testId');
+        setIsAssessmentActive(!!activeId || !!urlTestId);
+      }
+    };
+
+    checkActive();
+    window.addEventListener('storage', checkActive);
+    return () => window.removeEventListener('storage', checkActive);
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  if (isAssessmentActive) return null;
 
   useEffect(() => {
     if (isOpen) {
