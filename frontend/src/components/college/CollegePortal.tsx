@@ -70,6 +70,10 @@ export const CollegePortal: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TpoTab>('cohort_readiness');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [activeTab]);
+
   // Modals State
   const [showNirfModal, setShowNirfModal] = useState(false);
   const [showDriveRosterModal, setShowDriveRosterModal] = useState(false);

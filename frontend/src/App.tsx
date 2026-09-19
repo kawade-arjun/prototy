@@ -31,6 +31,10 @@ const AppContent: React.FC = () => {
   const [settingsTab, setSettingsTab] = useState<'bookmarks' | 'privacy' | 'preferences'>('preferences');
   const { isOnboardingOpen, setIsOnboardingOpen } = useStudent();
 
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [currentRole]);
+
   const handleOpenAuth = (role: UserRole = 'student', mode: 'signin' | 'signup' = 'signin') => {
     setAuthModal({ role, mode });
   };

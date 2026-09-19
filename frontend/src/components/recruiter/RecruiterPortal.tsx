@@ -59,6 +59,10 @@ export const RecruiterPortal: React.FC = () => {
   const [activeConsoleTab, setActiveConsoleTab] = useState<ConsoleTab>('pipeline');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [activeConsoleTab]);
+
   // Candidate Data State
   const [candidates, setCandidates] = useState<RecruiterCandidate[]>(RECRUITER_CANDIDATES);
   const [activeStageFilter, setActiveStageFilter] = useState<FunnelStage | 'all'>('all');

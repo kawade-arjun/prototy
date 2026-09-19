@@ -45,6 +45,10 @@ export const GovernmentPortal: React.FC = () => {
   type GovTab = 'state_heatmap' | 'national_registry' | 'ayush_observatory' | 'nep_curriculum' | 'rnd_grants' | 'sovereign_governance';
   const [activeTab, setActiveTab] = useState<GovTab>('state_heatmap');
 
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [activeTab]);
+
   // State Heatmap Selection
   const [selectedStateCode, setSelectedStateCode] = useState<string>('MH');
   const selectedState = STATE_TELEMETRY_DATA.find(s => s.stateCode === selectedStateCode) || STATE_TELEMETRY_DATA[0];

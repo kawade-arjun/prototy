@@ -28,6 +28,10 @@ export const StudentPortal: React.FC = () => {
   const { activeStudent, customProfile, setIsOnboardingOpen, activeTab, setActiveTab } = useStudent();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [activeTab]);
+
   const tabs: { id: StudentTab; label: string; icon: React.ReactNode }[] = [
     { id: 'recommendations', label: 'Recommendations', icon: <Target className="w-4 h-4" /> },
     { id: 'sandbox', label: 'Assessments', icon: <Terminal className="w-4 h-4" /> },
