@@ -67,7 +67,8 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
           parsed.text.includes('PyTorch & Triton') || 
           parsed.text.includes('vLLM PagedAttention') ||
           parsed.text.includes('Distributed systems and GenAI engineer') ||
-          parsed.text.includes('STU-TECH-001')
+          parsed.text.includes('STU-TECH-001') ||
+          parsed.text.includes('Unable to automatically extract text')
         )) {
           localStorage.removeItem('user_uploaded_resume');
           return null;

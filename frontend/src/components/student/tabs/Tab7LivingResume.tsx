@@ -60,6 +60,46 @@ export const Tab7LivingResume: React.FC = () => {
     }
 
     if (isPdf) {
+      // 1. Try Base64 JSON Endpoint first
+      try {
+        const base64Data = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+
+        const jsonEndpoints = [
+          '/api/resume/parse-pdf-json',
+          'http://localhost:8000/api/resume/parse-pdf-json',
+          'http://127.0.0.1:8000/api/resume/parse-pdf-json'
+        ];
+        for (const ep of jsonEndpoints) {
+          try {
+            const res = await fetch(ep, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ file_b64: base64Data, filename: fileName })
+            });
+            if (res.ok) {
+              const data = await res.json();
+              if (data.text && data.text.trim()) {
+                setUploadedResume(data.text, fileName, fileSize);
+                setCustomText(data.text);
+                setUploadStatus(`Extracted ${data.char_count} characters from ${fileName}!`);
+                setTimeout(() => setUploadStatus(null), 3000);
+                return;
+              }
+            }
+          } catch (e) {
+            console.warn(`JSON Base64 PDF parse failed on ${ep}:`, e);
+          }
+        }
+      } catch (err) {
+        console.warn('Base64 data URL conversion failed:', err);
+      }
+
+      // 2. Try Multipart Endpoint
       const endpoints = [
         '/api/resume/parse-pdf',
         'http://localhost:8000/api/resume/parse-pdf',
@@ -89,7 +129,7 @@ export const Tab7LivingResume: React.FC = () => {
         }
       }
 
-      // Browser-side text extraction fallback from PDF bytes streams
+      // 3. Browser-side text stream fallback
       try {
         const buffer = await file.arrayBuffer();
         const rawText = new TextDecoder('latin1').decode(buffer);
@@ -112,12 +152,9 @@ export const Tab7LivingResume: React.FC = () => {
       }
     }
 
-    // Fallback if PDF text extraction could not parse printable text
-    const defaultText = `CANDIDATE RESUME: ${fileName} (${fileSize})\n[Unable to automatically extract text from this PDF file. Please paste or edit your resume text manually using the editor below.]`;
-    setUploadedResume(defaultText, fileName, fileSize);
-    setCustomText(defaultText);
-    setUploadStatus(`Loaded ${fileName}`);
-    setTimeout(() => setUploadStatus(null), 3000);
+    clearUploadedResume();
+    setUploadStatus(`Could not extract text automatically from ${fileName}. Please paste resume text directly.`);
+    setTimeout(() => setUploadStatus(null), 4000);
   };
 
   const handleDrop = (e: React.DragEvent) => {
