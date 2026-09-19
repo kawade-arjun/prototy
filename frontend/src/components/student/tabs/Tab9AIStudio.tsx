@@ -4,15 +4,16 @@ import {
   Key, 
   FileText, 
   Target, 
-  Cpu, 
-  Award, 
   AlertTriangle, 
   CheckCircle2, 
-  Plus, 
   ArrowRight, 
-  RotateCcw,
   Zap,
-  HelpCircle
+  TrendingUp,
+  FileCheck,
+  Code,
+  ShieldCheck,
+  BookOpen,
+  Info
 } from 'lucide-react';
 import { 
   getGeminiApiKey, 
@@ -22,7 +23,6 @@ import {
   GeminiResumeAnalysis,
   GeminiSkillGapAnalysis
 } from '../../../services/geminiService';
-import { useStudent } from '../../../context/StudentContext';
 
 const SAMPLE_RESUME = `ARJUN KAWADE
 Bengaluru, India | arjun@careeroptic.dev | github.com/arjunkawade
@@ -56,7 +56,6 @@ Requirements:
 `;
 
 export const Tab9AIStudio: React.FC = () => {
-  const { activeStudent } = useStudent();
   const [apiKey, setApiKeyInput] = useState('');
   const [isKeySaved, setIsKeySaved] = useState(false);
 
@@ -67,7 +66,7 @@ export const Tab9AIStudio: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<GeminiResumeAnalysis | null>(null);
   const [gapResult, setGapResult] = useState<GeminiSkillGapAnalysis | null>(null);
-  const [activeStudioTab, setActiveStudioTab] = useState<'ats' | 'gap' | 'interview'>('ats');
+  const [activeStudioTab, setActiveStudioTab] = useState<'ats' | 'gap'>('ats');
 
   useEffect(() => {
     const saved = getGeminiApiKey();
@@ -80,7 +79,7 @@ export const Tab9AIStudio: React.FC = () => {
   const handleSaveApiKey = () => {
     setGeminiApiKey(apiKey);
     setIsKeySaved(Boolean(apiKey.trim()));
-    alert(apiKey.trim() ? 'Gemini API Key saved to local storage!' : 'Gemini API Key cleared. System will use prototype fallback mode.');
+    alert(apiKey.trim() ? 'Gemini API Key saved to local storage! API calls will run live on Gemini 1.5 Flash.' : 'Gemini API Key cleared. System will use prototype fallback diagnostic mode.');
   };
 
   const handleRunAtsDiagnostics = async () => {
@@ -105,27 +104,27 @@ export const Tab9AIStudio: React.FC = () => {
           <div className="max-w-2xl space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/30 dark:text-amber-400 text-xs font-bold">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>AI STUDIO & RESUME ATS ANALYZER (POWERED BY GEMINI AI)</span>
+              <span>GEMINI AI RESUME ATS DIAGNOSTIC STUDIO</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-              AI Career Studio & ATS Optimizer
+              AI Resume ATS & Scale Analyzer
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              Diagnostic engineering studio providing automated ATS score evaluation, missing keyword identification, and Gemini LLM career gap closure roadmaps.
+              Diagnostic engineering studio providing automated Workday/Greenhouse ATS compatibility scores, line-by-line bullet rewrites, and Gemini LLM career gap roadmaps.
             </p>
           </div>
 
-          {/* Gemini API Key Configuration Box */}
+          {/* Gemini API Key Input Configuration Box */}
           <div className="p-4 rounded-2xl bg-white dark:bg-[#0e1424] border border-slate-200 dark:border-white/[0.08] space-y-2 shadow-sm min-w-[280px]">
             <div className="flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white">
               <span className="flex items-center gap-1.5">
                 <Key className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                Gemini API Key
+                Gemini API Key Space
               </span>
               <span className={`text-[10px] font-mono px-2 py-0.5 rounded-md ${
                 isKeySaved ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30' : 'bg-slate-200 dark:bg-slate-800 text-slate-500'
               }`}>
-                {isKeySaved ? '✓ Key Saved' : 'Prototype Mode'}
+                {isKeySaved ? '✓ Key Active' : 'Prototype Fallback'}
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -133,21 +132,24 @@ export const Tab9AIStudio: React.FC = () => {
                 type="password"
                 value={apiKey}
                 onChange={(e) => setApiKeyInput(e.target.value)}
-                placeholder="Paste Gemini API Key (AI Studio)"
-                className="w-full px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-[#151c2e] border border-slate-200 dark:border-white/[0.08] text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-amber-500"
+                placeholder="GEMINI_API_KEY=AIzaSy..."
+                className="w-full px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-[#151c2e] border border-slate-200 dark:border-white/[0.08] text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-amber-500 font-mono"
               />
               <button
                 onClick={handleSaveApiKey}
-                className="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shrink-0 transition-all"
+                className="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shrink-0 transition-all cursor-pointer"
               >
                 Save
               </button>
             </div>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400">
+              Also stored in <code className="text-amber-600 dark:text-amber-400 font-mono">.env</code> as <code className="font-mono">GEMINI_API_KEY=</code>
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Mode Navigation Tabs */}
+      {/* Mode Navigation Sub-Tabs */}
       <div className="flex items-center gap-2 border-b border-slate-200 dark:border-white/[0.08] pb-1">
         <button
           onClick={() => setActiveStudioTab('ats')}
@@ -156,7 +158,7 @@ export const Tab9AIStudio: React.FC = () => {
           }`}
         >
           <FileText className="w-4 h-4" />
-          <span>Resume ATS Analyzer</span>
+          <span>Resume ATS Diagnostic Report</span>
         </button>
 
         <button
@@ -166,11 +168,11 @@ export const Tab9AIStudio: React.FC = () => {
           }`}
         >
           <Target className="w-4 h-4" />
-          <span>Skill Gap Differential</span>
+          <span>Target Job Skill Differential</span>
         </button>
       </div>
 
-      {/* TAB 1: ATS ANALYZER STUDIO */}
+      {/* TAB 1: ATS DIAGNOSTIC REPORT */}
       {activeStudioTab === 'ats' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left 2 Cols: Input Form */}
@@ -222,51 +224,160 @@ export const Tab9AIStudio: React.FC = () => {
                     className="w-full py-2.5 px-5 rounded-xl bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white font-bold text-xs shadow-lg shadow-amber-600/20 flex items-center justify-center gap-2 transition-all disabled:opacity-60 cursor-pointer"
                   >
                     <Zap className={`w-4 h-4 ${isAnalyzing ? 'animate-spin' : ''}`} />
-                    <span>{isAnalyzing ? 'Running Gemini AI Diagnostics...' : 'Run Gemini ATS Analysis'}</span>
+                    <span>{isAnalyzing ? 'Running Gemini AI Analysis...' : 'Analyze Resume with Gemini'}</span>
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Diagnostic Results Display */}
+            {/* Comprehensive Diagnostic Results */}
             {analysisResult && (
               <div className="glass-panel p-6 rounded-3xl space-y-6 animate-in fade-in">
-                <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-white/[0.08]">
+                {/* Executive Summary Header */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-white/[0.08]">
                   <div>
                     <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-                      Gemini AI ATS Diagnostic Report
+                      Detailed Strategic Executive Summary
                     </span>
                     <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mt-0.5">
-                      ATS Overall Compatibility Score
+                      ATS Market Compatibility Score
                     </h3>
                   </div>
-                  <div className="text-center px-4 py-2 rounded-2xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30">
+                  <div className="text-center px-5 py-2.5 rounded-2xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 shrink-0">
                     <span className="text-3xl font-black text-amber-600 dark:text-amber-400">{analysisResult.overallScore}</span>
                     <span className="text-xs text-slate-500 dark:text-slate-400 block font-mono">/100</span>
                   </div>
                 </div>
 
-                {/* 3 Metric Score Gauges */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {/* Executive Narrative Box */}
+                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#080d1a] border border-slate-200 dark:border-white/[0.06] text-xs text-slate-700 dark:text-slate-200 leading-relaxed space-y-1">
+                  <span className="font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider text-[10px] block font-mono">
+                    AI Diagnostic Evaluation:
+                  </span>
+                  <p>{analysisResult.executiveSummary}</p>
+                </div>
+
+                {/* 4 Metric Sub-Scores */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#090d18] border border-slate-200 dark:border-white/[0.06] text-center">
-                    <span className="text-[11px] text-slate-500 dark:text-slate-400 block font-mono">Quantified Impact</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-mono">Quantified Metrics</span>
                     <span className="text-lg font-bold text-slate-900 dark:text-white">{analysisResult.quantifiedMetricsScore}%</span>
                   </div>
                   <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#090d18] border border-slate-200 dark:border-white/[0.06] text-center">
-                    <span className="text-[11px] text-slate-500 dark:text-slate-400 block font-mono">Keyword Density</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-mono">Keyword Match</span>
                     <span className="text-lg font-bold text-amber-600 dark:text-amber-400">{analysisResult.keywordDensityScore}%</span>
                   </div>
                   <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#090d18] border border-slate-200 dark:border-white/[0.06] text-center">
-                    <span className="text-[11px] text-slate-500 dark:text-slate-400 block font-mono">Formatting Bypass</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-mono">ATS Formatting</span>
                     <span className="text-lg font-bold text-slate-900 dark:text-white">{analysisResult.formattingBypassScore}%</span>
                   </div>
+                  <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#090d18] border border-slate-200 dark:border-white/[0.06] text-center">
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-mono">Action Verbs</span>
+                    <span className="text-lg font-bold text-amber-600 dark:text-amber-400">{analysisResult.impactActionVerbsScore || 88}%</span>
+                  </div>
                 </div>
+
+                {/* Section Scores Breakdown */}
+                {analysisResult.sectionScores && analysisResult.sectionScores.length > 0 && (
+                  <div className="space-y-3">
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
+                      <BookOpen className="w-3.5 h-3.5 text-amber-500" />
+                      Section-by-Section ATS Audit:
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {analysisResult.sectionScores.map((sec, i) => (
+                        <div key={i} className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#090d18] border border-slate-200 dark:border-white/[0.06] space-y-1">
+                          <div className="flex items-center justify-between text-xs font-bold">
+                            <span className="text-slate-900 dark:text-white">{sec.section}</span>
+                            <span className="text-amber-600 dark:text-amber-400 font-mono">{sec.score}%</span>
+                          </div>
+                          <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">{sec.feedback}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Detailed Strengths & Evidence */}
+                <div>
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                    Detailed Key Strengths & Resume Evidence:
+                  </h4>
+                  <div className="space-y-3">
+                    {analysisResult.detailedStrengths.map((str, i) => (
+                      <div key={i} className="p-4 rounded-2xl bg-slate-50 dark:bg-[#090d18] border border-slate-200 dark:border-white/[0.06] space-y-1.5 text-xs">
+                        <div className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
+                          {str.title}
+                        </div>
+                        <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{str.description}</p>
+                        {str.evidence && (
+                          <div className="p-2.5 rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-500/20 text-[11px] text-amber-900 dark:text-amber-200 font-mono">
+                            <span className="font-bold">Resume Evidence: </span>&quot;{str.evidence}&quot;
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Detailed Weaknesses & Impact */}
+                <div>
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                    <AlertTriangle className="w-4 h-4 text-amber-500" />
+                    Identified Weaknesses & ATS Impact:
+                  </h4>
+                  <div className="space-y-3">
+                    {analysisResult.detailedWeaknesses.map((weak, i) => (
+                      <div key={i} className="p-4 rounded-2xl bg-slate-50 dark:bg-[#090d18] border border-slate-200 dark:border-white/[0.06] space-y-1.5 text-xs">
+                        <div className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-amber-600 shrink-0" />
+                          {weak.title}
+                        </div>
+                        <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{weak.description}</p>
+                        {weak.impact && (
+                          <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-[#121827] border border-slate-200 dark:border-white/[0.06] text-[11px] text-slate-600 dark:text-slate-400">
+                            <span className="font-bold text-slate-900 dark:text-slate-200">ATS / Recruiter Impact: </span>{weak.impact}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Line-by-Line Bullet Point Rewrites (Before & After) */}
+                {analysisResult.bulletPointRewrites && analysisResult.bulletPointRewrites.length > 0 && (
+                  <div className="space-y-3">
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                      Line-by-Line AI Bullet Point Rewrites (Before vs. After):
+                    </h4>
+                    <div className="space-y-3">
+                      {analysisResult.bulletPointRewrites.map((rewrite, i) => (
+                        <div key={i} className="p-4 rounded-2xl bg-slate-50 dark:bg-[#090d18] border border-slate-200 dark:border-white/[0.06] space-y-2 text-xs">
+                          <div>
+                            <span className="text-[10px] font-mono text-slate-400 uppercase font-bold block">Original Bullet:</span>
+                            <p className="text-slate-500 line-through mt-0.5">{rewrite.original}</p>
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-mono text-amber-600 dark:text-amber-400 uppercase font-bold block">Gemini AI Optimized Rewrite:</span>
+                            <p className="text-slate-900 dark:text-white font-semibold mt-0.5">{rewrite.improved}</p>
+                          </div>
+                          <p className="text-[11px] text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-100 dark:border-white/[0.06]">
+                            <strong className="text-slate-700 dark:text-slate-300">Rationale: </strong>{rewrite.explanation}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Missing Keywords Chips */}
                 <div>
                   <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                    <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
-                    Missing Domain Keywords:
+                    <Code className="w-3.5 h-3.5 text-amber-500" />
+                    Missing ATS Keyword Tokens:
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {analysisResult.missingKeywords.map((kw) => (
@@ -280,37 +391,11 @@ export const Tab9AIStudio: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Strengths & Actionable Recommendations */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#090d18] border border-slate-200 dark:border-white/[0.06] space-y-2">
-                    <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                      <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                      Key Strengths Recognized:
-                    </span>
-                    <ul className="space-y-1 text-slate-600 dark:text-slate-300 list-disc list-inside">
-                      {analysisResult.strengths.map((s, i) => (
-                        <li key={i}>{s}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#090d18] border border-slate-200 dark:border-white/[0.06] space-y-2">
-                    <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-amber-500" />
-                      Actionable Improvements:
-                    </span>
-                    <ul className="space-y-1 text-slate-600 dark:text-slate-300 list-disc list-inside">
-                      {analysisResult.actionableRecommendations.map((r, i) => (
-                        <li key={i}>{r}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
               </div>
             )}
           </div>
 
-          {/* Right Col: Target Job Description & Quick Actions */}
+          {/* Right Col: Target Job Description */}
           <div className="space-y-5">
             <div className="glass-panel p-6 rounded-3xl space-y-4">
               <div className="flex items-center justify-between">
@@ -327,7 +412,7 @@ export const Tab9AIStudio: React.FC = () => {
               </div>
 
               <textarea
-                rows={10}
+                rows={12}
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
                 placeholder="Paste Target Role Description..."
@@ -352,7 +437,7 @@ export const Tab9AIStudio: React.FC = () => {
             <button
               onClick={handleRunAtsDiagnostics}
               disabled={isAnalyzing}
-              className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs"
+              className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs cursor-pointer"
             >
               Synthesize Gap Plan
             </button>
