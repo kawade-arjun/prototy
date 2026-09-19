@@ -25,9 +25,8 @@ import {
 import { useStudent } from '../../context/StudentContext';
 
 export const StudentPortal: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<StudentTab>('recommendations');
+  const { activeStudent, customProfile, setIsOnboardingOpen, activeTab, setActiveTab } = useStudent();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { activeStudent, customProfile, setIsOnboardingOpen } = useStudent();
 
   const tabs: { id: StudentTab; label: string; icon: React.ReactNode }[] = [
     { id: 'recommendations', label: 'Recommendations', icon: <Target className="w-4 h-4" /> },
@@ -36,8 +35,8 @@ export const StudentPortal: React.FC = () => {
     { id: 'internships', label: 'Internships', icon: <GraduationCap className="w-4 h-4" /> },
     { id: 'freelance', label: 'Freelance', icon: <Briefcase className="w-4 h-4" /> },
     { id: 'organisations', label: 'Organisations', icon: <Building2 className="w-4 h-4" /> },
-    { id: 'profile', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
-    { id: 'settings', label: 'Bookmarks & Settings', icon: <Bookmark className="w-4 h-4" /> }
+    { id: 'profile', label: 'Profile', icon: <LayoutDashboard className="w-4 h-4" /> },
+    { id: 'settings', label: 'Settings', icon: <Bookmark className="w-4 h-4" /> }
   ];
 
   const currentTabObj = tabs.find(t => t.id === activeTab) || tabs[0];

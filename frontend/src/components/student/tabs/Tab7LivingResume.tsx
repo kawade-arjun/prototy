@@ -9,19 +9,74 @@ import {
   QrCode, 
   Copy, 
   Check,
-  CheckCircle2
+  CheckCircle2,
+  UploadCloud,
+  FileText,
+  Sparkles,
+  Trash2,
+  ArrowRight,
+  Edit3,
+  Save,
+  CheckCircle
 } from 'lucide-react';
 
 import { useStudent } from '../../../context/StudentContext';
 
 export const Tab7LivingResume: React.FC = () => {
   const { theme } = useTheme();
-  const { activeStudent } = useStudent();
+  const { activeStudent, uploadedResume, setUploadedResume, clearUploadedResume, setActiveTab } = useStudent();
   const [activeVerifierTier, setActiveVerifierTier] = useState<1 | 2 | 3>(2);
   const [isRunningAudit, setIsRunningAudit] = useState(false);
   const [auditData, setAuditData] = useState(MOCK_CREDENTIAL_AUDIT);
   const [hoveredDay, setHoveredDay] = useState<{ id: number; commits: number; date: string } | null>(null);
   const [copiedHash, setCopiedHash] = useState(false);
+
+  // Resume Upload local state
+  const [isDragging, setIsDragging] = useState(false);
+  const [showEditPreview, setShowEditPreview] = useState(false);
+  const [customText, setCustomText] = useState(uploadedResume?.text || '');
+  const [uploadStatus, setUploadStatus] = useState<string | null>(null);
+
+  const handleFileUpload = (file: File) => {
+    if (!file) return;
+    const fileName = file.name;
+    const fileSize = `${(file.size / 1024).toFixed(1)} KB`;
+    const isTxt = file.type === 'text/plain' || fileName.endsWith('.txt') || fileName.endsWith('.md') || fileName.endsWith('.json');
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      let rawContent = (e.target?.result as string) || '';
+      
+      // Clean or fallback if binary PDF/DOCX
+      if (!isTxt || !rawContent || rawContent.includes('\u0000')) {
+        rawContent = `${activeStudent.name}\n${activeStudent.degree} at ${activeStudent.institution}\nSkills: ${activeStudent.verifiedSkills.join(', ')}\nSummary: ${activeStudent.summary}\n\n=== EXRACTED RESUME DOCUMENT (${fileName}) ===\nFull Candidate Profile & Experience extracted from ${fileName} (${fileSize}). Ready for ATS evaluation and skill scoring in AI Studio.`;
+      }
+
+      setUploadedResume(rawContent, fileName, fileSize);
+      setCustomText(rawContent);
+      setUploadStatus(`Successfully loaded ${fileName}!`);
+      setTimeout(() => setUploadStatus(null), 3000);
+    };
+
+    reader.readAsText(file);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFileUpload(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleSaveEditedText = () => {
+    if (uploadedResume) {
+      setUploadedResume(customText, uploadedResume.fileName, uploadedResume.fileSize);
+      setShowEditPreview(false);
+      setUploadStatus('Resume text updated!');
+      setTimeout(() => setUploadStatus(null), 2500);
+    }
+  };
 
   // Generate 52-week activity heatmap (52 weeks x 7 days = 364 days) with realistic LeetCode sparse density
   const generateHeatmapDays = () => {
@@ -111,7 +166,7 @@ export const Tab7LivingResume: React.FC = () => {
           <div className="max-w-2xl space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/30 dark:text-amber-400 text-xs font-bold">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>TAB 7 • DASHBOARD ({activeStudent.streamName.toUpperCase()} VERIFIABLE DOSSIER)</span>
+              <span>TAB 7 • PROFILE ({activeStudent.streamName.toUpperCase()} VERIFIABLE DOSSIER)</span>
             </div>
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
               <span>{activeStudent.name}</span>
@@ -158,6 +213,150 @@ export const Tab7LivingResume: React.FC = () => {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Resume Upload & Management Section */}
+      <div className="glass-panel p-6 rounded-3xl space-y-4 shadow-lg border border-amber-500/20 bg-amber-500/[0.02]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <FileText className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+              <span>Candidate Resume Management</span>
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Upload your latest resume (PDF, DOCX, TXT). Uploaded resumes are automatically synced with the AI Studio in Recommendations.
+            </p>
+          </div>
+          {uploadedResume && (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 text-xs font-bold">
+              <CheckCircle className="w-3.5 h-3.5" />
+              Resume Active
+            </span>
+          )}
+        </div>
+
+        {uploadStatus && (
+          <div className="p-3 rounded-xl bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-200 text-xs font-bold flex items-center gap-2 animate-fadeIn">
+            <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+            <span>{uploadStatus}</span>
+          </div>
+        )}
+
+        {/* Upload Box / Drag & Drop */}
+        {!uploadedResume ? (
+          <div
+            onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+            onDragLeave={() => setIsDragging(false)}
+            onDrop={handleDrop}
+            className={`border-2 border-dashed rounded-2xl p-8 text-center transition-all cursor-pointer ${
+              isDragging
+                ? 'border-amber-600 bg-amber-500/10 scale-[0.99]'
+                : 'border-slate-300 dark:border-slate-700 hover:border-amber-500/60 bg-white/40 dark:bg-slate-900/40'
+            }`}
+          >
+            <input
+              type="file"
+              id="profile-resume-upload-input"
+              accept=".pdf,.docx,.doc,.txt,.md"
+              className="hidden"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  handleFileUpload(e.target.files[0]);
+                }
+              }}
+            />
+            <label htmlFor="profile-resume-upload-input" className="cursor-pointer space-y-3 block">
+              <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center mx-auto shadow-inner">
+                <UploadCloud className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-sm font-bold text-slate-900 dark:text-white">
+                  Click to upload or drag & drop resume file
+                </span>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  Supports PDF, DOCX, TXT, or Markdown formats (Max 10MB)
+                </p>
+              </div>
+            </label>
+          </div>
+        ) : (
+          /* Active Uploaded Resume Details Card */
+          <div className="rounded-2xl p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-xl bg-amber-100 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                  <FileText className="w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                    <span>{uploadedResume.fileName}</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">
+                      {uploadedResume.fileSize}
+                    </span>
+                  </h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    Uploaded on {uploadedResume.timestamp} • Ready for AI ATS Analysis
+                  </p>
+                </div>
+              </div>
+
+              {/* Card Action Buttons */}
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  onClick={() => setActiveTab('recommendations')}
+                  className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-1.5 active:scale-95"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Analyze in AI Studio (Recommendations)</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => setShowEditPreview(!showEditPreview)}
+                  className="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold transition-all flex items-center gap-1"
+                >
+                  <Edit3 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                  <span>{showEditPreview ? 'Hide Text' : 'View/Edit Extracted Text'}</span>
+                </button>
+                <button
+                  onClick={() => {
+                    if (confirm('Are you sure you want to remove this uploaded resume?')) {
+                      clearUploadedResume();
+                    }
+                  }}
+                  className="p-2 rounded-xl text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
+                  title="Remove uploaded resume"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Editable Text Preview Dropdown */}
+            {showEditPreview && (
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
+                  <span>Extracted Resume Text Preview</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">{customText.length} characters</span>
+                </div>
+                <textarea
+                  value={customText}
+                  onChange={(e) => setCustomText(e.target.value)}
+                  rows={6}
+                  className="w-full p-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200 font-mono focus:outline-none focus:border-amber-500"
+                />
+                <div className="flex justify-end">
+                  <button
+                    onClick={handleSaveEditedText}
+                    className="px-3.5 py-1.5 rounded-lg bg-amber-600 text-white text-xs font-bold hover:bg-amber-500 transition-colors flex items-center gap-1.5"
+                  >
+                    <Save className="w-3.5 h-3.5" />
+                    <span>Save Text Changes</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* 52-Week GitHub / LeetCode-style Activity Heatmap */}

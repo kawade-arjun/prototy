@@ -54,7 +54,7 @@ export const Tab8SettingsBookmarks: React.FC = () => {
         <div className="max-w-3xl space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-xs font-bold">
             <Bookmark className="w-3.5 h-3.5" />
-            <span>TAB 8 • SETTINGS & BOOKMARKS HUB</span>
+            <span>TAB 8 • SETTINGS HUB</span>
           </div>
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             Application Tracker & DPDP Act 2023 Privacy Controls

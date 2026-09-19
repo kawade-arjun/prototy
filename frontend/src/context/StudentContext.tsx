@@ -1,7 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { AcademicStream, StudentProfile } from '../types';
+import { AcademicStream, StudentProfile, StudentTab } from '../types';
 import { STUDENT_PROFILES, DEFAULT_STUDENT, ALL_STUDENT_PROFILES } from '../mock/studentProfiles';
 import { api, getToken, getSavedUser, setToken, setSavedUser, removeToken, User, StudentProfileData } from '../services/api';
+
+export interface UploadedResumeData {
+  fileName: string;
+  text: string;
+  timestamp: string;
+  fileSize?: string;
+}
 
 interface StudentContextType {
   activeStudent: StudentProfile;
@@ -20,6 +27,15 @@ interface StudentContextType {
   logout: () => void;
   saveOnboarding: (data: StudentProfileData) => Promise<any>;
   refreshProfile: () => Promise<void>;
+
+  // Uploaded Resume State for AI Studio Analysis
+  uploadedResume: UploadedResumeData | null;
+  setUploadedResume: (text: string, fileName: string, fileSize?: string) => void;
+  clearUploadedResume: () => void;
+
+  // Global Tab Navigation state
+  activeTab: StudentTab;
+  setActiveTab: (tab: StudentTab) => void;
 }
 
 const StudentContext = createContext<StudentContextType | undefined>(undefined);
@@ -30,6 +46,41 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [currentUser, setCurrentUser] = useState<User | null>(() => getSavedUser());
   const [customProfile, setCustomProfile] = useState<StudentProfileData | null>(null);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<StudentTab>('recommendations');
+
+  // Load saved resume from localStorage on init
+  const [uploadedResume, setUploadedResumeState] = useState<UploadedResumeData | null>(() => {
+    try {
+      const saved = localStorage.getItem('user_uploaded_resume');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const setUploadedResume = (text: string, fileName: string, fileSize?: string) => {
+    const data: UploadedResumeData = {
+      text,
+      fileName,
+      timestamp: new Date().toLocaleString(),
+      fileSize: fileSize || 'Uploaded Document'
+    };
+    setUploadedResumeState(data);
+    try {
+      localStorage.setItem('user_uploaded_resume', JSON.stringify(data));
+    } catch (e) {
+      console.warn('Failed to save resume to localStorage', e);
+    }
+  };
+
+  const clearUploadedResume = () => {
+    setUploadedResumeState(null);
+    try {
+      localStorage.removeItem('user_uploaded_resume');
+    } catch (e) {
+      console.warn('Failed to remove resume from localStorage', e);
+    }
+  };
 
   // Load profile on initial mount if token exists
   useEffect(() => {
@@ -142,7 +193,12 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         register,
         logout,
         saveOnboarding,
-        refreshProfile
+        refreshProfile,
+        uploadedResume,
+        setUploadedResume,
+        clearUploadedResume,
+        activeTab,
+        setActiveTab
       }}
     >
       {children}

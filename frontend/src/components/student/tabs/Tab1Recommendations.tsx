@@ -21,7 +21,7 @@ interface Tab1Props {
 
 export const Tab1Recommendations: React.FC<Tab1Props> = () => {
   const { theme } = useTheme();
-  const { activeStudent, selectedStream } = useStudent();
+  const { activeStudent, selectedStream, uploadedResume } = useStudent();
   const [atsResult, setAtsResult] = useState<AtsDiagnosticResult>(activeStudent.atsBreakdown);
   const [isAnalyzingResume, setIsAnalyzingResume] = useState(false);
   const [showAiResumeModal, setShowAiResumeModal] = useState(false);
@@ -33,8 +33,15 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
 
   // Resume Text State for Analysis
   const [customResumeText, setCustomResumeText] = useState<string>(
-    `${activeStudent.name}\n${activeStudent.degree} at ${activeStudent.institution}\nSkills: ${activeStudent.verifiedSkills.join(', ')}\nSummary: ${activeStudent.summary}`
+    uploadedResume?.text || `${activeStudent.name}\n${activeStudent.degree} at ${activeStudent.institution}\nSkills: ${activeStudent.verifiedSkills.join(', ')}\nSummary: ${activeStudent.summary}`
   );
+
+  // Sync uploaded resume from profile tab into AI Studio
+  React.useEffect(() => {
+    if (uploadedResume?.text) {
+      setCustomResumeText(uploadedResume.text);
+    }
+  }, [uploadedResume]);
 
   // Skill Gap State
   const [gapMode, setGapMode] = useState<'jobId' | 'pasteJd'>('jobId');
@@ -70,7 +77,8 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
     setIsAnalyzingResume(true);
     setGeminiError(null);
     try {
-      const result = await analyzeResumeWithGemini(customResumeText, activeStudent.streamName);
+      const textToScan = uploadedResume?.text || customResumeText;
+      const result = await analyzeResumeWithGemini(textToScan, activeStudent.streamName);
       setGeminiResumeResult(result);
       setAtsResult({
         overallScore: result.overallScore,
@@ -141,6 +149,37 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             </button>
           </div>
         </div>
+
+        {/* Active Uploaded Resume Sync Banner */}
+        {uploadedResume && (
+          <div className="p-4 rounded-2xl bg-amber-500/[0.08] border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">
+                📄
+              </div>
+              <div>
+                <div className="text-xs font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span>Active Resume Loaded: {uploadedResume.fileName}</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-300 dark:border-emerald-800">
+                    Uploaded from Profile
+                  </span>
+                </div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                  Uploaded on {uploadedResume.timestamp} • {uploadedResume.text.length} characters active in AI Studio
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleAnalyzeResume}
+                disabled={isAnalyzingResume}
+                className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 active:scale-95"
+              >
+                <span>{isAnalyzingResume ? 'Scanning Resume Tokens...' : 'Run Deep AI ATS Audit'}</span>
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* ATS Overview Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
