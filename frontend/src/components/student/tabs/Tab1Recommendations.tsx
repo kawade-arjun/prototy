@@ -74,14 +74,19 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
   const [geminiResumeResult, setGeminiResumeResult] = useState<GeminiResumeAnalysis | null>(cachedResumeAnalysis);
   const [geminiSkillGapResult, setGeminiSkillGapResult] = useState<GeminiSkillGapAnalysis | null>(cachedSkillGapAnalysis);
 
-  // Sync uploaded resume from profile tab into AI Studio
+  // Sync uploaded resume from profile tab into AI Studio and trigger fresh analysis
   React.useEffect(() => {
     if (uploadedResume?.text) {
       setCustomResumeText(uploadedResume.text);
+      // Auto-analyze uploaded resume if no cached analysis exists for it
+      if (!cachedResumeAnalysis) {
+        handleAnalyzeResume();
+        handleRunDiff();
+      }
     }
-  }, [uploadedResume]);
+  }, [uploadedResume?.text]);
 
-  // Reuse cached AI resume analysis across tab switches and page refreshes
+  // Sync cached AI resume analysis across tab switches and page refreshes
   React.useEffect(() => {
     if (cachedResumeAnalysis) {
       setGeminiResumeResult(cachedResumeAnalysis);
@@ -97,17 +102,9 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
         quantifiedMetricsScore: cachedResumeAnalysis.quantifiedMetricsScore || 85,
         keywordDensityScore: cachedResumeAnalysis.keywordDensityScore || 88,
         formattingParsabilityScore: cachedResumeAnalysis.formattingBypassScore || cachedResumeAnalysis.formattingParsabilityScore || 92,
-        strengths: strList.length > 0 ? strList : [
-          'Quantified Performance Scale: Explicit performance numbers recognized by ATS engines.',
-          'Core Skill Stack Alignment: High keyword match for verified domain frameworks.'
-        ],
-        weaknesses: wkList.length > 0 ? wkList : [
-          'Scope for Leadership Metrics: Add explicit team numbers in experience bullets.'
-        ],
-        actionableSuggestions: cachedResumeAnalysis.actionableRecommendations || [
-          'Add quantitative metrics to experience bullet points.',
-          'Include cloud containerization terms like Docker and Kubernetes.'
-        ]
+        strengths: strList,
+        weaknesses: wkList,
+        actionableSuggestions: cachedResumeAnalysis.actionableRecommendations || []
       });
     }
   }, [cachedResumeAnalysis]);

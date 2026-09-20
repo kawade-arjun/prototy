@@ -152,8 +152,12 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       fileSize: fileSize || 'Uploaded Document'
     };
     setUploadedResumeState(data);
+    setCachedResumeAnalysisState(null);
+    setCachedSkillGapAnalysisState(null);
     try {
       localStorage.setItem('user_uploaded_resume', JSON.stringify(data));
+      localStorage.removeItem('careeroptic_cached_resume_analysis');
+      localStorage.removeItem('careeroptic_cached_skill_gap_analysis');
     } catch (e) {
       console.warn('Failed to save resume to localStorage', e);
     }
