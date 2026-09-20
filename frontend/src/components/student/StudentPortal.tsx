@@ -35,9 +35,9 @@ export const StudentPortal: React.FC = () => {
   const tabs: { id: StudentTab; label: string; icon: React.ReactNode }[] = [
     { id: 'recommendations', label: 'Recommendations', icon: <Target className="w-4 h-4" /> },
     { id: 'sandbox', label: 'Assessments', icon: <Terminal className="w-4 h-4" /> },
-    { id: 'jobs', label: 'Jobs', icon: <Search className="w-4 h-4" /> },
-    { id: 'internships', label: 'Internships', icon: <GraduationCap className="w-4 h-4" /> },
     { id: 'freelance', label: 'Freelance', icon: <Briefcase className="w-4 h-4" /> },
+    { id: 'internships', label: 'Internships', icon: <GraduationCap className="w-4 h-4" /> },
+    { id: 'jobs', label: 'Jobs', icon: <Search className="w-4 h-4" /> },
     { id: 'organisations', label: 'Organisations', icon: <Building2 className="w-4 h-4" /> },
     { id: 'profile', label: 'Profile', icon: <LayoutDashboard className="w-4 h-4" /> },
     { id: 'settings', label: 'Settings', icon: <Bookmark className="w-4 h-4" /> }
