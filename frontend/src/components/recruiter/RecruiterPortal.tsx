@@ -231,27 +231,26 @@ export const RecruiterPortal: React.FC = () => {
       <div className="glass-panel rounded-3xl p-6 sm:p-7 shadow-xl space-y-4 border border-amber-500/20 bg-gradient-to-r from-amber-500/5 via-transparent to-amber-500/5">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 align-center">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono font-black uppercase px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/30 flex items-center gap-1.5">
+              <span className="text-2xl font-mono font-black uppercase px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/30 flex items-center gap-1.5">
                 <Briefcase className="w-3.5 h-3.5 text-amber-500" />
                 CORPORATE TALENT CONSOLE
               </span>
-              <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 flex items-center gap-1">
+              {/* <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 flex items-center gap-1">
                 <ShieldCheck className="w-3 h-3" /> 0% CREDENTIAL FRAUD GUARANTEE
-              </span>
+              </span> */}
             </div>
             
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
               Pre-Verified Sovereign Talent Pipeline & Automated Shortlisting
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed">
-              Replacing weeks of manual resume sorting with an objective <strong>40-40-20 Composite AI Scoring Engine</strong>, live proctored sandboxes, and OpenCV ELA forensic fraud audits.
-            </p>
+              Replacing weeks of manual resume sorting         </p>
           </div>
 
           {/* Right Action: Gale-Shapley Matcher */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
+          {/* <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
             <button
               onClick={handleRunGaleShapley}
               disabled={isMatchingRunning}
@@ -260,7 +259,7 @@ export const RecruiterPortal: React.FC = () => {
               <Cpu className={`w-4 h-4 text-slate-950 ${isMatchingRunning ? 'animate-spin' : ''}`} />
               <span>{isMatchingRunning ? 'Executing Stable Matching...' : 'Run Gale-Shapley Matcher'}</span>
             </button>
-          </div>
+          </div> */}
 
         </div>
 
@@ -443,7 +442,7 @@ export const RecruiterPortal: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <h3 className="text-sm font-black text-slate-900 dark:text-white flex items-center gap-2">
-                  <Flame className="w-4 h-4 text-amber-500" />
+                  {/* <Flame className="w-4 h-4 text-amber-500" /> */}
                   <span>The 8-Stage Recruitment Funnel (Live Pipeline Ribbon)</span>
                 </h3>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -501,7 +500,7 @@ export const RecruiterPortal: React.FC = () => {
             
             {/* Header with Formula Explanation */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-              <div className="space-y-1">
+              {/* <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30">
                     OBJECTIVE EVALUATION FORMULA
@@ -513,7 +512,7 @@ export const RecruiterPortal: React.FC = () => {
                 <div className="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-3 py-1 rounded-lg inline-block">
                   Composite Score = 40% (Proctored Sandbox) + 40% (Verified Projects) + 20% (DigiLocker Academics)
                 </div>
-              </div>
+              </div> */}
 
               {/* Dynamic Cutoff Presets */}
               <div className="flex items-center gap-1.5 flex-wrap">

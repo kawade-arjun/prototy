@@ -121,21 +121,21 @@ export const GovernmentPortal: React.FC = () => {
 
           {/* Action Hub */}
           <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-            <button
+            {/* <button
               onClick={() => setShowNamasteModal(true)}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-black shadow-lg shadow-amber-600/20 transition-all active:scale-95"
             >
               <Globe2 className="w-4 h-4" />
               <span>WHO ICD-11 Crosswalk (SIH 26044)</span>
-            </button>
+            </button> */}
 
-            <button
+            {/* <button
               onClick={() => setShowGrantModal(true)}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-black shadow-lg shadow-rose-600/20 transition-all active:scale-95"
             >
               <Landmark className="w-4 h-4" />
               <span>Allocate Sovereign Grant</span>
-            </button>
+            </button> */}
 
             <button
               onClick={handleExportGazette}
