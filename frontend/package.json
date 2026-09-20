@@ -4,9 +4,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "next dev -p 3000",
-    "build": "next build",
-    "start": "next start -p 3000",
+    "dev": "vite",
+    "build": "vite build",
+    "build:next": "next build",
+    "start": "vite preview --port 3000",
     "test:e2e": "playwright test"
   },
   "dependencies": {
