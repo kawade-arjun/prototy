@@ -29,7 +29,7 @@ services:
 
   # 3. Static Frontend (React + Vite)
   - type: web
-    name: careeroptic-frontend
+    name: careeroptic
     env: static
     buildCommand: npm --prefix frontend install && npm --prefix frontend run build
     staticPublishPath: frontend/dist
