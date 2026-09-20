@@ -151,7 +151,7 @@ export const Tab7LivingResume: React.FC = () => {
     }
 
     if (isPdf) {
-      // 1. Try Base64 JSON Endpoint first
+      // 1. Try Base64 JSON Endpoint first with fast 2.5s timeout
       try {
         const base64Data = await new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
@@ -167,11 +167,15 @@ export const Tab7LivingResume: React.FC = () => {
         ].filter(Boolean)));
         for (const ep of jsonEndpoints) {
           try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2500);
             const res = await fetch(ep, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ file_b64: base64Data, filename: fileName })
+              body: JSON.stringify({ file_b64: base64Data, filename: fileName }),
+              signal: controller.signal
             });
+            clearTimeout(timeoutId);
             if (res.ok) {
               const data = await res.json();
               if (data.text && data.text.trim()) {
@@ -183,26 +187,31 @@ export const Tab7LivingResume: React.FC = () => {
               }
             }
           } catch (e) {
-            console.warn(`JSON Base64 PDF parse failed on ${ep}:`, e);
+            console.warn(`JSON Base64 PDF parse endpoint ${ep} bypassed or timed out:`, e);
           }
         }
       } catch (err) {
         console.warn('Base64 data URL conversion failed:', err);
       }
 
-      // 2. Try Multipart Endpoint
+      // 2. Try Multipart Endpoint with fast 2.5s timeout
+      const baseUrl = getApiBaseUrl(8000);
       const endpoints = Array.from(new Set([
         `${baseUrl}/api/resume/parse-pdf`,
         '/api/resume/parse-pdf'
       ].filter(Boolean)));
       for (const endpoint of endpoints) {
         try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 2500);
           const formData = new FormData();
           formData.append('file', file);
           const res = await fetch(endpoint, {
             method: 'POST',
-            body: formData
+            body: formData,
+            signal: controller.signal
           });
+          clearTimeout(timeoutId);
 
           if (res.ok) {
             const data = await res.json();
@@ -215,27 +224,50 @@ export const Tab7LivingResume: React.FC = () => {
             }
           }
         } catch (err) {
-          console.warn(`Backend PDF parser endpoint ${endpoint} failed:`, err);
+          console.warn(`Backend PDF parser endpoint ${endpoint} bypassed or timed out:`, err);
         }
       }
 
-      // 3. Browser-side text stream fallback
+      // 3. Instant Browser-side Client Text Stream Extractor (0.1s instant fallback)
       try {
         const buffer = await file.arrayBuffer();
         const rawText = new TextDecoder('latin1').decode(buffer);
-        const matches = rawText.match(/\(([^)]+)\)/g);
-        if (matches && matches.length > 5) {
-          const extracted = matches
-            .map(m => m.slice(1, -1).trim())
-            .filter(t => t.length > 1 && !t.startsWith('/') && !t.includes('Font') && !t.includes('Catalog'))
-            .join(' ');
-          if (extracted.length > 30) {
-            setUploadedResume(extracted, fileName, fileSize);
-            setCustomText(extracted);
-            setUploadStatus(`Extracted ${extracted.length} characters from ${fileName}!`);
-            setTimeout(() => setUploadStatus(null), 3000);
-            return;
+        const textObjectRegex = /BT[\s\S]*?ET/g;
+        const chunks: string[] = [];
+        let match;
+        while ((match = textObjectRegex.exec(rawText)) !== null) {
+          const block = match[0];
+          const stringMatches = block.match(/\(([^)]+)\)/g);
+          if (stringMatches) {
+            const cleaned = stringMatches
+              .map(s => s.slice(1, -1).trim())
+              .filter(s => s.length > 0 && !s.startsWith('/') && !s.includes('Font') && !s.includes('ProcSet') && !s.includes('Catalog'));
+            if (cleaned.length > 0) {
+              chunks.push(cleaned.join(' '));
+            }
           }
+        }
+
+        if (chunks.length === 0) {
+          const matches = rawText.match(/\(([^)]+)\)/g);
+          if (matches) {
+            const extracted = matches
+              .map(m => m.slice(1, -1).trim())
+              .filter(t => t.length > 1 && !t.startsWith('/') && !t.includes('Font') && !t.includes('Catalog') && !t.includes('Encoding'));
+            if (extracted.length > 0) {
+              chunks.push(extracted.join(' '));
+            }
+          }
+        }
+
+        const clientExtractedText = chunks.join('\n').replace(/[^\x20-\x7E\s]/g, '').replace(/\s+/g, ' ').trim();
+
+        if (clientExtractedText.length > 15) {
+          setUploadedResume(clientExtractedText, fileName, fileSize);
+          setCustomText(clientExtractedText);
+          setUploadStatus(`Extracted ${clientExtractedText.length} characters from ${fileName}!`);
+          setTimeout(() => setUploadStatus(null), 3000);
+          return;
         }
       } catch (e) {
         console.warn('Browser raw stream text fallback failed:', e);
