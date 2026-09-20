@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 
 import { useStudent } from '../../../context/StudentContext';
+import { getApiBaseUrl } from '../../../services/apiConfig';
 
 interface VerifiedCert {
   id: string;
@@ -159,11 +160,11 @@ export const Tab7LivingResume: React.FC = () => {
           reader.readAsDataURL(file);
         });
 
-        const jsonEndpoints = [
-          '/api/resume/parse-pdf-json',
-          'http://localhost:8000/api/resume/parse-pdf-json',
-          'http://127.0.0.1:8000/api/resume/parse-pdf-json'
-        ];
+        const baseUrl = getApiBaseUrl(8000);
+        const jsonEndpoints = Array.from(new Set([
+          `${baseUrl}/api/resume/parse-pdf-json`,
+          '/api/resume/parse-pdf-json'
+        ].filter(Boolean)));
         for (const ep of jsonEndpoints) {
           try {
             const res = await fetch(ep, {
@@ -190,11 +191,10 @@ export const Tab7LivingResume: React.FC = () => {
       }
 
       // 2. Try Multipart Endpoint
-      const endpoints = [
-        '/api/resume/parse-pdf',
-        'http://localhost:8000/api/resume/parse-pdf',
-        'http://127.0.0.1:8000/api/resume/parse-pdf'
-      ];
+      const endpoints = Array.from(new Set([
+        `${baseUrl}/api/resume/parse-pdf`,
+        '/api/resume/parse-pdf'
+      ].filter(Boolean)));
       for (const endpoint of endpoints) {
         try {
           const formData = new FormData();
@@ -287,11 +287,10 @@ export const Tab7LivingResume: React.FC = () => {
 
       let verifiedData: any;
 
-      const apiEndpoints = [
-        '/api/certificate/verify-3layer',
-        'http://localhost:8000/api/certificate/verify-3layer',
-        'http://127.0.0.1:8000/api/certificate/verify-3layer'
-      ];
+      const apiEndpoints = Array.from(new Set([
+        `${baseUrl}/api/certificate/verify-3layer`,
+        '/api/certificate/verify-3layer'
+      ].filter(Boolean)));
 
       let apiSuccess = false;
       for (const endpoint of apiEndpoints) {

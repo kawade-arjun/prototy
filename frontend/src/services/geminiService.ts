@@ -1,3 +1,5 @@
+import { getApiBaseUrl } from './apiConfig';
+
 const GEMINI_KEY_STORAGE = 'careeroptic_gemini_api_key';
 
 export const getGeminiApiKey = (): string => {
@@ -129,11 +131,11 @@ export const analyzeResumeWithGemini = async (
   apiKey?: string
 ): Promise<GeminiResumeAnalysis> => {
   // 1. Try FastAPI Backend Endpoints first (uses server-side GEMINI_API_KEY from .env)
-  const backendEndpoints = [
-    '/api/resume/analyze-gemini',
-    'http://localhost:8000/api/resume/analyze-gemini',
-    'http://127.0.0.1:8000/api/resume/analyze-gemini'
-  ];
+  const baseUrl = getApiBaseUrl(8000);
+  const backendEndpoints = Array.from(new Set([
+    `${baseUrl}/api/resume/analyze-gemini`,
+    '/api/resume/analyze-gemini'
+  ].filter(Boolean)));
   for (const endpoint of backendEndpoints) {
     try {
       const backendRes = await fetch(endpoint, {

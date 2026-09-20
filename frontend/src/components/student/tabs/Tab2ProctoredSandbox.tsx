@@ -39,6 +39,7 @@ import {
   Award
 } from 'lucide-react';
 import { useStudent } from '../../../context/StudentContext';
+import { getApiBaseUrl } from '../../../services/apiConfig';
 
 const getStreamIcon = (streamId: string, className = "w-4 h-4") => {
   switch (streamId) {
@@ -378,11 +379,11 @@ class Solution {
       assessment_id: activeTest.id
     };
 
-    const endpoints = [
-      '/api/assessment/execute',
-      'http://localhost:8000/api/assessment/execute',
-      'http://127.0.0.1:8000/api/assessment/execute'
-    ];
+    const baseUrl = getApiBaseUrl(8000);
+    const endpoints = Array.from(new Set([
+      `${baseUrl}/api/assessment/execute`,
+      '/api/assessment/execute'
+    ].filter(Boolean)));
 
     let executed = false;
     for (const endpoint of endpoints) {

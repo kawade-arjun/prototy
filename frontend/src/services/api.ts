@@ -1,4 +1,7 @@
-const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:5005/api';
+import { getApiBaseUrl } from './apiConfig';
+
+const API_BASE_URL = `${getApiBaseUrl(5005)}/api`.replace(/^\/api/, '/api');
+
 
 export interface User {
   id: string;

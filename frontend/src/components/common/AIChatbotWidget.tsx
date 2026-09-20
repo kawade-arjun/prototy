@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { getApiBaseUrl } from '../../services/apiConfig';
 import { 
   MessageSquare, 
   X, 
@@ -85,8 +86,9 @@ export const AIChatbotWidget: React.FC = () => {
     setIsTyping(true);
 
     try {
-      const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
-      const res = await fetch(`${BASE_URL}/api/chat`, {
+      const BASE_URL = getApiBaseUrl(8000);
+      const endpoint = `${BASE_URL}/api/chat`.replace(/^\/api\/chat/, '/api/chat');
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

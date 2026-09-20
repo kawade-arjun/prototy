@@ -1120,7 +1120,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               03
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">3. Curated Recommendations Feed</h3>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Curated Recommendations Feed</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">Contextually matched opportunities with click-to-modal AI fit</p>
             </div>
           </div>
@@ -1206,7 +1206,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
               04
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">4. Future Market Scope & Predictions (2026–2028)</h3>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Future Market Scope & Predictions (2026–2028)</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 Empirical growth radar tracking high-velocity emerging skills vs commoditizing skills
               </p>

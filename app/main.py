@@ -76,6 +76,7 @@ class RoleVectorizeRequest(BaseModel):
     requirements_text: str
 
 
+@app.get("/")
 @app.get("/health")
 async def health_check():
     return {
