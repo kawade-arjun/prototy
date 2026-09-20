@@ -26,10 +26,10 @@ const DEFAULT_MESSAGES: ChatMessage[] = [
     text: 'Hello! I am your CareerLens AI Assistant. How can I help you navigate DigiLocker verification, 3-tier credentials, pgvector skill matching, or proctored assessments today?',
     timestamp: 'Just now',
     suggestedActions: [
-      'How does DigiLocker work?',
-      'What are 3-tier certificates?',
-      'Explain pgvector matching',
-      'Proctored assessment rules'
+       'How can I improve my ATS score?',
+  'Recommend skills for my stream',
+  'Find internships matching my profile',
+  'Explain my skill gap report'
     ]
   }
 ];
@@ -61,13 +61,13 @@ export const AIChatbotWidget: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  if (isAssessmentActive) return null;
-
   useEffect(() => {
     if (isOpen) {
       scrollToBottom();
     }
   }, [messages, isOpen, isTyping]);
+
+  if (isAssessmentActive) return null;
 
   const handleSendMessage = async (textToSend?: string) => {
     const queryText = (textToSend || input).trim();
@@ -114,7 +114,7 @@ export const AIChatbotWidget: React.FC = () => {
       const fallbackMsg: ChatMessage = {
         id: `bot-${Date.now()}`,
         sender: 'assistant',
-        text: `CareerLens Assistant: Verified information regarding "${queryText}". Our platform integrates DigiLocker OAuth2 authentication, 384-dimensional pgvector skill matching, and 3-tier credential verification.`,
+        text: `CareerOptic Assistant: Verified information regarding "${queryText}". Our platform integrates DigiLocker OAuth2 authentication, 384-dimensional pgvector skill matching, and 3-tier credential verification.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         suggestedActions: ['What are 3-tier certificates?', 'How does pgvector matching work?']
       };
@@ -145,8 +145,8 @@ export const AIChatbotWidget: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-1.5 leading-tight">
-                  CareerLens AI
-                  <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                  CareerOptic AI
+                  {/* <Sparkles className="w-3.5 h-3.5 text-amber-500" /> */}
                 </h3>
                 <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">Real-time Platform Assistant</p>
               </div>
@@ -254,10 +254,10 @@ export const AIChatbotWidget: React.FC = () => {
       >
         <div className="relative">
           <MessageSquare className="w-5 h-5" />
-          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-300 animate-ping" />
+          {/* <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-300 animate-ping" /> */}
         </div>
         <span className="hidden sm:inline font-extrabold tracking-wide">AI Assistant</span>
-        {isOpen ? <ChevronDown className="w-4 h-4" /> : <Sparkles className="w-4 h-4 text-amber-200" />}
+        {/* {isOpen ? <ChevronDown className="w-4 h-4" /> : <Sparkles className="w-4 h-4 text-amber-200" />} */}
       </button>
     </div>
   );

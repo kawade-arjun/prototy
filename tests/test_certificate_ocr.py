@@ -278,3 +278,33 @@ async def test_ocr_output_alone_never_marks_certificate_verified(sample_certific
         # Verified MUST be False because OCR is only an extractor, not a verification method
         assert result["verified"] is False
         assert result["verification_tier"] == "tier_3_heuristic"
+
+
+@pytest.mark.asyncio
+async def test_process_3layer_certificate_cascade_pass_l1():
+    from app.services.certificate_verification_service import process_3layer_certificate_cascade
+    pdf_bytes = b"%PDF-1.4\n<x:xmpmeta>PyHanabiXMP Valid Metadata Stream</x:xmpmeta>\n/ByteRange [0 100 200 500]"
+    result = await process_3layer_certificate_cascade(
+        file_bytes=pdf_bytes,
+        certificate_title="GenAI Architecture Certificate",
+        issuer="IIT Bombay",
+        cert_id="IITB-AI-9021"
+    )
+    assert result["verified"] is True
+    assert result["layer_passed"] == "PyHanabiXMP"
+    assert result["verification_layer_number"] == 1
+
+
+@pytest.mark.asyncio
+async def test_process_3layer_certificate_cascade_rejection():
+    from app.services.certificate_verification_service import process_3layer_certificate_cascade
+    fake_bytes = b"fake_certificate_photoshopped_tampered"
+    result = await process_3layer_certificate_cascade(
+        file_bytes=fake_bytes,
+        certificate_title="Fake Certificate",
+        issuer="Unknown",
+        cert_id="invalid_fake_id"
+    )
+    assert result["verified"] is False
+    assert result["verification_status"] == "FAKE_OR_UNVERIFIED"
+    assert result["layer_passed"] is None

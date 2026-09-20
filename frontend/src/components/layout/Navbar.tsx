@@ -115,26 +115,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </div>
 
-        {/* Right Controls: Current Session Profile, Settings */}
+        {/* Right Controls: Settings */}
         <div className="pointer-events-auto absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 flex items-center gap-1.5 sm:gap-2.5">
 
-          {/* 1. User Avatar Profile Button */}
-          <button 
-            onClick={onOpenAuthModal}
-            className="relative group cursor-pointer focus:outline-none"
-            title="Current Session Profile"
-          >
-            <div className="w-9 h-9 rounded-full bg-amber-600 p-0.5 shadow-sm group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-white dark:bg-[#0E131F] rounded-full flex items-center justify-center text-xs font-bold text-amber-700 dark:text-amber-300">
-                {currentRole === 'student' ? activeStudent.avatarInitials : currentRole === 'college' ? 'TPO' : currentRole === 'recruiter' ? 'HR' : currentRole === 'government' ? 'GOV' : <User className="w-4 h-4 text-amber-600 dark:text-amber-400" />}
-              </div>
-            </div>
-            <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#1D9BF0] text-white flex items-center justify-center border-2 border-white dark:border-[#0B0E14]" title="Meta Verified">
-              <Check className="w-2 h-2 stroke-[3]" />
-            </span>
-          </button>
-
-          {/* 2. Top-Right Settings Gear Button */}
+          {/* Top-Right Settings Gear Button */}
           <div className="relative" ref={settingsRef}>
             <button
               onClick={() => setIsSettingsMenuOpen(!isSettingsMenuOpen)}
@@ -161,7 +145,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <div>
                       <h4 className="text-xs font-black text-slate-900 dark:text-white">Settings</h4>
                       <p className="text-[10px] text-slate-500 dark:text-slate-400">
-                        {currentRole !== null ? 'Session Active • Preferences' : 'Guest Mode • System Settings'}
+                        {currentRole !== null ? 'Account Active • Preferences' : 'Guest Mode • System Settings'}
                       </p>
                     </div>
                   </div>

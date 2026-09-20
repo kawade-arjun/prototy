@@ -33,6 +33,12 @@ interface StudentContextType {
   setUploadedResume: (text: string, fileName: string, fileSize?: string) => void;
   clearUploadedResume: () => void;
 
+  // Cached AI Resume & Skill Gap Analysis results across tab switching
+  cachedResumeAnalysis: any | null;
+  setCachedResumeAnalysis: (analysis: any | null) => void;
+  cachedSkillGapAnalysis: any | null;
+  setCachedSkillGapAnalysis: (analysis: any | null) => void;
+
   // Global Tab Navigation state
   activeTab: StudentTab;
   setActiveTab: (tab: StudentTab) => void;
@@ -46,8 +52,56 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [currentUser, setCurrentUser] = useState<User | null>(() => getSavedUser());
   const [customProfile, setCustomProfile] = useState<StudentProfileData | null>(null);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<StudentTab>(() => {
+  const [cachedResumeAnalysis, setCachedResumeAnalysisState] = useState<any | null>(() => {
+    try {
+      const saved = localStorage.getItem('careeroptic_cached_resume_analysis');
+      return saved ? JSON.parse(saved) : null;
+    } catch (e) {
+      return null;
+    }
+  });
+
+  const [cachedSkillGapAnalysis, setCachedSkillGapAnalysisState] = useState<any | null>(() => {
+    try {
+      const saved = localStorage.getItem('careeroptic_cached_skill_gap_analysis');
+      return saved ? JSON.parse(saved) : null;
+    } catch (e) {
+      return null;
+    }
+  });
+
+  const setCachedResumeAnalysis = (analysis: any | null) => {
+    setCachedResumeAnalysisState(analysis);
+    try {
+      if (analysis) {
+        localStorage.setItem('careeroptic_cached_resume_analysis', JSON.stringify(analysis));
+      } else {
+        localStorage.removeItem('careeroptic_cached_resume_analysis');
+      }
+    } catch (e) {
+      console.warn('Failed to save cachedResumeAnalysis to localStorage', e);
+    }
+  };
+
+  const setCachedSkillGapAnalysis = (analysis: any | null) => {
+    setCachedSkillGapAnalysisState(analysis);
+    try {
+      if (analysis) {
+        localStorage.setItem('careeroptic_cached_skill_gap_analysis', JSON.stringify(analysis));
+      } else {
+        localStorage.removeItem('careeroptic_cached_skill_gap_analysis');
+      }
+    } catch (e) {
+      console.warn('Failed to save cachedSkillGapAnalysis to localStorage', e);
+    }
+  };
+
+  const [activeTab, setActiveTabState] = useState<StudentTab>(() => {
     if (typeof window !== 'undefined') {
+      const savedTab = localStorage.getItem('careeroptic_active_tab');
+      if (savedTab && ['recommendations', 'sandbox', 'freelance', 'internships', 'jobs', 'organisations', 'profile', 'settings'].includes(savedTab)) {
+        return savedTab as StudentTab;
+      }
       const params = new URLSearchParams(window.location.search);
       const tabParam = params.get('activeTab');
       if (tabParam) return tabParam as StudentTab;
@@ -55,6 +109,15 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
     return 'recommendations';
   });
+
+  const setActiveTab = (tab: StudentTab) => {
+    setActiveTabState(tab);
+    try {
+      localStorage.setItem('careeroptic_active_tab', tab);
+    } catch (e) {
+      console.warn('Failed to save activeTab to localStorage', e);
+    }
+  };
 
   // Load saved resume from localStorage on init
   const [uploadedResume, setUploadedResumeState] = useState<UploadedResumeData | null>(() => {
@@ -157,6 +220,14 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setAuthToken(null);
     setCurrentUser(null);
     setCustomProfile(null);
+    setCachedResumeAnalysis(null);
+    setCachedSkillGapAnalysis(null);
+    try {
+      localStorage.removeItem('careeroptic_user_role');
+      localStorage.removeItem('careeroptic_active_tab');
+    } catch (e) {
+      console.warn('Failed to clear session from localStorage', e);
+    }
   };
 
   const saveOnboarding = async (data: StudentProfileData) => {
@@ -220,6 +291,10 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         uploadedResume,
         setUploadedResume,
         clearUploadedResume,
+        cachedResumeAnalysis,
+        setCachedResumeAnalysis,
+        cachedSkillGapAnalysis,
+        setCachedSkillGapAnalysis,
         activeTab,
         setActiveTab
       }}

@@ -6,7 +6,7 @@ import { Tab3FreelanceMarketplace } from './tabs/Tab3FreelanceMarketplace';
 import { Tab4and5Opportunities } from './tabs/Tab4and5Opportunities';
 import { Tab6Organisations } from './tabs/Tab6Organisations';
 import { Tab7LivingResume } from './tabs/Tab7LivingResume';
-import { Tab8SettingsBookmarks } from './tabs/Tab8SettingsBookmarks';
+// import { Tab8SettingsBookmarks } from './tabs/Tab8SettingsBookmarks';
 import { 
   Target, 
   Terminal, 
@@ -40,7 +40,7 @@ export const StudentPortal: React.FC = () => {
     { id: 'jobs', label: 'Jobs', icon: <Search className="w-4 h-4" /> },
     { id: 'organisations', label: 'Organisations', icon: <Building2 className="w-4 h-4" /> },
     { id: 'profile', label: 'Profile', icon: <LayoutDashboard className="w-4 h-4" /> },
-    { id: 'settings', label: 'Settings', icon: <Bookmark className="w-4 h-4" /> }
+    // { id: 'settings', label: 'Settings', icon: <Bookmark className="w-4 h-4" /> }
   ];
 
   const currentTabObj = tabs.find(t => t.id === activeTab) || tabs[0];
@@ -97,7 +97,7 @@ export const StudentPortal: React.FC = () => {
       <div className="flex flex-col lg:flex-row items-start gap-6">
 
         {/* Left Vertical Navigation Bar */}
-        <aside className="w-full lg:w-56 xl:w-64 shrink-0 lg:sticky lg:top-20 z-20 space-y-3">
+        <aside className="w-full lg:w-56 xl:w-54 shrink-0 lg:sticky lg:top-20 z-20 space-y-3 text-xl font-bold">
           
           {/* Mobile Collapsible Header (lg:hidden) */}
           <div className="lg:hidden">
@@ -176,7 +176,7 @@ export const StudentPortal: React.FC = () => {
           {activeTab === 'jobs' && <Tab4and5Opportunities mode="jobs" />}
           {activeTab === 'organisations' && <Tab6Organisations />}
           {activeTab === 'profile' && <Tab7LivingResume />}
-          {activeTab === 'settings' && <Tab8SettingsBookmarks />}
+          {/* {activeTab === 'settings' && <Tab8SettingsBookmarks />} */}
         </div>
       </div>
 

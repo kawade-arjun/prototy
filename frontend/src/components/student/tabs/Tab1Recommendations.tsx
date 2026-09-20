@@ -12,6 +12,8 @@ import {
   setGeminiApiKey, 
   analyzeResumeWithGemini, 
   analyzeSkillGapWithGemini,
+  extractJobInfoFromJobId,
+  ExtractedJobInfo,
   GeminiResumeAnalysis,
   GeminiSkillGapAnalysis
 } from '../../../services/geminiService';
@@ -22,15 +24,38 @@ interface Tab1Props {
 
 export const Tab1Recommendations: React.FC<Tab1Props> = () => {
   const { theme } = useTheme();
-  const { activeStudent, selectedStream, uploadedResume } = useStudent();
+  const { 
+    activeStudent, 
+    selectedStream, 
+    uploadedResume, 
+    cachedResumeAnalysis, 
+    setCachedResumeAnalysis, 
+    cachedSkillGapAnalysis, 
+    setCachedSkillGapAnalysis 
+  } = useStudent();
+
   const [atsResult, setAtsResult] = useState<AtsDiagnosticResult>({
     overallScore: 88,
     quantifiedMetricsScore: 85,
     keywordDensityScore: 88,
     formattingParsabilityScore: 92,
-    strengths: [],
-    weaknesses: [],
-    actionableSuggestions: []
+    strengths: [
+      'Quantified Performance Scale: Contains clear technical metrics (latency, throughput, CGPA) recognized by ATS engines.',
+      'Core Skill Stack Alignment: High keyword match density for verified domain frameworks.',
+      'Formatting Parsability: Structured section headers and extractable text formatting.',
+      'Academic Pedigree: Verified degree qualification and sovereign registry record.'
+    ],
+    weaknesses: [
+      'Scope for Leadership Metrics: Include explicit team numbers and cross-functional leadership outcomes in experience bullets.',
+      'Cloud Containerization Keywords: Explicitly tag container orchestration tools (Kubernetes/Helm/Docker) in technical section.',
+      'Direct Project Evidence: Add explicit live demo or GitHub repository URLs for top projects.'
+    ],
+    actionableSuggestions: [
+      'Add quantitative metrics to experience bullet points (e.g., "Improved response latency by 35%" or "Processed 10,000+ daily API requests").',
+      'Include explicit cloud containerization terms like Docker, Kubernetes, and gRPC Protocol.',
+      'Add direct links to deployed live demos or GitHub repositories in experience section.',
+      'Ensure standard, consistent formatting across section headers for maximum ATS parser accuracy.'
+    ]
   });
   const [isAnalyzingResume, setIsAnalyzingResume] = useState(false);
   const [showAiResumeModal, setShowAiResumeModal] = useState(false);
@@ -45,28 +70,56 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
     uploadedResume?.text || `${activeStudent.name}\n${activeStudent.degree} at ${activeStudent.institution}\nSkills: ${activeStudent.verifiedSkills.join(', ')}\nSummary: ${activeStudent.summary}`
   );
 
-  // Sync uploaded resume from profile tab into AI Studio & trigger live analysis
+  // Gemini Live Results State
+  const [geminiResumeResult, setGeminiResumeResult] = useState<GeminiResumeAnalysis | null>(cachedResumeAnalysis);
+  const [geminiSkillGapResult, setGeminiSkillGapResult] = useState<GeminiSkillGapAnalysis | null>(cachedSkillGapAnalysis);
+
+  // Sync uploaded resume from profile tab into AI Studio
   React.useEffect(() => {
     if (uploadedResume?.text) {
       setCustomResumeText(uploadedResume.text);
     }
   }, [uploadedResume]);
 
-  // Auto-analyze resume whenever customResumeText or uploadedResume changes
+  // Reuse cached AI resume analysis across tab switches and page refreshes
   React.useEffect(() => {
-    handleAnalyzeResume();
-  }, [customResumeText]);
+    if (cachedResumeAnalysis) {
+      setGeminiResumeResult(cachedResumeAnalysis);
+      const strList = cachedResumeAnalysis.detailedStrengths 
+        ? cachedResumeAnalysis.detailedStrengths.map((s: any) => `${s.title}: ${s.description || s.evidence}`)
+        : (cachedResumeAnalysis.strengths || []);
+      const wkList = cachedResumeAnalysis.detailedWeaknesses 
+        ? cachedResumeAnalysis.detailedWeaknesses.map((w: any) => `${w.title}: ${w.description || w.impact}`)
+        : (cachedResumeAnalysis.weaknesses || []);
+
+      setAtsResult({
+        overallScore: cachedResumeAnalysis.overallScore || 88,
+        quantifiedMetricsScore: cachedResumeAnalysis.quantifiedMetricsScore || 85,
+        keywordDensityScore: cachedResumeAnalysis.keywordDensityScore || 88,
+        formattingParsabilityScore: cachedResumeAnalysis.formattingBypassScore || cachedResumeAnalysis.formattingParsabilityScore || 92,
+        strengths: strList.length > 0 ? strList : [
+          'Quantified Performance Scale: Explicit performance numbers recognized by ATS engines.',
+          'Core Skill Stack Alignment: High keyword match for verified domain frameworks.'
+        ],
+        weaknesses: wkList.length > 0 ? wkList : [
+          'Scope for Leadership Metrics: Add explicit team numbers in experience bullets.'
+        ],
+        actionableSuggestions: cachedResumeAnalysis.actionableRecommendations || [
+          'Add quantitative metrics to experience bullet points.',
+          'Include cloud containerization terms like Docker and Kubernetes.'
+        ]
+      });
+    }
+  }, [cachedResumeAnalysis]);
 
   // Skill Gap State
   const [gapMode, setGapMode] = useState<'jobId' | 'pasteJd'>('jobId');
   const [selectedJobId, setSelectedJobId] = useState('JOB-MSFT-901');
+  const [customJobInput, setCustomJobInput] = useState('JOB-MSFT-901');
   const [pastedJd, setPastedJd] = useState('');
+  const [extractedJobDetails, setExtractedJobDetails] = useState<ExtractedJobInfo | null>(null);
   const [isDiffing, setIsDiffing] = useState(false);
   const [diffComplete, setDiffComplete] = useState(true);
-
-  // Gemini Live Results State
-  const [geminiResumeResult, setGeminiResumeResult] = useState<GeminiResumeAnalysis | null>(null);
-  const [geminiSkillGapResult, setGeminiSkillGapResult] = useState<GeminiSkillGapAnalysis | null>(null);
 
   // Recommendations Feed Filter
   const [feedType, setFeedType] = useState<'all' | 'gig' | 'internship' | 'job'>('all');
@@ -83,8 +136,14 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
     const streamOpps = MOCK_OPPORTUNITIES.filter(o => o.stream === selectedStream);
     if (streamOpps.length > 0) {
       setSelectedJobId(streamOpps[0].id);
+      setCustomJobInput(streamOpps[0].id);
     }
   }, [selectedStream]);
+
+  // Sync input text with selected job ID
+  React.useEffect(() => {
+    setCustomJobInput(selectedJobId);
+  }, [selectedJobId]);
 
   // Auto-run skill differential comparison whenever selected job or pasted JD changes
   React.useEffect(() => {
@@ -94,9 +153,11 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
       }, 500);
       return () => clearTimeout(timer);
     } else if (gapMode === 'jobId') {
-      handleRunDiff();
+      if (!cachedSkillGapAnalysis) {
+        handleRunDiff();
+      }
     }
-  }, [gapMode, selectedJobId, pastedJd, customResumeText]);
+  }, [gapMode, selectedJobId, pastedJd]);
 
   const handleAnalyzeResume = async () => {
     setIsAnalyzingResume(true);
@@ -104,14 +165,26 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
     try {
       const textToScan = uploadedResume?.text || customResumeText;
       const result = await analyzeResumeWithGemini(textToScan, activeStudent.streamName);
+      
+      const strList = result.detailedStrengths 
+        ? result.detailedStrengths.map((s: any) => `${s.title}: ${s.description || s.evidence}`)
+        : (result.strengths || []);
+      const wkList = result.detailedWeaknesses 
+        ? result.detailedWeaknesses.map((w: any) => `${w.title}: ${w.description || w.impact}`)
+        : (result.weaknesses || []);
+
+      result.strengths = strList;
+      result.weaknesses = wkList;
+
       setGeminiResumeResult(result);
+      setCachedResumeAnalysis(result);
       setAtsResult({
         overallScore: result.overallScore,
         quantifiedMetricsScore: result.quantifiedMetricsScore,
         keywordDensityScore: result.keywordDensityScore,
         formattingParsabilityScore: result.formattingBypassScore,
-        strengths: result.strengths,
-        weaknesses: result.weaknesses,
+        strengths: strList,
+        weaknesses: wkList,
         actionableSuggestions: result.actionableRecommendations
       });
     } catch (err: any) {
@@ -121,16 +194,21 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
     }
   };
 
-  const handleRunDiff = async () => {
+  const handleRunDiff = async (overrideJobId?: string) => {
     setIsDiffing(true);
     setGeminiError(null);
     try {
+      const activeJobId = overrideJobId || selectedJobId.trim() || 'JOB-MSFT-901';
+      const jobInfo = extractJobInfoFromJobId(activeJobId, MOCK_OPPORTUNITIES);
+      setExtractedJobDetails(jobInfo);
+
       const targetJdText = gapMode === 'pasteJd' 
         ? pastedJd 
-        : MOCK_OPPORTUNITIES.find(o => o.id === selectedJobId)?.description || 'Senior Software Engineer Role';
+        : `${jobInfo.title} at ${jobInfo.organization}. Required Skills: ${jobInfo.requiredSkills.join(', ')}. Description: ${jobInfo.description}. Responsibilities: ${jobInfo.responsibilities.join('; ')}`;
 
-      const result = await analyzeSkillGapWithGemini(customResumeText, targetJdText);
+      const result = await analyzeSkillGapWithGemini(customResumeText, targetJdText, activeStudent.streamName);
       setGeminiSkillGapResult(result);
+      setCachedSkillGapAnalysis(result);
       setDiffComplete(true);
     } catch (err: any) {
       setGeminiError(err.message || 'Failed to run skill gap diff with Gemini API.');
@@ -559,7 +637,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             </div>
 
             <button
-              onClick={handleRunDiff}
+              onClick={() => handleRunDiff()}
               disabled={isDiffing}
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs shadow-sm transition-all active:scale-95 disabled:opacity-50"
             >
@@ -567,28 +645,94 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
             </button>
           </div>
 
-          {/* Mode A: Job ID Selector (Filtered to active student's discipline) */}
+          {/* Mode A: Job ID Selector & Search Cockpit */}
           {gapMode === 'jobId' ? (
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
-                Select Target Opportunity in {activeStudent.streamName}:
-              </label>
-              <div className="flex flex-wrap gap-2">
-                {MOCK_OPPORTUNITIES.filter(o => o.stream === selectedStream).map((item) => (
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+                  Enter Unique Job ID or Select Opportunity in {activeStudent.streamName}:
+                </label>
+                <div className="flex flex-col sm:flex-row items-center gap-2.5">
+                  <input
+                    type="text"
+                    value={customJobInput}
+                    onChange={(e) => setCustomJobInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        setSelectedJobId(customJobInput);
+                        handleRunDiff(customJobInput);
+                      }
+                    }}
+                    placeholder="Type any Job ID (e.g. JOB-MSFT-901, INT-GS-201, JOB-RZP-402, JOB-META-888)..."
+                    className="w-full bg-white dark:bg-[#0a0f1d] border border-slate-200 dark:border-white/[0.08] rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-slate-200 font-mono focus:outline-none focus:border-amber-500 shadow-sm"
+                  />
                   <button
-                    key={item.id}
-                    onClick={() => setSelectedJobId(item.id)}
-                    className={`px-3.5 py-2 rounded-xl text-xs font-mono transition-all flex items-center gap-2 ${
-                      selectedJobId === item.id
-                        ? 'bg-amber-600 text-white font-bold shadow-md'
-                        : 'bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-white/[0.08] text-slate-700 dark:text-slate-300 hover:border-amber-400'
-                    }`}
+                    onClick={() => {
+                      setSelectedJobId(customJobInput);
+                      handleRunDiff(customJobInput);
+                    }}
+                    disabled={isDiffing}
+                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs shrink-0 shadow-sm transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-1.5"
                   >
-                    <span>{item.id}</span>
-                    <span className="text-[10px] opacity-80 font-sans font-normal truncate max-w-[140px]">({item.title})</span>
+                    <span>{isDiffing ? 'Extracting...' : 'Extract & Analyze Job ID'}</span>
                   </button>
-                ))}
+                </div>
+
+                {/* Featured Job ID Chips */}
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {MOCK_OPPORTUNITIES.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        setSelectedJobId(item.id);
+                        setCustomJobInput(item.id);
+                        handleRunDiff(item.id);
+                      }}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all flex items-center gap-2 ${
+                        selectedJobId.toUpperCase() === item.id.toUpperCase()
+                          ? 'bg-amber-600 text-white font-bold shadow-md'
+                          : 'bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-white/[0.08] text-slate-700 dark:text-slate-300 hover:border-amber-400'
+                      }`}
+                    >
+                      <span>{item.id}</span>
+                      <span className="text-[10px] opacity-80 font-sans font-normal truncate max-w-[130px]">({item.title})</span>
+                    </button>
+                  ))}
+                </div>
               </div>
+
+              {/* Extracted Job Details Summary Card */}
+              {extractedJobDetails && (
+                <div className="p-4 rounded-2xl bg-amber-500/[0.06] border border-amber-500/30 space-y-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-amber-500/20 pb-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="px-2.5 py-0.5 rounded-md bg-amber-600 text-white font-mono text-xs font-bold shadow-sm">
+                        {extractedJobDetails.jobId}
+                      </span>
+                      <span className="text-xs font-black text-slate-900 dark:text-white">
+                        {extractedJobDetails.title}
+                      </span>
+                      <span className="text-xs text-amber-700 dark:text-amber-300 font-semibold">
+                        @ {extractedJobDetails.organization}
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-300">
+                      Extracted Job Info
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                    {extractedJobDetails.description}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                    <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 mr-1">Extracted Required Skills:</span>
+                    {extractedJobDetails.requiredSkills.map((sk, idx) => (
+                      <span key={idx} className="text-[10px] font-mono px-2 py-0.5 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/[0.1] text-slate-800 dark:text-slate-200">
+                        {sk}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <div className="space-y-2">
@@ -609,45 +753,68 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
           {diffComplete && (
             <div className="space-y-6 pt-4 border-t border-slate-200 dark:border-white/[0.08]">
               
-              {/* Dynamic Multi-Axis Competency Radar Visualization (Matching uploaded reference image) */}
+              {/* Dynamic Multi-Axis Competency Radar Visualization */}
               {(() => {
-                const getRadarAxesForStream = () => {
-                  switch (selectedStream) {
-                    case 'tech_ai':
-                      return {
-                        axes: ['Algorithms & DSA', 'Cloud Architecture', 'System Design', 'REST & Microservices', 'Docker & DevOps', 'Database & SQL'],
-                        candValues: [0.90, 0.62, 0.84, 0.94, 0.52, 0.82],
-                        targetValues: [0.82, 0.85, 0.88, 0.80, 0.78, 0.72]
-                      };
-                    case 'commerce_finance':
-                      return {
-                        axes: ['Financial Modeling', 'LBO & DCF Valuation', 'SEC Edgar Audit', 'Quant Risk Analysis', 'FinTech APIs', 'Excel & SQL'],
-                        candValues: [0.92, 0.64, 0.86, 0.94, 0.54, 0.84],
-                        targetValues: [0.84, 0.86, 0.90, 0.82, 0.80, 0.74]
-                      };
-                    case 'healthcare_bio':
-                      return {
-                        axes: ['Ayush Bio-Stats', 'ICD-11 Taxonomy', 'Clinical Protocols', 'Data Governance', 'Diagnostic Acc', 'Pharmacology'],
-                        candValues: [0.88, 0.60, 0.82, 0.92, 0.50, 0.80],
-                        targetValues: [0.80, 0.84, 0.86, 0.78, 0.76, 0.70]
-                      };
-                    case 'law_governance':
-                      return {
-                        axes: ['Constitutional Law', 'DPDP Compliance', 'Statutory Drafting', 'Case Analysis', 'Litigation Risk', 'Corporate Legal'],
-                        candValues: [0.90, 0.62, 0.84, 0.93, 0.52, 0.82],
-                        targetValues: [0.82, 0.85, 0.88, 0.80, 0.78, 0.72]
-                      };
-                    case 'ui_ux':
-                    default:
-                      return {
-                        axes: ['UI/UX Research', 'Design Systems', 'WCAG 2.2 AA', 'User Testing', 'Figma Prototyping', 'Spatial Layout'],
-                        candValues: [0.91, 0.63, 0.85, 0.94, 0.53, 0.83],
-                        targetValues: [0.83, 0.85, 0.89, 0.81, 0.79, 0.73]
-                      };
+                const getDynamicRadarData = () => {
+                  const candSkillsList = (geminiResumeResult?.extractedSkills || activeStudent.verifiedSkills || []).map(s => s.toLowerCase());
+                  const candTextLower = (customResumeText || '').toLowerCase();
+                  const targetJdText = gapMode === 'pasteJd' 
+                    ? pastedJd 
+                    : `${extractedJobDetails?.title || selectedJobId} at ${extractedJobDetails?.organization || ''}. Skills: ${(extractedJobDetails?.requiredSkills || []).join(', ')}. ${extractedJobDetails?.description || ''}`;
+                  const targetJdLower = targetJdText.toLowerCase();
+
+                  let axes: string[] = ['Algorithms & DSA', 'Cloud Architecture', 'System Design', 'REST & Microservices', 'Docker & DevOps', 'Database & SQL'];
+                  
+                  if (selectedStream === 'commerce_finance') {
+                    axes = ['Financial Modeling', 'DCF & LBO Valuation', 'SEC Edgar Audit', 'Quant Risk & VaR', 'FinTech APIs', 'Excel & SQL'];
+                  } else if (selectedStream === 'healthcare_bio') {
+                    axes = ['Ayush Bio-Stats', 'ICD-11 Taxonomy', 'Clinical Protocols', 'Data Governance', 'Diagnostic Acc', 'Pharmacology'];
+                  } else if (selectedStream === 'law_governance') {
+                    axes = ['Constitutional Law', 'DPDP Compliance', 'Statutory Drafting', 'Case Analysis', 'Litigation Risk', 'Corporate Legal'];
+                  } else if (selectedStream === 'ui_ux') {
+                    axes = ['UI/UX Research', 'Design Systems', 'WCAG 2.2 AA', 'User Testing', 'Figma Prototyping', 'Spatial Layout'];
                   }
+
+                  const candValues = axes.map((axis) => {
+                    const axisTokens = axis.toLowerCase().split(/[\s&/]+/);
+                    let score = 0.55;
+                    const hasSkillMatch = axisTokens.some(token => 
+                      candSkillsList.some(cs => cs.includes(token)) || candTextLower.includes(token)
+                    );
+                    const isMatchedInDiff = geminiSkillGapResult?.matchedSkills.some(ms => 
+                      axisTokens.some(token => ms.toLowerCase().includes(token))
+                    );
+
+                    if (hasSkillMatch || isMatchedInDiff) score += 0.32;
+                    else score -= 0.12;
+
+                    const atsScoreMult = (atsResult.overallScore || 80) / 100;
+                    score = Math.max(0.25, Math.min(0.96, score * (0.65 + 0.35 * atsScoreMult)));
+
+                    const seed = (selectedJobId + axis + candTextLower.length).split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+                    const shift = ((seed % 14) - 7) / 100;
+                    return Number(Math.max(0.25, Math.min(0.96, score + shift)).toFixed(2));
+                  });
+
+                  const targetValues = axes.map((axis) => {
+                    const axisTokens = axis.toLowerCase().split(/[\s&/]+/);
+                    let targetScore = 0.82;
+                    const isMentionedInJd = axisTokens.some(token => targetJdLower.includes(token));
+                    const isMissingInDiff = geminiSkillGapResult?.missingSkills.some(ms => 
+                      axisTokens.some(token => ms.toLowerCase().includes(token))
+                    );
+
+                    if (isMentionedInJd || isMissingInDiff) targetScore += 0.10;
+
+                    const seed = (selectedJobId + axis + 'target').split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+                    const shift = ((seed % 12) - 6) / 100;
+                    return Number(Math.max(0.60, Math.min(0.98, targetScore + shift)).toFixed(2));
+                  });
+
+                  return { axes, candValues, targetValues };
                 };
 
-                const rData = getRadarAxesForStream();
+                const rData = getDynamicRadarData();
                 const cx = 220;
                 const cy = 170;
                 const R = 105;
@@ -669,10 +836,15 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                 return (
                   <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0c1220] border border-slate-200/80 dark:border-white/[0.08] shadow-lg flex flex-col items-center justify-center space-y-6 relative overflow-hidden">
                     
-                    {/* Header Title (Matching Reference Image) */}
-                    <h4 className="text-sm sm:text-base font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 text-center">
-                      MULTI-AXIS COMPETENCY RADAR
-                    </h4>
+                    {/* Header Title with Dynamic Badge */}
+                    <div className="flex flex-col items-center space-y-1 text-center">
+                      <h4 className="text-sm sm:text-base font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                        MULTI-AXIS COMPETENCY RADAR
+                      </h4>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                        Dynamic Candidate Skills vs Target Benchmark for <span className="font-mono font-bold text-amber-600 dark:text-amber-400">{selectedJobId}</span>
+                      </p>
+                    </div>
 
                     {/* Radar SVG Chart */}
                     <div className="relative w-full max-w-xl h-80 flex flex-col items-center justify-center p-1">
@@ -688,7 +860,7 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                           </radialGradient>
                         </defs>
 
-                        {/* Concentric Hexagon Web Rings (3 rings as in reference image) */}
+                        {/* Concentric Hexagon Web Rings (3 rings) */}
                         {[0.35, 0.70, 1.0].map((scale, idx) => {
                           const r = R * scale;
                           const points = [0, 1, 2, 3, 4, 5].map((i) => {
@@ -743,46 +915,63 @@ export const Tab1Recommendations: React.FC<Tab1Props> = () => {
                           className="transition-all duration-700 ease-out"
                         />
 
-                        {/* Solid Teal Vertex Dots */}
+                        {/* Solid Teal Vertex Dots & Dynamic Score Callouts */}
                         {rData.candValues.map((val, i) => {
                           const angle = -Math.PI / 2 + (i * 2 * Math.PI) / 6;
                           const r = R * val;
                           const vx = cx + r * Math.cos(angle);
                           const vy = cy + r * Math.sin(angle);
                           return (
-                            <circle
-                              key={i}
-                              cx={vx}
-                              cy={vy}
-                              r="4.5"
-                              fill="#029983"
-                              stroke="#ffffff"
-                              strokeWidth="1.8"
-                              className="transition-all duration-700 ease-out"
-                            />
+                            <g key={i}>
+                              <circle
+                                cx={vx}
+                                cy={vy}
+                                r="4.5"
+                                fill="#029983"
+                                stroke="#ffffff"
+                                strokeWidth="1.8"
+                                className="transition-all duration-700 ease-out"
+                              />
+                            </g>
                           );
                         })}
 
-                        {/* 6 Axis Text Labels (Exact placement matching reference image) */}
-                        <text x="220" y="42" textAnchor="middle" className="text-[12px] font-bold fill-slate-700 dark:fill-slate-200 tracking-tight">{rData.axes[0]}</text>
-                        <text x="342" y="121" textAnchor="start" className="text-[12px] font-bold fill-slate-700 dark:fill-slate-200 tracking-tight">{rData.axes[1]}</text>
-                        <text x="342" y="226" textAnchor="start" className="text-[12px] font-bold fill-slate-700 dark:fill-slate-200 tracking-tight">{rData.axes[2]}</text>
-                        <text x="220" y="302" textAnchor="middle" className="text-[12px] font-bold fill-slate-700 dark:fill-slate-200 tracking-tight">{rData.axes[3]}</text>
-                        <text x="98" y="226" textAnchor="end" className="text-[12px] font-bold fill-slate-700 dark:fill-slate-200 tracking-tight">{rData.axes[4]}</text>
-                        <text x="98" y="121" textAnchor="end" className="text-[12px] font-bold fill-slate-700 dark:fill-slate-200 tracking-tight">{rData.axes[5]}</text>
+                        {/* 6 Axis Text Labels with Dynamic Numerical Scores */}
+                        <text x="220" y="38" textAnchor="middle" className="text-[11px] font-bold fill-slate-800 dark:fill-slate-100 tracking-tight">
+                          {rData.axes[0]} <tspan fill="#029983">({Math.round(rData.candValues[0]*100)}%)</tspan>
+                        </text>
+                        <text x="345" y="121" textAnchor="start" className="text-[11px] font-bold fill-slate-800 dark:fill-slate-100 tracking-tight">
+                          {rData.axes[1]} <tspan fill="#029983">({Math.round(rData.candValues[1]*100)}%)</tspan>
+                        </text>
+                        <text x="345" y="226" textAnchor="start" className="text-[11px] font-bold fill-slate-800 dark:fill-slate-100 tracking-tight">
+                          {rData.axes[2]} <tspan fill="#029983">({Math.round(rData.candValues[2]*100)}%)</tspan>
+                        </text>
+                        <text x="220" y="306" textAnchor="middle" className="text-[11px] font-bold fill-slate-800 dark:fill-slate-100 tracking-tight">
+                          {rData.axes[3]} <tspan fill="#029983">({Math.round(rData.candValues[3]*100)}%)</tspan>
+                        </text>
+                        <text x="95" y="226" textAnchor="end" className="text-[11px] font-bold fill-slate-800 dark:fill-slate-100 tracking-tight">
+                          {rData.axes[4]} <tspan fill="#029983">({Math.round(rData.candValues[4]*100)}%)</tspan>
+                        </text>
+                        <text x="95" y="121" textAnchor="end" className="text-[11px] font-bold fill-slate-800 dark:fill-slate-100 tracking-tight">
+                          {rData.axes[5]} <tspan fill="#029983">({Math.round(rData.candValues[5]*100)}%)</tspan>
+                        </text>
 
                       </svg>
                     </div>
 
-                    {/* Bottom Legend Bar (Matching Reference Image) */}
+                    {/* Bottom Legend Bar */}
                     <div className="flex flex-wrap items-center justify-center gap-8 pt-4 border-t border-slate-100 dark:border-white/[0.06] w-full">
                       <div className="flex items-center gap-2.5">
                         <span className="w-4 h-4 rounded bg-[#029983] shadow-sm inline-block" />
-                        <span className="text-slate-600 dark:text-slate-300 font-bold text-xs sm:text-sm">Verified Candidate Score</span>
+                        <span className="text-slate-600 dark:text-slate-300 font-bold text-xs sm:text-sm">
+                          Verified Candidate Score (Avg {Math.round(rData.candValues.reduce((a,b)=>a+b,0)/6*100)}%)
+                        </span>
                       </div>
                       <div className="flex items-center gap-2.5">
                         <span className="w-4 h-4 rounded border-2 border-dashed border-[#d97706] bg-amber-500/20 shadow-sm inline-block" />
-                        <span className="text-slate-600 dark:text-slate-300 font-bold text-xs sm:text-sm">Industry Target Benchmark</span>
+                        <span className="text-slate-600 dark:text-slate-300 font-bold text-xs sm:text-sm">
+                          Industry Target Benchmark (Avg {Math.round(rData.targetValues.reduce((a,b)=>a+b,0)/6*100)}%)
+                        </span>
                       </div>
                     </div>
 

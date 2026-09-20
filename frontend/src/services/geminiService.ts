@@ -44,13 +44,84 @@ export interface GeminiResumeAnalysis {
   sectionScores: { section: string; score: number; feedback: string }[];
 }
 
+export interface ExtractedJobInfo {
+  jobId: string;
+  title: string;
+  organization: string;
+  stream: string;
+  type: string;
+  stipendOrSalary?: string;
+  location?: string;
+  requiredSkills: string[];
+  description: string;
+  responsibilities: string[];
+}
+
 export interface GeminiSkillGapAnalysis {
   matchPercentage: number;
   matchedSkills: string[];
   missingSkills: string[];
   bridgePlan: { step: number; title: string; action: string; duration: string }[];
   summary: string;
+  extractedJobInfo?: ExtractedJobInfo;
 }
+
+export const extractJobInfoFromJobId = (jobId: string, availableOpps: any[] = []): ExtractedJobInfo => {
+  const cleanId = (jobId || '').trim().toUpperCase();
+  const found = availableOpps.find(o => o.id.toUpperCase() === cleanId);
+
+  if (found) {
+    return {
+      jobId: found.id,
+      title: found.title,
+      organization: found.organization,
+      stream: found.stream,
+      type: found.type,
+      stipendOrSalary: found.stipendOrSalary,
+      location: found.location,
+      requiredSkills: found.tags || [],
+      description: found.description,
+      responsibilities: found.responsibilities || []
+    };
+  }
+
+  // Synthesize / Extract for unknown or custom Job IDs (e.g. JOB-META-888, INT-GOOG-101, etc.)
+  let org = 'Global Enterprise';
+  if (cleanId.includes('META')) org = 'Meta AI Research';
+  else if (cleanId.includes('GOOG') || cleanId.includes('GOOGLE')) org = 'Google DeepMind';
+  else if (cleanId.includes('MSFT') || cleanId.includes('MICROSOFT')) org = 'Microsoft Cloud & AI';
+  else if (cleanId.includes('AMZN') || cleanId.includes('AWS')) org = 'Amazon Web Services';
+  else if (cleanId.includes('AAPL') || cleanId.includes('APPLE')) org = 'Apple Intelligence';
+  else if (cleanId.includes('RZP') || cleanId.includes('RAZORPAY')) org = 'Razorpay Treasury';
+  else if (cleanId.includes('GS') || cleanId.includes('GOLDMAN')) org = 'Goldman Sachs Global';
+  else if (cleanId.includes('AIIMS')) org = 'AIIMS Research Lab';
+  else if (cleanId.includes('NIA')) org = 'National Institute of Ayurveda';
+
+  const isIntern = cleanId.startsWith('INT');
+  const roleType = isIntern ? 'internship' : 'job';
+  const roleTitle = isIntern ? `Target ${org} Specialist Intern` : `Senior Lead Engineer / Analyst (${cleanId})`;
+
+  const mockSkills = isIntern 
+    ? ['Python 3.12', 'Data Structures', 'REST APIs', 'Git', 'Docker Basics', 'Unit Testing']
+    : ['System Design', 'Kubernetes', 'Microservices', 'Distributed Caching', 'Cloud Security', 'FastAPI'];
+
+  return {
+    jobId: cleanId || 'CUSTOM-JOB-ID',
+    title: roleTitle,
+    organization: org,
+    stream: 'tech_ai',
+    type: roleType,
+    stipendOrSalary: isIntern ? '₹1,00,000 / month' : '₹25 - 35 LPA',
+    location: 'Hybrid / Remote',
+    requiredSkills: mockSkills,
+    description: `Extracted Job Requirements for Job ID ${cleanId}: Focuses on end-to-end technical execution, architecture scalability, and domain compliance in ${org}.`,
+    responsibilities: [
+      `Deliver reliable production systems for ${cleanId}`,
+      'Collaborate with cross-functional technical teams',
+      'Optimize API latencies and data pipeline throughput'
+    ]
+  };
+};
 
 export const analyzeResumeWithGemini = async (
   resumeText: string,

@@ -362,16 +362,16 @@ export const Tab6Organisations: React.FC = () => {
       {/* Header Banner */}
       <div className="rounded-3xl glass-panel p-8 bg-slate-50 dark:bg-slate-900">
         <div className="max-w-3xl space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-xs font-bold">
-            <Building2 className="w-3.5 h-3.5" />
-            <span>TAB 6 • ORGANISATIONS DIRECTORY ({activeStudent.streamName.toUpperCase()})</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-2xl font-bold">
+            <Building2 className="w-4.5 h-4.5" />
+            <span>ORGANISATIONS DIRECTORY </span>
           </div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-            Verified Corporate Employers & Academic Benchmark Labs
+          <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            Verified Corporate Organisations & Academic Benchmark Labs
           </h2>
-          <p className="text-sm text-slate-600 dark:text-slate-300">
+          {/* <p className="text-sm text-slate-600 dark:text-slate-300">
             Directly inspect verified partner requirements, bypass interview stages, and explore active opportunities in {activeStudent.streamName}.
-          </p>
+          </p> */}
         </div>
       </div>
 

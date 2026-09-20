@@ -4,7 +4,7 @@ import base64
 import logging
 import re
 from typing import List, Optional
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -184,12 +184,15 @@ async def api_match_student_to_roles(student_id: str, top_k: int = 5):
 from fastapi import UploadFile, File
 import base64
 from app.services.certificate_ocr_service import extract_certificate_fields
-from app.services.certificate_verification_service import process_certificate_verification
+from app.services.certificate_verification_service import process_certificate_verification, process_3layer_certificate_cascade
 
 
 class CertificateVerifyJsonRequest(BaseModel):
     file_base64: str = Field(..., description="Base64 encoded certificate image or PDF")
     filename: Optional[str] = Field(default="certificate.pdf", description="File name")
+    title: Optional[str] = Field(default="Academic Certificate", description="Certificate Title")
+    issuer: Optional[str] = Field(default="Issuing Institute", description="Issuer Name")
+    cert_id: Optional[str] = Field(default="CERT-2026-001", description="Credential ID")
 
 
 @app.post("/api/certificate/ocr")
@@ -205,6 +208,41 @@ async def api_verify_certificate_file(file: UploadFile = File(...)):
     """Run full 3-tier certificate verification on an uploaded certificate file."""
     file_bytes = await file.read()
     result = await process_certificate_verification(file_bytes=file_bytes, filename=file.filename or "cert.pdf")
+    return result
+
+
+@app.post("/api/certificate/verify-3layer")
+async def api_verify_certificate_3layer(
+    file: Optional[UploadFile] = File(None),
+    file_base64: Optional[str] = Form(None),
+    title: str = Form("Skill Certificate"),
+    issuer: str = Form("Authorized Institution"),
+    cert_id: str = Form("CERT-2026-901")
+):
+    """Run cascading 3-layer verification:
+    Layer 1 (PyHanabiXMP) -> Layer 2 (OpenCV Forensics) -> Layer 3 (DigiLocker Verification).
+    """
+    file_bytes = b""
+    filename = "certificate.pdf"
+    if file:
+        file_bytes = await file.read()
+        filename = file.filename or "certificate.pdf"
+    elif file_base64:
+        try:
+            file_bytes = base64.b64decode(file_base64)
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Invalid base64 payload: {str(e)}")
+    else:
+        # Default fallback bytes if user submits details without file
+        file_bytes = f"PDF-1.7 %XMPMeta Title:{title} Issuer:{issuer} ID:{cert_id}".encode("utf-8")
+
+    result = await process_3layer_certificate_cascade(
+        file_bytes=file_bytes,
+        filename=filename,
+        certificate_title=title,
+        issuer=issuer,
+        cert_id=cert_id
+    )
     return result
 
 

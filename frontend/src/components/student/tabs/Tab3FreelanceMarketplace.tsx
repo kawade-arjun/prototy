@@ -8,7 +8,8 @@ import {
   Copy, 
   ShieldCheck, 
   Filter,
-  Cpu
+  Cpu,
+  Search
 } from 'lucide-react';
 
 import { AcademicStream } from '../../../types';
@@ -213,16 +214,17 @@ export const Tab3FreelanceMarketplace: React.FC = () => {
       {/* Header Banner */}
       <div className="rounded-3xl glass-panel p-8 bg-amber-50/40 dark:bg-slate-900">
         <div className="max-w-3xl space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-xs font-bold">
-            <Briefcase className="w-3.5 h-3.5" />
-            <span>TAB 3 • VERIFIED FREELANCE MARKETPLACE</span>
+          <div className="inline-flex align-center items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-2xl font-bold">
+            <Briefcase className="w-4.5 h-4.5 " />
+            
+            <span> FREELANCE AND PROJECTS</span>
           </div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             Build Real Industry Experience & Earnings Prior to Graduation
           </h2>
-          <p className="text-sm text-slate-600 dark:text-slate-300">
+          {/* <p className="text-sm text-slate-600 dark:text-slate-300">
             Micro-projects curated by skill tag, featuring 1-click benchmark-backed AI proposal generation and an immutable reputation ledger.
-          </p>
+          </p> */}
         </div>
       </div>
 
@@ -231,25 +233,25 @@ export const Tab3FreelanceMarketplace: React.FC = () => {
         <div className="glass-panel p-5 rounded-2xl space-y-1">
           <div className="text-xs text-slate-500 dark:text-slate-400">Total Verified Earnings</div>
           <div className="text-2xl font-black text-amber-600 dark:text-amber-400">₹1,85,000</div>
-          <div className="text-[10px] text-slate-500">Escrow settled via smart contract</div>
+          {/* <div className="text-[10px] text-slate-500">Escrow settled via smart contract</div> */}
         </div>
         <div className="glass-panel p-5 rounded-2xl space-y-1">
           <div className="text-xs text-slate-500 dark:text-slate-400">Client Satisfaction Rating</div>
           <div className="text-2xl font-black text-amber-600 dark:text-amber-400 flex items-center gap-1">
             4.95 <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
           </div>
-          <div className="text-[10px] text-slate-500">Based on 14 completed micro-gigs</div>
+          {/* <div className="text-[10px] text-slate-500">Based on 14 completed micro-gigs</div> */}
         </div>
         <div className="glass-panel p-5 rounded-2xl space-y-1">
           <div className="text-xs text-slate-500 dark:text-slate-400">On-Time Delivery Rate</div>
           <div className="text-2xl font-black text-amber-600 dark:text-amber-400">100%</div>
-          <div className="text-[10px] text-slate-500">Zero deadline breaches</div>
+          {/* <div className="text-[10px] text-slate-500">Zero deadline breaches</div> */}
         </div>
-        <div className="glass-panel p-5 rounded-2xl space-y-1">
+        {/* <div className="glass-panel p-5 rounded-2xl space-y-1">
           <div className="text-xs text-slate-500 dark:text-slate-400">Platform Reputation Tier</div>
           <div className="text-2xl font-black text-amber-600 dark:text-amber-400">Top Rated Plus</div>
           <div className="text-[10px] text-slate-500">Verified Sovereign Badge Active</div>
-        </div>
+        </div> */}
       </div>
 
       {/* Filter by skill tag & discipline */}
@@ -332,8 +334,8 @@ export const Tab3FreelanceMarketplace: React.FC = () => {
                 onClick={() => handleOpenAiProposal(gig)}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md shadow-amber-600/20 transition-all active:scale-95"
               >
-                <Cpu className="w-3.5 h-3.5" />
-                <span>AI Proposal Generator</span>
+                {/* <Cpu className="w-3.5 h-3.5" /> */}
+                <span>Generate the Proposal</span>
               </button>
             </div>
           </div>

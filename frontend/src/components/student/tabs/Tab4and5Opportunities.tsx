@@ -61,16 +61,16 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
           : 'bg-orange-50/40 dark:bg-slate-900'
       }`}>
         <div className="max-w-3xl space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-xs font-bold">
-            {isInternship ? <GraduationCap className="w-3.5 h-3.5" /> : <Briefcase className="w-3.5 h-3.5" />}
-            <span>{isInternship ? 'TAB 4 • INTERNSHIPS HUB' : 'TAB 5 • JOBS HUB'}</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-2xl font-bold">
+            {isInternship ? <GraduationCap className="w-4.5 h-4.5" /> : <Briefcase className="w-4.5 h-4.5" />}
+            <span>{isInternship ? 'INTERNSHIPS HUB' : 'JOBS HUB'}</span>
           </div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             {isInternship ? 'Verified University & Industry Internships' : 'High-Impact Full-Time Engineering & Finance Roles'}
           </h2>
-          <p className="text-sm text-slate-600 dark:text-slate-300">
+          {/* <p className="text-sm text-slate-600 dark:text-slate-300">
             Every listing carries a traceable ID (e.g. <span className="font-mono text-amber-600 dark:text-amber-300 font-bold">INT-MSFT-101</span>, <span className="font-mono text-amber-600 dark:text-amber-300 font-bold">JOB-RZP-402</span>) with click-to-analyze AI cutoff score comparison.
-          </p>
+          </p> */}
         </div>
       </div>
 
@@ -170,8 +170,8 @@ export const Tab4and5Opportunities: React.FC<OpportunitiesProps> = ({ mode }) =>
                     onClick={() => handleOpenAnalysis(opp)}
                     className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-amber-600 border border-amber-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-amber-400 dark:border-amber-900/40 text-xs font-bold transition-all"
                   >
-                    <Cpu className="w-3.5 h-3.5" />
-                    <span>Run AI Skill & Test Analysis</span>
+                    {/* <Cpu className="w-3.5 h-3.5" /> */}
+                    <span>Run Skill & Test Analysis</span>
                   </button>
 
                   <button

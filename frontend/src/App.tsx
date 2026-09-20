@@ -17,8 +17,12 @@ import { ShieldCheck, Lock } from 'lucide-react';
 import { AIChatbotWidget } from './components/common/AIChatbotWidget';
 
 const AppContent: React.FC = () => {
-  const [currentRole, setCurrentRole] = useState<UserRole | null>(() => {
+  const [currentRole, setCurrentRoleState] = useState<UserRole | null>(() => {
     if (typeof window !== 'undefined') {
+      const savedRole = localStorage.getItem('careeroptic_user_role');
+      if (savedRole && ['student', 'college', 'recruiter', 'government'].includes(savedRole)) {
+        return savedRole as UserRole;
+      }
       const params = new URLSearchParams(window.location.search);
       if (params.get('testId') || params.get('activeTab')) {
         return 'student';
@@ -26,6 +30,19 @@ const AppContent: React.FC = () => {
     }
     return null;
   });
+
+  const setCurrentRole = (role: UserRole | null) => {
+    setCurrentRoleState(role);
+    if (typeof window !== 'undefined') {
+      if (role) {
+        localStorage.setItem('careeroptic_user_role', role);
+      } else {
+        localStorage.removeItem('careeroptic_user_role');
+        localStorage.removeItem('careeroptic_active_tab');
+      }
+    }
+  };
+
   const [authModal, setAuthModal] = useState<{ role: UserRole; mode: 'signin' | 'signup' } | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [settingsTab, setSettingsTab] = useState<'bookmarks' | 'privacy' | 'preferences'>('preferences');
