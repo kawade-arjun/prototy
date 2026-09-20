@@ -270,11 +270,19 @@ ${resumeText}
 
   // Extract capitalized technical acronyms & framework terms directly from candidate's text
   const customAcronyms = resumeText.match(/\b[A-Z][a-zA-Z0-9+#.]{1,15}\b/g) || [];
+  const commonStopwords = ['The', 'And', 'For', 'With', 'From', 'This', 'That', 'Your', 'Have', 'Will', 'Using', 'Built', 'Created', 'Engineered', 'Developed', 'Managed', 'Worked', 'Section', 'Page', 'Resume', 'Curriculum', 'Vitae', 'Email', 'Phone', 'Address', 'https', 'http', 'com', 'org', 'edu', 'gmail', 'mailto', 'Text', 'Font', 'Object', 'Stream', 'Endstream', 'Filter', 'Flatedecode', 'Catalog'];
+
+  const isValidTechnicalTerm = (term: string): boolean => {
+    if (term.length < 2 || term.length > 20) return false;
+    if (commonStopwords.includes(term)) return false;
+    // Must contain vowels or be a recognized upper-case tech acronym
+    const hasVowel = /[aeiouy]/i.test(term);
+    const isKnownAcronym = ['API', 'SDK', 'AWS', 'GCP', 'SQL', 'CSS', 'HTML', 'JSON', 'REST', 'CRUD', 'HTTP', 'HTTPS', 'CORS', 'JWT', 'LLM', 'GPU', 'CPU', 'RAM', 'OOP', 'K8S', 'S3', 'EC2', 'IAM', 'VPC', 'NLP', 'OCR'].includes(term);
+    return hasVowel || isKnownAcronym;
+  };
+
   customAcronyms.forEach(term => {
-    if (
-      !['The', 'And', 'For', 'With', 'From', 'This', 'That', 'Your', 'Have', 'Will', 'Using', 'Built', 'Created', 'Engineered', 'Developed', 'Managed', 'Worked', 'Section', 'Page', 'Resume', 'Curriculum', 'Vitae', 'Email', 'Phone', 'Address', 'https', 'http', 'com', 'org', 'edu', 'gmail', 'mailto'].includes(term) &&
-      term.length > 1
-    ) {
+    if (isValidTechnicalTerm(term)) {
       if (extractedSkillsSet.size < 12) {
         extractedSkillsSet.add(term);
       }

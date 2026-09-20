@@ -228,49 +228,53 @@ export const Tab7LivingResume: React.FC = () => {
         }
       }
 
-      // 3. Instant Browser-side Client Text Stream Extractor (0.1s instant fallback)
+      // 3. Official PDF.js Decompressor & Text Engine (Decompresses FlateDecode PDF streams)
       try {
-        const buffer = await file.arrayBuffer();
-        const rawText = new TextDecoder('latin1').decode(buffer);
-        const textObjectRegex = /BT[\s\S]*?ET/g;
-        const chunks: string[] = [];
-        let match;
-        while ((match = textObjectRegex.exec(rawText)) !== null) {
-          const block = match[0];
-          const stringMatches = block.match(/\(([^)]+)\)/g);
-          if (stringMatches) {
-            const cleaned = stringMatches
-              .map(s => s.slice(1, -1).trim())
-              .filter(s => s.length > 0 && !s.startsWith('/') && !s.includes('Font') && !s.includes('ProcSet') && !s.includes('Catalog'));
-            if (cleaned.length > 0) {
-              chunks.push(cleaned.join(' '));
+        const pdfText = await new Promise<string>((resolve) => {
+          const runPdfJs = async () => {
+            try {
+              let pdfjs = (window as any).pdfjsLib;
+              if (!pdfjs) {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+                await new Promise((res, rej) => {
+                  script.onload = res;
+                  script.onerror = rej;
+                  document.head.appendChild(script);
+                });
+                pdfjs = (window as any).pdfjsLib;
+              }
+              if (pdfjs) {
+                pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                const arrayBuf = await file.arrayBuffer();
+                const doc = await pdfjs.getDocument({ data: arrayBuf }).promise;
+                let pageTexts: string[] = [];
+                for (let p = 1; p <= doc.numPages; p++) {
+                  const page = await doc.getPage(p);
+                  const textContent = await page.getTextContent();
+                  const str = textContent.items.map((it: any) => it.str).join(' ');
+                  if (str.trim()) pageTexts.push(str.trim());
+                }
+                resolve(pageTexts.join('\n\n').trim());
+                return;
+              }
+            } catch (err) {
+              console.warn('PDF.js client extraction failed:', err);
             }
-          }
-        }
+            resolve('');
+          };
+          runPdfJs();
+        });
 
-        if (chunks.length === 0) {
-          const matches = rawText.match(/\(([^)]+)\)/g);
-          if (matches) {
-            const extracted = matches
-              .map(m => m.slice(1, -1).trim())
-              .filter(t => t.length > 1 && !t.startsWith('/') && !t.includes('Font') && !t.includes('Catalog') && !t.includes('Encoding'));
-            if (extracted.length > 0) {
-              chunks.push(extracted.join(' '));
-            }
-          }
-        }
-
-        const clientExtractedText = chunks.join('\n').replace(/[^\x20-\x7E\s]/g, '').replace(/\s+/g, ' ').trim();
-
-        if (clientExtractedText.length > 15) {
-          setUploadedResume(clientExtractedText, fileName, fileSize);
-          setCustomText(clientExtractedText);
-          setUploadStatus(`Extracted ${clientExtractedText.length} characters from ${fileName}!`);
+        if (pdfText && pdfText.length > 20) {
+          setUploadedResume(pdfText, fileName, fileSize);
+          setCustomText(pdfText);
+          setUploadStatus(`Extracted ${pdfText.length} characters from ${fileName}!`);
           setTimeout(() => setUploadStatus(null), 3000);
           return;
         }
       } catch (e) {
-        console.warn('Browser raw stream text fallback failed:', e);
+        console.warn('PDF.js fallback error:', e);
       }
     }
 
