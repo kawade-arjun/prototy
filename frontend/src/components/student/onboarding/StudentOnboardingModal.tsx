@@ -16,7 +16,8 @@ import {
   Trash2,
   Building,
   Target,
-  Sparkles
+  Sparkles,
+  BrainCircuit
 } from 'lucide-react';
 import { ALL_DISCIPLINES, DisciplineConfig } from '../../../mock/mockData';
 import { AcademicStream } from '../../../types';
