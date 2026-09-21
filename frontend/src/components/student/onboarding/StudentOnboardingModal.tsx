@@ -93,6 +93,10 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
     return saved && ALL_DISCIPLINES.some(d => d.id === saved) ? saved : 'tech_ai';
   });
 
+  const [isChangingDiscipline, setIsChangingDiscipline] = useState<boolean>(() => {
+    return !localStorage.getItem('careeroptic_selected_discipline');
+  });
+
   const activeDisciplineConfig = useMemo(() => {
     return ALL_DISCIPLINES.find(d => d.id === selectedDiscipline) || ALL_DISCIPLINES[0];
   }, [selectedDiscipline]);
@@ -320,58 +324,90 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
           {/* STEP 1: 5-Disciplinary Stream & Branch Selection */}
           {currentStep === 1 && (
             <div className="space-y-5">
-              {/* 1. Discipline Selector Grid */}
-              <div>
-                <label className="block text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider mb-2 flex items-center justify-between">
-                  <span className="flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-amber-500" />
-                    <span>1. Select Your Primary Disciplinary Track:</span>
-                  </span>
-                  <span className="text-[10px] text-amber-600 dark:text-amber-400">Sovereign National Benchmarks</span>
-                </label>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-                  {ALL_DISCIPLINES.map((d) => {
-                    const isSelected = selectedDiscipline === d.id;
-                    return (
-                      <button
-                        key={d.id}
-                        type="button"
-                        onClick={() => {
-                          setSelectedDiscipline(d.id);
-                          localStorage.setItem('careeroptic_selected_discipline', d.id);
-                          const firstBranch = d.branches[0];
-                          setSelectedBranch(firstBranch.name);
-                          setSelectedTechSkills(firstBranch.skills.slice(0, 3));
-                        }}
-                        className={`p-3 rounded-2xl border text-left transition-all relative cursor-pointer ${
-                          isSelected
-                            ? 'border-amber-600 bg-amber-500/10 dark:bg-amber-600/20 dark:border-amber-500 text-amber-900 dark:text-white shadow-md shadow-amber-500/10'
-                            : 'border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/40 text-slate-700 dark:text-slate-300 hover:border-amber-500/40'
-                        }`}
-                      >
-                        <div className="flex items-start justify-between gap-1.5 mb-1">
-                          <p className="text-xs font-extrabold flex items-center gap-1.5">
-                            <span className="text-base">{d.icon === 'Cpu' ? '💻' : d.icon === 'TrendingUp' ? '📊' : d.icon === 'Palette' ? '🎨' : d.icon === 'Scale' ? '⚖️' : '🔬'}</span>
-                            <span>{d.name}</span>
-                          </p>
-                          {isSelected && (
-                            <div className="w-4 h-4 rounded-full bg-amber-600 text-white flex items-center justify-center shrink-0">
-                              <Check className="w-2.5 h-2.5" />
-                            </div>
-                          )}
-                        </div>
-                        <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
-                          {d.description}
-                        </p>
-                        <span className="mt-2 inline-block px-2 py-0.5 rounded-md text-[9px] font-extrabold bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/20">
-                          {d.badge}
+              {/* 1. Pre-Selected Track Card or Full Selector Grid */}
+              {!isChangingDiscipline ? (
+                <div className="p-4 rounded-2xl bg-amber-500/10 dark:bg-amber-600/15 border border-amber-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center text-xl font-bold shadow-md shrink-0">
+                      {activeDisciplineConfig.icon === 'Cpu' ? '💻' : activeDisciplineConfig.icon === 'TrendingUp' ? '📊' : activeDisciplineConfig.icon === 'Palette' ? '🎨' : activeDisciplineConfig.icon === 'Scale' ? '⚖️' : '🔬'}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h4 className="text-sm font-black text-slate-900 dark:text-white">
+                          {activeDisciplineConfig.name}
+                        </h4>
+                        <span className="px-2 py-0.5 rounded-md text-[9px] font-extrabold bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/30">
+                          Pre-Selected during Signup
                         </span>
-                      </button>
-                    );
-                  })}
+                      </div>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                        {activeDisciplineConfig.badge} • {activeDisciplineConfig.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setIsChangingDiscipline(true)}
+                    className="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-800 hover:bg-amber-100 dark:hover:bg-slate-700 text-amber-700 dark:text-amber-300 font-bold text-xs border border-amber-500/30 transition-all cursor-pointer whitespace-nowrap self-end sm:self-center"
+                  >
+                    Change Track
+                  </button>
                 </div>
-              </div>
+              ) : (
+                <div>
+                  <label className="block text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider mb-2 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-amber-500" />
+                      <span>1. Select Your Primary Disciplinary Track:</span>
+                    </span>
+                    <span className="text-[10px] text-amber-600 dark:text-amber-400">Sovereign National Benchmarks</span>
+                  </label>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                    {ALL_DISCIPLINES.map((d) => {
+                      const isSelected = selectedDiscipline === d.id;
+                      return (
+                        <button
+                          key={d.id}
+                          type="button"
+                          onClick={() => {
+                            setSelectedDiscipline(d.id);
+                            localStorage.setItem('careeroptic_selected_discipline', d.id);
+                            const firstBranch = d.branches[0];
+                            setSelectedBranch(firstBranch.name);
+                            setSelectedTechSkills(firstBranch.skills.slice(0, 3));
+                            setIsChangingDiscipline(false);
+                          }}
+                          className={`p-3 rounded-2xl border text-left transition-all relative cursor-pointer ${
+                            isSelected
+                              ? 'border-amber-600 bg-amber-500/10 dark:bg-amber-600/20 dark:border-amber-500 text-amber-900 dark:text-white shadow-md shadow-amber-500/10'
+                              : 'border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/40 text-slate-700 dark:text-slate-300 hover:border-amber-500/40'
+                          }`}
+                        >
+                          <div className="flex items-start justify-between gap-1.5 mb-1">
+                            <p className="text-xs font-extrabold flex items-center gap-1.5">
+                              <span className="text-base">{d.icon === 'Cpu' ? '💻' : d.icon === 'TrendingUp' ? '📊' : d.icon === 'Palette' ? '🎨' : d.icon === 'Scale' ? '⚖️' : '🔬'}</span>
+                              <span>{d.name}</span>
+                            </p>
+                            {isSelected && (
+                              <div className="w-4 h-4 rounded-full bg-amber-600 text-white flex items-center justify-center shrink-0">
+                                <Check className="w-2.5 h-2.5" />
+                              </div>
+                            )}
+                          </div>
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                            {d.description}
+                          </p>
+                          <span className="mt-2 inline-block px-2 py-0.5 rounded-md text-[9px] font-extrabold bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/20">
+                            {d.badge}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
               {/* 2. Branch / Specialization Selector */}
               <div>

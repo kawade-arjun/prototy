@@ -341,11 +341,11 @@ export const AuthPopupModal: React.FC<AuthPopupModalProps> = ({
                       onChange={(e) => setSelectedDiscipline(e.target.value)}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-amber-500/30 bg-amber-500/5 dark:bg-[#080d18] text-slate-900 dark:text-white text-xs font-bold focus:ring-2 focus:ring-amber-500 focus:outline-none cursor-pointer"
                     >
-                      <option value="tech_ai">💻 Engineering & Technology (IIT Bombay Benchmark)</option>
-                      <option value="commerce_finance">📊 Commerce & Finance (SRCC / NMIMS Benchmark)</option>
-                      <option value="ui_ux">🎨 UI/UX & Spatial Design (NID Ahmedabad Benchmark)</option>
-                      <option value="law_governance">⚖️ Law, Governance & Tech Policy (NLSIU Benchmark)</option>
-                      <option value="healthcare_bio">🔬 Healthcare, Bio-Tech & Ayush (AIIMS Benchmark)</option>
+                      <option value="tech_ai">Engineering </option>
+                      <option value="commerce_finance">Commerce & Finance </option>
+                      <option value="ui_ux">UI/UX & Spatial Design )</option>
+                      <option value="law_governance">Law </option>
+                      <option value="healthcare_bio">Healthcare, Bio-Tech & Ayush</option>
                     </select>
                   </div>
                 )}
