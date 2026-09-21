@@ -294,7 +294,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
           <div className="flex items-center justify-between pt-3 gap-1 overflow-x-auto pb-1 text-[11px] font-semibold">
             {[
               { num: 1, label: 'Branch' },
-              { num: 2, label: 'Domain Skills' },
+              { num: 2, label: 'Skills' },
               { num: 3, label: 'Soft Skills' },
               { num: 4, label: 'Resume (Opt)' },
               { num: 5, label: 'Academics' },
@@ -451,12 +451,12 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
             </div>
           )}
 
-          {/* STEP 2: Domain Skills & Custom "Other" Skills */}
+          {/* STEP 2: Core Domain Skills & Custom "Other" Skills */}
           {currentStep === 2 && (
             <div className="space-y-5">
               <div>
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <span>Domain Skills for {selectedBranch}</span>
+                  <span>Skills for {selectedBranch}</span>
                 </h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                   Click to select the competencies you have experience with:
@@ -495,7 +495,13 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                     type="text"
                     value={customSkillInput}
                     onChange={(e) => setCustomSkillInput(e.target.value)}
-                    placeholder="e.g. LLM Fine-Tuning, Rust, WebAssembly, Solana..."
+                    placeholder={
+                      selectedDiscipline === 'law' ? 'e.g. DPDP Act, Contract Drafting, Statutory Audit, IP Law...' :
+                      selectedDiscipline === 'commerce' ? 'e.g. Financial Modeling, IFRS, Risk Assessment, SAP...' :
+                      selectedDiscipline === 'design' ? 'e.g. Figma, Usability Testing, Motion Design, Wireframing...' :
+                      selectedDiscipline === 'healthcare' ? 'e.g. Clinical Research, Telemedicine, EHR Compliance...' :
+                      'e.g. LLM Fine-Tuning, Rust, WebAssembly, System Design...'
+                    }
                     className="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-slate-900 text-xs text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500 focus:outline-none"
                   />
                   <button
@@ -787,7 +793,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                 onClick={() => setCurrentStep(prev => prev + 1)}
                 className="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-md shadow-amber-600/20 flex items-center gap-1.5 transition-all"
               >
-                <span>Continue to {currentStep === 1 ? 'Domain Skills' : currentStep === 2 ? 'Soft Skills' : currentStep === 3 ? 'Resume' : currentStep === 4 ? 'Academics' : 'Aspirations'}</span>
+                <span>Continue to {currentStep === 1 ? 'Skills' : currentStep === 2 ? 'Soft Skills' : currentStep === 3 ? 'Resume' : currentStep === 4 ? 'Academics' : 'Aspirations'}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             ) : (
