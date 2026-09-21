@@ -14,10 +14,12 @@ import {
   ArrowLeft,
   CheckCircle2,
   Trash2,
-  BrainCircuit,
   Building,
-  Target
+  Target,
+  Sparkles
 } from 'lucide-react';
+import { ALL_DISCIPLINES, DisciplineConfig } from '../../../mock/mockData';
+import { AcademicStream } from '../../../types';
 
 // Engineering branches configuration
 export const ENGINEERING_BRANCHES = [
@@ -84,13 +86,23 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  // Form State
-  const [discipline] = useState<string>('Engineering');
+  // Form State - Dynamic 5-Discipline Streams
+  const [selectedDiscipline, setSelectedDiscipline] = useState<AcademicStream>(() => {
+    const saved = localStorage.getItem('careeroptic_selected_discipline') as AcademicStream;
+    return saved && ALL_DISCIPLINES.some(d => d.id === saved) ? saved : 'tech_ai';
+  });
+
+  const activeDisciplineConfig = useMemo(() => {
+    return ALL_DISCIPLINES.find(d => d.id === selectedDiscipline) || ALL_DISCIPLINES[0];
+  }, [selectedDiscipline]);
+
+  const availableBranches = activeDisciplineConfig.branches;
+
   const [selectedBranch, setSelectedBranch] = useState<string>(
-    customProfile?.stream || 'Computer Science & Engineering (CSE)'
+    customProfile?.stream || availableBranches[0].name
   );
   const [selectedTechSkills, setSelectedTechSkills] = useState<string[]>(
-    customProfile?.technical_skills || ['Python', 'Data Structures & Algorithms']
+    customProfile?.technical_skills || availableBranches[0].skills.slice(0, 3)
   );
   const [customSkillInput, setCustomSkillInput] = useState<string>('');
   const [customSkills, setCustomSkills] = useState<string[]>(
@@ -129,8 +141,8 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
 
   // Active branch metadata
   const currentBranchData = useMemo(() => {
-    return ENGINEERING_BRANCHES.find(b => b.name === selectedBranch) || ENGINEERING_BRANCHES[0];
-  }, [selectedBranch]);
+    return availableBranches.find(b => b.name === selectedBranch) || availableBranches[0];
+  }, [selectedBranch, availableBranches]);
 
   // Real-time Completion Percentage Calculation (NO XP)
   const completionPercentage = useMemo(() => {
@@ -197,9 +209,10 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
     setSubmitError(null);
 
     try {
+      localStorage.setItem('careeroptic_selected_discipline', selectedDiscipline);
       await saveOnboarding({
         full_name: activeStudent.name,
-        discipline: 'Engineering',
+        discipline: activeDisciplineConfig.name,
         stream: selectedBranch,
         technical_skills: selectedTechSkills,
         custom_skills: customSkills,
@@ -303,32 +316,80 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
         {/* Modal Scrollable Body */}
         <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
 
-          {/* STEP 1: Discipline & Engineering Branch Selection */}
+          {/* STEP 1: 5-Disciplinary Stream & Branch Selection */}
           {currentStep === 1 && (
-            <div className="space-y-4">
-              <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-500/20">
-                <div className="flex items-center gap-2 text-amber-700 dark:text-amber-300 font-bold text-sm mb-1">
-                  <Cpu className="w-4 h-4" />
-                  <span>Primary Discipline: Engineering</span>
+            <div className="space-y-5">
+              {/* 1. Discipline Selector Grid */}
+              <div>
+                <label className="block text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider mb-2 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-amber-500" />
+                    <span>1. Select Your Primary Disciplinary Track:</span>
+                  </span>
+                  <span className="text-[10px] text-amber-600 dark:text-amber-400">Sovereign National Benchmarks</span>
+                </label>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                  {ALL_DISCIPLINES.map((d) => {
+                    const isSelected = selectedDiscipline === d.id;
+                    return (
+                      <button
+                        key={d.id}
+                        type="button"
+                        onClick={() => {
+                          setSelectedDiscipline(d.id);
+                          localStorage.setItem('careeroptic_selected_discipline', d.id);
+                          const firstBranch = d.branches[0];
+                          setSelectedBranch(firstBranch.name);
+                          setSelectedTechSkills(firstBranch.skills.slice(0, 3));
+                        }}
+                        className={`p-3 rounded-2xl border text-left transition-all relative cursor-pointer ${
+                          isSelected
+                            ? 'border-amber-600 bg-amber-500/10 dark:bg-amber-600/20 dark:border-amber-500 text-amber-900 dark:text-white shadow-md shadow-amber-500/10'
+                            : 'border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/40 text-slate-700 dark:text-slate-300 hover:border-amber-500/40'
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-1.5 mb-1">
+                          <p className="text-xs font-extrabold flex items-center gap-1.5">
+                            <span className="text-base">{d.icon === 'Cpu' ? '💻' : d.icon === 'TrendingUp' ? '📊' : d.icon === 'Palette' ? '🎨' : d.icon === 'Scale' ? '⚖️' : '🔬'}</span>
+                            <span>{d.name}</span>
+                          </p>
+                          {isSelected && (
+                            <div className="w-4 h-4 rounded-full bg-amber-600 text-white flex items-center justify-center shrink-0">
+                              <Check className="w-2.5 h-2.5" />
+                            </div>
+                          )}
+                        </div>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                          {d.description}
+                        </p>
+                        <span className="mt-2 inline-block px-2 py-0.5 rounded-md text-[9px] font-extrabold bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/20">
+                          {d.badge}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
-                <p className="text-xs text-slate-600 dark:text-slate-400">
-                  AI, Data Science, Software, Electronics, and Core streams are specialized branches under Engineering.
-                </p>
               </div>
 
+              {/* 2. Branch / Specialization Selector */}
               <div>
-                <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-2">
-                  Select Your Specific Engineering Branch:
+                <label className="block text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <Building className="w-4 h-4 text-amber-500" />
+                  <span>2. Select Specific Branch / Specialization ({activeDisciplineConfig.name}):</span>
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {ENGINEERING_BRANCHES.map((b) => {
+                  {availableBranches.map((b) => {
                     const isSelected = selectedBranch === b.name;
                     return (
                       <button
                         key={b.id}
                         type="button"
-                        onClick={() => setSelectedBranch(b.name)}
-                        className={`p-3.5 rounded-2xl border text-left transition-all flex items-start justify-between gap-2 ${
+                        onClick={() => {
+                          setSelectedBranch(b.name);
+                          setSelectedTechSkills(b.skills.slice(0, 3));
+                        }}
+                        className={`p-3.5 rounded-2xl border text-left transition-all flex items-start justify-between gap-2 cursor-pointer ${
                           isSelected
                             ? 'border-amber-600 bg-amber-50/80 dark:bg-amber-600/20 dark:border-amber-500 text-amber-900 dark:text-white font-bold shadow-sm'
                             : 'border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-slate-900/40 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-white/[0.15]'
@@ -341,7 +402,7 @@ export const StudentOnboardingModal: React.FC<StudentOnboardingModalProps> = ({
                           </p>
                         </div>
                         {isSelected && (
-                          <div className="w-5 h-5 rounded-full bg-amber-600 text-white flex items-center justify-center flex-shrink-0">
+                          <div className="w-5 h-5 rounded-full bg-amber-600 text-white flex items-center justify-center shrink-0">
                             <Check className="w-3 h-3" />
                           </div>
                         )}

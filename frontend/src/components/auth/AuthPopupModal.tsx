@@ -134,6 +134,7 @@ export const AuthPopupModal: React.FC<AuthPopupModalProps> = ({
   const [fullName, setFullName] = useState('');
   const [organization, setOrganization] = useState('');
   const [identifier, setIdentifier] = useState('');
+  const [selectedDiscipline, setSelectedDiscipline] = useState('tech_ai');
   const [agreeDpdp, setAgreeDpdp] = useState(true);
 
   const [loading, setLoading] = useState(false);
@@ -195,6 +196,10 @@ export const AuthPopupModal: React.FC<AuthPopupModalProps> = ({
         const displayName = fullName.trim() 
           ? (organization ? `${fullName} (${organization})` : fullName)
           : (role === 'student' ? 'Student Candidate' : `${config.title} User`);
+
+        if (role === 'student') {
+          localStorage.setItem('careeroptic_selected_discipline', selectedDiscipline);
+        }
 
         await register(email, password, role, displayName).catch((err) => {
           console.warn('Backend register notice:', err);
@@ -321,6 +326,29 @@ export const AuthPopupModal: React.FC<AuthPopupModalProps> = ({
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-50 dark:bg-[#080d18] text-slate-900 dark:text-white text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none"
                   />
                 </div>
+
+                {role === 'student' && (
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
+                      <span className="flex items-center gap-1.5">
+                        <GraduationCap className="w-3.5 h-3.5 text-amber-500" />
+                        <span>Select Disciplinary Stream / Track:</span>
+                      </span>
+                      <span className="text-[10px] text-amber-600 dark:text-amber-400 font-extrabold">5 Tracks Available</span>
+                    </label>
+                    <select
+                      value={selectedDiscipline}
+                      onChange={(e) => setSelectedDiscipline(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-amber-500/30 bg-amber-500/5 dark:bg-[#080d18] text-slate-900 dark:text-white text-xs font-bold focus:ring-2 focus:ring-amber-500 focus:outline-none cursor-pointer"
+                    >
+                      <option value="tech_ai">💻 Engineering & Technology (IIT Bombay Benchmark)</option>
+                      <option value="commerce_finance">📊 Commerce & Finance (SRCC / NMIMS Benchmark)</option>
+                      <option value="ui_ux">🎨 UI/UX & Spatial Design (NID Ahmedabad Benchmark)</option>
+                      <option value="law_governance">⚖️ Law, Governance & Tech Policy (NLSIU Benchmark)</option>
+                      <option value="healthcare_bio">🔬 Healthcare, Bio-Tech & Ayush (AIIMS Benchmark)</option>
+                    </select>
+                  </div>
+                )}
               </>
             )}
 

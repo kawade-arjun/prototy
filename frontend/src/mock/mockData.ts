@@ -8,10 +8,98 @@ import {
   CredentialAudit 
 } from '../types';
 
+export interface DisciplineBranch {
+  id: string;
+  name: string;
+  skills: string[];
+}
+
+export interface DisciplineConfig {
+  id: AcademicStream;
+  name: string;
+  badge: string;
+  institution: string;
+  description: string;
+  icon: string;
+  branches: DisciplineBranch[];
+}
+
+export const ALL_DISCIPLINES: DisciplineConfig[] = [
+  {
+    id: 'tech_ai',
+    name: 'Engineering & Technology',
+    badge: 'IIT Bombay Benchmark',
+    institution: 'IIT Bombay',
+    description: 'Software, AI/ML, Cloud Systems, Electronics & Hardware Engineering',
+    icon: 'Cpu',
+    branches: [
+      { id: 'cse', name: 'Computer Science & Engineering (CSE)', skills: ['Data Structures & Algorithms', 'Python', 'C++', 'Java', 'React.js', 'Node.js', 'PostgreSQL', 'Docker', 'System Design'] },
+      { id: 'ai_ds', name: 'Artificial Intelligence & Data Science', skills: ['Python', 'PyTorch', 'TensorFlow', 'Machine Learning', 'NLP / Transformers', 'Computer Vision', 'vLLM', 'Pandas / NumPy', 'SQL'] },
+      { id: 'ece', name: 'Electronics & Communication (ECE)', skills: ['Embedded C', 'VLSI Design', 'Verilog / VHDL', 'Microcontrollers (ARM/ESP32)', 'Signal Processing', 'PCB Design', 'IoT Protocols'] },
+      { id: 'mechanical', name: 'Mechanical Engineering', skills: ['SolidWorks / CAD', 'Finite Element Analysis (FEA)', 'ANSYS', 'Thermodynamics', 'Robotics & Kinematics', 'CNC Machining', 'MATLAB'] },
+      { id: 'civil', name: 'Civil Engineering', skills: ['AutoCAD', 'STAAD Pro', 'Structural Analysis', 'Revit / BIM', 'Geotechnical Engineering', 'Project Scheduling', 'GIS Mapping'] },
+      { id: 'electrical', name: 'Electrical Engineering', skills: ['Power Systems', 'Control Systems', 'MATLAB / Simulink', 'PLC & SCADA', 'Power Electronics', 'High Voltage Engineering'] }
+    ]
+  },
+  {
+    id: 'commerce_finance',
+    name: 'Commerce & Finance',
+    badge: 'SRCC / NMIMS Benchmark',
+    institution: 'SRCC / NMIMS',
+    description: 'Financial Modeling, Investment Banking, Accounting & Quantitative Risk',
+    icon: 'TrendingUp',
+    branches: [
+      { id: 'fin_model', name: 'Financial Risk & Quantitative Modeling', skills: ['DCF Modeling', 'Monte Carlo Simulation', 'Financial Risk', 'Python Quantlib', 'VaR Analysis', 'Excel Analytics'] },
+      { id: 'inv_bank', name: 'Investment Banking & M&A', skills: ['LBO Waterfall', '3-Statement Modeling', 'CFA Level 1', 'M&A Accretion/Dilution', 'Valuation Multiples'] },
+      { id: 'acc_audit', name: 'Accounting, Audit & Taxation', skills: ['Corporate Accounting', 'Statutory Audit', 'GST & Direct Tax', 'IFRS Standards', 'Financial Analysis'] },
+      { id: 'fintech', name: 'Fintech & Banking Operations', skills: ['Payment Gateway Rails', 'AML/KYC Compliance', 'Treasury Management', 'API Reconciliation', 'Risk Assessment'] }
+    ]
+  },
+  {
+    id: 'ui_ux',
+    name: 'UI/UX & Spatial Design',
+    badge: 'NID Ahmedabad Benchmark',
+    institution: 'NID Ahmedabad',
+    description: 'Product Design, Design Systems, Accessibility Audit (WCAG) & Spatial UI',
+    icon: 'Palette',
+    branches: [
+      { id: 'product_design', name: 'Product & Visual Interface Design', skills: ['Figma Tokens', 'Design Systems', 'Micro-Interactions', 'Prototyping', 'User Flows', 'Tailwind CSS'] },
+      { id: 'ux_research', name: 'UX Research & Usability Engineering', skills: ['WCAG 2.2 AAA Audit', 'Usability Testing', 'Information Architecture', 'User Journey Mapping', 'A/B Testing'] },
+      { id: 'spatial_ui', name: 'Spatial UI & Multimodal Interfaces', skills: ['Spatial Design (AR/VR)', 'Voice UI', 'Gesture Controls', 'Figma Variables', 'Accessibility (ARIA)'] }
+    ]
+  },
+  {
+    id: 'law_governance',
+    name: 'Law, Governance & Tech Policy',
+    badge: 'NLSIU Bangalore Benchmark',
+    institution: 'NLSIU Bangalore',
+    description: 'Digital Data Protection (DPDP), Corporate Law, Tech Patents & Policy',
+    icon: 'Scale',
+    branches: [
+      { id: 'dpdp_policy', name: 'Technology Policy & Data Protection (DPDP)', skills: ['DPDP Act 2023', 'Consent Manager Flow', 'GDPR Section 8', 'Statutory Audit', 'Tech IP'] },
+      { id: 'corp_law', name: 'Corporate Law & M&A Governance', skills: ['NDA Contract Parsing', 'Statutory Compliance', 'Due Diligence', 'Cross-Border Transfer', 'Legal Drafting'] },
+      { id: 'ip_patent', name: 'Intellectual Property & Tech Patent Law', skills: ['Patent Drafting', 'Copyright & Tech IP', 'Trademark Prosecution', 'Licensing Agreements'] }
+    ]
+  },
+  {
+    id: 'healthcare_bio',
+    name: 'Healthcare, Bio-Tech & Ayush',
+    badge: 'AIIMS New Delhi Benchmark',
+    institution: 'AIIMS New Delhi',
+    description: 'Genomics, Computational Biology, Clinical Biostatistics & Ayush Research',
+    icon: 'Activity',
+    branches: [
+      { id: 'bioinfo', name: 'Computational Biology & Genomics', skills: ['Single-Cell RNA-seq', 'Scanpy / Seurat', 'Bio-Statistics', 'Python BioPy', 'UMAP Analysis'] },
+      { id: 'clin_biostat', name: 'Clinical Biostatistics & Trial Data', skills: ['Kaplan-Meier Survival', 'CDSCO Regulations', 'GCP Compliance', 'NAMASTE Ontology', 'Clinical Data Analysis'] },
+      { id: 'ayush_res', name: 'Ayush & Traditional Medicine Research', skills: ['WHO ICD-11 TM2', 'Ayurveda Pharmaco-Vigilance', 'Phytochemistry Analysis', 'Clinical Documentation'] }
+    ]
+  }
+];
+
 export const ACADEMIC_STREAMS: StreamMetadata[] = [
   {
     id: 'tech_ai',
-    name: 'Engineering',
+    name: 'Engineering & Technology',
     badge: 'IIT Bombay Benchmark',
     institution: 'IIT Bombay',
     sandboxTitle: 'Monaco Code Sandbox (Judge0 Isolated Container)',
